@@ -1,5 +1,4 @@
 # ArchOzu Team Repository 🗿
-## Task Sheet
 ```
 📦 Top Modules
  ┗ 📜 General Testbench ❌
