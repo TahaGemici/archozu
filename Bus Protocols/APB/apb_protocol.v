@@ -1,33 +1,18 @@
-////////////////////////////////////////////////
-//
-// Name:   Shubhi Agrawal
-// Design: APB2 Protocol Top Module
-// Date:   13-06-2021
-//
-///////////////////////////////////////////////
-
-
-
-
 `include "master.v"
 `include "slave1.v"
 `include "slave2.v"
 
 
-
-`timescale 1ns/1ns
-
-
-
 module APB_Protocol(
-                 input PCLK,PRESETn,transfer,READ_WRITE,
-                 input [8:0] apb_write_paddr,
-		 input [7:0]apb_write_data,
-		 input [8:0] apb_read_paddr,
-		 output PSLVERR, 
-                 output [7:0] apb_read_data_out
-          );
-
+    input PCLK,PRESETn,
+	input transfer,
+	input READ_WRITE,
+    input [8:0] apb_write_paddr,
+	input [7:0] apb_write_data,
+	input [8:0] apb_read_paddr,
+	output PSLVERR, 
+	output [7:0] apb_read_data_out
+);
        wire [7:0]PWDATA,PRDATA,PRDATA1,PRDATA2;
        wire [8:0]PADDR;
 
