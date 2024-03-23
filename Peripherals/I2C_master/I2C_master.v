@@ -27,7 +27,7 @@ module I2C_master(
 	reg [7:0] wdata, wdata_nxt, rdata_nxt;
 	reg [2:0] counter, counter_nxt;
 
-	reg scln = 1;
+	reg scln;
 	reg ready_nxt;
     
 	assign scl_io = scln || clk_i;
@@ -110,15 +110,9 @@ module I2C_master(
 			WDATA: sda_io = wdata[counter];
 			ACK1: sda_io = 1'b0;
 			RDATA: sda_io = 1'bz;
-			ACK2: sda_io = 1'b0;
+			ACK2: sda_io = 1'bz;
 			STOP: sda_io = 1'b1;
 		endcase
-
-		// reset
-		if(rst) begin
-			write_enable = 1;
-			sda_io = 1;
-		end
 	end
 
 endmodule
