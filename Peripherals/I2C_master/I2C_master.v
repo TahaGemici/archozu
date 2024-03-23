@@ -7,9 +7,9 @@ module I2C_master(
     input [6:0]addr_i,
     input [7:0] wdata_i,
     output reg [7:0] rdata_o,
-    output ready_o,
-	inout sda_io,
-	inout scl_io
+    output reg ready_o,
+	inout reg sda_io,
+	inout reg scl_io
 );
 	localparam IDLE = 0;
 	localparam START = 1;
@@ -26,117 +26,98 @@ module I2C_master(
 	reg [6:0] addr, addr_nxt;
 	reg [7:0] wdata, wdata_nxt, rdata_nxt;
 	reg [2:0] counter, counter_nxt;
-	reg write_enable;
-	reg sda_out;
-	reg i2c_scl_enable = 0;
 
-	assign ready_o = rstn_i && (state == IDLE);
-    assign sda_io = write_enable ? sda_out : 1'bz;
-	assign scl_io = i2c_scl_enable ? clk_i : 1'b1;
+	reg scln = 1;
+	reg ready_nxt;
+    
+	assign scl_io = scln || clk_i;
+	wire setup = sel_i && (!enable_i);
+	wire rst = ~rstn_i;
+	wire[7:0] addr_read = {addr, ~write};
 	
 	always @(negedge clk_i) begin
-		i2c_scl_enable <= 0;
-		if(rstn_i && (state != IDLE) && (state != START) && (state != STOP)) begin
-			i2c_scl_enable <= 1;
-		end
+		addr <= addr_nxt;
+		wdata <= wdata_nxt;
 	end
 
 	always @(posedge clk_i) begin
-		addr <= addr_nxt;
 		state <= state_nxt;
-		wdata <= wdata_nxt;
 		write <= write_nxt;
 		rdata_o <= rdata_nxt;
+		ready_o <= ready_nxt;
 		counter <= counter_nxt;
+
+		scln <= rst || (state == IDLE) || (state == START) || (state == STOP);
 	end
 
 	always @* begin
+		// default
 		state_nxt = state;
-		if(sel_i && (!enable_i)) begin
+		write_nxt = write;
+		counter_nxt = state[0] ? 3'h7 : (counter - 1);
+		rdata_nxt = {rdata_o[6:0], sda_io};
+		ready_nxt = rstn_i && (state == IDLE);
+
+		if(setup) begin
 			state_nxt = START;
-			addr_nxt = addr_i;
-			wdata_nxt = wdata_i;
 			write_nxt = write_i;
 		end
-		rdata_nxt = rdata_o;
-		counter_nxt = counter-1;
+		
 		case(state)
-
-			IDLE: counter_nxt = 0;
-
+			//IDLE:
 			START: state_nxt = ADDR;
-
 			ADDR: begin
-				if (counter == 0) state_nxt <= ACK0;
+				if (counter == 0) state_nxt = ACK0;
 			end
-
 			ACK0: begin
 				state_nxt = write ? WDATA : RDATA;
 				if(sda_io) state_nxt = IDLE;
 			end
-
 			WDATA: begin
-				if(counter == 7) state_nxt <= ACK1;
+				if(counter == 0) state_nxt <= ACK1;
 			end
-
 			ACK1: begin
 				state_nxt = STOP;
 				if(sda_io) state_nxt = IDLE;
 			end
-
 			RDATA: begin
-				rdata_nxt = {rdata_o, sda_io};
-				if (counter == 7) state_nxt = ACK2;
+				//rdata_nxt = {rdata_o, sda_io};
+				if (counter == 0) state_nxt = ACK2;
 			end
-			
 			ACK2: state_nxt = STOP;
-
 			STOP: state_nxt = IDLE;
-
 		endcase
 
-		if(!rstn_i) state_nxt = IDLE;
+		// reset
+		if(rst) state_nxt = IDLE;
 	end
 	
-	always @(negedge clk_i, negedge rst) begin
-		if(rst == 0) begin
-			write_enable <= 1;
-			sda_out <= 1;
-		end else begin
-			case(state)
-				
-				START: begin
-					write_enable <= 1;
-					sda_out <= 0;
-				end
-				
-				ADDRESS: begin
-					sda_out <= saved_addr[counter];
-				end
-				
-				READ_ACK: begin
-					write_enable <= 0;
-				end
-				
-				WRITE_DATA: begin 
-					write_enable <= 1;
-					sda_out <= saved_data[counter];
-				end
-				
-				WRITE_ACK: begin
-					write_enable <= 1;
-					sda_out <= 0;
-				end
-				
-				READ_DATA: begin
-					write_enable <= 0;				
-				end
-				
-				STOP: begin
-					write_enable <= 1;
-					sda_out <= 1;
-				end
-			endcase
+	always @* begin
+		// default
+		addr_nxt = addr;
+		wdata_nxt = wdata;
+
+		if(setup) begin
+			addr_nxt = addr_i;
+			wdata_nxt = wdata_i;
+		end
+
+		case(state)
+			IDLE: sda_io = 1'b1;
+			START: sda_io = 1'b0;
+			ADDR: sda_io = addr_read[counter];
+			ACK0: sda_io = 1'bz;
+			WDATA: sda_io = wdata[counter];
+			ACK1: sda_io = 1'b0;
+			RDATA: sda_io = 1'bz;
+			ACK2: sda_io = 1'b0;
+			STOP: sda_io = 1'b1;
+		endcase
+
+		// reset
+		if(rst) begin
+			write_enable = 1;
+			sda_io = 1;
 		end
 	end
 
