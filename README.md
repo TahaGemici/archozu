@@ -4,8 +4,8 @@
  ┗ 📜 General Testbench ❌
 
 📦 Bus Protocols
- ┣ 📁 APB ✔ (lucky-wfw/ARM_AMBA_Design)
- ┣ 📁 AHB ✔ (shubhi704/APB-Protocol)
+ ┣ 📁 APB ✔ (shubhi704/APB-Protocol)
+ ┣ 📁 AHB ✔ (lucky-wfw/ARM_AMBA_Design)
  ┣ 📁 AHB2APB Bridge 🌱 (taha)
  ┗ 📁 AHB Implementation ❌
 
