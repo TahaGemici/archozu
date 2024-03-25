@@ -1,7 +1,9 @@
 # ArchOzu Team Repository 🗿
 ```
 📦 Top Modules
- ┗ 📜 General Testbench ❌
+ ┣ 📜 RTL ❌
+ ┣ 📜 Header ❌
+ ┗ 📜 TB ❌
 
 📦 Bus Protocols
  ┣ 📁 APB ✔ (shubhi704/APB-Protocol)
@@ -28,6 +30,8 @@
  ┣ 📂 USB
  ┃ ┣ 📜 RTL 🌱 (metin)
  ┃ ┗ 📜 TB ❌
+ ┣ 📂 Clock Generator
+ ┃ ┗ 📜 RTL 🌱 (taha)
  ┗ 📂 JTAG
    ┣ 📜 RTL ❌
    ┗ 📜 TB ❌
@@ -42,8 +46,8 @@
 
 📦 Documents
  ┣ 📂 ÖTR
- ┃ ┣ 📝 docx ✔ (15.03.2024)
- ┃ ┗ 📝 pdf ✔ (15.03.2024)
+ ┃ ┣ 📝 docx ✔ (all, 15.03.2024)
+ ┃ ┗ 📝 pdf ✔ (all, 15.03.2024)
  ┗ 📂 DTR
    ┣ 📝 docx ❌
    ┗ 📝 pdf ❌
