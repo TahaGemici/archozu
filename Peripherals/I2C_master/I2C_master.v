@@ -1,5 +1,5 @@
 module I2C_master(
-    input clk_i, //FREKANSI DÜZELT
+    input clk_i,
     input rstn_i,
     input sel_i,
     input enable_i,
@@ -11,6 +11,12 @@ module I2C_master(
 	inout reg sda_io,
 	inout reg scl_io
 );
+	wire clk_i2c;
+	clk_gen #(`CLK_I2C_FREQ)(
+		clk_i,
+		clk_i2c
+	);
+
 	localparam IDLE = 0;
 	localparam START = 1;
 	localparam ADDR = 2;
@@ -35,12 +41,12 @@ module I2C_master(
 	wire rst = ~rstn_i;
 	wire[7:0] addr_read = {addr, ~write};
 	
-	always @(negedge clk_i) begin
+	always @(posedge clk_i) begin
 		addr <= addr_nxt;
 		wdata <= wdata_nxt;
 	end
 
-	always @(posedge clk_i) begin
+	always @(posedge clk_i2c) begin
 		state <= state_nxt;
 		write <= write_nxt;
 		rdata_o <= rdata_nxt;
