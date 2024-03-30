@@ -1,29 +1,28 @@
+`define i (`CLK_FREQ / CLK_GEN_FREQ / 2)
 module clk_gen #(
-    parameter unsigned integer CLK_GEN_FREQ
+    parameter integer CLK_GEN_FREQ
 )(
+    input rst,
     input clk_i,
-    output clk_gen_o;
+    output reg clk_gen_o
 );
-    reg clk_gen_o = 0, clk_gen_o_nxt;
-    genvar i;
-    generate
-        i = `CLK_FREQ / CLK_GEN_FREQ;
-        `assert((i%2)!== 0, "error: clk_gen: undefined error")
-        `assert(`CLK_FREQ!==(CLK_GEN_FREQ*i), "error: clk_gen: CLK_FREQ is not divisible")
+    initial begin
+        `assert(`CLK_FREQ!=(CLK_GEN_FREQ*2*`i), "clk_gen: CLK_FREQ is not divisible")
+    end
 
-        i = i/2;
-        if(pow(2,$clog2(i)) !== i) begin
-            reg[$clog2(i):0] counter = 0, counter_nxt;
-            always @* counter_nxt = (counter + 1) % i;
-        end else begin
-            reg[$clog2(i)-1:0] counter = 0, counter_nxt;
-            always @* counter_nxt = counter + 1;
-        end
+    reg clk_gen_o_nxt;
+    reg[$clog2(`i):0] counter, counter_nxt;
 
-        always @(posedge clk) begin
-            counter   <= counter_nxt;
-            clk_gen_o <= clk_gen_o_nxt;
+    always @(posedge clk_i) begin
+        counter   <= counter_nxt;
+        clk_gen_o <= clk_gen_o_nxt;
+    end
+    always @* begin
+        clk_gen_o_nxt = counter ? clk_gen_o : (~clk_gen_o);
+        counter_nxt = (counter + 1) % `i;
+        if(rst) begin
+            clk_gen_o_nxt = 1'b1;
+            counter_nxt = 1'b0;
         end
-        always @* clk_gen_o_nxt = (counter == 0) ? (~clk_gen_o) : clk_gen_o;
-    endgenerate
+    end
 endmodule
