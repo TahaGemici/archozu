@@ -7,7 +7,11 @@ module clk_gen #(
     output reg clk_gen_o
 );
     initial begin
-        `assert(`CLK_FREQ!=(CLK_GEN_FREQ*2*`i), "clk_gen: CLK_FREQ is not divisible")
+        reg[31:0] tmp = `i;
+        $display(tmp);
+        tmp = tmp * 2;
+        tmp = tmp * CLK_GEN_FREQ;
+        `assert(`CLK_FREQ!==tmp, "clk_gen: CLK_FREQ is not divisible")
     end
 
     reg clk_gen_o_nxt;

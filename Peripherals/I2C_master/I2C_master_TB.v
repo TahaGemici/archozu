@@ -1,5 +1,5 @@
-`timescale 1ns/1ps
-`define WAIT @(posedge clk);#9;
+`timescale 1ps/1fs
+`define WAIT @(posedge clk);#(`CLK_PERIOD*0.9);
 `define test_write(addr_val, wdata_val) `WAIT\
 sel=1;\
 enable=0;\
@@ -17,7 +17,7 @@ module I2C_master_TB();
 
 reg clk = 1'b1;
 initial begin
-    forever clk = #5 ~clk;
+    forever clk = #(`CLK_PERIOD/2.0) ~clk;
 end
 
 reg rstn = 0;
@@ -63,5 +63,7 @@ I2C_master dut(
 	sda,
 	scl
 );
+
+i2c_slave_controller slave(sda, scl);
 
 endmodule
