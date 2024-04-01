@@ -1,6 +1,7 @@
 `timescale 1ps/1fs
 `define WAIT @(posedge clk);#(`CLK_PERIOD*0.9);
-`define test_write(addr_val, wdata_val) `WAIT\
+
+`define write(addr_val, wdata_val) `WAIT\
 sel=1;\
 enable=0;\
 write=1;\
@@ -12,6 +13,42 @@ while(!ready) `WAIT\
 sel = 0;\
 enable = 0;\
 `WAIT
+
+`define test_write1(addr_val, data1) `write(8'h00,8'h01)\
+`write(8'h04,addr_val)\
+`write(8'h0C,data1)\
+`write(8'h10,8'h01)\
+while(ready) `WAIT\
+while(!ready) `WAIT
+
+`define test_write2(addr_val, data1, data2) `write(8'h00,8'h02)\
+`write(8'h04,addr_val)\
+`write(8'h0C,data1)\
+`write(8'h0D,data2)\
+`write(8'h10,8'h01)\
+while(ready) `WAIT\
+while(!ready) `WAIT
+
+`define test_write3(addr_val, data1, data2, data3) `write(8'h00,8'h03)\
+`write(8'h04,addr_val)\
+`write(8'h0C,data1)\
+`write(8'h0D,data2)\
+`write(8'h0E,data3)\
+`write(8'h10,8'h01)\
+while(ready) `WAIT\
+while(!ready) `WAIT
+
+`define test_write4(addr_val, data1, data2, data3, data4) `write(8'h00,8'h04)\
+`write(8'h04,addr_val)\
+`write(8'h0C,data1)\
+`write(8'h0D,data2)\
+`write(8'h0E,data3)\
+`write(8'h0F,data4)\
+`write(8'h10,8'h01)\
+while(ready) `WAIT\
+while(!ready) `WAIT
+
+
 
 module I2C_master_TB();
 
@@ -30,23 +67,19 @@ initial begin
     rstn = 1;
 
 
+    `test_write2(85, 1, 124)
 
+    //`test_read2    
 
-    `test_write(8'h00,8'h01)
-
-    `test_write(8'h04,8'h25)
-
-    `test_write(8'h0D,8'h22)
-    `test_write(8'h0C,8'h11)
-    `test_write(8'h0F,8'h44)
-    `test_write(8'h0E,8'h33)
-
-    `test_write(8'h10,8'h01)
-
-
+    `write(8'h00,8'h02)
+    `write(8'h04,85)
+    `write(8'h0C,1)
+    `write(8'h0D,6)
+    `write(8'h10,8'h04)
 
 
     repeat(10000) @(posedge clk);
+    wait(ready);
     $finish;
 end
 
@@ -64,6 +97,6 @@ I2C_master dut(
 	scl
 );
 
-i2c_slave_controller slave(sda, scl);
+i2c_slave_controller slave(scl, sda, ~rstn);
 
 endmodule

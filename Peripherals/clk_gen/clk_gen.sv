@@ -8,7 +8,6 @@ module clk_gen #(
 );
     initial begin
         reg[31:0] tmp = `i;
-        $display(tmp);
         tmp = tmp * 2;
         tmp = tmp * CLK_GEN_FREQ;
         `assert(`CLK_FREQ!==tmp, "clk_gen: CLK_FREQ is not divisible")
@@ -25,8 +24,8 @@ module clk_gen #(
         clk_gen_o_nxt = counter ? clk_gen_o : (~clk_gen_o);
         counter_nxt = (counter + 1) % `i;
         if(rst) begin
-            clk_gen_o_nxt = 1'b1;
-            counter_nxt = 1'b0;
+            clk_gen_o_nxt = 1'b0;
+            counter_nxt = -1;
         end
     end
 endmodule
