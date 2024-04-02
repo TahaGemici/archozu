@@ -65,7 +65,7 @@ module I2C_master(
 		I2C_CFG_nxt = I2C_CFG;
 		rdata_o_nxt = rdata_o;
 
-		ready_o_nxt = sel_i ? enable_i : (state==IDLE);
+		ready_o_nxt = sel_i ? enable_i : 1'b1;
 
 		if(setup) begin
 			I2C_RDR_nxt = I2C_RDR;
