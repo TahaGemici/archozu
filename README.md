@@ -8,8 +8,8 @@
 📦 Bus Protocols
  ┣ 📁 APB ✔ (shubhi704/APB-Protocol)
  ┣ 📁 AHB ✔ (lucky-wfw/ARM_AMBA_Design)
- ┣ 📁 AHB2APB Bridge 🌱 (taha)
- ┗ 📁 AHB Implementation ❌
+ ┣ 📁 AHB2APB Bridge 🌱 (utku)
+ ┗ 📁 AHB Implementation 🌱 (utku)
 
 📦 Peripherals
  ┣ 📂 UART
@@ -19,16 +19,16 @@
  ┃ ┣ 📜 RTL ✔ (taha, 01.04.2024)
  ┃ ┗ 📜 TB ✔ (taha, 01.04.2024)
  ┣ 📂 QSPI Master
- ┃ ┣ 📜 RTL 🌱 (taha)
+ ┃ ┣ 📜 RTL 🌱 (metin)
  ┃ ┗ 📜 TB ❌
  ┣ 📂 Timer
- ┃ ┣ 📜 RTL ❌
+ ┃ ┣ 📜 RTL 🌱 (taha)
  ┃ ┗ 📜 TB ❌
  ┣ 📂 GPIO
  ┃ ┣ 📜 RTL ✔ (taha, 05.04.2024)
  ┃ ┗ 📜 TB ❌
  ┣ 📂 USB
- ┃ ┣ 📜 RTL 🌱 (metin)
+ ┃ ┣ 📜 RTL 🌱 (taha)
  ┃ ┗ 📜 TB ❌
  ┣ 📂 Clock Generator
  ┃ ┗ 📜 RTL ✔ (taha, 31.03.2024)
