@@ -8,8 +8,9 @@ module I2C_master(
     input [7:0] wdata_i,
     output reg [7:0] rdata_o,
     output reg ready_o,
+
 	inout sda_io,
-	inout scl_io
+	output scl_io
 );
 
 	// states
