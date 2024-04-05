@@ -25,7 +25,7 @@
  ┃ ┣ 📜 RTL ❌
  ┃ ┗ 📜 TB ❌
  ┣ 📂 GPIO
- ┃ ┣ 📜 RTL ❌
+ ┃ ┣ 📜 RTL ✔ (taha, 05.04.2024)
  ┃ ┗ 📜 TB ❌
  ┣ 📂 USB
  ┃ ┣ 📜 RTL 🌱 (metin)
