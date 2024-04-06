@@ -29,8 +29,6 @@ module I2C_master(
 
 */
 
-
-
 	// wires 
 	wire setup = sel_i & (~enable_i);
 	wire rst = ~rstn_i;
@@ -125,7 +123,7 @@ module I2C_master(
 
 /*
 
-	I2C_Master <---> I2C_Slave
+	I2C_Master <---> I2C_Slave(s)
 
 */
 
