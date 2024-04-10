@@ -49,7 +49,7 @@ module top();
 
         // Data memory interface
         output logic        data_req_o,
-        .data_gnt_i(1'b1),
+        .data_gnt_i(data_gnt),
         input  logic        data_rvalid_i,
         output logic        data_we_o,
         output logic [ 3:0] data_be_o,
