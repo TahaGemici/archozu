@@ -1,10 +1,5 @@
 # ArchOzu Team Repository 🗿
 ```
-📦 Top Modules
- ┣ 📜 RTL ❌
- ┣ 📜 Header ❌
- ┗ 📜 TB ❌
-
 📦 Bus Protocols
  ┣ 📁 APB ✔ (shubhi704/APB-Protocol)
  ┣ 📁 AHB ✔ (lucky-wfw/ARM_AMBA_Design)
