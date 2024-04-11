@@ -53,14 +53,17 @@ module I2C_master(
 
 		if(write_i) begin
 			case(addr_i)
-				8'h00: I2C_NBY_nxt = wdata_i[7:2] ? 2'h0 : {wdata_i[1], (~wdata_i[1])|wdata_i[0]};
-				
+				8'h00: I2C_NBY_nxt = wdata_i[31:2] ? 2'h0 : {wdata_i[1], (~wdata_i[1])|wdata_i[0]};
+				8'h01: I2C_NBY_nxt = wdata_i[7:0] ? 2'h0 : I2C_NBY;
+				8'h02: I2C_NBY_nxt = wdata_i[15:0] ? 2'h0 : I2C_NBY;
+				8'h03: I2C_NBY_nxt = wdata_i[7:0] ? 2'h0 : I2C_NBY;
+
 				8'h04: I2C_ADR_nxt = wdata_i[6:0];
 
-				8'h0C: I2C_TDR_nxt[7:0] = wdata_i;
-				8'h0D: I2C_TDR_nxt[15:8] = wdata_i;
-				8'h0E: I2C_TDR_nxt[23:16] = wdata_i;
-				8'h0F: I2C_TDR_nxt[31:24] = wdata_i;
+				8'h0C: I2C_TDR_nxt = wdata_i;
+				8'h0D: I2C_TDR_nxt[15:8] = wdata_i[7:0];
+				8'h0E: I2C_TDR_nxt[31:16] = wdata_i[15:0];
+				8'h0F: I2C_TDR_nxt[31:24] = wdata_i[7:0];
 			endcase
 		end
 		rdata_o = 0;
@@ -69,15 +72,15 @@ module I2C_master(
 			
 			8'h04: rdata_o[6:0] = I2C_ADR;
 
-			8'h08: rdata_o = I2C_RDR[7:0];
-			8'h09: rdata_o = I2C_RDR[15:8];
-			8'h0A: rdata_o = I2C_RDR[23:16];
-			8'h0B: rdata_o = I2C_RDR[31:24];
+			8'h08: rdata_o = I2C_RDR;
+			8'h09: rdata_o[7:0] = I2C_RDR[15:8];
+			8'h0A: rdata_o[15:0] = I2C_RDR[31:16];
+			8'h0B: rdata_o[7:0] = I2C_RDR[31:24];
 
-			8'h0C: rdata_o = I2C_TDR[7:0];
-			8'h0D: rdata_o = I2C_TDR[15:8];
-			8'h0E: rdata_o = I2C_TDR[23:16];
-			8'h0F: rdata_o = I2C_TDR[31:24];
+			8'h0C: rdata_o = I2C_TDR;
+			8'h0D: rdata_o[7:0] = I2C_TDR[15:8];
+			8'h0E: rdata_o[15:0] = I2C_TDR[31:16];
+			8'h0F: rdata_o[7:0] = I2C_TDR[31:24];
 			
 			8'h10: rdata_o[3:0] = I2C_CFG;
 		endcase
