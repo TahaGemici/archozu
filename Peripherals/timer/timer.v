@@ -14,7 +14,7 @@ module timer(
     reg TIM_CLR, TIM_CLR_nxt;
     reg TIM_ENA, TIM_ENA_nxt;
     reg TIM_MOD, TIM_MOD_nxt;
-    reg TIM_CNT, TIM_CNT_nxt;
+    reg[31:0] TIM_CNT, TIM_CNT_nxt;
     reg[31:0] TIM_EVN, TIM_EVN_nxt;
     reg TIM_EVC, TIM_EVC_nxt;
     reg[31:0] counter, counter_nxt;
@@ -33,6 +33,7 @@ module timer(
 		condition <= condition_nxt;
 	end
 
+	integer i;
 	always @* begin
         TIM_PRE_nxt = TIM_PRE;
         TIM_ARE_nxt = TIM_ARE;

@@ -24,8 +24,8 @@ module GPIO(
     assign all_regs[1] = GPIO_IDR[15:8];
     assign all_regs[2] = 0;
     assign all_regs[3] = 0;
-    assign all_regs[4] = GPIO_ODR[7:0];
-    assign all_regs[5] = GPIO_ODR[15:8];
+    assign all_regs[4] = output_o[7:0];
+    assign all_regs[5] = output_o[15:8];
 
     integer i;
     always @* begin

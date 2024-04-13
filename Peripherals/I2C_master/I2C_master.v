@@ -66,7 +66,8 @@ module I2C_master(
 		I2C_TDR <= I2C_TDR_nxt;
 		I2C_CFG <= I2C_CFG_nxt;
 	end
-
+	
+	integer i;
 	always @* begin
 		I2C_NBY_nxt = I2C_NBY;
 		I2C_ADR_nxt = I2C_ADR;

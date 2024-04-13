@@ -1,13 +1,12 @@
 `define i (`CLK_FREQ / CLK_GEN_FREQ / 2)
-module clk_gen #(
-    parameter real CLK_GEN_FREQ = 100_000.0;
-)(
+module clk_gen (
     input rst,
     input clk_i,
     output reg clk_gen_o
 );
+    parameter CLK_GEN_FREQ = 100_000;
+    integer tmp = `i;
     initial begin
-        reg[31:0] tmp = `i;
         tmp = tmp * 2;
         tmp = tmp * CLK_GEN_FREQ;
         `assert(`CLK_FREQ!==tmp, "clk_gen: CLK_FREQ is not divisible")

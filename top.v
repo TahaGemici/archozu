@@ -1,5 +1,12 @@
 module top();
 
+    wire instr_req, instr_gnt, instr_rvalid;
+    wire[31:0] instr_addr, instr_rdata;
+
+    wire data_req, data_gnt, data_rvalid, data_we;
+    wire[3:0] data_be;
+    wire[31:0] data_addr, data_wdata, data_rdata;
+
     wire[31:0] irq;
     wire irq_ack;
     wire[4:0] irq_id;
@@ -17,15 +24,7 @@ module top();
         rst = 0;
     end
 
-    cv32e40p_top cv32e40p_top #(
-        0, // PULP ISA Extension (incl. custom CSRs and hardware loop, excl. cv.elw)
-        0,  // PULP Cluster interface (incl. cv.elw)
-        0,  // Floating Point Unit (interfaced via APU interface)
-        0,  // Floating-Point ADDition/MULtiplication computing lane pipeline registers number
-        0,  // Floating-Point COMParison/CONVersion computing lanes pipeline registers number
-        0,  // Float-in-General Purpose registers
-        1
-    ) (
+    cv32e40p_top cv32e40p_top (
         // Clock and Reset
         .clk_i(clk),
         .rst_ni(~rst),
@@ -41,21 +40,21 @@ module top();
         .dm_exception_addr_i(),
 
         // Instruction memory interface
-        output logic        instr_req_o,
-        input  logic        instr_gnt_i,
-        input  logic        instr_rvalid_i,
-        output logic [31:0] instr_addr_o,
-        input  logic [31:0] instr_rdata_i,
+        .instr_req_o(instr_req),
+        .instr_gnt_i(instr_gnt),
+        .instr_rvalid_i(instr_rvalid),
+        .instr_addr_o(instr_adddr),
+        .instr_rdata_i(instr_rdata),
 
         // Data memory interface
-        output logic        data_req_o,
+        .data_req_o(data_req),
         .data_gnt_i(data_gnt),
-        input  logic        data_rvalid_i,
-        output logic        data_we_o,
-        output logic [ 3:0] data_be_o,
-        output logic [31:0] data_addr_o,
-        output logic [31:0] data_wdata_o,
-        input  logic [31:0] data_rdata_i,
+        .data_rvalid_i(data_rvalid),
+        .data_we_o(data_we),
+        .data_be_o(data_be),
+        .data_addr_o(data_addr),
+        .data_wdata_o(data_wdata),
+        .data_rdata_i(data_rdata),
 
         // Interrupt inputs
         .irq_i(irq),
@@ -71,5 +70,17 @@ module top();
         // CPU Control Signals
         .fetch_enable_i(),
         .core_sleep_o()
+    );
+    bus bus(
+        clk_i,
+        rst,
+        data_req,
+        data_we,
+        data_be,
+        data_addr,
+        data_wdata,
+        data_gnt,
+        data_rvalid,
+        data_rdata
     );
 endmodule

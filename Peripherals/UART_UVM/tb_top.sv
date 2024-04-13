@@ -21,7 +21,7 @@ module tb_top;
     logic clk;
     uart_interface intf(.clk(clk));
 
-    top dut(
+    uart_top dut(
     );
 
     //Interface Setting

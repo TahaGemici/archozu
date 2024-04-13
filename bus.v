@@ -11,9 +11,9 @@ module bus(
     output reg[31:0] data_rdata_o
 );
     assign data_gnt_o = 1;
-    always @(posedge clk) data_rvalid_o <= data_req_i;
+    always @(posedge clk_i) data_rvalid_o <= data_req_i;
 
-    wire[12:0] addr = data_addr_i[12:0];
+    wire[5:0] addr = data_addr_i[12:0];
     wire we = data_we_i & data_req_i;
     reg uart_en, i2c_en, qspi_en, timer_en, usb_en, gpio_en;
     reg[31:0] data_rdata_o_nxt;
@@ -26,7 +26,7 @@ module bus(
         rst_i,
         i2c_en & we,
         data_be_i,
-        addr_i[5:0],
+        addr,
         data_wdata_i,
         i2c_out,
 	    sda_io,
@@ -40,7 +40,7 @@ module bus(
         rst_i,
         timer_en & we,
         data_be_i,
-        addr_i[5:0],
+        addr,
         data_wdata_i,
         timer_out
     );
@@ -50,10 +50,9 @@ module bus(
     wire[31:0] gpio_out;
     GPIO GPIO(
         clk_i,
-        rst_i,
         gpio_en & we,
         data_be_i,
-        addr_i[5:0],
+        addr,
         data_wdata_i,
         gpio_out,
         in,
@@ -67,13 +66,13 @@ module bus(
         clk_i,
         data_mem_en & we,
         data_be_i,
-        addr,
+        data_addr_i[12:0],
         data_wdata_i,
         data_mem_out
     );
 
 
-    always @(posedge clk) data_rdata_o <= data_rdata_o_nxt;
+    always @(posedge clk_i) data_rdata_o <= data_rdata_o_nxt;
 
     always @* begin
         uart_en = 0;
@@ -92,11 +91,15 @@ module bus(
                 3'b101: gpio_en = 1;
             endcase
         end
-        data_rdata_o_nxt = ({32{uart_en}} & uart_out)
+        /*data_rdata_o_nxt = ({32{uart_en}} & uart_out)
                          | ({32{i2c_en}} & i2c_out)
                          | ({32{qspi_en}} & qspi_out)
                          | ({32{timer_en}} & timer_out)
                          | ({32{usb_en}} & usb_out)
+                         | ({32{gpio_en}} & gpio_out)
+                         | ({32{data_mem_en}} & data_mem_out);*/
+        data_rdata_o_nxt = ({32{i2c_en}} & i2c_out)
+                         | ({32{timer_en}} & timer_out)
                          | ({32{gpio_en}} & gpio_out)
                          | ({32{data_mem_en}} & data_mem_out);
     end
