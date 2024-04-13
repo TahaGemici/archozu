@@ -6,27 +6,24 @@ module data_mem(
     input[31:0] data_i,
     output reg[31:0] data_o
 );
-    reg[7:0] mem0[0:2047];
-    reg[7:0] mem1[0:2047];
-    reg[7:0] mem2[0:2047];
-    reg[7:0] mem3[0:2047];
+    reg[7:0] mem[0:8191];
 
-    wire[10:0] addr_11 = addr_i[10:0];
+    `include "data_mem.vh"
+
     wire[3:0] write = b_sel_i & {4{write_i}};
 
     always @(posedge clk_i) begin
-        mem0[addr_11] <= write[0] ? data_i[7:0]   : mem0[addr_11];
-        mem1[addr_11] <= write[1] ? data_i[15:8]  : mem1[addr_11];
-        mem2[addr_11] <= write[2] ? data_i[23:16] : mem2[addr_11];
-        mem3[addr_11] <= write[3] ? data_i[31:24] : mem3[addr_11];
+        mem[addr_i]   <= write[0] ? data_i[7:0]   : mem[addr_i];
+        mem[addr_i+1] <= write[1] ? data_i[15:8]  : mem[addr_i+1];
+        mem[addr_i+2] <= write[2] ? data_i[23:16] : mem[addr_i+2];
+        mem[addr_i+3] <= write[3] ? data_i[31:24] : mem[addr_i+3];
     end
 
     always @* begin
-        data_o = 32'h00_00_00_00;
-        if(b_sel_i[0]) data_o[7:0]   = mem0[addr_11];
-        if(b_sel_i[1]) data_o[15:8]  = mem1[addr_11];
-        if(b_sel_i[2]) data_o[23:16] = mem2[addr_11];
-        if(b_sel_i[3]) data_o[31:24] = mem3[addr_11];
+        data_o[7:0]   = mem[addr_i]   & {8{b_sel_i[0]}};
+        data_o[15:8]  = mem[addr_i+1] & {8{b_sel_i[1]}};
+        data_o[23:16] = mem[addr_i+2] & {8{b_sel_i[2]}};
+        data_o[31:24] = mem[addr_i+3] & {8{b_sel_i[3]}};
     end
 
 endmodule

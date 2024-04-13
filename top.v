@@ -22,6 +22,8 @@ module top();
         rst = 1;
         #1000;
         rst = 0;
+        #1000;
+        $finish;
     end
 
     cv32e40p_top cv32e40p_top (
@@ -72,7 +74,7 @@ module top();
         .core_sleep_o()
     );
     bus bus(
-        clk_i,
+        clk,
         rst,
         data_req,
         data_we,
