@@ -2,6 +2,7 @@ module timer(
     input clk_i,
     input rst_i,
     input write_i,
+    input [3:0] data_be_i,
     input [4:0] addr_i,
     input [31:0] wdata_i,
     output reg [31:0] rdata_o

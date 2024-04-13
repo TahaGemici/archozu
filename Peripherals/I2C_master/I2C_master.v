@@ -2,6 +2,7 @@ module I2C_master(
     input clk_i,
     input rst_i,
     input write_i,
+    input [3:0] data_be_i,
     input [4:0] addr_i,
     input [31:0] wdata_i,
     output reg [31:0] rdata_o,
@@ -38,6 +39,27 @@ module I2C_master(
 	reg [31:0] I2C_TDR, I2C_TDR_nxt;
 	reg [3:0] I2C_CFG, I2C_CFG_nxt;
 
+	wire[7:0] all_regs[0:16];
+	assign all_regs[0] = {6'h00, ~|I2C_NBY, I2C_NBY};
+	assign all_regs[1] = 0;
+	assign all_regs[2] = 0;
+	assign all_regs[3] = 0;
+	assign all_regs[4] = {1'b0, I2C_ADR};
+	assign all_regs[5] = 0;
+	assign all_regs[6] = 0;
+	assign all_regs[7] = 0;
+	assign all_regs[8] = I2C_RDR[7:0];
+	assign all_regs[9] = I2C_RDR[15:8];
+	assign all_regs[10] = I2C_RDR[23:16];
+	assign all_regs[11] = I2C_RDR[31:24];
+	assign all_regs[12] = I2C_TDR[7:0];
+	assign all_regs[13] = I2C_TDR[15:8];
+	assign all_regs[14] = I2C_TDR[23:16];
+	assign all_regs[15] = I2C_TDR[31:24];
+	assign all_regs[16] = {4'h0, I2C_CFG};
+
+
+
 	always @(posedge clk_i) begin
 		I2C_NBY <= I2C_NBY_nxt;
 		I2C_ADR <= I2C_ADR_nxt;
@@ -49,54 +71,32 @@ module I2C_master(
 		I2C_NBY_nxt = I2C_NBY;
 		I2C_ADR_nxt = I2C_ADR;
 		I2C_TDR_nxt = I2C_TDR;
-		I2C_CFG_nxt = I2C_CFG;
+		I2C_CFG_nxt = rst_i ? 0 : I2C_CFG;
+		if(state == ACK1) I2C_CFG_nxt[{read, 1'b1}] = 1'b1;
 
-		if(write_i) begin
-			case(addr_i)
-				8'h00: I2C_NBY_nxt = wdata_i[31:2] ? 2'h0 : {wdata_i[1], (~wdata_i[1])|wdata_i[0]};
-				8'h01: I2C_NBY_nxt = wdata_i[7:0] ? 2'h0 : I2C_NBY;
-				8'h02: I2C_NBY_nxt = wdata_i[15:0] ? 2'h0 : I2C_NBY;
-				8'h03: I2C_NBY_nxt = wdata_i[7:0] ? 2'h0 : I2C_NBY;
+        for(i=0;i<4;i=i+1) begin
+			if(addr_i <= (16-i)) begin
+            	if(write_i) begin
+					case(addr_i+i)
+						5'h00: I2C_NBY_nxt[7:0] = wdata_i[(8*i)+:8];
+						5'h01: I2C_NBY_nxt[15:8] = wdata_i[(8*i)+:8];
+						5'h02: I2C_NBY_nxt[23:16] = wdata_i[(8*i)+:8];
+						5'h03: I2C_NBY_nxt[31:24] = wdata_i[(8*i)+:8];
+						
+						5'h04: I2C_ADR_nxt = wdata_i[(8*i)+:7];
+						
+						5'h0C: I2C_TDR_nxt[7:0] = wdata_i[(8*i)+:8];
+						5'h0D: I2C_TDR_nxt[15:8] = wdata_i[(8*i)+:8];
+						5'h0E: I2C_TDR_nxt[23:16] = wdata_i[(8*i)+:8];
+						5'h0F: I2C_TDR_nxt[31:24] = wdata_i[(8*i)+:8];
 
-				8'h04: I2C_ADR_nxt = wdata_i[6:0];
-
-				8'h0C: I2C_TDR_nxt = wdata_i;
-				8'h0D: I2C_TDR_nxt[15:8] = wdata_i[7:0];
-				8'h0E: I2C_TDR_nxt[31:16] = wdata_i[15:0];
-				8'h0F: I2C_TDR_nxt[31:24] = wdata_i[7:0];
-			endcase
-		end
-		rdata_o = 0;
-		case(addr_i)
-			8'h00: rdata_o[2:0] = {~|I2C_NBY, I2C_NBY};
-			
-			8'h04: rdata_o[6:0] = I2C_ADR;
-
-			8'h08: rdata_o = I2C_RDR;
-			8'h09: rdata_o[7:0] = I2C_RDR[15:8];
-			8'h0A: rdata_o[15:0] = I2C_RDR[31:16];
-			8'h0B: rdata_o[7:0] = I2C_RDR[31:24];
-
-			8'h0C: rdata_o = I2C_TDR;
-			8'h0D: rdata_o[7:0] = I2C_TDR[15:8];
-			8'h0E: rdata_o[15:0] = I2C_TDR[31:16];
-			8'h0F: rdata_o[7:0] = I2C_TDR[31:24];
-			
-			8'h10: rdata_o[3:0] = I2C_CFG;
-		endcase
-
-		if(rst_i)begin
-			I2C_NBY_nxt = 0;
-			I2C_ADR_nxt = 0;
-			I2C_TDR_nxt = 0;
-			I2C_CFG_nxt = 0;
-		end
+						5'h10: I2C_CFG_nxt = wdata_i[3:0];
+					endcase
+            	end
+            	if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
+			end
+        end
 	end	
-
-
-
-
-
 
 
 
@@ -148,7 +148,6 @@ module I2C_master(
 		counter_nxt = counter - 1;
 		nby_counter_nxt = nby_counter;
 
-		if(enable_i & write_i & (addr_i==8'h10)) I2C_CFG_nxt = wdata_i[3:0];
 		read_nxt = (^I2C_CFG[3:2]) & (~^I2C_CFG[1:0]);
 
 		case(state)
@@ -186,11 +185,7 @@ module I2C_master(
 			end
 			ACK1: begin
 				counter_nxt = 3'h7;
-				state_nxt = {2'b10, read};
-				if(nby_counter == I2C_NBY) begin
-					I2C_CFG_nxt[{read, 1'b1}] = 1'b1;
-					state_nxt = STOP;
-				end
+				state_nxt = (nby_counter == I2C_NBY) ? STOP : {2'b10, read};
 			end
 			STOP: begin
 				scln_nxt = 1;

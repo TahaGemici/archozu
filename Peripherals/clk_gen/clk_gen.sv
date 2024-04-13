@@ -1,6 +1,6 @@
 `define i (`CLK_FREQ / CLK_GEN_FREQ / 2)
 module clk_gen #(
-    parameter integer CLK_GEN_FREQ
+    parameter real CLK_GEN_FREQ = 100_000.0;
 )(
     input rst,
     input clk_i,
