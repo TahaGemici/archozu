@@ -75,6 +75,7 @@ module I2C_master(
 		I2C_CFG_nxt = rst_i ? 0 : I2C_CFG;
 		if(state == ACK1) I2C_CFG_nxt[{read, 1'b1}] = 1'b1;
 
+        rdata_o = 8'h00;
         for(i=0;i<4;i=i+1) begin
 			if(addr_i <= (16-i)) begin
             	if(write_i) begin

@@ -30,6 +30,7 @@ module GPIO(
     integer i;
     always @* begin
         GPIO_ODR_nxt = output_o;
+        rdata_o = 8'h00;
         for(i=0;i<4;i=i+1) begin
             if(addr_i<=(5-i)) begin
                 if(write_i) begin
