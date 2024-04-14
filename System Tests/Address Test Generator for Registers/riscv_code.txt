@@ -1,0 +1,22 @@
+    lui t0, 0x0
+    addi t0, t0, 64
+    li t1, 0x12345678
+    sw t1, 0(t0)
+    lui t0, 0x0
+    addi t0, t0, 68
+    li t1, 0x12345678
+    sw t1, 0(t0)
+    lui t0, 0x0
+    addi t0, t0, 72
+    li t1, 0x12345678
+    sw t1, 0(t0)
+    lui t0, 0x0
+    addi t0, t0, 76
+    li t1, 0x12345678
+    sw t1, 0(t0)
+    lui t0, 0x0
+    addi t0, t0, 80
+    li t1, 0x12345678
+    sw t1, 0(t0)
+    li a7, 10
+    ecall

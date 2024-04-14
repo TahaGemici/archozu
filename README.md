@@ -1,37 +1,32 @@
 # ArchOzu Team Repository 🗿
 ```
-📦 Top Modules
- ┣ 📜 RTL ❌
- ┣ 📜 Header ❌
- ┗ 📜 TB ❌
-
 📦 Bus Protocols
  ┣ 📁 APB ✔ (shubhi704/APB-Protocol)
  ┣ 📁 AHB ✔ (lucky-wfw/ARM_AMBA_Design)
- ┣ 📁 AHB2APB Bridge 🌱 (taha)
- ┗ 📁 AHB Implementation ❌
+ ┣ 📁 AHB2APB Bridge 🌱 (utku)
+ ┗ 📁 AHB Implementation 🌱 (utku)
 
 📦 Peripherals
  ┣ 📂 UART
  ┃ ┣ 📜 RTL 🌱 (utku)
  ┃ ┗ 📜 TB 🌱 (kutay)
  ┣ 📂 I2C Master
- ┃ ┣ 📜 RTL 🌱 (taha)
- ┃ ┗ 📜 TB ❌
+ ┃ ┣ 📜 RTL ✔ (taha, 01.04.2024)
+ ┃ ┗ 📜 TB ✔ (taha, 01.04.2024)
  ┣ 📂 QSPI Master
- ┃ ┣ 📜 RTL ❌
- ┃ ┗ 📜 TB ❌
- ┣ 📂 Timer
- ┃ ┣ 📜 RTL ❌
- ┃ ┗ 📜 TB ❌
- ┣ 📂 GPIO
- ┃ ┣ 📜 RTL ❌
- ┃ ┗ 📜 TB ❌
- ┣ 📂 USB
  ┃ ┣ 📜 RTL 🌱 (metin)
  ┃ ┗ 📜 TB ❌
+ ┣ 📂 Timer
+ ┃ ┣ 📜 RTL ✔ (taha, 06.04.2024)
+ ┃ ┗ 📜 TB ❌
+ ┣ 📂 GPIO
+ ┃ ┣ 📜 RTL ✔ (taha, 05.04.2024)
+ ┃ ┗ 📜 TB ❌
+ ┣ 📂 USB
+ ┃ ┣ 📜 RTL 🌱 (taha)
+ ┃ ┗ 📜 TB ❌
  ┣ 📂 Clock Generator
- ┃ ┗ 📜 RTL 🌱 (taha)
+ ┃ ┗ 📜 RTL ✔ (taha, 31.03.2024)
  ┗ 📂 JTAG
    ┣ 📜 RTL ❌
    ┗ 📜 TB ❌

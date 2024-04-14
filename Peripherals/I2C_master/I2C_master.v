@@ -1,108 +1,210 @@
 module I2C_master(
-    input clk_i, //FREKANSI DÜZELT
-    input rstn_i,
-    input sel_i,
-    input enable_i,
+    input clk_i,
+    input rst_i,
     input write_i,
-    input [6:0]addr_i,
-    input [7:0] wdata_i,
-    output reg [7:0] rdata_o,
-    output reg ready_o,
-	inout reg sda_io,
-	inout reg scl_io
+    input [3:0] data_be_i,
+    input [4:0] addr_i,
+    input [31:0] wdata_i,
+    output reg [31:0] rdata_o,
+
+	inout sda_io,
+	output scl_io
 );
-	localparam IDLE = 0;
+
+	// states
+	localparam IDLE  = 0;
 	localparam START = 1;
-	localparam ADDR = 2;
-	localparam ACK0 = 3;
+	localparam ADDR  = 2;
+	localparam ACK0  = 3;
 	localparam WDATA = 4;
-	localparam ACK1 = 5;
-	localparam RDATA = 6;
-	localparam ACK2 = 7;
-	localparam STOP = 8;
+	localparam RDATA = 5;
+	localparam ACK1  = 6;
+	localparam STOP  = 7;
 
+/*
+
+	APB <---> I2C_Master
+
+*/
+
+	// registers
 	reg [2:0] state, state_nxt;
-	reg write, write_nxt;
-	reg [6:0] addr, addr_nxt;
-	reg [7:0] wdata, wdata_nxt, rdata_nxt;
-	reg [2:0] counter, counter_nxt;
+	reg [4:0] addr, addr_nxt;
+	reg [31:0] wdata, wdata_nxt;
+	reg read, read_nxt;
 
-	reg scln;
-	reg ready_nxt;
-    
-	assign scl_io = scln | clk_i;
-	wire setup = sel_i & (~enable_i);
-	wire rst = ~rstn_i;
-	wire[7:0] addr_read = {addr, ~write};
-	
-	always @(negedge clk_i) begin
-		addr <= addr_nxt;
-		wdata <= wdata_nxt;
-	end
+	reg [1:0] I2C_NBY, I2C_NBY_nxt;
+	reg [6:0] I2C_ADR, I2C_ADR_nxt;
+	reg [31:0] I2C_RDR, I2C_RDR_nxt;
+	reg [31:0] I2C_TDR, I2C_TDR_nxt;
+	reg [3:0] I2C_CFG, I2C_CFG_nxt;
+
+	wire[7:0] all_regs[0:16];
+	assign all_regs[0] = {6'h00, ~|I2C_NBY, I2C_NBY};
+	assign all_regs[1] = 0;
+	assign all_regs[2] = 0;
+	assign all_regs[3] = 0;
+	assign all_regs[4] = {1'b0, I2C_ADR};
+	assign all_regs[5] = 0;
+	assign all_regs[6] = 0;
+	assign all_regs[7] = 0;
+	assign all_regs[8] = I2C_RDR[7:0];
+	assign all_regs[9] = I2C_RDR[15:8];
+	assign all_regs[10] = I2C_RDR[23:16];
+	assign all_regs[11] = I2C_RDR[31:24];
+	assign all_regs[12] = I2C_TDR[7:0];
+	assign all_regs[13] = I2C_TDR[15:8];
+	assign all_regs[14] = I2C_TDR[23:16];
+	assign all_regs[15] = I2C_TDR[31:24];
+	assign all_regs[16] = {4'h0, I2C_CFG};
+
+
 
 	always @(posedge clk_i) begin
-		state <= state_nxt;
-		write <= write_nxt;
-		rdata_o <= rdata_nxt;
-		ready_o <= ready_nxt;
-		counter <= counter_nxt;
+		I2C_NBY <= I2C_NBY_nxt;
+		I2C_ADR <= I2C_ADR_nxt;
+		I2C_TDR <= I2C_TDR_nxt;
+		I2C_CFG <= I2C_CFG_nxt;
+	end
+	
+	integer i;
+	always @* begin
+		I2C_NBY_nxt = I2C_NBY;
+		I2C_ADR_nxt = I2C_ADR;
+		I2C_TDR_nxt = I2C_TDR;
+		I2C_CFG_nxt = rst_i ? 0 : I2C_CFG;
+		if(state == ACK1) I2C_CFG_nxt[{read, 1'b1}] = 1'b1;
 
-		scln <= rst | (state == IDLE) | (state == START) | (state == STOP);
+        for(i=0;i<4;i=i+1) begin
+			if(addr_i <= (16-i)) begin
+            	if(write_i) begin
+					case(addr_i+i)
+						5'h00: I2C_NBY_nxt[7:0] = wdata_i[(8*i)+:8];
+						5'h01: I2C_NBY_nxt[15:8] = wdata_i[(8*i)+:8];
+						5'h02: I2C_NBY_nxt[23:16] = wdata_i[(8*i)+:8];
+						5'h03: I2C_NBY_nxt[31:24] = wdata_i[(8*i)+:8];
+						
+						5'h04: I2C_ADR_nxt = wdata_i[(8*i)+:7];
+						
+						5'h0C: I2C_TDR_nxt[7:0] = wdata_i[(8*i)+:8];
+						5'h0D: I2C_TDR_nxt[15:8] = wdata_i[(8*i)+:8];
+						5'h0E: I2C_TDR_nxt[23:16] = wdata_i[(8*i)+:8];
+						5'h0F: I2C_TDR_nxt[31:24] = wdata_i[(8*i)+:8];
+
+						5'h10: I2C_CFG_nxt = wdata_i[3:0];
+					endcase
+            	end
+            	if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
+			end
+        end
+	end	
+
+
+
+
+/*
+
+	I2C_Master <---> I2C_Slave(s)
+
+*/
+
+
+	// wires 
+	wire clk_i2c;
+	
+	// clock generator
+	clk_gen #(`CLK_I2C_FREQ) clk_i2c_inst(
+		rst_i,
+		clk_i,
+		clk_i2c
+	);
+
+	// registers
+	reg [1:0] nby_counter, nby_counter_nxt;
+	reg [2:0] counter, counter_nxt;
+	reg sda_o;
+	reg scln, scln_nxt;
+    
+	wire[7:0] addr_read = {I2C_ADR, read};
+	assign (pull1, pull0) sda_io = 1;
+	assign sda_io = sda_o;
+	assign scl_io = scln | clk_i2c;
+
+	always @(posedge clk_i2c or rst_i) begin
+		scln <= scln_nxt;
+	end
+	
+	always @(negedge clk_i2c or rst_i) begin
+		I2C_RDR <= I2C_RDR_nxt;
+		state <= rst_i ? IDLE : state_nxt;
+		counter <= counter_nxt;
+		nby_counter <= nby_counter_nxt;
+		read <= read_nxt;
 	end
 
 	always @* begin
-		state_nxt = setup ? START : state;
-		write_nxt = setup ? write_i : write;
-		rdata_nxt = rdata;
-		ready_nxt = 1'b0;
-		counter_nxt = state[0] ? 3'h7 : (counter - 1);
+		I2C_RDR_nxt = I2C_RDR;
+		scln_nxt = rst_i;
+		state_nxt = state;
+		counter_nxt = counter - 1;
+		nby_counter_nxt = nby_counter;
 
-		if(setup) begin
-			state_nxt = START;
-			write_nxt = write_i;
-		end
-		
+		read_nxt = (^I2C_CFG[3:2]) & (~^I2C_CFG[1:0]);
+
 		case(state)
-			IDLE: ready_nxt = rstn_i;
-			START: state_nxt = ADDR;
+			IDLE: begin
+				scln_nxt = 1;
+				nby_counter_nxt = 0;
+				state_nxt = IDLE;
+				if(^I2C_CFG[3:2]) state_nxt = START;
+				if(^I2C_CFG[1:0]) state_nxt = START;
+			end
+			START: begin
+				counter_nxt = 3'h7;
+				scln_nxt = 0;
+				state_nxt = ADDR;
+			end
 			ADDR: begin
 				if (counter == 0) state_nxt = ACK0;
 			end
 			ACK0: begin
-				state_nxt = write ? WDATA : RDATA;
-				if(sda_io) state_nxt = IDLE;
+				counter_nxt = 3'h7;
+				state_nxt = sda_io ? STOP : (read ? RDATA : WDATA);
 			end
 			WDATA: begin
-				if(counter == 0) state_nxt <= ACK1;
-			end
-			ACK1: begin
-				state_nxt = sda_io ? IDLE : STOP;
+				if(counter == 0) begin
+					state_nxt <= ACK1;
+					nby_counter_nxt = nby_counter + 1;
+				end
 			end
 			RDATA: begin
-				rdata_nxt = {rdata_o[6:0], sda_io};
-				if (counter == 0) state_nxt = ACK2;
+				I2C_RDR[{nby_counter-1, counter}] = sda_io;
+				if (counter == 0) begin
+					state_nxt <= ACK1;
+					nby_counter_nxt = nby_counter + 1;
+				end
 			end
-			ACK2: state_nxt = STOP;
-			STOP: state_nxt = IDLE;
+			ACK1: begin
+				counter_nxt = 3'h7;
+				state_nxt = (nby_counter == I2C_NBY) ? STOP : {2'b10, read};
+			end
+			STOP: begin
+				scln_nxt = 1;
+				state_nxt = IDLE;
+			end
 		endcase
-
-		if(rst) state_nxt = IDLE;
 	end
 	
 	always @* begin
-		addr_nxt = setup ? addr_i : addr;
-		wdata_nxt = setup ? wdata_i : wdata;
-
 		case(state)
-			IDLE:  sda_io = 1'b1;
-			START: sda_io = 1'b0;
-			ADDR:  sda_io = addr_read[counter];
-			ACK0:  sda_io = 1'bz;
-			WDATA: sda_io = wdata[counter];
-			ACK1:  sda_io = 1'b0;
-			RDATA: sda_io = 1'bz;
-			ACK2:  sda_io = 1'bz;
-			STOP:  sda_io = 1'b1;
+			IDLE:  sda_o = 1'b1;
+			START: sda_o = 1'b0;
+			ADDR:  sda_o = addr_read[counter];
+			ACK0:  sda_o = 1'bz;
+			WDATA: sda_o = I2C_TDR[{nby_counter, counter}];
+			RDATA: sda_o = 1'bz;
+			ACK1:  sda_o = read ? (nby_counter == I2C_NBY) : 1'bz;
+			STOP:  sda_o = 1'b0;
 		endcase
 	end
 endmodule
