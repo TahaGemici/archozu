@@ -94,7 +94,7 @@ module I2C_master(
 						5'h10: I2C_CFG_nxt = wdata_i[3:0];
 					endcase
             	end
-            	if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
+                if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
 			end
         end
 	end	
