@@ -20,14 +20,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Uart (
+module Uart       (
     input wire clk,            // System clock input
     input wire rst,            // Reset input
     input wire [7:0] data_tx, // Data to transmit
     output reg [7:0] data_rx, // Received data
     output reg tx_en,         // Transmit enable
     output reg rx_flag,       // Data received flag
-    output reg tx_complete    // Transmit completed flag
+    output reg tx_complete,// Transmit completed flag
+    output reg Hready   
 );
 
 // UART registers
@@ -51,6 +52,7 @@ reg [15:0] cpb_count;
 always @(posedge clk) begin
     if (rst) begin
         cpb_count <= 0;
+        Hready <= 0;
     end else if (cpb_count < UART_CPB - 1) begin
         cpb_count <= cpb_count + 1;
     end else begin
@@ -118,6 +120,7 @@ always @(posedge clk) begin
         end
         if (UART_CFG[0] && ~tx_en) begin // Transmit completed
             UART_CFG[2] <= 1; // Set transmit completed bit
+            Hready <=1;
         end
     end
 end
