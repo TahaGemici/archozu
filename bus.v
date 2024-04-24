@@ -35,6 +35,7 @@ module bus(
 
 
     wire[31:0] timer_out;
+    wire irq_ack, irq_7_o;
     timer timer(
         clk_i,
         rst_i,
@@ -42,7 +43,9 @@ module bus(
         data_be_i,
         addr,
         data_wdata_i,
-        timer_out
+        timer_out,
+        irq_ack,
+        irq_7_o
     );
 
 

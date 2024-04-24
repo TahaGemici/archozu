@@ -5,10 +5,15 @@ module timer(
     input [3:0] data_be_i,
     input [4:0] addr_i,
     input [31:0] wdata_i,
-    output reg [31:0] rdata_o
+    output reg [31:0] rdata_o,
+
+    input irq_ack_i,
+    output reg irq_7_o
 );
 
     //registers
+    reg irq_7_o_nxt;
+
     reg TIM_CLR, TIM_CLR_nxt;
     reg TIM_ENA, TIM_ENA_nxt;
     reg TIM_MOD, TIM_MOD_nxt;
@@ -62,6 +67,7 @@ module timer(
         TIM_EVN <= TIM_EVN_nxt;
         TIM_EVC <= TIM_EVC_nxt;
 		
+        irq_7_o <= irq_ack_i ? 0 : irq_7_o_nxt;
 		condition <= condition_nxt;
 	end
 
@@ -76,6 +82,8 @@ module timer(
         TIM_EVC_nxt = TIM_EVC;
         TIM_CNT_nxt = TIM_CNT;
         counter_nxt = counter;
+        
+        irq_7_o_nxt = irq_7_o;
 
         rdata_o = 8'h00;
         for(i=0;i<4;i=i+1) begin
@@ -116,6 +124,7 @@ module timer(
             if(TIM_ARE==TIM_CNT) begin
                 TIM_CNT_nxt = 0;
                 TIM_EVN_nxt = TIM_EVN + 1;
+                irq_7_o_nxt = 1;
             end
         end
 
@@ -133,6 +142,7 @@ module timer(
             TIM_CNT_nxt = 0;
             TIM_EVN_nxt = 0;
             TIM_EVC_nxt = 0;
+            irq_7_0_nxt = 0;
             counter_nxt = 0;
         end
     end
