@@ -20,18 +20,20 @@ class uart_driver extends uvm_driver#(uart_sequence_item);
 
     task run_phase (uvm_phase phase);
         super.run_phase(phase);
-    forever begin
+        forever begin
             item = uart_sequence_item::type_id::create("item");
             seq_item_port.get_next_item(item);
             drive(item);
             seq_item_port.item_done();
-    end
+        end
     endtask: run_phase
 
     //--------------------------------------------------------
     //[Method] Drive
     //--------------------------------------------------------
     task drive(uart_sequence_item item);
-        //TO DO
+        @(vif.cb);
+            vif.data_tx_i <= item.data_tx_i;
+            vif.rx_i <= item.rx_i; 
     endtask: drive
 endclass //uart_driver extends uvm_test

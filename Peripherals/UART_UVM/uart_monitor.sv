@@ -24,9 +24,17 @@ class uart_monitor extends uvm_monitor;
         super.run_phase(phase);
         forever begin
             item = uart_sequence_item::type_id::create("item");
-            wait(!vif.rst);
-           //TO DO
             //send item to scoreboard
+            @(vif.cb);
+            //sample inputs
+                item.data_tx_i = vif.data_tx_i;
+                item.rx_i = vif.rx_i;
+            //sample outputs
+                item.data_rx_o = vif.data_rx_o;
+                item.rx_flag_o = vif.rx_flag_o;
+                item.tx_en_o = vif.tx_en_o;
+                item.tx_complete_o = vif.tx_complete_o;
+                item.hReady_o = vif.hReady_o;
             monitor_port.write(item);
             `uvm_info("MONITOR_CLASS", $sformatf("Saw item %s", item.convert2str()), UVM_HIGH)
         end

@@ -17,9 +17,9 @@ import uvm_pkg::*;
 `include "uart_test.sv"
 
 module tb_top;
-
     logic clk;
-    uart_interface intf(.clk(clk));
+    logic rst;
+    uart_interface intf(.clk_i(clk), .rst_i(rst));
 
     uart_top dut(
     );
@@ -36,9 +36,14 @@ module tb_top;
     
     //Clock Generation
     initial begin
-        clk = 0;
-        #10;
-        forever #10 clk = ~clk;
+        intf.clk = 0;
+        forever #5 intf.clk = ~intf.clk;
+    end
+
+    initial begin
+        intf.rst = 1;
+        #1000;
+        intf.rst = 0;
     end
 
     //Maximum Simulation Time
