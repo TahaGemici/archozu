@@ -1,3 +1,4 @@
+//`define FPGA
 `define CLK_FREQ 102_400_000
 `define CLK_I2C_FREQ 400_000
 `define CLK_QSPI_FREQ 104_000_000
