@@ -137,6 +137,7 @@ module QSPI_master(
 	wire clk_qspi;
 	
 	// clock generator
+    
 	clk_gen #(`CLK_QSPI_FREQ) clk_qspi_inst(
 		rst_i,
 		clk_i,
