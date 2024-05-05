@@ -8,22 +8,12 @@ module QSPI_master(
     output reg [31:0] rdata_o,
 
 	output sclk_o,
-    output ss_n_o,
+    output cs_no,
     inout io0_io,
     inout io1_io,
     inout io2_io,
 	inout io3_io
 );
-
-	// states
-	localparam 
-	localparam 
-	localparam 
-	localparam 
-	localparam 
-	localparam 
-	localparam 
-	localparam 
 
 /*
 
@@ -122,6 +112,7 @@ module QSPI_master(
                 if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
             end
         end
+        if(rst_i) QSPI_CCR[9:8] = 2'b0;
     end
 
 
@@ -132,18 +123,47 @@ module QSPI_master(
 
 */
 
+    reg cs_nq, cs_nd;
+    reg io0_q, io0_d;
+    reg io1_q, io1_d;
+    reg io2_q, io2_d;
+    reg io3_q, io3_d;
+    
 
-	// wires 
-	wire clk_qspi;
+    
+    /////////////////////
+	// clock generator //
+    /////////////////////
 	
-	// clock generator
-    
-	clk_gen #(`CLK_QSPI_FREQ) clk_qspi_inst(
-		rst_i,
-		clk_i,
-		clk_qspi
-	);
+    reg sclk_q, sclk_d;
+    reg[5:0] cntr_d, cntr_q;
 
-    
+    always @(posedge clk_i or negedge clk_i) begin
+        sclk_q <= sclk_d;
+        cntr_q <= cntr_d;
+    end
+
+    always @* begin
+        cntr_d = cntr_d + 1;
+
+        if(cntr_d == QSPI_CCR[30:25]) begin
+            sclk_d = ~sclk_q;
+            cntr_d = 6'h00;
+        end
+
+        if(cs_n) begin
+            sclk_d = 1'h0;
+            cntr_d = 6'h00;
+        end
+    end
+
+    /////////////////////////
+    // Client Select Conf. //
+    /////////////////////////
 
 
+
+
+
+
+endmodule
