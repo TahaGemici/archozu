@@ -9,10 +9,7 @@ module QSPI_master(
 
 	output sclk_o,
     output cs_no,
-    inout io0_io,
-    inout io1_io,
-    inout io2_io,
-	inout io3_io
+    inout[3:0] io
 );
 
 /*
@@ -24,15 +21,18 @@ module QSPI_master(
     // registers
     reg[2:0] state, state_nxt;
 
-    reg[31:0] QSPI_CCR, QSPI_CCR_nxt;
+    reg[30:0] QSPI_CCR, QSPI_CCR_nxt;
     reg[31:0] QSPI_ADR, QSPI_ADR_nxt;
     reg[31:0] QSPI_DR[0:7], QSPI_DR_nxt[0:7];
     reg[1:0] QSPI_STA, QSPI_STA_nxt;
 
     integer i, j;
     wire[7:0] all_regs[0:40];
+    assign all_regs[0] = QSPI_CCR[0+:8];
+    assign all_regs[1] = QSPI_CCR[8+:8];
+    assign all_regs[2] = QSPI_CCR[16+:8];
+    assign all_regs[3] = {1'h0, QSPI_CCR[24+:7]};
     for(i=0;i<4;i+=1) begin
-        assign all_regs[i] = QSPI_CCR[i*8+:8];
         assign all_regs[i+4] = QSPI_ADR[i*8+:8];
         for(j=0;j<8;j+=1) begin
             assign all_regs[i+8+j*4] = QSPI_DR[j][i*8+:8];
@@ -61,8 +61,13 @@ module QSPI_master(
                         6'h00: QSPI_CCR_nxt[7:0] = wdata_i[(8*i)+:8];
                         6'h01: QSPI_CCR_nxt[15:8] = wdata_i[(8*i)+:8];
                         6'h02: QSPI_CCR_nxt[23:16] = wdata_i[(8*i)+:8];
-                        6'h03: QSPI_CCR_nxt[31:24] = wdata_i[(8*i)+:8];
-                        
+                        6'h03: begin
+                            QSPI_CCR_nxt[30:24] = wdata_i[(8*i)+:7];
+                            if(wdata_i[8*i+7]) begin
+                                QSPI_STA[1] = 1'h0;
+                            end
+                        end
+
                         6'h04: QSPI_ADR_nxt[7:0] = wdata_i[(8*i)+:8];
                         6'h05: QSPI_ADR_nxt[15:8] = wdata_i[(8*i)+:8];
                         6'h06: QSPI_ADR_nxt[23:16] = wdata_i[(8*i)+:8];
@@ -112,7 +117,8 @@ module QSPI_master(
                 if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
             end
         end
-        if(rst_i) QSPI_CCR[9:8] = 2'b0;
+
+        if(rst_i) QSPI_STA_nxt = 2'b01;
     end
 
 
@@ -123,47 +129,74 @@ module QSPI_master(
 
 */
 
-    reg cs_nq, cs_nd;
-    reg io0_q, io0_d;
-    reg io1_q, io1_d;
-    reg io2_q, io2_d;
-    reg io3_q, io3_d;
-    
-
-    
-    /////////////////////
-	// clock generator //
-    /////////////////////
-	
-    reg sclk_q, sclk_d;
-    reg[5:0] cntr_d, cntr_q;
-
-    always @(posedge clk_i or negedge clk_i) begin
-        sclk_q <= sclk_d;
-        cntr_q <= cntr_d;
-    end
-
-    always @* begin
-        cntr_d = cntr_d + 1;
-
-        if(cntr_d == QSPI_CCR[30:25]) begin
-            sclk_d = ~sclk_q;
-            cntr_d = 6'h00;
-        end
-
-        if(cs_n) begin
-            sclk_d = 1'h0;
-            cntr_d = 6'h00;
-        end
-    end
-
     /////////////////////////
     // Client Select Conf. //
     /////////////////////////
 
+    reg cs_nd, cs_no;
+    
+    always @(posedge clk_i) begin
+        cs_no <= cs_nd;
+    end
 
+    always @* begin
+        cs_nd = QSPI_CCR[31];
+    end
+    
+    /////////////////////
+	// Clock Generator //
+    /////////////////////
+	
+    reg sclk_d, sclk_o;
+    reg[5:0] cntr_sclk_d, cntr_sclk_q;
 
+    always @(posedge clk_i or negedge clk_i) begin
+        sclk_o <= sclk_d;
+        cntr_sclk_q <= cntr_sclk_d;
+    end
 
+    always @* begin
+        cntr_sclk_d = cntr_sclk_d + 1;
+
+        if(cntr_sclk_d == QSPI_CCR[30:25]) begin
+            sclk_d = ~sclk_o;
+            cntr_sclk_d = 6'h00;
+        end
+
+        if(cs_no) begin
+            sclk_d = 1'h0;
+            cntr_sclk_d = 6'h00;
+        end
+    end
+
+    /////////
+    // FSM //
+    /////////
+
+    reg[3:0] state_q, state_d;
+    reg[3:0] cntr_state_q, cntr_state_d;
+    reg[3:0] io_q, io_d;
+    reg[3:0] io_en_q, io_en_d;
+    
+    always @(posedge sclk_o or rst_i) begin
+        io_q <= io_d;
+        io_en_q <= rst_i ? 0 : io_en_d;
+        state_q <= rst_i ? 0 : state_d;
+        cntr_state_q <= rst_i ? 0 : cntr_state_d;
+    end
+
+	assign (pull1, pull0) io = 4'hf;
+    assign io = io_en_q ? io_q : 4'bzzzz;
+
+    always @* begin
+        state_d = state_q + 1;
+        case(state_q)
+            'd0: begin
+                
+            end
+
+        endcase
+    end
 
 
 endmodule
