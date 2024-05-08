@@ -51,7 +51,7 @@ module QSPI_master(
         QSPI_CCR_nxt = QSPI_CCR;
         QSPI_ADR_nxt = QSPI_ADR;
         for(i=0;i<8;i+=1) QSPI_DR_nxt[i] = QSPI_DR[i];
-        QSPI_STA_nxt = QSPI_STA;
+        QSPI_STA_nxt[0] = QSPI_STA[0];
 
         rdata_o = 8'h00;
         for(i=0;i<4;i=i+1) begin
@@ -64,7 +64,7 @@ module QSPI_master(
                         6'h03: begin
                             QSPI_CCR_nxt[30:24] = wdata_i[(8*i)+:7];
                             if(wdata_i[8*i+7]) begin
-                                QSPI_STA[1] = 1'h0;
+                                QSPI_STA_nxt[0] = 1'h1;
                             end
                         end
 
@@ -118,7 +118,7 @@ module QSPI_master(
             end
         end
 
-        if(rst_i) QSPI_STA_nxt = 2'b01;
+        if(rst_i) QSPI_STA_nxt[0] = 1'h1;
     end
 
 
@@ -140,7 +140,7 @@ module QSPI_master(
     end
 
     always @* begin
-        cs_nd = QSPI_CCR[31];
+        cs_nd = QSPI_STA_nxt[0];
     end
     
     /////////////////////
@@ -163,7 +163,7 @@ module QSPI_master(
             cntr_sclk_d = 6'h00;
         end
 
-        if(cs_no) begin
+        if(rst_i | cs_no) begin
             sclk_d = 1'h0;
             cntr_sclk_d = 6'h00;
         end
@@ -178,7 +178,7 @@ module QSPI_master(
     reg[3:0] io_q, io_d;
     reg[3:0] io_en_q, io_en_d;
     
-    always @(posedge sclk_o or rst_i) begin
+    always @(negedge (sclk_o | cs_no) or rst_i) begin
         io_q <= io_d;
         io_en_q <= rst_i ? 0 : io_en_d;
         state_q <= rst_i ? 0 : state_d;
@@ -188,12 +188,22 @@ module QSPI_master(
 	assign (pull1, pull0) io = 4'hf;
     assign io = io_en_q ? io_q : 4'bzzzz;
 
+    localparam STATE_IDLE = 0;
+    localparam STATE_
+
     always @* begin
+        QSPI_STA_nxt[1] = QSPI_STA[1];
         state_d = state_q + 1;
         case(state_q)
-            'd0: begin
-                
+            STATE_IDLE: begin
+                QSPI_STA_nxt[1] = 1'h0;
+                if(QSPI_STA[0]==0) begin
+                    QSPI_STA_nxt[1] = 1'h1;
+                    state_d = QSPI_CCR[7:0];
+                end
             end
+
+
 
         endcase
     end
