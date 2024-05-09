@@ -173,8 +173,8 @@ module QSPI_master(
     // FSM //
     /////////
 
-    reg[3:0] state_q, state_d;
-    reg[3:0] cntr_state_q, cntr_state_d;
+    reg[4:0] state_q, state_d;
+    reg[4:0] cntr_state_q, cntr_state_d;
     reg[3:0] io_q, io_d;
     reg[3:0] io_en_q, io_en_d;
     
@@ -188,18 +188,80 @@ module QSPI_master(
 	assign (pull1, pull0) io = 4'hf;
     assign io = io_en_q ? io_q : 4'bzzzz;
 
-    localparam STATE_IDLE = 0;
-    localparam STATE_
+    localparam STATE_IDLE    = 0;
+    localparam STATE_READ    = ;
+    localparam STATE_DOR     = ;
+    localparam STATE_QOR     = ;
+    localparam STATE_PP      = ;
+    localparam STATE_QPP     = ;
+    localparam STATE_SE      = ;
+    localparam STATE_READ_ID = ; // 2
+    localparam STATE_RDID    = ;
+    localparam STATE_RES     = ;
+    localparam STATE_RDSR1   = ;
+    localparam STATE_RDSR2   = ;
+    localparam STATE_RDCR    = ;
+    localparam STATE_WRR     = ;
+    localparam STATE_WRDI    = ;
+    localparam STATE_WREN    = ;
+    localparam STATE_CLSR    = ;
+    localparam STATE_RESET   = ;
 
     always @* begin
-        QSPI_STA_nxt[1] = QSPI_STA[1];
-        state_d = state_q + 1;
+        QSPI_STA_nxt = QSPI_STA;
+        state_d = state_q;
+        cntr_state_d = cntr_state_q - 1;
+        io_en_d = io_en_q;
+        io_d = io_q;
+
         case(state_q)
             STATE_IDLE: begin
-                QSPI_STA_nxt[1] = 1'h0;
-                if(QSPI_STA[0]==0) begin
+                if(QSPI_STA[0]) begin
+                    io_en_d = 4'b0000;
+                    QSPI_STA_nxt[1] = 1'h0;
+                    cntr_state_d = -1;
+                end else begin
                     QSPI_STA_nxt[1] = 1'h1;
-                    state_d = QSPI_CCR[7:0];
+                    case(QSPI_CCR[7:0])
+                        8'h03: state_d = STATE_READ;
+                        8'h3B: state_d = STATE_DOR;
+                        8'h6B: state_d = STATE_QOR;
+                        8'h02: state_d = STATE_PP;
+                        8'h32: state_d = STATE_QPP;
+                        8'hD8: state_d = STATE_SE;
+                        8'h90: state_d = STATE_READ_ID;
+                        8'h9F: state_d = STATE_RDID;
+                        8'hAB: state_d = STATE_RES;
+                        8'h05: state_d = STATE_RDSR1;
+                        8'h07: state_d = STATE_RDSR2;
+                        8'h35: state_d = STATE_RDCR;
+                        8'h01: state_d = STATE_WRR;
+                        8'h04: state_d = STATE_WRDI;
+                        8'h06: state_d = STATE_WREN;
+                        8'h30: state_d = STATE_CLSR;
+                        8'hF0: state_d = STATE_RESET;
+                    endcase
+                    io_en_d = 4'b0001;
+                    io_d[0] = QSPI_CCR[cntr_state_q[2:0]];
+                    if(cntr_state_q[2:0]) begin
+                        state_d = STATE_IDLE;
+                    end
+                end
+            end
+
+            STATE_READ_ID: begin
+                io_d[0] = QSPI_ADDR[cntr_state_q[3:0]];
+                if(cntr_state_q[3:0]) begin
+                    state_d = STATE_IDLE;
+                    QSPI_STA_nxt[0]
+                end
+            end
+            
+            (STATE_READ_ID + 1): begin
+                QSPI_DR_nxt[cntr_state_q[3:0]] = io[1];
+                if(cntr_state_q[3:0]) begin
+                    state_d = STATE_IDLE;
+                    QSPI_STA_nxt[0] = 1'h1;
                 end
             end
 
