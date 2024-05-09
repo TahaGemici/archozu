@@ -43,7 +43,7 @@ module timer(
 	assign all_regs[13] = 0;
 	assign all_regs[14] = 0;
 	assign all_regs[15] = 0;
-	assign all_regs[16] = {7'b0, TIM_MOD};0;
+	assign all_regs[16] = {7'b0, TIM_MOD};
 	assign all_regs[17] = 0;
 	assign all_regs[18] = 0;
 	assign all_regs[19] = 0;
@@ -142,7 +142,7 @@ module timer(
             TIM_CNT_nxt = 0;
             TIM_EVN_nxt = 0;
             TIM_EVC_nxt = 0;
-            irq_7_0_nxt = 0;
+            irq_7_o_nxt = 0;
             counter_nxt = 0;
         end
     end

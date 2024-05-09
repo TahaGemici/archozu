@@ -32,9 +32,9 @@ module QSPI_master(
     assign all_regs[1] = QSPI_CCR[8+:8];
     assign all_regs[2] = QSPI_CCR[16+:8];
     assign all_regs[3] = {1'h0, QSPI_CCR[24+:7]};
-    for(i=0;i<4;i+=1) begin
+    for(i=0;i<4;i=i+1) begin
         assign all_regs[i+4] = QSPI_ADR[i*8+:8];
-        for(j=0;j<8;j+=1) begin
+        for(j=0;j<8;j=j+1) begin
             assign all_regs[i+8+j*4] = QSPI_DR[j][i*8+:8];
         end
     end
@@ -43,14 +43,14 @@ module QSPI_master(
     always @(posedge clk_i) begin
         QSPI_CCR <= QSPI_CCR_nxt;
         QSPI_ADR <= QSPI_ADR_nxt;
-        for(i=0;i<8;i+=1) QSPI_DR[i] <= QSPI_DR_nxt[i];
+        for(i=0;i<8;i=i+1) QSPI_DR[i] <= QSPI_DR_nxt[i];
         QSPI_STA <= QSPI_STA_nxt;
     end
 
     always @* begin
         QSPI_CCR_nxt = QSPI_CCR;
         QSPI_ADR_nxt = QSPI_ADR;
-        for(i=0;i<8;i+=1) QSPI_DR_nxt[i] = QSPI_DR[i];
+        for(i=0;i<8;i=i+1) QSPI_DR_nxt[i] = QSPI_DR[i];
         QSPI_STA_nxt[0] = QSPI_STA[0];
 
         rdata_o = 8'h00;
@@ -173,12 +173,12 @@ module QSPI_master(
     // FSM //
     /////////
 
-    reg[4:0] state_q, state_d;
+    reg[4:0] state_q=0, state_d;
     reg[4:0] cntr_state_q, cntr_state_d;
     reg[3:0] io_q, io_d;
-    reg[3:0] io_en_q, io_en_d;
+    reg[3:0] io_en_q=0, io_en_d;
     
-    always @(negedge (sclk_o | cs_no) or rst_i) begin
+    always @(negedge (sclk_o | cs_no)) begin
         io_q <= io_d;
         io_en_q <= rst_i ? 0 : io_en_d;
         state_q <= rst_i ? 0 : state_d;
@@ -189,23 +189,23 @@ module QSPI_master(
     assign io = io_en_q ? io_q : 4'bzzzz;
 
     localparam STATE_IDLE    = 0;
-    localparam STATE_READ    = ;
-    localparam STATE_DOR     = ;
-    localparam STATE_QOR     = ;
-    localparam STATE_PP      = ;
-    localparam STATE_QPP     = ;
-    localparam STATE_SE      = ;
-    localparam STATE_READ_ID = ; // 2
-    localparam STATE_RDID    = ;
-    localparam STATE_RES     = ;
-    localparam STATE_RDSR1   = ;
-    localparam STATE_RDSR2   = ;
-    localparam STATE_RDCR    = ;
-    localparam STATE_WRR     = ;
-    localparam STATE_WRDI    = ;
-    localparam STATE_WREN    = ;
-    localparam STATE_CLSR    = ;
-    localparam STATE_RESET   = ;
+    localparam STATE_READ_ID = 1;
+    localparam STATE_READ    = 3;
+    localparam STATE_DOR     = 0;
+    localparam STATE_QOR     = 0;
+    localparam STATE_PP      = 0;
+    localparam STATE_QPP     = 0;
+    localparam STATE_SE      = 0;
+    localparam STATE_RDID    = 0;
+    localparam STATE_RES     = 0;
+    localparam STATE_RDSR1   = 0;
+    localparam STATE_RDSR2   = 0;
+    localparam STATE_RDCR    = 0;
+    localparam STATE_WRR     = 0;
+    localparam STATE_WRDI    = 0;
+    localparam STATE_WREN    = 0;
+    localparam STATE_CLSR    = 0;
+    localparam STATE_RESET   = 0;
 
     always @* begin
         QSPI_STA_nxt = QSPI_STA;
@@ -251,15 +251,14 @@ module QSPI_master(
 
             STATE_READ_ID: begin
                 io_d[0] = QSPI_ADDR[cntr_state_q[3:0]];
-                if(cntr_state_q[3:0]) begin
-                    state_d = STATE_IDLE;
-                    QSPI_STA_nxt[0]
+                if(cntr_state_q[3:0]==0) begin
+                    state_d = state_q + 1;
                 end
             end
             
             (STATE_READ_ID + 1): begin
                 QSPI_DR_nxt[cntr_state_q[3:0]] = io[1];
-                if(cntr_state_q[3:0]) begin
+                if(cntr_state_q[3:0]==0) begin
                     state_d = STATE_IDLE;
                     QSPI_STA_nxt[0] = 1'h1;
                 end
