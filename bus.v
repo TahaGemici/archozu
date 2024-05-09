@@ -1,6 +1,7 @@
 module bus(
     input clk_i,
     input rst_i,
+    
     input data_req_i,
     input data_we_i,
     input[3:0] data_be_i,
@@ -8,7 +9,13 @@ module bus(
     input[31:0] data_wdata_i,
     output data_gnt_o,
     output reg data_rvalid_o,
-    output reg[31:0] data_rdata_o
+    output reg[31:0] data_rdata_o,
+
+        instr_req,
+        instr_gnt,
+        instr_rvalid,
+        instr_addr,
+        instr_rdata
 );
     assign data_gnt_o = 1;
     always @(posedge clk_i) data_rvalid_o <= data_req_i;
@@ -32,6 +39,33 @@ module bus(
 	    sda_io,
 	    scl_io
     );
+
+
+    wire sclk, cs;
+    wire[3:0] io;
+    wire[31:0] qspi_out;
+    QSPI_master QSPI_master(
+        clk_i,
+        rst_i,
+        qspi_en & we,
+        data_be_i,
+        addr,
+        data_wdata_i,
+        qspi_out,
+	    sclk,
+        cs,
+	    io
+    );
+    s25fl128s flash_mem(
+        io[0],
+        io[1],
+        sclk,
+        cs,
+        rst_i,
+        io[2],
+        io[3]
+    );
+
 
 
     wire[31:0] timer_out;
@@ -95,13 +129,10 @@ module bus(
             endcase
         end
         /*data_rdata_o_nxt = ({32{uart_en}} & uart_out)
-                         | ({32{i2c_en}} & i2c_out)
-                         | ({32{qspi_en}} & qspi_out)
-                         | ({32{timer_en}} & timer_out)
                          | ({32{usb_en}} & usb_out)
-                         | ({32{gpio_en}} & gpio_out)
-                         | ({32{data_mem_en}} & data_mem_out);*/
+        */
         data_rdata_o_nxt = ({32{i2c_en}} & i2c_out)
+                         | ({32{qspi_en}} & qspi_out)
                          | ({32{timer_en}} & timer_out)
                          | ({32{gpio_en}} & gpio_out)
                          | ({32{data_mem_en}} & data_mem_out);

@@ -45,7 +45,7 @@ module top();
         .instr_req_o(instr_req),
         .instr_gnt_i(instr_gnt),
         .instr_rvalid_i(instr_rvalid),
-        .instr_addr_o(instr_adddr),
+        .instr_addr_o(instr_addr),
         .instr_rdata_i(instr_rdata),
 
         // Data memory interface
@@ -76,6 +76,7 @@ module top();
     bus bus(
         clk,
         rst,
+
         data_req,
         data_we,
         data_be,
@@ -83,6 +84,12 @@ module top();
         data_wdata,
         data_gnt,
         data_rvalid,
-        data_rdata
+        data_rdata,
+
+        instr_req,
+        instr_gnt,
+        instr_rvalid,
+        instr_addr,
+        instr_rdata
     );
 endmodule

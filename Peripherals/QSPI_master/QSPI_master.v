@@ -7,8 +7,8 @@ module QSPI_master(
     input [31:0] wdata_i,
     output reg [31:0] rdata_o,
 
-	output sclk_o,
-    output cs_no,
+	output reg sclk_o,
+    output reg cs_no,
     inout[3:0] io
 );
 
@@ -26,35 +26,56 @@ module QSPI_master(
     reg[31:0] QSPI_DR[0:7], QSPI_DR_nxt[0:7];
     reg[1:0] QSPI_STA, QSPI_STA_nxt;
 
-    integer i, j;
+    genvar i, j;
     wire[7:0] all_regs[0:40];
     assign all_regs[0] = QSPI_CCR[0+:8];
     assign all_regs[1] = QSPI_CCR[8+:8];
     assign all_regs[2] = QSPI_CCR[16+:8];
     assign all_regs[3] = {1'h0, QSPI_CCR[24+:7]};
-    for(i=0;i<4;i=i+1) begin
-        assign all_regs[i+4] = QSPI_ADR[i*8+:8];
-        for(j=0;j<8;j=j+1) begin
-            assign all_regs[i+8+j*4] = QSPI_DR[j][i*8+:8];
+    generate
+        for(i=0;i<4;i=i+1) begin
+            assign all_regs[i+4] = QSPI_ADR[i*8+:8];
+            for(j=0;j<8;j=j+1) begin
+                assign all_regs[i+8+j*4] = QSPI_DR[j][i*8+:8];
+            end
         end
-    end
+    endgenerate
     assign all_regs[40] = {6'h00, QSPI_STA};
 
     always @(posedge clk_i) begin
         QSPI_CCR <= QSPI_CCR_nxt;
         QSPI_ADR <= QSPI_ADR_nxt;
-        for(i=0;i<8;i=i+1) QSPI_DR[i] <= QSPI_DR_nxt[i];
         QSPI_STA <= QSPI_STA_nxt;
+        QSPI_DR[0] <= QSPI_DR_nxt[0];
+        QSPI_DR[1] <= QSPI_DR_nxt[1];
+        QSPI_DR[2] <= QSPI_DR_nxt[2];
+        QSPI_DR[3] <= QSPI_DR_nxt[3];
+        QSPI_DR[4] <= QSPI_DR_nxt[4];
+        QSPI_DR[5] <= QSPI_DR_nxt[5];
+        QSPI_DR[6] <= QSPI_DR_nxt[6];
+        QSPI_DR[7] <= QSPI_DR_nxt[7];
     end
 
     always @* begin
         QSPI_CCR_nxt = QSPI_CCR;
         QSPI_ADR_nxt = QSPI_ADR;
-        for(i=0;i<8;i=i+1) QSPI_DR_nxt[i] = QSPI_DR[i];
+        QSPI_DR_nxt[0] = QSPI_DR[0];
+        QSPI_DR_nxt[1] = QSPI_DR[1];
+        QSPI_DR_nxt[2] = QSPI_DR[2];
+        QSPI_DR_nxt[3] = QSPI_DR[3];
+        QSPI_DR_nxt[4] = QSPI_DR[4];
+        QSPI_DR_nxt[5] = QSPI_DR[5];
+        QSPI_DR_nxt[6] = QSPI_DR[6];
+        QSPI_DR_nxt[7] = QSPI_DR[7];
         QSPI_STA_nxt[0] = QSPI_STA[0];
 
-        rdata_o = 8'h00;
+        if(rst_i) QSPI_STA_nxt[0] = 1'h1;
+    end
+
+    generate
         for(i=0;i<4;i=i+1) begin
+            always @* begin
+            rdata_o = 8'h00;
             if(addr_i <= (40-i)) begin
                 if(write_i) begin
                     case(addr_i+i)
@@ -116,12 +137,9 @@ module QSPI_master(
                 end
                 if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
             end
+            end
         end
-
-        if(rst_i) QSPI_STA_nxt[0] = 1'h1;
-    end
-
-
+    endgenerate
 
 /*
 
@@ -133,7 +151,7 @@ module QSPI_master(
     // Client Select Conf. //
     /////////////////////////
 
-    reg cs_nd, cs_no;
+    reg cs_nd;
     
     always @(posedge clk_i) begin
         cs_no <= cs_nd;
@@ -147,7 +165,7 @@ module QSPI_master(
 	// Clock Generator //
     /////////////////////
 	
-    reg sclk_d, sclk_o;
+    reg sclk_d;
     reg[5:0] cntr_sclk_d, cntr_sclk_q;
 
     always @(posedge clk_i or negedge clk_i) begin
@@ -250,7 +268,7 @@ module QSPI_master(
             end
 
             STATE_READ_ID: begin
-                io_d[0] = QSPI_ADDR[cntr_state_q[3:0]];
+                io_d[0] = QSPI_ADR[cntr_state_q[3:0]];
                 if(cntr_state_q[3:0]==0) begin
                     state_d = state_q + 1;
                 end
@@ -263,8 +281,6 @@ module QSPI_master(
                     QSPI_STA_nxt[0] = 1'h1;
                 end
             end
-
-
 
         endcase
     end
