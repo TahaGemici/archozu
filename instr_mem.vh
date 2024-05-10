@@ -1,5 +1,3 @@
-// Bootloader code
-
 initial begin
     mem[  0] = 32'h00_00_00_33; // ADD x0, x0, x0
     mem[  1] = 32'h00_00_00_33; // ADD x0, x0, x0
@@ -128,5 +126,5 @@ initial begin
     mem[124] = 32'h00_00_00_33; // ADD x0, x0, x0
     mem[125] = 32'h00_00_00_33; // ADD x0, x0, x0
     mem[126] = 32'h00_00_00_33; // ADD x0, x0, x0
-    mem[127] = 32'h00_00_00_67; // JALR x0, x0, 0
+    mem[127] = 32'h00_00_00_33; // ADD x0, x0, x0
 end

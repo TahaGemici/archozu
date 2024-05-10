@@ -13,9 +13,12 @@ module instr_mem(
 );
     reg[31:0] mem[0:(2*1024-1)];
 
+    // B E N İ   S İ L
+    `include "instr_mem.vh"
+
     wire[31:0] rom_out;
     rom rom(
-        addr_i[10:0],
+        addr_i[6:0],
         rom_out
     );
 

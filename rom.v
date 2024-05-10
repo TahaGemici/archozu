@@ -1,5 +1,5 @@
 module rom(
-    input[10:0] addr_i,
+    input[6:0] addr_i,
     output[31:0] mem_out
 );
     reg[31:0] mem[0:127];

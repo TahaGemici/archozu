@@ -22,7 +22,7 @@ module top();
         rst = 1;
         #1000;
         rst = 0;
-        #1000;
+        #10000;
         $finish;
     end
 
@@ -35,7 +35,7 @@ module top();
         .scan_cg_en_i(0),  // Enable all clock gates for testing
 
         // Core ID, Cluster ID, debug mode halt address and boot address are considered more or less static
-        .boot_addr_i(2048),
+        .boot_addr_i(8192),
         .mtvec_addr_i(0),
         .dm_halt_addr_i(0),
         .hart_id_i(0),

@@ -96,7 +96,7 @@ module bus(
     );
 
 
-    wire data_mem_en = ~data_addr_i[14];
+    wire data_mem_en = ~data_addr_i[16];
     wire[31:0] data_mem_out;
     data_mem data_mem(
         clk_i,
@@ -110,14 +110,14 @@ module bus(
     instr_mem instr_mem(
         clk_i,
 
-        instr_addr,
+        instr_addr[31:2],
         instr_req,
         instr_gnt,
         instr_rvalid,
         instr_rdata,
 
         instr_mem_en & we,
-        data_addr_i,
+        data_addr_i[31:2],
         data_wdata_i
     );
 
@@ -134,8 +134,8 @@ module bus(
         usb_en = 0;
         gpio_en = 0;
         instr_mem_en = 0;
-        if(data_addr_i[14]) begin
-            case(data_addr_i[13:11]) // 3b: select, 11b: registers
+        if(data_addr_i[16]) begin
+            case(data_addr_i[15:13]) // 3b: select, 13b: registers
                 3'b000: uart_en = 1;
                 3'b001: i2c_en = 1;
                 3'b010: qspi_en = 1;
@@ -143,6 +143,7 @@ module bus(
                 3'b100: usb_en = 1;
                 3'b101: gpio_en = 1;
                 3'b110: instr_mem_en = 1;
+                3'b111: instr_mem_en = 1;
             endcase
         end
         data_rdata_o_nxt = ({32{i2c_en}} & i2c_out)
