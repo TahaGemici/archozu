@@ -7,9 +7,6 @@ module data_mem(
     output reg[31:0] data_o
 );
     reg[7:0] mem[0:(8*1024-1)];
-
-    `include "data_mem.vh"
-
     wire[3:0] write = b_sel_i & {4{write_i}};
 
     always @(posedge clk_i) begin
