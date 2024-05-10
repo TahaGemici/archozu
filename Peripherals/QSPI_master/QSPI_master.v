@@ -207,23 +207,28 @@ module QSPI_master(
     assign io = io_en_q ? io_q : 4'bzzzz;
 
     localparam STATE_IDLE    = 0;
-    localparam STATE_READ_ID = 1;
-    localparam STATE_READ    = 3;
-    localparam STATE_DOR     = 0;
-    localparam STATE_QOR     = 0;
-    localparam STATE_PP      = 0;
-    localparam STATE_QPP     = 0;
-    localparam STATE_SE      = 0;
-    localparam STATE_RDID    = 0;
-    localparam STATE_RES     = 0;
-    localparam STATE_RDSR1   = 0;
-    localparam STATE_RDSR2   = 0;
-    localparam STATE_RDCR    = 0;
-    localparam STATE_WRR     = 0;
-    localparam STATE_WRDI    = 0;
-    localparam STATE_WREN    = 0;
-    localparam STATE_CLSR    = 0;
-    localparam STATE_RESET   = 0;
+
+
+
+//  command     code     veri_modu    dummy   count   freq   clear_status_reg
+
+//  READ       8'h03                                                           
+//  DOR        8'h3B                                                           
+//  QOR        8'h6B                                                           
+//  PP         8'h02                                                           
+//  QPP        8'h32                                                           
+//  SE         8'hD8                                                           
+//  READ_ID    8'h90        1x            0     24     133              1     
+//  RDID       8'h9F                                                           
+//  RES        8'hAB                                                           
+//  RDSR       8'h05                                                           
+//  RDSR       8'h07                                                           
+//  RDCR       8'h35                                                           
+//  WRR        8'h01                                                           
+//  WRDI       8'h04                                                           
+//  WREN       8'h06                                                           
+//  CLSR       8'h30                                                           
+//  RESET      8'hF0                                                           
 
     always @* begin
         QSPI_STA_nxt = QSPI_STA;
@@ -240,7 +245,7 @@ module QSPI_master(
                     cntr_state_d = -1;
                 end else begin
                     QSPI_STA_nxt[1] = 1'h1;
-                    case(QSPI_CCR[7:0])
+                    /*case(QSPI_CCR[7:0])
                         8'h03: state_d = STATE_READ;
                         8'h3B: state_d = STATE_DOR;
                         8'h6B: state_d = STATE_QOR;
@@ -250,35 +255,20 @@ module QSPI_master(
                         8'h90: state_d = STATE_READ_ID;
                         8'h9F: state_d = STATE_RDID;
                         8'hAB: state_d = STATE_RES;
-                        8'h05: state_d = STATE_RDSR1;
-                        8'h07: state_d = STATE_RDSR2;
+                        8'h05: state_d = STATE_RDSR;
+                        8'h07: state_d = STATE_RDSR;
                         8'h35: state_d = STATE_RDCR;
                         8'h01: state_d = STATE_WRR;
                         8'h04: state_d = STATE_WRDI;
                         8'h06: state_d = STATE_WREN;
                         8'h30: state_d = STATE_CLSR;
                         8'hF0: state_d = STATE_RESET;
-                    endcase
+                    endcase*/
                     io_en_d = 4'b0001;
                     io_d[0] = QSPI_CCR[cntr_state_q[2:0]];
                     if(cntr_state_q[2:0]) begin
                         state_d = STATE_IDLE;
                     end
-                end
-            end
-
-            STATE_READ_ID: begin
-                io_d[0] = QSPI_ADR[cntr_state_q[3:0]];
-                if(cntr_state_q[3:0]==0) begin
-                    state_d = state_q + 1;
-                end
-            end
-            
-            (STATE_READ_ID + 1): begin
-                QSPI_DR_nxt[cntr_state_q[3:0]] = io[1];
-                if(cntr_state_q[3:0]==0) begin
-                    state_d = STATE_IDLE;
-                    QSPI_STA_nxt[0] = 1'h1;
                 end
             end
 
