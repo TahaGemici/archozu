@@ -31,15 +31,15 @@ module top();
         .clk_i(clk),
         .rst_ni(~rst),
 
-        .pulp_clock_en_i(),  // PULP clock enable (only used if COREV_CLUSTER = 1)
-        .scan_cg_en_i(),  // Enable all clock gates for testing
+        .pulp_clock_en_i(0),  // PULP clock enable (only used if COREV_CLUSTER = 1)
+        .scan_cg_en_i(0),  // Enable all clock gates for testing
 
         // Core ID, Cluster ID, debug mode halt address and boot address are considered more or less static
-        .boot_addr_i(),
-        .mtvec_addr_i(),
-        .dm_halt_addr_i(),
-        .hart_id_i(),
-        .dm_exception_addr_i(),
+        .boot_addr_i(0),
+        .mtvec_addr_i(0),
+        .dm_halt_addr_i(0),
+        .hart_id_i(0),
+        .dm_exception_addr_i(0),
 
         // Instruction memory interface
         .instr_req_o(instr_req),
@@ -70,7 +70,7 @@ module top();
         .debug_halted_o(debug_halted),
 
         // CPU Control Signals
-        .fetch_enable_i(),
+        .fetch_enable_i(1),
         .core_sleep_o()
     );
     bus bus(

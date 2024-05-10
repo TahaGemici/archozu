@@ -11,11 +11,11 @@ module bus(
     output reg data_rvalid_o,
     output reg[31:0] data_rdata_o,
 
-        instr_req,
-        instr_gnt,
-        instr_rvalid,
-        instr_addr,
-        instr_rdata
+    input instr_req,
+    output instr_gnt,
+    output instr_rvalid,
+    input[31:0] instr_addr,
+    output[31:0] instr_rdata
 );
     assign data_gnt_o = 1;
     always @(posedge clk_i) data_rvalid_o <= data_req_i;
@@ -108,6 +108,14 @@ module bus(
         data_mem_out
     );
 
+    inst_mem inst_mem(
+        clk_i,
+        instr_addr,
+        instr_req,
+        instr_gnt,
+        instr_rvalid,
+        instr_rdata
+    );
 
     always @(posedge clk_i) data_rdata_o <= data_rdata_o_nxt;
 

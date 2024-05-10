@@ -349,7 +349,7 @@ module cv32e40p_prefetch_controller #(
       state_q      <= IDLE;
       cnt_q        <= '0;
       flush_cnt_q  <= '0;
-      trans_addr_q <= '0;
+      trans_addr_q <= -4;//'0;
     end else begin
       state_q     <= next_state;
       cnt_q       <= next_cnt;

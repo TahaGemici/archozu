@@ -6,7 +6,7 @@ module data_mem(
     input[31:0] data_i,
     output reg[31:0] data_o
 );
-    reg[7:0] mem[0:8191];
+    reg[7:0] mem[0:(8*1024-1)];
 
     `include "data_mem.vh"
 
