@@ -5,7 +5,7 @@ module bus(
     input data_req_i,
     input data_we_i,
     input[3:0] data_be_i,
-    input[13:0] data_addr_i,
+    input[14:0] data_addr_i,
     input[31:0] data_wdata_i,
     output data_gnt_o,
     output reg data_rvalid_o,
