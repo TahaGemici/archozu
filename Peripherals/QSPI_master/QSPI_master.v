@@ -22,7 +22,7 @@ module QSPI_master(
     reg[2:0] state, state_nxt;
 
     reg[30:0] QSPI_CCR, QSPI_CCR_nxt;
-    reg[31:0] QSPI_ADR, QSPI_ADR_nxt;
+    reg[23:0] QSPI_ADR, QSPI_ADR_nxt;
     reg[31:0] QSPI_DR[0:7], QSPI_DR_nxt[0:7];
     reg[1:0] QSPI_STA, QSPI_STA_nxt;
 
@@ -32,9 +32,12 @@ module QSPI_master(
     assign all_regs[1] = QSPI_CCR[8+:8];
     assign all_regs[2] = QSPI_CCR[16+:8];
     assign all_regs[3] = {1'h0, QSPI_CCR[24+:7]};
+    assign all_regs[4] = QSPI_ADR[0+:8];
+    assign all_regs[5] = QSPI_ADR[8+:8];
+    assign all_regs[6] = QSPI_ADR[16+:8];
+    assign all_regs[7] = 8'h00;
     generate
         for(i=0;i<4;i=i+1) begin
-            assign all_regs[i+4] = QSPI_ADR[i*8+:8];
             for(j=0;j<8;j=j+1) begin
                 assign all_regs[i+8+j*4] = QSPI_DR[j][i*8+:8];
             end
@@ -92,7 +95,6 @@ module QSPI_master(
                         6'h04: QSPI_ADR_nxt[7:0] = wdata_i[(8*i)+:8];
                         6'h05: QSPI_ADR_nxt[15:8] = wdata_i[(8*i)+:8];
                         6'h06: QSPI_ADR_nxt[23:16] = wdata_i[(8*i)+:8];
-                        6'h07: QSPI_ADR_nxt[31:24] = wdata_i[(8*i)+:8];
 
                         6'h08: QSPI_DR_nxt[0][7:0] = wdata_i[(8*i)+:8];
                         6'h09: QSPI_DR_nxt[0][15:8] = wdata_i[(8*i)+:8];
@@ -191,44 +193,57 @@ module QSPI_master(
     // FSM //
     /////////
 
-    reg[4:0] state_q=0, state_d;
-    reg[4:0] cntr_state_q, cntr_state_d;
+    reg[1:0] state_q=0, state_d;
+    reg[7:0] cntr_state_q, cntr_state_d;
     reg[3:0] io_q, io_d;
-    reg[3:0] io_en_q=0, io_en_d;
+    reg[3:0] io_en_q, io_en_d;
     
     always @(negedge (sclk_o | cs_no)) begin
         io_q <= io_d;
-        io_en_q <= rst_i ? 0 : io_en_d;
-        state_q <= rst_i ? 0 : state_d;
-        cntr_state_q <= rst_i ? 0 : cntr_state_d;
+        io_en_q <= io_en_d;
+        state_q <= state_d;
+        cntr_state_q <= cntr_state_d;
     end
 
 	assign (pull1, pull0) io = 4'hf;
     assign io = io_en_q ? io_q : 4'bzzzz;
 
-    localparam STATE_IDLE    = 0;
 
 
+//  WREN       8'h06 + 8b cmd                         133Mhz x0 xxxx xxxx xxxx
+//  WRDI       8'h04 + 8b cmd                         133Mhz x0 xxxx xxxx xxxx
+//  CLSR       8'h30 + 8b cmd                         133Mhz x0 xxxx xxxx xxxx
+//  RESET      8'hF0 + 8b cmd                         133Mhz x0 xxxx xxxx xxxx
 
-//  command     code     veri_modu    dummy   count   freq   clear_status_reg
+//  RDID       8'h9F + 8b cmd             - 648b data 133Mhz x1  read  0dummy 0-31
+//  RDSR1      8'h05 + 8b cmd             - 8b data   133Mhz x1  read  0dummy 0
+//  RDSR2      8'h07 + 8b cmd             - 8b data   133Mhz x1  read  0dummy 0
+//  RDCR       8'h35 + 8b cmd             - 8b data   133Mhz x1  read  0dummy 0
+//  READ_ID    8'h90 + 8b cmd + 24b addr  - 16b data  133Mhz x1  read  3dummy 1
+//  RES        8'hAB + 8b cmd + 24b dummy - 8b data    50Mhz x1  read  3dummy 0
+//  WRR        8'h01 + 8b cmd             + 16b data  133Mhz x1 write  0dummy 1
+//  READ       8'h03 + 8b cmd + 24b addr  - inf        50Mhz x1  read  3dummy 0-31
+//  PP         8'h02 + 8b cmd + 24b addr + 256B data  133Mhz x1 write  3dummy 0-31
+//  SE         8'hD8 + 8b cmd            + 24b data   133Mhz x1 write  0dummy 2
 
-//  READ       8'h03                                                           
-//  DOR        8'h3B                                                           
-//  QOR        8'h6B                                                           
-//  PP         8'h02                                                           
-//  QPP        8'h32                                                           
-//  SE         8'hD8                                                           
-//  READ_ID    8'h90        1x            0     24     133              1     
-//  RDID       8'h9F                                                           
-//  RES        8'hAB                                                           
-//  RDSR       8'h05                                                           
-//  RDSR       8'h07                                                           
-//  RDCR       8'h35                                                           
-//  WRR        8'h01                                                           
-//  WRDI       8'h04                                                           
-//  WREN       8'h06                                                           
-//  CLSR       8'h30                                                           
-//  RESET      8'hF0                                                           
+//  DOR        8'h3B + 8b cmd + 24b addr + 8b dummy -inf 104Mhz x2 read 4dummy 0-31
+//                                                  -inf
+
+//  QOR        8'h6B + 8b cmd + 24b addr + 8b dummy -inf 104Mhz x4 read  4dummy 0-31
+//                                                  -inf
+//                                                  -inf
+//                                                  -inf
+//  QPP        8'h32 + 8b cmd + 24b addr + 64B data       80Mhz x4 write 3dummy 0-31
+//                                       + 64B data
+//                                       + 64B data
+//                                       + 64B data
+    
+    localparam STATE_IDLE    = 2'b00;
+    localparam STATE_CMD     = 2'b01;
+    localparam STATE_DUMMY   = 2'b10;
+    localparam STATE_EXECUTE = 2'b11;
+
+    wire[31:0] QSPI_ADR32 = {QSPI_ADR, 8'h00};
 
     always @* begin
         QSPI_STA_nxt = QSPI_STA;
@@ -240,40 +255,85 @@ module QSPI_master(
         case(state_q)
             STATE_IDLE: begin
                 if(QSPI_STA[0]) begin
-                    io_en_d = 4'b0000;
-                    QSPI_STA_nxt[1] = 1'h0;
-                    cntr_state_d = -1;
+                    io_en_d = 0;
+                    QSPI_STA_nxt[1] = 0;
+                    cntr_state_d = -40;
                 end else begin
                     QSPI_STA_nxt[1] = 1'h1;
-                    /*case(QSPI_CCR[7:0])
-                        8'h03: state_d = STATE_READ;
-                        8'h3B: state_d = STATE_DOR;
-                        8'h6B: state_d = STATE_QOR;
-                        8'h02: state_d = STATE_PP;
-                        8'h32: state_d = STATE_QPP;
-                        8'hD8: state_d = STATE_SE;
-                        8'h90: state_d = STATE_READ_ID;
-                        8'h9F: state_d = STATE_RDID;
-                        8'hAB: state_d = STATE_RES;
-                        8'h05: state_d = STATE_RDSR;
-                        8'h07: state_d = STATE_RDSR;
-                        8'h35: state_d = STATE_RDCR;
-                        8'h01: state_d = STATE_WRR;
-                        8'h04: state_d = STATE_WRDI;
-                        8'h06: state_d = STATE_WREN;
-                        8'h30: state_d = STATE_CLSR;
-                        8'hF0: state_d = STATE_RESET;
-                    endcase*/
-                    io_en_d = 4'b0001;
-                    io_d[0] = QSPI_CCR[cntr_state_q[2:0]];
-                    if(cntr_state_q[2:0]) begin
-                        state_d = STATE_IDLE;
+                    state_d = STATE_CMD;
+                end
+            end
+            
+            STATE_CMD: begin
+                io_en_d = 4'b0001;
+                io_d[0] = QSPI_CCR[cntr_state_q[2:0]];
+                if(cntr_state_q[2:0]==0) begin
+                    state_d = STATE_IDLE;
+                    if(QSPI_CCR[9:8]) begin
+                        if(QSPI_CCR[15:11]) state_d = STATE_DUMMY;
+                        else state_d = STATE_EXECUTE;
                     end
                 end
+            end
+            
+            STATE_DUMMY: begin
+                io_d[0] = QSPI_ADR32[cntr_state_d[4:0]];
+                if(cntr_state_q[4:0]=={~QSPI_CCR[15:11], 2'b11}) begin
+                    state_d = STATE_EXECUTE;
+                    cntr_state_d = -1;
+                end
+            end
+
+            STATE_EXECUTE: begin
+                if(QSPI_CCR[10]) begin
+                    case(QSPI_CCR[9:8])
+                        2'b01: begin
+                            io_en_d = 4'b0001;
+                            io_d[0] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:0]}];
+                        end
+                        2'b10: begin
+                            io_en_d = 4'b0011;
+                            io_d[0] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:1], 1'b0}];
+                            io_d[1] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:1], 1'b1}];
+                            cntr_state_d = cntr_state_q - 2;
+                        end
+                        2'b11: begin
+                            io_en_d = 4'b1111;
+                            io_d[0] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b00}];
+                            io_d[1] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b01}];
+                            io_d[2] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b10}];
+                            io_d[3] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b11}];
+                            cntr_state_d = cntr_state_q - 4;
+                        end
+                    endcase
+                end else begin
+                    io_en_d = 4'b0000;
+                    case(QSPI_CCR[9:8])
+                        2'b01: begin
+                            QSPI_DR_nxt[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:0]}] = io_q[0];
+                        end
+                        2'b10: begin
+                            QSPI_DR_nxt[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:1], 1'b0}] = io_q[0];
+                            QSPI_DR_nxt[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:1], 1'b1}] = io_q[1];
+                            cntr_state_d = cntr_state_q - 2;
+                        end
+                        2'b11: begin
+                            QSPI_DR_nxt[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b00}] = io_q[0];
+                            QSPI_DR_nxt[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b01}] = io_q[1];
+                            QSPI_DR_nxt[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b10}] = io_q[2];
+                            QSPI_DR_nxt[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b11}] = io_q[3];
+                            cntr_state_d = cntr_state_q - 4;
+                        end
+                    endcase
+
+                end
+                if(cntr_state_q == {~QSPI_CCR[20:16], 2'b11}) begin
+                    state_d = STATE_IDLE;
+                end
+
             end
 
         endcase
     end
-
 
 endmodule
