@@ -70,9 +70,9 @@ module QSPI_master(
         QSPI_DR_nxt[5] = QSPI_DR[5];
         QSPI_DR_nxt[6] = QSPI_DR[6];
         QSPI_DR_nxt[7] = QSPI_DR[7];
-        QSPI_STA_nxt[0] = QSPI_STA[0];
+        QSPI_STA_nxt = QSPI_STA;
 
-        if(rst_i) QSPI_STA_nxt[0] = 1'h1;
+        if(rst_i) QSPI_STA_nxt = 2'h01;
     end
 
     generate
@@ -88,7 +88,7 @@ module QSPI_master(
                         6'h03: begin
                             QSPI_CCR_nxt[30:24] = wdata_i[(8*i)+:7];
                             if(wdata_i[8*i+7]) begin
-                                QSPI_STA_nxt[0] = 1'h1;
+                                QSPI_STA_nxt = 2'h01;
                             end
                         end
 
