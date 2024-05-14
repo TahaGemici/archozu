@@ -1,10 +1,10 @@
 // Bootloader code
 
 initial begin
-    mem[  0] = 32'h000160b7;
+    mem[  0] = 32'h000140b7;
     mem[  1] = 32'h0001c137;
-    mem[  2] = 32'h801f21b7;
-    mem[  3] = 32'h26b06193;
+    mem[  2] = 32'h801f41b7;
+    mem[  3] = 32'h26b1e193;
     mem[  4] = 32'h00001237;
     mem[  5] = 32'h000062b3;
     mem[  6] = 32'h0050a223;
@@ -31,7 +31,7 @@ initial begin
     mem[ 27] = 32'h0063ae23;
     mem[ 28] = 32'h00800293;
     mem[ 29] = 32'hfa42d2e3;
-    mem[ 30] = 32'h00000033; // reserved
+    mem[ 30] = 32'h00000067;
     mem[ 31] = 32'h00000033; // reserved
 end
 
@@ -42,10 +42,10 @@ end
 .text
 
 _boot:
-    lui x1, 22
+    lui x1, 20
     lui x2, 28
-    lui x3, 0x801F2
-    ori x3, x0, 0x26B
+    lui x3, 0x801F4
+    ori x3, x3, 0x26B
     lui x4, 1
     or x5, x0, x0
     

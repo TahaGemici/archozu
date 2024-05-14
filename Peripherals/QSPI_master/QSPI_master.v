@@ -72,14 +72,15 @@ module QSPI_master(
         QSPI_DR_nxt[7] = QSPI_DR[7];
         QSPI_STA_nxt = QSPI_STA;
 
-        if(rst_i) QSPI_STA_nxt = 2'h01;
+        if(rst_i) QSPI_STA_nxt = 2'b00;
     end
 
     generate
         for(i=0;i<4;i=i+1) begin
             always @* begin
-            rdata_o = 8'h00;
+            rdata_o = 32'hXXXXXXXX;
             if(addr_i <= (40-i)) begin
+            rdata_o[(8*i)+:8] = 0;
                 if(write_i) begin
                     case(addr_i+i)
                         6'h00: QSPI_CCR_nxt[7:0] = wdata_i[(8*i)+:8];
@@ -88,7 +89,7 @@ module QSPI_master(
                         6'h03: begin
                             QSPI_CCR_nxt[30:24] = wdata_i[(8*i)+:7];
                             if(wdata_i[8*i+7]) begin
-                                QSPI_STA_nxt = 2'h01;
+                                QSPI_STA_nxt = 2'b10;
                             end
                         end
 
@@ -154,13 +155,14 @@ module QSPI_master(
     /////////////////////////
 
     reg cs_nd;
+    reg[1:0] state_q=0, state_d;
     
     always @(posedge clk_i) begin
         cs_no <= cs_nd;
     end
 
     always @* begin
-        cs_nd = QSPI_STA_nxt[0];
+        cs_nd = (state_q==0) ? (~QSPI_STA_nxt[1]) : 1'b0;
     end
     
     /////////////////////
@@ -176,9 +178,9 @@ module QSPI_master(
     end
 
     always @* begin
-        cntr_sclk_d = cntr_sclk_d + 1;
+        cntr_sclk_d = cntr_sclk_q + 1;
 
-        if(cntr_sclk_d == QSPI_CCR[30:25]) begin
+        if(cntr_sclk_q == QSPI_CCR[30:25]) begin
             sclk_d = ~sclk_o;
             cntr_sclk_d = 6'h00;
         end
@@ -193,7 +195,6 @@ module QSPI_master(
     // FSM //
     /////////
 
-    reg[1:0] state_q=0, state_d;
     reg[7:0] cntr_state_q, cntr_state_d;
     reg[3:0] io_q, io_d;
     reg[3:0] io_en_q, io_en_d;
@@ -254,13 +255,10 @@ module QSPI_master(
 
         case(state_q)
             STATE_IDLE: begin
-                if(QSPI_STA[0]) begin
-                    io_en_d = 0;
-                    QSPI_STA_nxt[1] = 0;
-                    cntr_state_d = -40;
-                end else begin
-                    QSPI_STA_nxt[1] = 1'h1;
+                io_en_d = 0;
+                if(QSPI_STA[1]) begin
                     state_d = STATE_CMD;
+                    cntr_state_d = 7;
                 end
             end
             
@@ -268,19 +266,21 @@ module QSPI_master(
                 io_en_d = 4'b0001;
                 io_d[0] = QSPI_CCR[cntr_state_q[2:0]];
                 if(cntr_state_q[2:0]==0) begin
-                    state_d = STATE_IDLE;
                     if(QSPI_CCR[9:8]) begin
                         if(QSPI_CCR[15:11]) state_d = STATE_DUMMY;
                         else state_d = STATE_EXECUTE;
+                    end else begin
+                        state_d = STATE_IDLE;
+                        QSPI_STA_nxt = 2'h01;
                     end
                 end
             end
             
             STATE_DUMMY: begin
                 io_d[0] = QSPI_ADR32[cntr_state_d[4:0]];
-                if(cntr_state_q[4:0]=={~QSPI_CCR[15:11], 2'b11}) begin
+                if(cntr_state_q[4:0]==(~QSPI_CCR[15:11])) begin
                     state_d = STATE_EXECUTE;
-                    cntr_state_d = -1;
+                    cntr_state_d = {6'b11_1111, ~QSPI_CCR[9:8]} + 1;
                 end
             end
 
@@ -327,8 +327,9 @@ module QSPI_master(
                     endcase
 
                 end
-                if(cntr_state_q == {~QSPI_CCR[20:16], 2'b11}) begin
+                if(cntr_state_q == {~QSPI_CCR[20:16], 3'b000}) begin
                     state_d = STATE_IDLE;
+                    QSPI_STA_nxt = 2'h01;
                 end
 
             end

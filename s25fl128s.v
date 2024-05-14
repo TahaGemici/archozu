@@ -251,8 +251,8 @@ module s25fl128s
     assign SO_z = SOut_z;
 
     parameter UserPreload       = 1;
-    parameter mem_file_name     = "none";//"s25fl128s.mem";
-    parameter otp_file_name     = "s25fl128sOTP.mem";//"none";
+    parameter mem_file_name     = "s25fl128s.mem";
+    parameter otp_file_name     = "none";//"s25fl128sOTP.mem";//"none";
 
     parameter TimingModel       = "DefaultTimingModel";
 

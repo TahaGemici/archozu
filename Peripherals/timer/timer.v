@@ -85,7 +85,7 @@ module timer(
         
         irq_7_o_nxt = irq_7_o;
 
-        rdata_o = 8'h00;
+        rdata_o = 0;
         for(i=0;i<4;i=i+1) begin
 			if(addr_i <= (28-i)) begin
             	if(write_i) begin

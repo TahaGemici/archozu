@@ -22,7 +22,7 @@ module top();
         rst = 1;
         #1000;
         rst = 0;
-        #10000;
+        #1000000;
         $finish;
     end
 
