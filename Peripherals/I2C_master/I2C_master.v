@@ -39,7 +39,7 @@ module I2C_master(
 	reg [31:0] I2C_TDR, I2C_TDR_nxt;
 	reg [3:0] I2C_CFG, I2C_CFG_nxt;
 
-	wire[7:0] all_regs[0:16];
+	wire[7:0] all_regs[0:19];
 	assign all_regs[0] = {6'h00, ~|I2C_NBY, I2C_NBY};
 	assign all_regs[1] = 0;
 	assign all_regs[2] = 0;
@@ -57,6 +57,9 @@ module I2C_master(
 	assign all_regs[14] = I2C_TDR[23:16];
 	assign all_regs[15] = I2C_TDR[31:24];
 	assign all_regs[16] = {4'h0, I2C_CFG};
+	assign all_regs[17] = 0;
+	assign all_regs[18] = 0;
+	assign all_regs[19] = 0;
 
 
 
@@ -77,7 +80,6 @@ module I2C_master(
 
         rdata_o = 0;
         for(i=0;i<4;i=i+1) begin
-			if(addr_i <= (16-i)) begin
             	if(write_i) begin
 					case(addr_i+i)
 						5'h00: begin
@@ -113,7 +115,6 @@ module I2C_master(
 					endcase
             	end
                 if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
-			end
         end
 	end	
 

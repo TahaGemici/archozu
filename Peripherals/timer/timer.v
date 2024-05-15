@@ -26,7 +26,7 @@ module timer(
     
     reg condition, condition_nxt;
 
-    wire[7:0] all_regs[0:28];
+    wire[7:0] all_regs[0:31];
 	assign all_regs[0] = TIM_PRE[7:0];
 	assign all_regs[1] = TIM_PRE[15:8];
 	assign all_regs[2] = TIM_PRE[23:16];
@@ -56,6 +56,9 @@ module timer(
 	assign all_regs[26] = TIM_EVN[23:16];
 	assign all_regs[27] = TIM_EVN[31:24];
 	assign all_regs[28] = {7'b0, TIM_EVC};
+	assign all_regs[29] = 0;
+	assign all_regs[30] = 0;
+	assign all_regs[31] = 0;
 
 	always @(posedge clk_i) begin
         TIM_PRE <= TIM_PRE_nxt;
@@ -87,7 +90,6 @@ module timer(
 
         rdata_o = 0;
         for(i=0;i<4;i=i+1) begin
-			if(addr_i <= (28-i)) begin
             	if(write_i) begin
 					case(addr_i+i)
                         5'h00: TIM_PRE_nxt = wdata_i[(8*i)+:8];
@@ -110,7 +112,6 @@ module timer(
                     endcase
                 end
                 if(data_be_i[i]) rdata_o[(8*i)+:8] = all_regs[addr_i+i];
-            end
         end
 
         condition_nxt = (&TIM_PRE_nxt) ? (`CLK_FREQ - 1) : TIM_PRE_nxt;
