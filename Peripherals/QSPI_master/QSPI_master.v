@@ -204,10 +204,10 @@ module QSPI_master(
         cntr_state_q <= cntr_state_d;
     end
 
-	assign (pull1, pull0) io[0] = 1'b1;
-	assign (pull1, pull0) io[1] = 1'b1;
-	assign (pull1, pull0) io[2] = 1'b1;
-	assign (pull1, pull0) io[3] = 1'b1;
+	//assign (pull1, pull0) io[0] = 1'b1;
+	//assign (pull1, pull0) io[1] = 1'b1;
+	//assign (pull1, pull0) io[2] = 1'b1;
+	//assign (pull1, pull0) io[3] = 1'b1;
     assign io[0] = io_en_q[0] ? io_q[0] : 1'bz;
     assign io[1] = io_en_q[1] ? io_q[1] : 1'bz;
     assign io[2] = io_en_q[2] ? io_q[2] : 1'bz;
@@ -269,7 +269,7 @@ module QSPI_master(
             STATE_CMD: begin
                 io_d[0] = QSPI_CCR[cntr_state_q[2:0]];
                 if(cntr_state_q[2:0]==0) begin
-                    cntr_state_d = {7'b111_1111, ~QSPI_CCR[10]};
+                    cntr_state_d = -1;
                     if(QSPI_CCR[9:8]) begin
                         if(QSPI_CCR[15:11]) state_d = STATE_DUMMY;
                         else state_d = STATE_EXECUTE;
@@ -283,6 +283,7 @@ module QSPI_master(
             STATE_DUMMY: begin
                 io_d[0] = QSPI_ADR32[cntr_state_q[4:0]];
                 if(cntr_state_q=={~QSPI_CCR[15:11],3'b111}) begin
+                    io_en_d = 4'b0000;
                     state_d = STATE_EXECUTE;
                     case(QSPI_CCR[9:8])
                         default: cntr_state_d = 8'b1111_1111;

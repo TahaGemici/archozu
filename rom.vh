@@ -22,8 +22,8 @@ initial begin
     mem[ 18] = 32'hfe0416e3;
     mem[ 19] = 32'hfe008093;
     mem[ 20] = 32'hfe038393;
-    mem[ 21] = 32'h00828293;
-    mem[ 22] = 32'hfc42d0e3;
+    mem[ 21] = 32'h02028293;
+    mem[ 22] = 32'hfc4290e3;
     mem[ 23] = 32'h00000067;
     mem[ 24] = 32'h00000033; // reserved
     mem[ 25] = 32'h00000033; // reserved
@@ -33,6 +33,38 @@ initial begin
     mem[ 29] = 32'h00000033; // reserved
     mem[ 30] = 32'h00000033; // reserved
     mem[ 31] = 32'h00000033; // reserved
+    mem[ 32] = 32'h00000033; // reserved
+    mem[ 33] = 32'h00000033; // reserved
+    mem[ 34] = 32'h00000033; // reserved
+    mem[ 35] = 32'h00000033; // reserved
+    mem[ 36] = 32'h00000033; // reserved
+    mem[ 37] = 32'h00000033; // reserved
+    mem[ 38] = 32'h00000033; // reserved
+    mem[ 39] = 32'h00000033; // reserved
+    mem[ 40] = 32'h00000033; // reserved
+    mem[ 41] = 32'h00000033; // reserved
+    mem[ 42] = 32'h00000033; // reserved
+    mem[ 43] = 32'h00000033; // reserved
+    mem[ 44] = 32'h00000033; // reserved
+    mem[ 45] = 32'h00000033; // reserved
+    mem[ 46] = 32'h00000033; // reserved
+    mem[ 47] = 32'h00000033; // reserved
+    mem[ 48] = 32'h00000033; // reserved
+    mem[ 49] = 32'h00000033; // reserved
+    mem[ 50] = 32'h00000033; // reserved
+    mem[ 51] = 32'h00000033; // reserved
+    mem[ 52] = 32'h00000033; // reserved
+    mem[ 53] = 32'h00000033; // reserved
+    mem[ 54] = 32'h00000033; // reserved
+    mem[ 55] = 32'h00000033; // reserved
+    mem[ 56] = 32'h00000033; // reserved
+    mem[ 57] = 32'h00000033; // reserved
+    mem[ 58] = 32'h00000033; // reserved
+    mem[ 59] = 32'h00000033; // reserved
+    mem[ 60] = 32'h00000033; // reserved
+    mem[ 61] = 32'h00000033; // reserved
+    mem[ 62] = 32'h00000033; // reserved
+    mem[ 63] = 32'h00000033; // reserved
 end
 
 /*
@@ -67,7 +99,7 @@ _boot:
     addi x1, x1, -32
     addi x7, x7, -32
     
-    addi x5, x5, 8
-    bge x5, x4, loop
+    addi x5, x5, 32
+    bne x5, x4, loop
     jalr x0, x0, 0
 */
