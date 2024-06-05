@@ -60,7 +60,7 @@ module bus(
         io[1],
         sclk,
         cs,
-        rst_i,
+        ~rst_i,
         io[2],
         io[3]
     );

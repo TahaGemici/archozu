@@ -19,8 +19,6 @@ module QSPI_master(
 */
 
     // registers
-    reg[2:0] state, state_nxt;
-
     reg[30:0] QSPI_CCR, QSPI_CCR_nxt;
     reg[23:0] QSPI_ADR, QSPI_ADR_nxt;
     reg[31:0] QSPI_DR[0:7], QSPI_DR_nxt[0:7];
@@ -250,29 +248,28 @@ module QSPI_master(
     localparam STATE_DUMMY   = 2'b10;
     localparam STATE_EXECUTE = 2'b11;
 
-    wire[31:0] QSPI_ADR32 = {QSPI_ADR, 8'h00};
+    wire[31:0] QSPI_ADR32 = {1'h0, QSPI_ADR, 7'h00};
 
     always @* begin
         QSPI_STA_nxt = QSPI_STA;
         state_d = state_q;
         cntr_state_d = cntr_state_q - 1;
-        io_en_d = io_en_q;
-        io_d = io_q;
+        io_en_d = 4'b0011;
+        io_d = 4'b0000;
 
         case(state_q)
             STATE_IDLE: begin
-                io_en_d = 0;
                 if(QSPI_STA[1]) begin
                     state_d = STATE_CMD;
-                    cntr_state_d = 7;
+                    cntr_state_d = 6;
+                    io_d[0] = QSPI_CCR[7];
                 end
             end
             
             STATE_CMD: begin
-                io_en_d = 4'b0001;
                 io_d[0] = QSPI_CCR[cntr_state_q[2:0]];
                 if(cntr_state_q[2:0]==0) begin
-                    cntr_state_d = -1;
+                    cntr_state_d = {7'b111_1111, ~QSPI_CCR[10]};
                     if(QSPI_CCR[9:8]) begin
                         if(QSPI_CCR[15:11]) state_d = STATE_DUMMY;
                         else state_d = STATE_EXECUTE;
@@ -284,8 +281,8 @@ module QSPI_master(
             end
             
             STATE_DUMMY: begin
-                io_d[0] = QSPI_ADR32[cntr_state_d[4:0]];
-                if(cntr_state_q[4:0]==(~QSPI_CCR[15:11])) begin
+                io_d[0] = QSPI_ADR32[cntr_state_q[4:0]];
+                if(cntr_state_q=={~QSPI_CCR[15:11],3'b111}) begin
                     state_d = STATE_EXECUTE;
                     case(QSPI_CCR[9:8])
                         default: cntr_state_d = 8'b1111_1111;
@@ -297,19 +294,17 @@ module QSPI_master(
 
             STATE_EXECUTE: begin
                 if(QSPI_CCR[10]) begin
+                    io_en_d = 4'b1111;
                     case(QSPI_CCR[9:8])
                         2'b01: begin
-                            io_en_d = 4'b0001;
                             io_d[0] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:0]}];
                         end
                         2'b10: begin
-                            io_en_d = 4'b0011;
                             io_d[0] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:1], 1'b0}];
                             io_d[1] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2:1], 1'b1}];
                             cntr_state_d = cntr_state_q - 2;
                         end
                         2'b11: begin
-                            io_en_d = 4'b1111;
                             io_d[0] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b00}];
                             io_d[1] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b01}];
                             io_d[2] = QSPI_DR[~cntr_state_q[7:5]][{~cntr_state_q[4:3], cntr_state_q[2], 2'b10}];

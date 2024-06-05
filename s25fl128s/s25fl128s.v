@@ -399,7 +399,7 @@ module s25fl128s
     assign PS   = Status_reg2[0];
 
     // Configuration Register 1
-    reg[7:0] Config_reg1       = 8'h00;
+    reg[7:0] Config_reg1       = 8'h02;//8'h00;
     reg[7:0] Config_reg1_in    = 8'h00;
 
     wire   LC1                     ;
@@ -1022,6 +1022,7 @@ endspecify
            //  dd      - <dd> is byte to be written at Mem(aaaaaa++)
            // (aaaaaa is incremented at every load)
            $readmemh(mem_file_name,Mem);
+           $display("mem read");
         end
 
         for (i=OTPLoAddr;i<=OTPHiAddr;i=i+1)
@@ -1039,6 +1040,7 @@ endspecify
         //   (aa is incremented at every load)
         //   only first 1-4 columns are loaded. NO empty lines !!!!!!!!!!!!!!!!
            $readmemh(otp_file_name,OTPMem);
+           $display("otp read");
         end
 
         LOCK_BYTE1[7:0] = OTPMem[16];
@@ -1317,8 +1319,10 @@ endspecify
 
     always @(negedge CSNeg_ipd)
     begin:CheckCEOnPowerUP
-        if (~PoweredUp)
+        if (~PoweredUp) begin
             $display ("Device is selected during Power Up");
+            $finish;
+        end
     end
 
     ///////////////////////////////////////////////////////////////////////////
@@ -7555,6 +7559,7 @@ task Return_DLP;
                     start_dlp = 1'b0;
                     $display("Warning at", $time);
                     $display("Inappropriate latency is set during DPL mode");
+                    $finish;
                 end
             end
             else
@@ -7585,6 +7590,7 @@ task Return_DLP;
                     start_dlp = 1'b0;
                     $display("Warning at", $time);
                     $display("Inappropriate latency is set during DPL mode");
+                    $finish;
                 end
                 else
                     start_dlp = 1'b0;
@@ -7617,6 +7623,7 @@ task Return_DLP;
                     $display("Warning at", $time);
                     $display("Inappropriate latency is");
                     $display("set during DPL mode");
+                    $finish;
                 end
                 else
                     start_dlp  = 1'b0;
@@ -7636,6 +7643,7 @@ task Return_DLP;
                     $display("Warning at", $time);
                     $display("Inappropriate latency is");
                     $display("set during DPL mode");
+                    $finish;
                 end
                 else
                     start_dlp = 1'b0;
