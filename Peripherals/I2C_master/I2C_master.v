@@ -192,14 +192,14 @@ module I2C_master(
 			end
 			WDATA: begin
 				if(counter == 0) begin
-					state_nxt <= ACK1;
+					state_nxt = ACK1;
 					nby_counter_nxt = nby_counter + 1;
 				end
 			end
 			RDATA: begin
 				I2C_RDR[{nby_counter-1, counter}] = sda_io;
 				if (counter == 0) begin
-					state_nxt <= ACK1;
+					state_nxt = ACK1;
 					nby_counter_nxt = nby_counter + 1;
 				end
 			end

@@ -399,7 +399,7 @@ module s25fl128s
     assign PS   = Status_reg2[0];
 
     // Configuration Register 1
-    reg[7:0] Config_reg1       = 8'h02;//8'h00;
+    reg[7:0] Config_reg1       = 8'h00;
     reg[7:0] Config_reg1_in    = 8'h00;
 
     wire   LC1                     ;
