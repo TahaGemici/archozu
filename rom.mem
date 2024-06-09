@@ -16,7 +16,7 @@
 00127213
 fe021ae3
 02816213
-801f2537
+821f2537
 36b56513
 000012b7
 000065b3
@@ -64,7 +64,7 @@ _boot:
     bne x4, x0, loop_rdsr1
     
     ori x4, x2, 40
-    lui x10, 0x801F2
+    lui x10, 0x821F2
     ori x10, x10, 0x36B
     lui x5, 1
     or x11, x0, x0
