@@ -1,49 +1,40 @@
 # ArchOzu Team Repository 🗿
 ```
-📦 Bus Protocols
- ┣ 📁 APB ✔ (shubhi704/APB-Protocol)
- ┣ 📁 AHB ✔ (lucky-wfw/ARM_AMBA_Design)
- ┣ 📁 AHB2APB Bridge 🌱 (utku)
- ┗ 📁 AHB Implementation 🌱 (utku)
+📦 Bus Protocol ✔ (taha)
 
 📦 Peripherals
  ┣ 📂 UART
  ┃ ┣ 📜 RTL 🌱 (utku)
  ┃ ┗ 📜 TB 🌱 (kutay)
  ┣ 📂 I2C Master
- ┃ ┣ 📜 RTL ✔ (taha, 01.04.2024)
- ┃ ┗ 📜 TB ✔ (taha, 01.04.2024)
+ ┃ ┣ 📜 RTL ✔ (taha)
+ ┃ ┗ 📜 TB 🌱 (taha)
  ┣ 📂 QSPI Master
- ┃ ┣ 📜 RTL 🌱 (metin)
- ┃ ┗ 📜 TB ❌
+ ┃ ┣ 📜 RTL ✔ (taha)
+ ┃ ┗ 📜 TB 🌱 (taha)
  ┣ 📂 Timer
- ┃ ┣ 📜 RTL ✔ (taha, 06.04.2024)
- ┃ ┗ 📜 TB ❌
+ ┃ ┣ 📜 RTL ✔ (taha)
+ ┃ ┗ 📜 TB 🌱 (taha)
  ┣ 📂 GPIO
- ┃ ┣ 📜 RTL ✔ (taha, 05.04.2024)
- ┃ ┗ 📜 TB ❌
+ ┃ ┣ 📜 RTL ✔ (taha)
+ ┃ ┗ 📜 TB 🌱 (taha)
  ┣ 📂 USB
- ┃ ┣ 📜 RTL 🌱 (taha)
- ┃ ┗ 📜 TB ❌
+ ┃ ┗ 📜 RTL 🌱 (utku) 
  ┣ 📂 Clock Generator
- ┃ ┗ 📜 RTL ✔ (taha, 31.03.2024)
+ ┃ ┗ 📜 RTL 🌱 (taha)
  ┗ 📂 JTAG
-   ┣ 📜 RTL ❌
+   ┣ 📜 RTL 🌱 (utku)
    ┗ 📜 TB ❌
 
-📦 Physical Design
- ┣ 📁 RTL Design 🌱 (all)
- ┣ 📁 Synthesis ❌
- ┣ 📁 Floorplanning ❌
- ┣ 📁 Placement ❌
- ┣ 📁 CTS ❌
- ┗ 📁 Routing ❌
+📦 FPGA Implementation 🌱 (taha)
+
+📦 Physical Design 🌱 (metin + utku)
 
 📦 Documents
  ┣ 📂 ÖTR
- ┃ ┣ 📝 docx ✔ (all, 15.03.2024)
- ┃ ┗ 📝 pdf ✔ (all, 15.03.2024)
+ ┃ ┣ 📝 docx ✔ (all)
+ ┃ ┗ 📝 pdf ✔ (all)
  ┗ 📂 DTR
-   ┣ 📝 docx ❌
-   ┗ 📝 pdf ❌
+   ┣ 📝 docx 🌱 (taha)
+   ┗ 📝 pdf 🌱 (taha)
 ```
