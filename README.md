@@ -4,8 +4,8 @@
 
 📦 Peripherals
  ┣ 📂 UART
- ┃ ┣ 📜 RTL 🌱 (utku)
- ┃ ┗ 📜 TB 🌱 (kutay)
+ ┃ ┣ 📜 RTL ✔ (utku)
+ ┃ ┗ 📜 UVM 🌱 (kutay)
  ┣ 📂 I2C Master
  ┃ ┣ 📜 RTL ✔ (taha)
  ┃ ┗ 📜 TB 🌱 (taha)
@@ -35,6 +35,6 @@
  ┃ ┣ 📝 docx ✔ (all)
  ┃ ┗ 📝 pdf ✔ (all)
  ┗ 📂 DTR
-   ┣ 📝 docx 🌱 (taha)
-   ┗ 📝 pdf 🌱 (taha)
+   ┣ 📝 docx 🌱 (all)
+   ┗ 📝 pdf ❌
 ```
