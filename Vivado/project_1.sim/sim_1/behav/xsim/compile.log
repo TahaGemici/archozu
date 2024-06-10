@@ -1,0 +1,26 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tgemici/GitHub/archozu/Logic Design/RTL/top.vh" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/cv32e40p/vendor/pulp_platform_common_cells/include/common_cells/registers.svh" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/GPIO.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module GPIO
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module I2C_master
+ERROR: [VRFC 10-3163] cannot assign to non-variable 'I2C_NBY' [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:91]
+ERROR: [VRFC 10-1280] procedural assignment to a non-register I2C_NBY is not permitted, left-hand side should be reg/integer/time/genvar [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:91]
+ERROR: [VRFC 10-2989] 'I2C_NBY_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:91]
+ERROR: [VRFC 10-3163] cannot assign to non-variable 'I2C_ADR' [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:92]
+ERROR: [VRFC 10-1280] procedural assignment to a non-register I2C_ADR is not permitted, left-hand side should be reg/integer/time/genvar [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:92]
+ERROR: [VRFC 10-2989] 'I2C_ADR_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:92]
+ERROR: [VRFC 10-3163] cannot assign to non-variable 'I2C_TDR' [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:93]
+ERROR: [VRFC 10-1280] procedural assignment to a non-register I2C_TDR is not permitted, left-hand side should be reg/integer/time/genvar [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:93]
+ERROR: [VRFC 10-2989] 'I2C_TDR_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:93]
+ERROR: [VRFC 10-3163] cannot assign to non-variable 'I2C_CFG' [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:94]
+ERROR: [VRFC 10-1280] procedural assignment to a non-register I2C_CFG is not permitted, left-hand side should be reg/integer/time/genvar [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:94]
+ERROR: [VRFC 10-2989] 'I2C_CFG_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:94]
+ERROR: [VRFC 10-2989] 'I2C_NBY_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:99]
+ERROR: [VRFC 10-2989] 'I2C_ADR_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:100]
+ERROR: [VRFC 10-2989] 'I2C_TDR_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:101]
+ERROR: [VRFC 10-2989] 'I2C_CFG_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:102]
+ERROR: [VRFC 10-2989] 'I2C_CFG_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:103]
+ERROR: [VRFC 10-2989] 'I2C_NBY_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:110]
+ERROR: [VRFC 10-2989] 'I2C_NBY_nxt' is not declared [/home/tgemici/GitHub/archozu/Logic Design/RTL/bus/protocols/I2C_master.v:112]
+INFO: [#UNDEF] Sorry, too many errors..
