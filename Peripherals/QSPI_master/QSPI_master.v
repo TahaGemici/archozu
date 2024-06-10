@@ -132,13 +132,11 @@ module QSPI_master(
     localparam STATE_EXECUTE = 2'b11;
 
     reg QSPI_WRITE, QSPI_WRITE_nxt;
-    reg fnshd, fnshd_nxt;
     reg[1:0] QSPI_DATA_MODE, QSPI_DATA_MODE_nxt;
     reg[4:0] QSPI_DUMMY, QSPI_DUMMY_nxt;
     reg[4:0] QSPI_SIZE, QSPI_SIZE_nxt;
     reg[5:0] QSPI_PRESCALER, QSPI_PRESCALER_nxt;
     always @(posedge clk_i) begin
-        fnshd <= fnshd_nxt;
         QSPI_PRESCALER <= QSPI_PRESCALER_nxt;
         QSPI_DATA_MODE <= QSPI_DATA_MODE_nxt;
         QSPI_DUMMY     <= QSPI_DUMMY_nxt;
@@ -146,12 +144,13 @@ module QSPI_master(
         QSPI_SIZE      <= QSPI_SIZE_nxt;
     end    
     always @* begin
-        cs_nd = (state_q==0);
+        cs_nd = state_q ? 1'b0 : (cntr_sclk_q == 0);
         QSPI_PRESCALER_nxt = QSPI_PRESCALER;
         QSPI_DATA_MODE_nxt = QSPI_DATA_MODE;
         QSPI_DUMMY_nxt     = QSPI_DUMMY;
         QSPI_WRITE_nxt     = QSPI_WRITE;
         QSPI_SIZE_nxt      = QSPI_SIZE;
+        cntr_sclk_d        = 0;
         if(write_i & (~|addr_i[5:2])) begin
             cs_nd = 1'b0;
             case(addr_i[1:0])
@@ -161,6 +160,7 @@ module QSPI_master(
                     QSPI_DUMMY_nxt     = data_be_i[1] ? wdata_i[15:11] : QSPI_DUMMY;
                     QSPI_WRITE_nxt     = data_be_i[1] ? wdata_i[10]    : QSPI_WRITE;
                     QSPI_SIZE_nxt      = data_be_i[2] ? wdata_i[20:16] : QSPI_SIZE;
+                    cntr_sclk_d        = QSPI_PRESCALER_nxt;
                 end
                 2'b01: begin
                     QSPI_PRESCALER_nxt = data_be_i[2] ? wdata_i[22:17] : QSPI_PRESCALER;
@@ -175,8 +175,8 @@ module QSPI_master(
                 end
                 2'b11: QSPI_PRESCALER_nxt = data_be_i[0] ? wdata_i[6:1] : QSPI_PRESCALER;
             endcase
+            cntr_sclk_d = QSPI_PRESCALER_nxt;
         end
-        cntr_sclk_d = 0;
         sclk_d = 0;
         if(~cs_no) begin
             sclk_d = sclk_o;
@@ -196,7 +196,6 @@ module QSPI_master(
         wraddr_perip = QSPI_STA;
         data_i_perip = 1;
         rdaddr_perip = QSPI_CCR;
-        fnshd_nxt = 0;
 
         case(state_q)
             STATE_IDLE: begin
@@ -204,7 +203,6 @@ module QSPI_master(
                 io_d[0] = (data_be_i[0] & (~|addr_i[1:0])) ? wdata_i[7] : data_o_perip[7];
                 state_d = STATE_CMD;
                 write_perip = 1;
-                fnshd_nxt = 1;
             end
             
             STATE_CMD: begin

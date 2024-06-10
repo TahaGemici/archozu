@@ -18,7 +18,7 @@ fe021ae3
 02816213
 821f2537
 36b56513
-000012b7
+000022b7
 000065b3
 028000ef
 00810313
@@ -66,7 +66,7 @@ _boot:
     ori x4, x2, 40
     lui x10, 0x821F2
     ori x10, x10, 0x36B
-    lui x5, 1
+    lui x5, 2
     or x11, x0, x0
     loop_qor0:
     jal x1, qspi_func
