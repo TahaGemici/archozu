@@ -1,0 +1,10 @@
+Time resolution is 1 ps
+WARNING: File s25fl128s.mem referenced on /home/tgemici/GitHub/archozu/logic_design/RTL/bus/cv32e40p/cv32e40p_obi_interface.sv at line 106 cannot be opened for reading. Please ensure that this file is available in the current working directory.
+mem read
+WARNING: File s25fl128sOTP.mem referenced on /home/tgemici/GitHub/archozu/logic_design/RTL/bus/cv32e40p/cv32e40p_obi_interface.sv at line 106 cannot be opened for reading. Please ensure that this file is available in the current working directory.
+otp read
+WARNING: File rom.mem referenced on /home/tgemici/GitHub/archozu/logic_design/RTL/bus/cv32e40p/cv32e40p_obi_interface.sv at line 106 cannot be opened for reading. Please ensure that this file is available in the current working directory.
+WARNING: 0ns : none of the conditions were true for unique case from File:/home/tgemici/GitHub/archozu/logic_design/RTL/bus/cv32e40p/cv32e40p_load_store_unit.sv:419
+WARNING: 0ns : none of the conditions were true for unique case from File:/home/tgemici/GitHub/archozu/logic_design/RTL/bus/cv32e40p/cv32e40p_load_store_unit.sv:419
+$finish called at time : 10500 us : File "/home/tgemici/GitHub/archozu/logic_design/RTL/top.v" Line 26
+INFO: xsimkernel Simulation Memory Usage: 909936 KB (Peak: 909936 KB), Simulation CPU Usage: 24040 ms

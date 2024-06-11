@@ -8,25 +8,25 @@
  ┃ ┗ 📜 UVM 🌱 (kutay)
  ┣ 📂 I2C Master
  ┃ ┣ 📜 RTL ✔ (taha)
- ┃ ┗ 📜 TB 🌱 (taha)
+ ┃ ┗ 📜 TB 🌱 (metin + taha)
  ┣ 📂 QSPI Master
  ┃ ┣ 📜 RTL ✔ (taha)
- ┃ ┗ 📜 TB 🌱 (taha)
+ ┃ ┗ 📜 TB 🌱 (metin + taha)
  ┣ 📂 Timer
  ┃ ┣ 📜 RTL ✔ (taha)
- ┃ ┗ 📜 TB 🌱 (taha)
+ ┃ ┗ 📜 TB 🌱 (metin + taha)
  ┣ 📂 GPIO
  ┃ ┣ 📜 RTL ✔ (taha)
  ┃ ┗ 📜 TB 🌱 (taha)
  ┣ 📂 USB
  ┃ ┗ 📜 RTL 🌱 (utku) 
  ┣ 📂 Clock Generator
- ┃ ┗ 📜 RTL 🌱 (taha)
+ ┃ ┗ 📜 RTL ❌
  ┗ 📂 JTAG
    ┣ 📜 RTL 🌱 (utku)
    ┗ 📜 TB ❌
 
-📦 FPGA Implementation 🌱 (taha)
+📦 FPGA Implementation ❌
 
 📦 Physical Design 🌱 (metin + utku)
 
