@@ -1,8 +1,0 @@
-//#s25fl128s memory file
-//#   /       - comment
-//#   @aaaaaa - <aaaaaa> stands for address
-//#   dd      - <dd> is byte to be written at Mem(aaaaaa++) (aaaaaa is incremented at every load)
-//#
-//#   only first 1-7 columns are loaded. NO empty lines !!!!!!!!!!!!!!!!
-@000000
-`include "knightrider_riscv.mem"
