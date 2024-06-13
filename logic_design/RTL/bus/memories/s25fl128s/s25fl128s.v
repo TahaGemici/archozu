@@ -1022,7 +1022,6 @@ endspecify
            //  dd      - <dd> is byte to be written at Mem(aaaaaa++)
            // (aaaaaa is incremented at every load)
            $readmemh(mem_file_name,Mem);
-           $display("mem read");
         end
 
         for (i=OTPLoAddr;i<=OTPHiAddr;i=i+1)
@@ -1040,7 +1039,6 @@ endspecify
         //   (aa is incremented at every load)
         //   only first 1-4 columns are loaded. NO empty lines !!!!!!!!!!!!!!!!
            $readmemh(otp_file_name,OTPMem);
-           $display("otp read");
         end
 
         LOCK_BYTE1[7:0] = OTPMem[16];
