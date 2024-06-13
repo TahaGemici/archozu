@@ -14,140 +14,21 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-<<<<<<< HEAD
-      <ZoomStartTime time="0 ps"></ZoomStartTime>
-      <ZoomEndTime time="8 ps"></ZoomEndTime>
-      <Cursor1Time time="10,500,000,000 ps"></Cursor1Time>
-=======
-      <ZoomStartTime time="500,317,062 ps"></ZoomStartTime>
-      <ZoomEndTime time="500,317,070 ps"></ZoomEndTime>
-      <Cursor1Time time="500,317,063 ps"></Cursor1Time>
->>>>>>> 965cc75 (.)
+      <ZoomStartTime time="3,666,512,853 ps"></ZoomStartTime>
+      <ZoomEndTime time="3,666,512,861 ps"></ZoomEndTime>
+      <Cursor1Time time="3,666,512,859 ps"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="168"></NameColumnWidth>
       <ValueColumnWidth column_width="60"></ValueColumnWidth>
    </column_width_setting>
-<<<<<<< HEAD
-   <WVObjectSize size="22" />
-   <wvobject type="logic" fp_name="/top/instr_req">
-      <obj_property name="ElementShortName">instr_req</obj_property>
-      <obj_property name="ObjectShortName">instr_req</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/instr_gnt">
-      <obj_property name="ElementShortName">instr_gnt</obj_property>
-      <obj_property name="ObjectShortName">instr_gnt</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/instr_rvalid">
-      <obj_property name="ElementShortName">instr_rvalid</obj_property>
-      <obj_property name="ObjectShortName">instr_rvalid</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/instr_addr">
-      <obj_property name="ElementShortName">instr_addr[31:0]</obj_property>
-      <obj_property name="ObjectShortName">instr_addr[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/instr_rdata">
-      <obj_property name="ElementShortName">instr_rdata[31:0]</obj_property>
-      <obj_property name="ObjectShortName">instr_rdata[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/data_req">
-      <obj_property name="ElementShortName">data_req</obj_property>
-      <obj_property name="ObjectShortName">data_req</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/data_gnt">
-      <obj_property name="ElementShortName">data_gnt</obj_property>
-      <obj_property name="ObjectShortName">data_gnt</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/data_rvalid">
-      <obj_property name="ElementShortName">data_rvalid</obj_property>
-      <obj_property name="ObjectShortName">data_rvalid</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/data_we">
-      <obj_property name="ElementShortName">data_we</obj_property>
-      <obj_property name="ObjectShortName">data_we</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/data_be">
-      <obj_property name="ElementShortName">data_be[3:0]</obj_property>
-      <obj_property name="ObjectShortName">data_be[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/data_addr">
-      <obj_property name="ElementShortName">data_addr[31:0]</obj_property>
-      <obj_property name="ObjectShortName">data_addr[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/data_wdata">
-      <obj_property name="ElementShortName">data_wdata[31:0]</obj_property>
-      <obj_property name="ObjectShortName">data_wdata[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/data_rdata">
-      <obj_property name="ElementShortName">data_rdata[31:0]</obj_property>
-      <obj_property name="ObjectShortName">data_rdata[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/irq">
-      <obj_property name="ElementShortName">irq[31:0]</obj_property>
-      <obj_property name="ObjectShortName">irq[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/irq_ack">
-      <obj_property name="ElementShortName">irq_ack</obj_property>
-      <obj_property name="ObjectShortName">irq_ack</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/irq_id">
-      <obj_property name="ElementShortName">irq_id[4:0]</obj_property>
-      <obj_property name="ObjectShortName">irq_id[4:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/debug_req">
-      <obj_property name="ElementShortName">debug_req</obj_property>
-      <obj_property name="ObjectShortName">debug_req</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/debug_havereset">
-      <obj_property name="ElementShortName">debug_havereset</obj_property>
-      <obj_property name="ObjectShortName">debug_havereset</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/debug_running">
-      <obj_property name="ElementShortName">debug_running</obj_property>
-      <obj_property name="ObjectShortName">debug_running</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/debug_halted">
-      <obj_property name="ElementShortName">debug_halted</obj_property>
-      <obj_property name="ObjectShortName">debug_halted</obj_property>
-=======
-   <WVObjectSize size="8" />
-   <wvobject type="logic" fp_name="/top/rst">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
->>>>>>> 965cc75 (.)
-   </wvobject>
+   <WVObjectSize size="2" />
    <wvobject type="logic" fp_name="/top/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-<<<<<<< HEAD
    <wvobject type="logic" fp_name="/top/rst">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
-=======
-   <wvobject type="array" fp_name="/top/cv32e40p_top/core_i/instr_addr_o">
-      <obj_property name="ElementShortName">instr_addr_o[31:0]</obj_property>
-      <obj_property name="ObjectShortName">instr_addr_o[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/cv32e40p_top/core_i/instr_rdata_i">
-      <obj_property name="ElementShortName">instr_rdata_i[31:0]</obj_property>
-      <obj_property name="ObjectShortName">instr_rdata_i[31:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/bus/I2C_master/sda_io">
-      <obj_property name="ElementShortName">sda_io</obj_property>
-      <obj_property name="ObjectShortName">sda_io</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/bus/I2C_master/scl_io">
-      <obj_property name="ElementShortName">scl_io</obj_property>
-      <obj_property name="ObjectShortName">scl_io</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/bus/I2C_master/state">
-      <obj_property name="ElementShortName">state[2:0]</obj_property>
-      <obj_property name="ObjectShortName">state[2:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/bus/instr_mem/mem">
-      <obj_property name="ElementShortName">mem[0:2047][31:0]</obj_property>
-      <obj_property name="ObjectShortName">mem[0:2047][31:0]</obj_property>
->>>>>>> 965cc75 (.)
    </wvobject>
 </wave_config>
