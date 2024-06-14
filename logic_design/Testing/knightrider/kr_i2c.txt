@@ -1,4 +1,4 @@
-lui x2, x0, 18 /*i2c addr*/
+lui x2, 18 /*i2c addr*/
 addi x3, x0, 1 /*nby*/
 addi x4, x0, 123 /*slave addr*/
 addi x5, x0, 1 /*tdr*/

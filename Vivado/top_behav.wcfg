@@ -14,53 +14,21 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="2,500,844.711 ns"></ZoomStartTime>
-      <ZoomEndTime time="2,501,245.212 ns"></ZoomEndTime>
-      <Cursor1Time time="2,500,911.461 ns"></Cursor1Time>
+      <ZoomStartTime time="2,255,140,298 ps"></ZoomStartTime>
+      <ZoomEndTime time="2,255,140,307 ps"></ZoomEndTime>
+      <Cursor1Time time="2,255,140,305 ps"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="160"></NameColumnWidth>
+      <NameColumnWidth column_width="156"></NameColumnWidth>
       <ValueColumnWidth column_width="60"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="10" />
-   <wvobject type="logic" fp_name="/top/rst">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
+   <WVObjectSize size="2" />
    <wvobject type="logic" fp_name="/top/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/top/bus/I2C_master/sda_io">
-      <obj_property name="ElementShortName">sda_io</obj_property>
-      <obj_property name="ObjectShortName">sda_io</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/bus/I2C_master/scl_io">
-      <obj_property name="ElementShortName">scl_io</obj_property>
-      <obj_property name="ObjectShortName">scl_io</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/bus/I2C_master/state">
-      <obj_property name="ElementShortName">state[2:0]</obj_property>
-      <obj_property name="ObjectShortName">state[2:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/bus/I2C_master/i2c_mem/mem">
-      <obj_property name="ElementShortName">mem[0:19][7:0]</obj_property>
-      <obj_property name="ObjectShortName">mem[0:19][7:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/bus/i2c_en">
-      <obj_property name="ElementShortName">i2c_en</obj_property>
-      <obj_property name="ObjectShortName">i2c_en</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/top/bus/I2C_master/write_i">
-      <obj_property name="ElementShortName">write_i</obj_property>
-      <obj_property name="ObjectShortName">write_i</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/bus/I2C_master/data_be_i">
-      <obj_property name="ElementShortName">data_be_i[3:0]</obj_property>
-      <obj_property name="ObjectShortName">data_be_i[3:0]</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top/bus/I2C_master/addr_i">
-      <obj_property name="ElementShortName">addr_i[4:0]</obj_property>
-      <obj_property name="ObjectShortName">addr_i[4:0]</obj_property>
+   <wvobject type="logic" fp_name="/top/rst">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
    </wvobject>
 </wave_config>
