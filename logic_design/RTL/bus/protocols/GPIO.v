@@ -4,7 +4,7 @@ module GPIO(
     input [3:0] data_be_i,
     input [5:0] addr_i,
     input [31:0] wdata_i,
-    output reg [31:0] rdata_o,
+    output reg[31:0] rdata_o,
 
     input [15:0] input_i,
     output reg [15:0] output_o
@@ -30,7 +30,7 @@ module GPIO(
     assign all_regs[7] = 0;
     assign all_regs[8] = 0;
 
-    reg write_perip;
+/*     reg write_perip;
     reg[3:0] be_perip;
     reg[31:0] wraddr_perip;
     reg[31:0] data_i_perip;
@@ -57,7 +57,7 @@ module GPIO(
     localparam QSPI_CCR = 0;
     localparam QSPI_ADR = 4;
     localparam QSPI_DR  = 8;
-    localparam QSPI_STA = 40;
+    localparam QSPI_STA = 40; */
     integer i;
     always @* begin
         GPIO_ODR_nxt = output_o;
