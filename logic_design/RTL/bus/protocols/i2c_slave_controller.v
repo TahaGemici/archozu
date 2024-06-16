@@ -35,6 +35,8 @@ RST
 input SCL,RST;//asynchronous reset input
 inout SDA;
 
+parameter [6:0] device_address = 7'h55;
+
 parameter [2:0] STATE_IDLE      = 3'h0,//idle
                 STATE_DEV_ADDR  = 3'h1,//the slave addr match
                 STATE_READ      = 3'h2,//the op=read 
@@ -57,7 +59,6 @@ reg [7:0]       output_shift;
 reg             output_control;
 reg [7:0]       index_pointer;
 
-parameter [6:0] device_address = 7'h55;
 wire            start_rst = RST | start_resetter;//detect the START for one cycle
 wire            stop_rst = RST | stop_resetter;//detect the STOP for one cycle
 wire            lsb_bit = (bit_counter == 4'h7) && !start_detect;//the 8bits one byte data

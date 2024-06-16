@@ -29,8 +29,6 @@ module I2C_master(
 
 	// registers
 	reg [2:0] state=IDLE, state_nxt;
-	reg [4:0] addr, addr_nxt;
-	reg [31:0] wdata, wdata_nxt;
 	reg read, read_nxt;
 
 	localparam I2C_NBY = 0;
@@ -40,7 +38,6 @@ module I2C_master(
 	localparam I2C_CFG = 16;
 
     reg write_perip;
-    reg[3:0] be_perip;
     reg[31:0] wraddr_perip;
     reg[31:0] data_i_perip;
     reg[31:0] rdaddr_perip;
@@ -56,7 +53,7 @@ module I2C_master(
         rdata_o,
         
         write_perip,
-        be_perip,
+        4'b1111,
         wraddr_perip,
         data_i_perip,
         rdaddr_perip,
@@ -81,15 +78,20 @@ module I2C_master(
 	);
 
 	// registers
-	reg [1:0] nby_counter, nby_counter_nxt;
-	reg [2:0] counter=0, counter_nxt;
+	reg [2:0] nby_counter, nby_counter_nxt;
+	reg [2:0] counter, counter_nxt;
 	reg sda_o;
-	reg scln=1, scln_nxt;
+	reg scln, scln_nxt;
     
 	wire[7:0] addr_read = {data_o_perip[6:0], read};
 	assign (pull1, pull0) sda_io = 1;
 	assign sda_io = sda_o;
 	assign scl_io = scln | clk_i2c;
+
+	reg clk_i2c_prv;
+	always @(posedge clk_i) begin
+		clk_i2c_prv <= clk_i2c; 
+	end
 
 	always @(posedge clk_i2c) begin
 		scln <= scln_nxt;
@@ -109,27 +111,17 @@ module I2C_master(
 		nby_counter_nxt = nby_counter;
 		read_nxt = read;
   
-		be_perip = 4'b1111;
-		if(rst_i) begin
-    		data_i_perip = 0;
-    		wraddr_perip = I2C_CFG;
-    		write_perip  = 1;
-		end else begin
-    		data_i_perip = data_o_perip;
-    		data_i_perip[{nby_counter, counter}] = sda_io;
-    		wraddr_perip = I2C_RDR;
-    		write_perip  = 0;
-		end
+    	write_perip = rst_i;
+    	data_i_perip = 0;
+    	wraddr_perip = I2C_CFG;
     	rdaddr_perip = I2C_CFG;
 
 		case(state)
 			IDLE: begin
 				scln_nxt = 1;
 				nby_counter_nxt = 0;
-				state_nxt = IDLE;
-				if(^data_o_perip[3:2]) state_nxt = START;
-				if(^data_o_perip[1:0]) state_nxt = START;
-				read_nxt = (^data_o_perip[3:2]) & (~^data_o_perip[1:0]);
+				if((^data_o_perip[3:2]) | (^data_o_perip[1:0])) state_nxt = START;
+				read_nxt = (data_o_perip[3:0] == 4'b0100);
 			end
 			START: begin
 				counter_nxt = 3'h7;
@@ -142,41 +134,48 @@ module I2C_master(
 			end
 			ACK0: begin
 				counter_nxt = 3'h7;
-				state_nxt = sda_io ? STOP : (read ? RDATA : WDATA);
+				if(sda_io) begin
+					state_nxt = STOP;
+					scln_nxt = 1;
+				end else begin
+					state_nxt = read ? RDATA : WDATA;
+				end
 			end
 			WDATA: begin
     			rdaddr_perip = I2C_TDR;
 				if(counter == 0) begin
 					state_nxt = ACK1;
-					nby_counter_nxt = nby_counter + 1;
 				end
 			end
 			RDATA: begin
     			rdaddr_perip = I2C_RDR;
+    			wraddr_perip = I2C_RDR;
     			write_perip  = 1;
+    			data_i_perip = data_o_perip;
+    			data_i_perip[{nby_counter[1:0], counter}] = sda_io;
 				if (counter == 0) begin
 					state_nxt = ACK1;
-					nby_counter_nxt = nby_counter + 1;
 				end
 			end
 			ACK1: begin
     			rdaddr_perip = I2C_NBY;
 				counter_nxt = 3'h7;
-
 				state_nxt = {2'b10, read};
+
+				nby_counter_nxt = nby_counter + (read || (!sda_io));
 				case(data_o_perip)
-					0,1: state_nxt = STOP;
-					2: if(nby_counter==2) state_nxt = STOP;
-					3: if(nby_counter==3) state_nxt = STOP;
-					default: if(nby_counter==0) state_nxt = STOP;
+					0: if(nby_counter_nxt==1) state_nxt = STOP;
+					1: if(nby_counter_nxt==1) state_nxt = STOP;
+					2: if(nby_counter_nxt==2) state_nxt = STOP;
+					3: if(nby_counter_nxt==3) state_nxt = STOP;
+					default: if(nby_counter_nxt==0) state_nxt = STOP;
 				endcase
 			end
 			STOP: begin
 				scln_nxt = 1;
 				state_nxt = IDLE;
-				write_perip = 1;
-				data_i_perip = data_o_perip;
-				data_i_perip[{read, 1'b1}] = 1'b1;
+				write_perip = clk_i2c & (~clk_i2c_prv);
+				data_i_perip[{read,1'b0}+:2] = 2'b11;
 			end
 		endcase
 		
@@ -185,9 +184,9 @@ module I2C_master(
 			START: sda_o = 1'b0;
 			ADDR:  sda_o = addr_read[counter];
 			ACK0:  sda_o = 1'bz;
-			WDATA: sda_o = data_o_perip[{nby_counter, counter}];
+			WDATA: sda_o = data_o_perip[{nby_counter[1:0], counter}];
 			RDATA: sda_o = 1'bz;
-			ACK1:  sda_o = read ? (nby_counter == I2C_NBY) : 1'bz;
+			ACK1:  sda_o = read ? (state_nxt == STOP) : 1'bz;
 			STOP:  sda_o = 1'b0;
 		endcase
 	end
