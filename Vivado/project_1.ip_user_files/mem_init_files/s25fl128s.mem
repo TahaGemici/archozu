@@ -4,6 +4,9 @@
 //#   dd      - <dd> is byte to be written at Mem(aaaaaa++) (aaaaaa is incremented at every load)
 //#
 //#   only first 1-7 columns are loaded. NO empty lines !!!!!!!!!!!!!!!!
+  ////////////////
+ // kr_i2c.txt //
+////////////////
 @000000
 37
 21
@@ -89,3 +92,7 @@ fe
 80
 00
 00
+  /////////////////
+ // kr_gpio.txt //
+/////////////////
+@001000
