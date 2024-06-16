@@ -6,7 +6,7 @@
 //5. Complete transaction
 //6. Repeat
 
-//UART TOP MODULE (???) WILL NEED TO MODIFY UVM ACCORDINGLY
+//UART TOP MODULE (???) WILL NEED TO MODIFY UVM ACCORDINGLY (DISREGARD FOR NOW SEE BELOW)
 /*module TopModule (
     input wire clk,             // System clock input
     input wire rst,             // Reset input
@@ -18,6 +18,17 @@
     output reg tx_complete,     // Transmit completed flag
     output  Hready           // Handshake signal
 ); */
+
+//VIRTUAL INTERFACE, UVM DONE ACCORDINGLY
+/* interface uart_if; 
+ logic clk, rst;
+ logic tx_start, rx_start;
+ logic [7:0] tx_data;
+ logic [16:0] baud_rate;
+ logic [1:0] stop_bits;
+ logic tx_done,rx_done;
+ logic [7:0] rx_out;   
+endinterface */
 
 `include "uvm_macros.svh"
 import uvm_pkg::*;
@@ -36,7 +47,6 @@ typedef enum bit [1:0] {
     RAND_BAUD_1_STOP = 0,
     RAND_BAUD_1P5_STOP = 1,
     RAND_BAUD_2_STOP = 2,
-    DATA_LENGTH_8 = 3
 } oper_mode;
 
 //UART TRANSACTION
@@ -49,8 +59,6 @@ class uart_transaction extends uvm_sequence_item;
     rand logic [7:0] tx_data;
     logic [7:0] rx_out;
     rand logic [15:0] baud_rate;
-    logic parity_en;
-    logic data_length;
     logic [1:0] stop_bits; //1, 1.5 or 2 stop bits , 00, 01, 1X respectively
     constraint baud_rate_c { baud_rate inside {4800, 9600, 14400, 19200, 38400, 57600}; }
     function new(string name = "uart_transaction");
@@ -133,5 +141,106 @@ class random_baud_2_stop extends uvm_sequence#(uart_transaction);
                 tr.stop_bits = 2'b10;
             finish_item(tr);
         end
+    endtask
+endclass
+
+//UART DRIVER
+class uart_driver extends uvm_driver#(uart_transaction);
+    `uvm_component_utils(uart_driver)
+    uart_transaction tr;
+    virtual uart_if vif;
+
+    function new(input string name = "uart_driver", uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
+
+    virtual function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        tr = uart_transaction::type_id::create("tr");
+        if(!uvm_config_db#(uart_if)::get(this, "", "vif", vif))
+            `uvm_error("DRIVER", "Unable to get vif");
+    endfunction
+
+    task reset_dut();
+        repeat(5) begin
+            vif.rst <= 1'b1;
+            vif.tx_start <= 1'b0;
+            vif.rx_start <= 1'b0;
+            vif.tx_data <= 8'b0;
+            vif.baud_rate <= 16'b0;
+            vif.stop_bits <= 2'b00;
+            `uvm_info("DRIVER", "Start of Simulation: Resetting DUT", UVM_NONE);
+            @(posedge vif.clk); //wait for 1 clock cycle to drive new transaction
+        end 
+    endtask
+
+    task drive();
+        reset_dut();
+        forever begin
+            seq_item_port.get_next_item(tr);
+                vif.rst <= 1'b0;
+                vif.tx_start <= tr.tx_start;
+                vif.rx_start <= tr.rx_start;
+                vif.tx_data <= tr.tx_data;
+                vif.baud_rate <= tr.baud_rate;
+                vif.stop_bits <= tr.stop_bits;
+                `uvm_info("DRIVER", $sformatf("BAUD:%0d STOP:%0d TX_DATA:%0d", tr.baud_rate, tr.stop_bits, tr.tx_data), UVM_NONE);
+                @(posedge vif.clk); //wait for the new clock cycle and tx_done and rx_done to drive new transaction
+                @(posedge vif.tx_done);
+                @(negedge vif.rx_done);
+            seq_item_port.item_done(tr);
+        end
+    endtask
+
+    virtual task run_phase(uvm_phase phase);
+        drive();
+    endtask
+endclass
+
+//UART MONITOR
+class uart_monitor extends uvm_monitor;
+    `uvm_component_utils(uart_monitor)
+    uvm_analysis_port#(uart_transaction) send;
+    uart_transaction tr;
+    virtual uart_if vif;
+
+    function new(input string name = "uart_monitor", uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
+
+    virtual function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        tr = uart_transaction::type_id::create("tr");
+        send = new("send", this);
+        if(!uvm_config_db#(uart_if)::get(this, "", "vif", vif))
+            `uvm_error("MONITOR", "Unable to get vif");
+    endfunction
+
+    task monitor();
+        forever begin
+            @(posedge vif.clk); //sample on the rising edge of the clock
+            if(vif.rst) begin
+                tr.rst = 1'b1;
+                `umv_info("MONITOR", "System Reset Detected", UVM_NONE);
+                send.write(tr);
+            end
+            else begin
+                @(posedge vif.tx_done); //wait for tx_done to sample the data from uart_tx
+                tr.rst = 1'b0;
+                tr.tx_start = vif.tx_start;
+                tr.rx_start = vif.rx_start;
+                tr.tx_data = vif.tx_data;
+                tr.baud_rate = vif.baud_rate;
+                tr.stop_bits = vif.stop_bits;
+                @(negedge vif.rx_done); //wait for rx_done to sample the data from uart_rx
+                tr.rx_out = vif.rx_out;
+                `uvm_info("MONITOR", $sformatf("BAUD:%0d STOP:%0d TX_DATA:%0d RX_DATA:%0d", tr.baud_rate, tr.stop_bits, tr.tx_data, tr.rx_out), UVM_NONE);
+                send.write(tr);
+            end
+        end
+    endtask
+
+    virtual task run_phase(uvm_phase phase);
+        monitor();
     endtask
 endclass
