@@ -1,0 +1,4 @@
+Time resolution is 1 ps
+ERROR: Illegal hex digit '@' found in data of file "s25fl128s.memWARNING: 0ns : none of the conditions were true for unique case from File:/home/tgemici/GitHub/archozu/logic_design/RTL/bus/cv32e40p/cv32e40p_load_store_unit.sv:419
+WARNING: 0ns : none of the conditions were true for unique case from File:/home/tgemici/GitHub/archozu/logic_design/RTL/bus/cv32e40p/cv32e40p_load_store_unit.sv:419
+INFO: xsimkernel Simulation Memory Usage: 910076 KB (Peak: 910076 KB), Simulation CPU Usage: 83780 ms
