@@ -39,6 +39,30 @@ module bus(
 	    scl_io
     );
 
+    i2c_slave_controller #(123) I2C_slave0(
+        scl_io,
+        sda_io,
+        rst_i
+    );
+
+    i2c_slave_controller #(74) I2C_slave1(
+        scl_io,
+        sda_io,
+        rst_i
+    );
+
+    i2c_slave_controller #(12) I2C_slave2(
+        scl_io,
+        sda_io,
+        rst_i
+    );
+
+    i2c_slave_controller #(31) I2C_slave3(
+        scl_io,
+        sda_io,
+        rst_i
+    );
+
 
     wire sclk, cs;
     wire[3:0] io;
