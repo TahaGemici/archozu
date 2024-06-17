@@ -9,7 +9,7 @@ module GPIO(
     input [15:0] input_i,
     output [15:0] output_o
 );
-    perip_mem #(9, 9'h0_30) qspi_mem(
+    perip_mem #(9, 9'h0_30) gpio_mem(
         clk_i,
         
         write_i,
