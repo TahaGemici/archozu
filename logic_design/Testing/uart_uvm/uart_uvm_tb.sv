@@ -20,7 +20,7 @@
 ); */
 
 //VIRTUAL INTERFACE, UVM DONE ACCORDINGLY
-/* interface uart_if; 
+interface uart_if; 
 logic clk, rst;
 logic tx_start, rx_start;
 logic [7:0] tx_data_i;
@@ -30,7 +30,7 @@ logic [1:0] stop_bits;
 logic tx_done,rx_done;
 logic [7:0] rx_data_i;
 logic [7:0] rx_data_o;   
-endinterface */
+endinterface
 
 `include "uvm_macros.svh"
 import uvm_pkg::*;
@@ -163,35 +163,28 @@ class uart_driver extends uvm_driver#(uart_transaction);
     endfunction
 
     task reset_dut();
-        repeat(5) begin
-            vif.rst <= 1'b1;
-            vif.tx_start <= 1'b0;
-            vif.rx_start <= 1'b0;
-            vif.tx_data_i <= 8'b0;
-            vif.rx_data_i <= 8'b0;
-            vif.baud_rate <= 16'b0;
-            vif.stop_bits <= 2'b00;
-            `uvm_info("DRIVER", "Start of Simulation: Resetting DUT", UVM_NONE);
-            @(posedge vif.clk); //wait for 1 clock cycle to drive new transaction
-        end 
+        `uvm_info("DRIVER", "Start of Simulation: Resetting DUT", UVM_NONE);
+        vif.rst <= 1'b1;
+        repeat (2) @(posedge vif.clk);
+        vif.rst <= 1'b0;
     endtask
 
     task drive();
         reset_dut();
         forever begin
             seq_item_port.get_next_item(tr);
-                vif.rst <= 1'b0;
                 vif.tx_start <= tr.tx_start;
                 vif.rx_start <= tr.rx_start;
                 vif.tx_data_i <= tr.tx_data_i;
                 vif.rx_data_i <= tr.rx_data_i;
                 vif.baud_rate <= tr.baud_rate;
                 vif.stop_bits <= tr.stop_bits;
-                `uvm_info("DRIVER", $sformatf("BAUD:%0d STOP:%0d TX_DATA_IN:%0d RX_DATA_IN:%0d",
-                 tr.baud_rate, tr.stop_bits, tr.tx_data_i, tr.rx_data_i), UVM_NONE);
-                @(posedge vif.clk); //wait for the new clock cycle and tx_done and rx_done to drive new transaction
+                `uvm_info("DRIVER", $sformatf("TX_START=%0b RX_START=%0b TX_DATA=%0h  RX_DATA=%0h BAUD_RATE=%0d STOP_BITS=%0b",
+                                                tr.tx_start, tr.rx_start, tr.tx_data_i, tr.rx_data_i, tr.baud_rate, tr.stop_bits), UVM_NONE);
                 @(posedge vif.tx_done);
                 @(posedge vif.rx_done);
+                vif.tx_start <= 1'b0;
+                vif.rx_start <= 1'b0;
             seq_item_port.item_done(tr);
         end
     endtask
@@ -204,48 +197,49 @@ endclass
 //UART MONITOR
 class uart_monitor extends uvm_monitor;
     `uvm_component_utils(uart_monitor)
+
     uvm_analysis_port#(uart_transaction) send;
-    uart_transaction tr;
     virtual uart_if vif;
 
-    function new(input string name = "uart_monitor", uvm_component parent = null);
+    covergroup cg_tx @(posedge vif.clk);
+        coverpoint vif.tx_start;
+        coverpoint vif.tx_done;
+        coverpoint vif.tx_data_i;
+        coverpoint vif.tx_data_o;
+    endgroup
+
+    covergroup cg_rx @(posedge vif.clk);
+        coverpoint vif.rx_start;
+        coverpoint vif.rx_done;
+        coverpoint vif.rx_data_i;
+        coverpoint vif.rx_data_o;
+    endgroup
+
+    function new(string name = "uart_monitor", uvm_component parent = null);
         super.new(name, parent);
+        send = new("send", this);
+        cg_tx = new();
+        cg_rx = new();
     endfunction
 
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        tr = uart_transaction::type_id::create("tr");
-        send = new("send", this);
-        if(!uvm_config_db#(uart_if)::get(this, "", "vif", vif))
-            `uvm_error("MONITOR", "Unable to get vif");
+        if (!uvm_config_db#(virtual uart_if)::get(this, "", "vif", vif))
+            `uvm_fatal("MONITOR", "Virtual interface not defined! Simulation aborted!");
     endfunction
 
     task monitor();
         forever begin
-            @(posedge vif.clk); //sample on the rising edge of the clock
-            if(vif.rst) begin
-                tr.rst = 1'b1;
-                `umv_info("MONITOR", "System Reset Detected", UVM_NONE);
-                send.write(tr);
-            end
-            else begin
-                @(posedge vif.tx_done); //wait for tx_done to sample the data from uart_tx
-                tr.rst = 1'b0;
-                tr.tx_start = vif.tx_start;
-                tr.tx_data_i = vif.tx_data_i;
-                tr.tx_data_o = vif.tx_data_o;
-                tr.baud_rate = vif.baud_rate;
-                tr.stop_bits = vif.stop_bits;
-                tr.tx_done = vif.tx_done;
-                @(posedge vif.rx_done); //wait for rx_done to sample the data from uart_rx
-                tr.rx_start = vif.rx_start;
-                tr.rx_data_i = vif.rx_data_i;
-                tr.rx_data_o = vif.rx_data_o;
-                tr.rx_done = vif.rx_done;
-                `uvm_info("MONITOR", $sformatf("BAUD:%0d STOP:%0d TX_DATA_OUT:%0d RX_DATA_OUT:%0d",
-                 tr.baud_rate, tr.stop_bits, tr.tx_data_o, tr.rx_data_o), UVM_NONE);
-                send.write(tr);
-            end
+            @(posedge vif.clk);
+            uart_transaction tr = uart_transaction::type_id::create("tr");
+            tr.rst = vif.rst;
+            tr.tx_done = vif.tx_done;
+            tr.rx_done = vif.rx_done;
+            tr.tx_data_o = vif.tx_data_o;
+            tr.rx_data_o = vif.rx_data_o;
+            cg_tx.sample();
+            cg_rx.sample();
+            send.write(tr);
         end
     endtask
 
@@ -254,49 +248,56 @@ class uart_monitor extends uvm_monitor;
     endtask
 endclass
 
+
+
 //UART SCOREBOARD
 //TX and RX are not connected to each other, they are independent
 //Very trivial scoreboard, just checking if the data is transmitted and received correctly
 //Might need to add a counter to check if the design works at the correct baud rate
 class uart_scoreboard extends uvm_scoreboard;
     `uvm_component_utils(uart_scoreboard)
-    uvm_analysis_imp#(uart_transaction, uart_scoreboard) recv;
 
-    function new(input string name = "uart_scoreboard", uvm_component parent = null);
+    uvm_analysis_imp#(uart_transaction, uart_scoreboard) recv;
+    int tx_match_count;
+    int tx_mismatch_count;
+    int rx_match_count;
+    int rx_mismatch_count;
+
+    function new(string name = "uart_scoreboard", uvm_component parent = null);
         super.new(name, parent);
     endfunction
 
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
         recv = new("recv", this);
+        tx_match_count = 0;
+        tx_mismatch_count = 0;
+        rx_match_count = 0;
+        rx_mismatch_count = 0;
     endfunction
 
     virtual function void write(uart_transaction tr);
-        `uvm_info("SCOREBOARD", $sformatf("BAUD:%0d STOP:%0d TX_DATA_IN:%0d TX_DATA_OUT:%0d RX_DATA_IN:%0d RX_DATA_OUT:%0d",
-         tr.baud_rate, tr.stop_bits, tr.tx_data_i, tr.tx_data_o, tr.rx_data_i, tr.rx_data_o), UVM_NONE);
-        if(tr.rst == 1) begin
-            `uvm_info("SCOREBOARD", "System Reset Detected", UVM_NONE);
+        if (tr.tx_done) begin
+            if (tr.tx_data_i == tr.tx_data_o) begin
+                tx_match_count++;
+                `uvm_info("SCOREBOARD", "TX Data Match", UVM_NONE);
+            end else begin
+                tx_mismatch_count++;
+                `uvm_error("SCOREBOARD", "TX Data Mismatch");
+            end
         end
-        else begin
-            if(tr.tx_done == 1) begin
-                `uvm_info("SCOREBOARD", "TX Done Detected", UVM_NONE);
-                if(tr.tx_data_i == tr.tx.data_o) `uvm_info("SCOREBOARD", "TX Data Match", UVM_NONE);
-                else `uvm_error("SCOREBOARD", "TX Data Mismatch");
-            end
-            else begin
-                `uvm_error("SCOREBOARD", "TX Done Not Detected");
-            end
-            if(tr.rx_done == 1) begin
-                `uvm_info("SCOREBOARD", "RX Done Detected", UVM_NONE);
-                if(tr.rx_data_i == tr.rx_data_o) `uvm_info("SCOREBOARD", "RX Data Match", UVM_NONE);
-                else `uvm_error("SCOREBOARD", "RX Data Mismatch");
-            end
-            else begin
-                `uvm_error("SCOREBOARD", "RX Done Not Detected");
+        if (tr.rx_done) begin
+            if (tr.rx_data_i == tr.rx_data_o) begin
+                rx_match_count++;
+                `uvm_info("SCOREBOARD", "RX Data Match", UVM_NONE);
+            end else begin
+                rx_mismatch_count++;
+                `uvm_error("SCOREBOARD", "RX Data Mismatch");
             end
         end
     endfunction
 endclass
+
 
 //UART AGENT
 class uart_agent extends uvm_agent;
@@ -377,11 +378,19 @@ class uart_test extends uvm_test;
         super.run_phase(phase);
         phase.raise_objection(this);
             seq1.start(env.agt.seqr);
-            #100;
+            `uvm_info("TEST", "Finished random_baud_1_stop sequence", UVM_NONE);
             seq2.start(env.agt.seqr);
-            #100;
+            `uvm_info("TEST", "Finished random_baud_1p5_stop sequence", UVM_NONE);
             seq3.start(env.agt.seqr);
-            #100;
+            `uvm_info("TEST", "Finished random_baud_2_stop sequence", UVM_NONE);
         phase.drop_objection(this);
     endtask
+
+    virtual function void end_of_test();
+        super.end_of_test();
+        `uvm_info("TEST", $sformatf("TX Matches: %0d, TX Mismatches: %0d, RX Matches: %0d, RX Mismatches: %0d",
+                  env.sb.tx_match_count, env.sb.tx_mismatch_count, env.sb.rx_match_count, env.sb.rx_mismatch_count), UVM_NONE);
+        `uvm_info("TEST", "Writing coverage data", UVM_NONE);
+        coverage_db::write("coverage.ucdb");
+    endfunction
 endclass
