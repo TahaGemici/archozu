@@ -1,40 +1,42 @@
 # ArchOzu Team Repository 🗿
 ```
-📦 Bus Protocol ✔ (taha)
+📦 RTL
+ ┣ 📜 bus ✔ (taha)
+ ┣ 📜 UART ✔ (utku)
+ ┣ 📜 I2C_master ✔ (taha)
+ ┣ 📜 QSPI_master ✔ (taha)
+ ┣ 📜 timer ✔ (taha)
+ ┣ 📜 GPIO ✔ (taha)
+ ┣ 📜 USB 🌱 (utku)
+ ┣ 📜 clk_gen 🌱 (taha)
+ ┗ 📜 JTAG 🌱 (utku)
 
-📦 Peripherals
- ┣ 📂 UART
- ┃ ┣ 📜 RTL ✔ (utku)
- ┃ ┗ 📜 UVM 🌱 (kutay)
- ┣ 📂 I2C Master
- ┃ ┣ 📜 RTL ✔ (taha)
- ┃ ┗ 📜 TB 🌱 (metin + taha)
- ┣ 📂 QSPI Master
- ┃ ┣ 📜 RTL ✔ (taha)
- ┃ ┗ 📜 TB 🌱 (metin + taha)
- ┣ 📂 Timer
- ┃ ┣ 📜 RTL ✔ (taha)
- ┃ ┗ 📜 TB 🌱 (metin + taha)
+📦 Testing
+ ┣ 📜 UART[UVM] 🌱 (kutay)
+ ┣ 📂 I2C_master
+ ┃ ┣ 📜 1B write ✔ (metin + taha)
+ ┃ ┣ 📜 2-4B write ❌
+ ┃ ┣ 📜 1-4B read ❌
+ ┃ ┗ 📜 random 1-4B R/W ❌
+ ┣ 📂 QSPI_master
+ ┃ ┣ 📜 WREN ✔ (taha)
+ ┃ ┣ 📜 WRR ✔ (taha)
+ ┃ ┣ 📜 RDSR1 ✔ (taha)
+ ┃ ┗ 📜 *other commands* ❌
+ ┣ 📂 timer
+ ┃ ┗ 📜 *undiscussed* ❌
  ┣ 📂 GPIO
- ┃ ┣ 📜 RTL ✔ (taha)
- ┃ ┗ 📜 TB 🌱 (taha)
+ ┃ ┗ 📜 *undiscussed* ❌
  ┣ 📂 USB
- ┃ ┗ 📜 RTL 🌱 (utku) 
- ┣ 📂 Clock Generator
- ┃ ┗ 📜 RTL ❌
- ┗ 📂 JTAG
-   ┣ 📜 RTL 🌱 (utku)
-   ┗ 📜 TB ❌
+ ┃ ┗ 📜 *undiscussed* ❌
+ ┣ 📂 clk_gen
+ ┃ ┗ 📜 *undiscussed* ❌
+ ┣ 📂 JTAG
+ ┃ ┗ 📜 *undiscussed* ❌
 
-📦 FPGA Implementation ❌
-
-📦 Physical Design 🌱 (metin + utku)
+📦 OpenLane 🌱 (metin)
 
 📦 Documents
- ┣ 📂 ÖTR
- ┃ ┣ 📝 docx ✔ (all)
- ┃ ┗ 📝 pdf ✔ (all)
- ┗ 📂 DTR
-   ┣ 📝 docx 🌱 (all)
-   ┗ 📝 pdf ❌
+ ┣ 📝 ÖTR ✔ (all)
+ ┗ 📝 DTR 🌱 (all)
 ```
