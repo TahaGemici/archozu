@@ -9,19 +9,18 @@
  ┣ 📜 GPIO ✔ (taha)
  ┣ 📜 USB 🌱 (utku)
  ┣ 📜 clk_gen 🌱 (taha)
- ┗ 📜 JTAG 🌱 (utku)
+ ┣ 📜 JTAG 🌱 (utku)
+ ┗ 📜 perip_mem ✔ (taha)
 
 📦 Testing
  ┣ 📜 UART[UVM] 🌱 (kutay)
  ┣ 📂 I2C_master
- ┃ ┣ 📜 1B write ✔ (metin + taha)
+ ┃ ┣ 📜 1B write ✔ (metin)
  ┃ ┣ 📜 2-4B write ❌
  ┃ ┣ 📜 1-4B read ❌
  ┃ ┗ 📜 random 1-4B R/W ❌
  ┣ 📂 QSPI_master
- ┃ ┣ 📜 WREN ✔ (taha)
- ┃ ┣ 📜 WRR ✔ (taha)
- ┃ ┣ 📜 RDSR1 ✔ (taha)
+ ┃ ┣ 📜 WREN, WRR, RDSR1, QOR ✔ (taha)
  ┃ ┗ 📜 *other commands* ❌
  ┣ 📂 timer
  ┃ ┗ 📜 *undiscussed* ❌
@@ -33,6 +32,7 @@
  ┃ ┗ 📜 *undiscussed* ❌
  ┣ 📂 JTAG
  ┃ ┗ 📜 *undiscussed* ❌
+ ┗ 📜 perip_mem ✔ (taha)
 
 📦 OpenLane 🌱 (metin)
 
