@@ -22,7 +22,7 @@ module top();
         rst = 1;
         #500000; //flash_mem için bu kadar uzun
         rst = 0;
-        #10000000;
+        #100000000;
         $finish;
     end
 

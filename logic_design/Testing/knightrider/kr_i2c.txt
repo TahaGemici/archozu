@@ -4,6 +4,10 @@ addi x4, x0, 123 /*slave addr*/
 addi x5, x0, 1 /*tdr*/
 addi x6, x0, 1 /*cfg*/
 addi x7, x0, 128 /*const*/
+addi x8, x0, 4 /*increase nby 3 times*/
+addi x9, x0, 100
+
+repeat:
 sw x3, 0(x2) /*write nby*/
 sw x4, 4(x2) /*write slave addr*/
 /*ignore rdr since we dont read*/
@@ -23,7 +27,15 @@ call_i2c:
 sw x5, 12(x2) /*write tdr*/
 sw x6, 16(x2) /*write cfg*/
 wait_i2c:
-lw x8, 16(x2) /*load cfg*/
-andi x8, x8, 10 /*bitmask CFG[1] and CFG[3]*/
-beq x8, x0, wait_i2c /*check whether the transmission is finished or not*/
+lw x10, 16(x2) /*load cfg*/
+andi x10, x10, 2 /*select CFG[1]*/
+beq x10, x0, wait_i2c /*check whether the transmission is finished or not*/
+addi x9, x9, -1
+beq x9, x0, increase_nby
 jalr x0, x1, 0 /*return*/
+
+increase_nby:
+addi x9, x0, 100
+addi x3, x3, 1
+slli x7, x7, 8
+bge x8, x3, repeat

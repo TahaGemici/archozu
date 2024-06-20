@@ -44,8 +44,8 @@ module perip_mem(
 
         for(i=0;i<4;i=i+1) begin
             always @* begin
-                data_o_perip[(8*i)+:8] = be_perip[i] ? mem[rdaddr_perip + i]  : 0;
-                data_o_bus[(8*i)+:8]   = be_bus[i]   ? mem[addr_bus + i]      : 0;
+                data_o_perip[(8*i)+:8] = be_perip[i] ? mem[rdaddr_perip + i] : 0;
+                data_o_bus[(8*i)+:8]   = be_bus[i]   ? mem[addr_bus + i]     : 0;
             end
         end
     endgenerate
