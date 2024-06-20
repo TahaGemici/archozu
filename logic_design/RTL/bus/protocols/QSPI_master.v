@@ -152,7 +152,6 @@ module QSPI_master(
         QSPI_SIZE_nxt      = QSPI_SIZE;
         cntr_sclk_d        = 0;
         if(write_i & (~|addr_i[5:2])) begin
-            cs_nd = 1'b0;
             case(addr_i[1:0])
                 2'b00: begin
                     QSPI_PRESCALER_nxt = data_be_i[3] ? wdata_i[30:25] : QSPI_PRESCALER;
@@ -161,6 +160,7 @@ module QSPI_master(
                     QSPI_WRITE_nxt     = data_be_i[1] ? wdata_i[10]    : QSPI_WRITE;
                     QSPI_SIZE_nxt      = data_be_i[2] ? wdata_i[20:16] : QSPI_SIZE;
                     cntr_sclk_d        = QSPI_PRESCALER_nxt;
+                    cs_nd = ~wdata_i[31];
                 end
                 2'b01: begin
                     QSPI_PRESCALER_nxt = data_be_i[2] ? wdata_i[22:17] : QSPI_PRESCALER;
@@ -168,12 +168,17 @@ module QSPI_master(
                     QSPI_DUMMY_nxt     = data_be_i[0] ? wdata_i[7:3]   : QSPI_DUMMY;
                     QSPI_WRITE_nxt     = data_be_i[0] ? wdata_i[2]     : QSPI_WRITE;
                     QSPI_SIZE_nxt      = data_be_i[1] ? wdata_i[12:8]  : QSPI_SIZE;
+                    cs_nd = ~wdata_i[23];
                 end
                 2'b10: begin
                     QSPI_PRESCALER_nxt = data_be_i[1] ? wdata_i[14: 9] : QSPI_PRESCALER;
                     QSPI_SIZE_nxt      = data_be_i[0] ? wdata_i[4:0]   : QSPI_SIZE;
+                    cs_nd = ~wdata_i[15];
                 end
-                2'b11: QSPI_PRESCALER_nxt = data_be_i[0] ? wdata_i[6:1] : QSPI_PRESCALER;
+                2'b11: begin
+                    QSPI_PRESCALER_nxt = data_be_i[0] ? wdata_i[6:1] : QSPI_PRESCALER;
+                    cs_nd = ~wdata_i[7];
+                end
             endcase
             cntr_sclk_d = QSPI_PRESCALER_nxt;
         end
@@ -194,7 +199,6 @@ module QSPI_master(
         write_perip = 0;
         be_perip = 4'b1111;
         wraddr_perip = QSPI_STA;
-        data_i_perip = 1;
         rdaddr_perip = QSPI_CCR;
 
         case(state_q)
@@ -203,6 +207,7 @@ module QSPI_master(
                 io_d[0] = (data_be_i[0] & (~|addr_i[1:0])) ? wdata_i[7] : data_o_perip[7];
                 state_d = STATE_CMD;
                 write_perip = 1;
+                data_i_perip = 1;
             end
             
             STATE_CMD: begin
