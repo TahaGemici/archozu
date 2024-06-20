@@ -46,23 +46,43 @@ module timer_mem(
         for(i=0;i<SIZE;i=i+1) begin
             always @(posedge clk_i) mem[i] <= mem_nxt[i];
         end
-        always @* begin
-            mem_nxt[ 8] = {7'b0, TIM_CLR_i};
-            mem_nxt[20] = TIM_CNT_i[0+:8];
-            mem_nxt[21] = TIM_CNT_i[8+:8];
-            mem_nxt[22] = TIM_CNT_i[16+:8];
-            mem_nxt[23] = TIM_CNT_i[24+:8];
-            mem_nxt[24] = TIM_EVN_i[0+:8];
-            mem_nxt[25] = TIM_EVN_i[8+:8];
-            mem_nxt[26] = TIM_EVN_i[16+:8];
-            mem_nxt[27] = TIM_EVN_i[24+:8];
-            mem_nxt[28] = {7'b0, TIM_EVC_i};
-            for(i=0;i<SIZE;i=i+1) begin
+        for(i=0;i<8;i=i+1) begin
+            always @* begin
                 mem_nxt[i] = mem[i];
                 if(mem_wren_bus[i]) begin
                     mem_nxt[i] = data_i_bus[{i[1:0]-addr_bus[1:0], 3'b0}+:8];
                 end
             end
+        end
+        for(i=9;i<20;i=i+1) begin
+            always @* begin
+                mem_nxt[i] = mem[i];
+                if(mem_wren_bus[i]) begin
+                    mem_nxt[i] = data_i_bus[{i[1:0]-addr_bus[1:0], 3'b0}+:8];
+                end
+            end
+        end
+        always @* begin
+            mem_nxt[ 8] = {7'b0, TIM_CLR_i};
+            if(mem_wren_bus[8]) mem_nxt[8] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[20] = TIM_CNT_i[0+:8];
+            if(mem_wren_bus[20]) mem_nxt[20] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[21] = TIM_CNT_i[8+:8];
+            if(mem_wren_bus[21]) mem_nxt[21] = data_i_bus[{1-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[22] = TIM_CNT_i[16+:8];
+            if(mem_wren_bus[22]) mem_nxt[22] = data_i_bus[{2-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[23] = TIM_CNT_i[24+:8];
+            if(mem_wren_bus[23]) mem_nxt[23] = data_i_bus[{3-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[24] = TIM_EVN_i[0+:8];
+            if(mem_wren_bus[24]) mem_nxt[24] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[25] = TIM_EVN_i[8+:8];
+            if(mem_wren_bus[25]) mem_nxt[25] = data_i_bus[{1-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[26] = TIM_EVN_i[16+:8];
+            if(mem_wren_bus[26]) mem_nxt[26] = data_i_bus[{2-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[27] = TIM_EVN_i[24+:8];
+            if(mem_wren_bus[27]) mem_nxt[27] = data_i_bus[{3-addr_bus[1:0], 3'b0}+:8];
+            mem_nxt[28] = {7'b0, TIM_EVC_i};
+            if(mem_wren_bus[28]) mem_nxt[28] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
         end
 
         for(i=0;i<4;i=i+1) begin

@@ -119,14 +119,22 @@ module I2C_master(
 		case(state)
 			IDLE: begin
 				scln_nxt = 1;
-				nby_counter_nxt = 0;
 				if((^data_o_perip[3:2]) | (^data_o_perip[1:0])) state_nxt = START;
 				read_nxt = (data_o_perip[3:0] == 4'b0100);
 			end
 			START: begin
+				rdaddr_perip = I2C_NBY;
 				counter_nxt = 3'h7;
 				scln_nxt = 0;
 				state_nxt = ADDR;
+				
+				case(data_o_perip)
+					0: nby_counter_nxt = 0;
+					1: nby_counter_nxt = 0;
+					2: nby_counter_nxt = 1;
+					3: nby_counter_nxt = 2;
+					default: nby_counter_nxt = 3;
+				endcase
 			end
 			ADDR: begin
     			rdaddr_perip = I2C_ADR;
@@ -162,14 +170,8 @@ module I2C_master(
 				counter_nxt = 3'h7;
 				state_nxt = {2'b10, read};
 
-				nby_counter_nxt = nby_counter + (read || (!sda_io));
-				case(data_o_perip)
-					0: if(nby_counter_nxt==1) state_nxt = STOP;
-					1: if(nby_counter_nxt==1) state_nxt = STOP;
-					2: if(nby_counter_nxt==2) state_nxt = STOP;
-					3: if(nby_counter_nxt==3) state_nxt = STOP;
-					default: if(nby_counter_nxt==0) state_nxt = STOP;
-				endcase
+				nby_counter_nxt = nby_counter - (read || (!sda_io));
+				if(nby_counter_nxt==3'b111) state_nxt = STOP;
 			end
 			STOP: begin
 				scln_nxt = 1;
