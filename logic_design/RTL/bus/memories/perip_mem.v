@@ -61,7 +61,4 @@ module perip_mem(
             mem_wren_bus[addr_bus+:4] = be_bus & ALLOW_WRITE[addr_bus+:4];
         end
     end
-
-
-
 endmodule

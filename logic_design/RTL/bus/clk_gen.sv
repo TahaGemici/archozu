@@ -66,7 +66,7 @@ MMCME2_BASE_inst (
 
 
 `else
-
+//i yerine ii kullan
 `define i (`CLK_FREQ / CLK_GEN_FREQ / 2)
 module clk_gen (
     input rst,
