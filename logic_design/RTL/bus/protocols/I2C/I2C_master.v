@@ -113,7 +113,7 @@ module I2C_master(
   
     	write_perip = rst_i;
     	data_i_perip = 0;
-    	wraddr_perip = I2C_CFG;
+    	wraddr_perip = I2C_RDR;
     	rdaddr_perip = I2C_CFG;
 
 		case(state)
@@ -146,7 +146,10 @@ module I2C_master(
 					state_nxt = STOP;
 					scln_nxt = 1;
 				end else begin
-					state_nxt = read ? RDATA : WDATA;
+					if(read) begin
+						write_perip = 1;
+						state_nxt = RDATA;
+					end else state_nxt = WDATA;
 				end
 			end
 			WDATA: begin
@@ -157,7 +160,6 @@ module I2C_master(
 			end
 			RDATA: begin
     			rdaddr_perip = I2C_RDR;
-    			wraddr_perip = I2C_RDR;
     			write_perip  = 1;
     			data_i_perip = data_o_perip;
     			data_i_perip[{nby_counter[1:0], counter}] = sda_io;
@@ -176,6 +178,7 @@ module I2C_master(
 			STOP: begin
 				scln_nxt = 1;
 				state_nxt = IDLE;
+    			wraddr_perip = I2C_CFG;
 				write_perip = clk_i2c & (~clk_i2c_prv);
 				data_i_perip[{read,1'b0}+:2] = 2'b11;
 			end

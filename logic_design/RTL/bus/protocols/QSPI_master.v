@@ -242,7 +242,7 @@ module QSPI_master(
             STATE_EXECUTE: begin
                 rdaddr_perip = QSPI_DR + {~cntr_state_q[7:5], 2'b0};
                 wraddr_perip = QSPI_DR + {~cntr_state_q[7:5], 2'b0};
-                data_i_perip = data_o_perip;
+                data_i_perip = (&cntr_state_q[4:0]) ? 0 : data_o_perip; // bu satır çokomelli
                 io_en_d = 4'b0000;
                 if(QSPI_WRITE) begin
                     case(QSPI_DATA_MODE)
