@@ -1,21 +1,68 @@
 `ifdef TEST
 module top();
-    reg clk, rst;
+    reg clk, rstn;
     initial begin
         clk = 0;
         forever clk = #(`CLK_PERIOD/2.0) ~clk;
     end
     initial begin
-        rst = 1;
+        rstn = 0;
         #500000; //flash_mem için bu kadar uzun
-        rst = 0;
+        rstn = 1;
         #100000000;
         $finish;
     end
-`else
-module top(rst, clk);
-`endif
 
+    wire rst = ~rstn;
+    wire sda_io, scl_io;
+    i2c_slave_controller #(123) I2C_slave0(
+        scl_io,
+        sda_io,
+        rst
+    );
+    i2c_slave_controller #(74) I2C_slave1(
+        scl_io,
+        sda_io,
+        rst
+    );
+    i2c_slave_controller #(12) I2C_slave2(
+        scl_io,
+        sda_io,
+        rst
+    );
+    i2c_slave_controller #(31) I2C_slave3(
+        scl_io,
+        sda_io,
+        rst
+    );
+
+    wire sclk, cs;
+    wire[3:0] io;
+    s25fl128s flash_mem(
+        io[0],
+        io[1],
+        sclk,
+        cs,
+        ~rst,
+        io[2],
+        io[3]
+    );
+
+    wire[15:0] in, out;
+`else
+module top(
+    input rstn,
+    input clk,
+    inout sda_io,
+    output scl_io,
+    output sclk,
+    output cs,
+    inout[3:0] io,
+    input in,
+    output out
+);
+`endif
+    wire rst = ~rstn;
     wire instr_req, instr_gnt, instr_rvalid;
     wire[31:0] instr_addr, instr_rdata;
 
@@ -41,7 +88,7 @@ module top(rst, clk);
     cv32e40p_top cv32e40p_top (
         // Clock and Reset
         .clk_i(clk_bus),
-        .rst_ni(~rst),
+        .rst_ni(rstn),
 
         .pulp_clock_en_i(0),  // PULP clock enable (only used if COREV_CLUSTER = 1)
         .scan_cg_en_i(0),  // Enable all clock gates for testing
@@ -105,6 +152,19 @@ module top(rst, clk);
         instr_gnt,
         instr_rvalid,
         instr_addr,
-        instr_rdata
+        instr_rdata,
+
+        sda_io,
+        scl_io,
+
+        sclk,
+        cs,
+        io,
+    
+        irq_ack,
+        irq[7],
+
+        out,
+        in
     );
 endmodule

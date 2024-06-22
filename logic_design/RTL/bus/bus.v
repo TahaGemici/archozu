@@ -17,7 +17,20 @@ module bus(
     output instr_gnt,
     output instr_rvalid,
     input[31:0] instr_addr,
-    output[31:0] instr_rdata
+    output[31:0] instr_rdata,
+
+    inout sda_io,
+    output scl_io,
+
+    output sclk,
+    output cs,
+    inout[3:0] io,
+
+    input irq_ack_i,
+    output irq_7_o,
+
+    input[15:0] out,
+    output[15:0] in
 );
     assign data_gnt_o = 1;
     always @(posedge clk_i) data_rvalid_o <= data_req_i;
@@ -27,7 +40,6 @@ module bus(
     reg[31:0] data_rdata_o_nxt;
 
 
-    wire sda_io, scl_io;
     wire[31:0] i2c_out;
     I2C_master I2C_master(
         clk_i,
@@ -42,33 +54,7 @@ module bus(
 	    scl_io
     );
 
-    i2c_slave_controller #(123) I2C_slave0(
-        scl_io,
-        sda_io,
-        rst_i
-    );
 
-    i2c_slave_controller #(74) I2C_slave1(
-        scl_io,
-        sda_io,
-        rst_i
-    );
-
-    i2c_slave_controller #(12) I2C_slave2(
-        scl_io,
-        sda_io,
-        rst_i
-    );
-
-    i2c_slave_controller #(31) I2C_slave3(
-        scl_io,
-        sda_io,
-        rst_i
-    );
-
-
-    wire sclk, cs;
-    wire[3:0] io;
     wire[31:0] qspi_out;
     QSPI_master QSPI_master(
         clk_i,
@@ -83,19 +69,9 @@ module bus(
         cs,
 	    io
     );
-    s25fl128s flash_mem(
-        io[0],
-        io[1],
-        sclk,
-        cs,
-        ~rst_i,
-        io[2],
-        io[3]
-    );
     
 
     wire[31:0] timer_out;
-    wire irq_ack, irq_7_o;
     timer timer(
         clk_i,
         rst_i,
@@ -104,12 +80,11 @@ module bus(
         data_addr_i,
         data_wdata_i,
         timer_out,
-        irq_ack,
+        irq_ack_i,
         irq_7_o
     );
 
 
-    wire[15:0] in, out;
     wire[31:0] gpio_out;
     GPIO GPIO(
         clk_i,
