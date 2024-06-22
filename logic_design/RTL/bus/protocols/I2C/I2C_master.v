@@ -1,5 +1,6 @@
 module I2C_master(
     input clk_i,
+    input clk_i2c,
     input rst_i,
     input write_i,
     input [3:0] data_be_i,
@@ -65,17 +66,6 @@ module I2C_master(
 	I2C_Master <---> I2C_Slave(s)
 
 */
-
-
-	// wires 
-	wire clk_i2c;
-	
-	// clock generator
-	clk_gen #(`CLK_I2C_FREQ) clk_i2c_inst(
-		rst_i,
-		clk_i,
-		clk_i2c
-	);
 
 	// registers
 	reg [2:0] nby_counter, nby_counter_nxt;

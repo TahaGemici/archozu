@@ -1,4 +1,20 @@
+`ifdef TEST
 module top();
+    reg clk, rst;
+    initial begin
+        clk = 0;
+        forever clk = #(`CLK_PERIOD/2.0) ~clk;
+    end
+    initial begin
+        rst = 1;
+        #500000; //flash_mem için bu kadar uzun
+        rst = 0;
+        #100000000;
+        $finish;
+    end
+`else
+module top(rst, clk);
+`endif
 
     wire instr_req, instr_gnt, instr_rvalid;
     wire[31:0] instr_addr, instr_rdata;
@@ -12,23 +28,19 @@ module top();
     wire[4:0] irq_id;
     
     wire debug_req, debug_havereset, debug_running, debug_halted;
-    
-    reg clk, rst;
-    initial begin
-        clk = 0;
-        forever clk = #(`CLK_PERIOD/2.0) ~clk;
-    end
-    initial begin
-        rst = 1;
-        #500000; //flash_mem için bu kadar uzun
-        rst = 0;
-        #100000000;
-        $finish;
-    end
+
+    wire clk_bus, clk_i2c, clk_qspi;
+    clk_gen clk_gen(
+        rst,
+        clk,
+        clk_bus,
+        clk_i2c,
+        clk_qspi
+    );
 
     cv32e40p_top cv32e40p_top (
         // Clock and Reset
-        .clk_i(clk),
+        .clk_i(clk_bus),
         .rst_ni(~rst),
 
         .pulp_clock_en_i(0),  // PULP clock enable (only used if COREV_CLUSTER = 1)
@@ -73,8 +85,11 @@ module top();
         .fetch_enable_i(1),
         .core_sleep_o()
     );
+
     bus bus(
-        clk,
+        clk_bus,
+        clk_i2c,
+        clk_qspi,
         rst,
 
         data_req,

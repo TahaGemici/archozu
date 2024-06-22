@@ -1,5 +1,6 @@
 module QSPI_master(
     input clk_i,
+    input clk_qspi,
     input rst_i,
     input write_i,
     input[3:0] data_be_i,
@@ -71,7 +72,7 @@ module QSPI_master(
     reg sclk_d;
     reg[5:0] cntr_sclk_d, cntr_sclk_q;
 
-    always @(posedge clk_i or negedge clk_i) begin
+    always @(posedge clk_qspi) begin
         sclk_o <= sclk_d;
         cntr_sclk_q <= cntr_sclk_d;
     end
