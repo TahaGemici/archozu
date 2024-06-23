@@ -1,13 +1,13 @@
 #include <math.h>
 #define CLK_FREQ_MHZ 103
 
-int* const ADDR_UART      = (int*)131072;
-int* const ADDR_I2C       = (int*)147456;
-int* const ADDR_QSPI      = (int*)163840;
-int* const ADDR_TIMER     = (int*)180224;
-int* const ADDR_USB       = (int*)196608;
-int* const ADDR_GPIO      = (int*)212992;
-int* const ADDR_INSTR_MEM = (int*)229376;
+int* const ADDR_UART      = _addr_instr_mem;
+int* const ADDR_I2C       = _addr_uart;
+int* const ADDR_QSPI      = _addr_i2c;
+int* const ADDR_TIMER     = _addr_qspi;
+int* const ADDR_USB       = _addr_timer;
+int* const ADDR_GPIO      = _addr_usb;
+int* const ADDR_INSTR_MEM = _addr_gpio;
 
   ////////////
  //  UART  //

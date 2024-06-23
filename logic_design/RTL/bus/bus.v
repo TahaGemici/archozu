@@ -36,7 +36,7 @@ module bus(
     always @(posedge clk_i) data_rvalid_o <= data_req_i;
 
     wire we = data_we_i & data_req_i;
-    reg uart_en, i2c_en, qspi_en, timer_en, usb_en, gpio_en, instr_mem_en;
+    reg uart_en, i2c_en, qspi_en, timer_en, usb_en, gpio_en, instr_mem_en, data_mem_en;
     reg[31:0] data_rdata_o_nxt;
 
 
@@ -98,7 +98,6 @@ module bus(
     );
 
 
-    wire data_mem_en = ~data_addr_i[16];
     wire[31:0] data_mem_out;
     data_mem data_mem(
         clk_i,
@@ -126,9 +125,13 @@ module bus(
     wire[31:0] usb_out;
     //USB EKSİK
 
+    wire[31:0] uart_out;
+    //UART EKSİK
+
     always @(posedge clk_i) data_rdata_o <= data_rdata_o_nxt;
 
     always @* begin
+        data_mem_en = 0;
         uart_en = 0;
         i2c_en = 0;
         qspi_en = 0;
@@ -136,23 +139,25 @@ module bus(
         usb_en = 0;
         gpio_en = 0;
         instr_mem_en = 0;
-        if(data_addr_i[16]) begin
-            case(data_addr_i[15:13]) // 3b: select, 13b: registers
-                3'b000: uart_en = 1;
-                3'b001: i2c_en = 1;
-                3'b010: qspi_en = 1;
-                3'b011: timer_en = 1;
-                3'b100: usb_en = 1;
-                3'b101: gpio_en = 1;
-                3'b110: instr_mem_en = 1;
-                3'b111: instr_mem_en = 1;
-            endcase
-        end
-        data_rdata_o_nxt = ({32{i2c_en}} & i2c_out)
-                         | ({32{qspi_en}} & qspi_out)
-                         | ({32{timer_en}} & timer_out)
-                         | ({32{usb_en}} & usb_out)
-                         | ({32{gpio_en}} & gpio_out)
-                         | ({32{data_mem_en}} & data_mem_out);
+
+        case(data_addr_i[16:13])
+            4'h0: data_mem_en = 1; // + bootloader
+            //4'h1: BİLEREK BOŞ BIRAKTIK LINKER SCRIPT FLASH İÇİN
+            4'h2: instr_mem_en = 1;
+            4'h3: uart_en = 1;
+            4'h4: i2c_en = 1;
+            4'h5: qspi_en = 1;
+            4'h6: timer_en = 1;
+            4'h7: usb_en = 1;
+            4'h8: gpio_en = 1;
+            //4'h9-4'hf: reserved
+        endcase
+        data_rdata_o_nxt = ({32{data_mem_en}} & data_mem_out)
+                         | ({32{uart_en}}     & uart_out)
+                         | ({32{i2c_en}}      & i2c_out)
+                         | ({32{qspi_en}}     & qspi_out)
+                         | ({32{timer_en}}    & timer_out)
+                         | ({32{usb_en}}      & usb_out)
+                         | ({32{gpio_en}}     & gpio_out);
     end
 endmodule

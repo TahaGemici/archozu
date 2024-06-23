@@ -22,7 +22,7 @@ module instr_mem(
     assign gnt_o = 1;
     always @(posedge clk_i) begin
         rvalid_o <= req_i;
-        rdata_o <= addr_i[11] ? rom_out : mem[addr_i[10:0]];
+        rdata_o <= addr_i[11] ? mem[addr_i[10:0]] : rom_out;
         mem[addr] <= write_i ? data : mem[addr];
     end
 
