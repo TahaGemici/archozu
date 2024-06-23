@@ -11,8 +11,9 @@ SECTIONS
     /* Code and read-only data */
     .text :
     {
+        *(.text.main)    /* main */
+        *(.text*)    /* rest of the code */
         *(.vectors) /* Vector table */
-        *(.text)    /* Code */
         *(.rodata)  /* Read-only data */
         . = ALIGN(4);
     } > FLASH

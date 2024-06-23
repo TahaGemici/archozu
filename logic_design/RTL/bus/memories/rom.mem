@@ -29,8 +29,8 @@ fe021ae3
 00430313
 fe4316e3
 fe5590e3
-000020b7
-00008067
+00002137
+00010067
 00a12023
 00b12223
 02812603
@@ -81,8 +81,8 @@ _boot:
     bne x6, x4, loop_qor1   
     bne x11, x5, loop_qor0
     
-    lui x1, 2
-    jalr x0, x1, 0
+    lui x2, 2
+    jalr x0, x2, 0
     
 	qspi_func:
     sw x10, 0(x2) 
