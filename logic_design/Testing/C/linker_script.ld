@@ -1,42 +1,22 @@
-MEMORY
-{
-    /* Define memory regions */
-    FLASH (x) : ORIGIN = 0x00002000, LENGTH = 8K
-    RAM (rw)  : ORIGIN = 0x00000000, LENGTH = 8K
-    PERIPHERALS (rw) : ORIGIN = 0x00004000, LENGTH = 112K
+MEMORY{
+    INSTR_MEM (x) : ORIGIN = 0x00002000, LENGTH = 8K
+    DATA_MEM (w)  : ORIGIN = 0x00000000, LENGTH = 8K
+    PERIPHERALS (w) : ORIGIN = 0x00004000, LENGTH = 112K
 }
 
-SECTIONS
-{
-    /* Code and read-only data */
+SECTIONS{
+    . = 0;
     .text :
     {
-        *(.text.main)    /* main */
-        *(.text*)    /* rest of the code */
-        *(.vectors) /* Vector table */
-        *(.rodata)  /* Read-only data */
-        . = ALIGN(4);
-    } > FLASH
+        *(.text.main)
+        *(.text)
+    } > INSTR_MEM
 
-    /* Initialized data */
-    .data : AT(ADDR(.text) + SIZEOF(.text))
-    {
-        _sdata = .; /* Create a symbol marking the start of the .data section */
-        *(.data)
-        . = ALIGN(4);
-        _edata = .; /* Define a symbol marking the end of the .data section */
-    } > RAM
+    . = ORIGIN(DATA_MEM);
 
-    /* Uninitialized data (zero-initialized) */
-    .bss :
-    {
-        _sbss = .; /* Start of the .bss section */
-        *(.bss)
-        . = ALIGN(4);
-        _ebss = .; /* End of the .bss section */
-    } > RAM
+    .data : {*(.data)} > DATA_MEM
+    .bss : {*(.bss)} > DATA_MEM
 
-    /* Peripheral register space */
     PERIPHERAL_REGISTERS : 
     {
         . = ORIGIN(PERIPHERALS);
