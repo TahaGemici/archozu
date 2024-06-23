@@ -1,7 +1,15 @@
 #include "peripherals.h"
 
 int main(){
-	int a=0;
-	int b=a+1;
-	a=gpio(b);
+	int data=1;
+	while(1){
+		while(data!=(1<<31)){
+			data<<=1;
+			i2c_write(data, 4);
+		}
+		while(data!=1){
+			data>>=1;
+			i2c_write(data, 4);
+		}
+	}
 }

@@ -1,35 +1,35 @@
 #include <math.h>
-#define CLK_FREQ_MHZ 103
+#define CLK_FREQ_MHZ 100.0
 
-int* const ADDR_UART      = _addr_instr_mem;
-int* const ADDR_I2C       = _addr_uart;
-int* const ADDR_QSPI      = _addr_i2c;
-int* const ADDR_TIMER     = _addr_qspi;
-int* const ADDR_USB       = _addr_timer;
-int* const ADDR_GPIO      = _addr_usb;
-int* const ADDR_INSTR_MEM = _addr_gpio;
+extern int* const _addr_instr_mem;
+extern int* const _addr_uart;
+extern int* const _addr_i2c;
+extern int* const _addr_qspi;
+extern int* const _addr_timer;
+extern int* const _addr_usb;
+extern int* const _addr_gpio;
 
   ////////////
  //  UART  //
 ////////////
 
 void uart_conf(int baud_quotient, char stop_bit){
-    *ADDR_UART = baud_quotient;
-    *(ADDR_UART+1) = stop_bit;
+    *_addr_uart = baud_quotient;
+    *(_addr_uart+1) = stop_bit;
 }
 
 char uart_read(){
-    while(*(ADDR_UART+4)!=2){}
-    char tmp = *(ADDR_UART+2); //sıralama kasıtlı: önce veriyi al, sonra 0'a çek
-    *(ADDR_UART+4) = 0;
+    while(*(_addr_uart+4)!=2){}
+    char tmp = *(_addr_uart+2); //sıralama kasıtlı: önce veriyi al, sonra 0'a çek
+    *(_addr_uart+4) = 0;
     return tmp;
 }
 
 void uart_write(char data){
-    *(ADDR_UART+3) = data;
-    *(ADDR_UART+4) = 1;
-    while(*(ADDR_UART+4)!=5){}
-    *(ADDR_UART+4) = 0;
+    *(_addr_uart+3) = data;
+    *(_addr_uart+4) = 1;
+    while(*(_addr_uart+4)!=5){}
+    *(_addr_uart+4) = 0;
 }
 
   ///////////
@@ -37,23 +37,23 @@ void uart_write(char data){
 ///////////
 
 void i2c_conf(char addr){
-    *(ADDR_I2C+1) = addr;
+    *(_addr_i2c+1) = addr;
 }
 
 void i2c_write(int data, char byte_size){
-    *ADDR_I2C     = byte_size;
-    *(ADDR_I2C+3) = data;
-    *(ADDR_I2C+4) = 1;
-    while(*(ADDR_I2C+4)!=3){}
-    *(ADDR_I2C+4) = 0;
+    *_addr_i2c     = byte_size;
+    *(_addr_i2c+3) = data;
+    *(_addr_i2c+4) = 1;
+    while(*(_addr_i2c+4)!=3){}
+    *(_addr_i2c+4) = 0;
 }
 
 int i2c_read(char byte_size){
-    *ADDR_I2C     = byte_size;
-    *(ADDR_I2C+4) = 4;
-    while(*(ADDR_I2C+4)!=12){}
-    *(ADDR_I2C+4) = 0;
-    return *(ADDR_I2C+2);
+    *_addr_i2c     = byte_size;
+    *(_addr_i2c+4) = 4;
+    while(*(_addr_i2c+4)!=12){}
+    *(_addr_i2c+4) = 0;
+    return *(_addr_i2c+2);
 }
 
   ////////////
@@ -72,23 +72,23 @@ const int qspi_dummy_3 = 3 << 11;
 const int qspi_dummy_4 = 4 << 11;
 
 void s25fl128s_wren(){
-    *ADDR_QSPI = qspi_clk_133 + 0x06;
-    while(*(ADDR_QSPI+10)!=1){}
+    *_addr_qspi = qspi_clk_133 + 0x06;
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void s25fl128s_wrdi(){
-    *ADDR_QSPI = qspi_clk_133 + 0x04;
-    while(*(ADDR_QSPI+10)!=1){}
+    *_addr_qspi = qspi_clk_133 + 0x04;
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void s25fl128s_clsr(){
-    *ADDR_QSPI = qspi_clk_133 + 0x30;
-    while(*(ADDR_QSPI+10)!=1){}
+    *_addr_qspi = qspi_clk_133 + 0x30;
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void s25fl128s_reset(){
-    *ADDR_QSPI = qspi_clk_133 + 0xF0;
-    while(*(ADDR_QSPI+10)!=1){}
+    *_addr_qspi = qspi_clk_133 + 0xF0;
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void s25fl128s_rdid(int* array, int byte_size){
@@ -96,36 +96,36 @@ void s25fl128s_rdid(int* array, int byte_size){
     tmp += qspi_mode_x1;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_133;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(ADDR_QSPI+2+i);
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
 }
 
 char s25fl128s_rdsr1(){
     int tmp = 0x05;
     tmp += qspi_mode_x1;
     tmp += qspi_clk_133;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    return *(ADDR_QSPI+2);
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    return *(_addr_qspi+2);
 }
 
 char s25fl128s_rdsr2(){
     int tmp = 0x07;
     tmp += qspi_mode_x1;
     tmp += qspi_clk_133;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    return *(ADDR_QSPI+2);
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    return *(_addr_qspi+2);
 }
 
 char s25fl128s_rdcr(){
     int tmp = 0x35;
     tmp += qspi_mode_x1;
     tmp += qspi_clk_133;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    return *(ADDR_QSPI+2);
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    return *(_addr_qspi+2);
 }
 
 short s25fl128s_read_id(int addr){
@@ -134,10 +134,10 @@ short s25fl128s_read_id(int addr){
     tmp += qspi_dummy_3;
     tmp += 1 << 16;
     tmp += qspi_clk_133;
-    *(ADDR_QSPI+1) = addr;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    return *(ADDR_QSPI+2);
+    *(_addr_qspi+1) = addr;
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    return *(_addr_qspi+2);
 }
 
 char s25fl128s_res(){
@@ -145,9 +145,9 @@ char s25fl128s_res(){
     tmp += qspi_mode_x1;
     tmp += qspi_dummy_3;
     tmp += qspi_clk_50;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    return *(ADDR_QSPI+2);
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    return *(_addr_qspi+2);
 }
 
 void s25fl128s_wrr(short data){
@@ -156,9 +156,9 @@ void s25fl128s_wrr(short data){
     tmp += qspi_write;
     tmp += 1 << 16;
     tmp += qspi_clk_133;
-    *(ADDR_QSPI+2) = data;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
+    *(_addr_qspi+2) = data;
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void s25fl128s_read(int addr, int* array, int byte_size){
@@ -167,10 +167,10 @@ void s25fl128s_read(int addr, int* array, int byte_size){
     tmp += qspi_dummy_3;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_50;
-    *(ADDR_QSPI+1) = addr;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(ADDR_QSPI+2+i);
+    *(_addr_qspi+1) = addr;
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
 }
 
 void s25fl128s_pp(int addr, int* array, int byte_size){
@@ -180,10 +180,10 @@ void s25fl128s_pp(int addr, int* array, int byte_size){
     tmp += qspi_dummy_3;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_133;
-    *(ADDR_QSPI+1) = addr;
-    for(int i=0;i<ceil(byte_size/4);i++) *(ADDR_QSPI+2+i) = array[i];
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
+    *(_addr_qspi+1) = addr;
+    for(int i=0;i<ceil(byte_size/4);i++) *(_addr_qspi+2+i) = array[i];
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void s25fl128s_se(int data){
@@ -192,9 +192,9 @@ void s25fl128s_se(int data){
     tmp += qspi_write;
     tmp += 2 << 16;
     tmp += qspi_clk_133;
-    *(ADDR_QSPI+2) = data;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
+    *(_addr_qspi+2) = data;
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void s25fl128s_dor(int addr, int* array, int byte_size){
@@ -203,10 +203,10 @@ void s25fl128s_dor(int addr, int* array, int byte_size){
     tmp += qspi_dummy_4;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_104;
-    *(ADDR_QSPI+1) = addr;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(ADDR_QSPI+2+i);
+    *(_addr_qspi+1) = addr;
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
 }
  
 void s25fl128s_qor(int addr, int* array, int byte_size){
@@ -215,10 +215,10 @@ void s25fl128s_qor(int addr, int* array, int byte_size){
     tmp += qspi_dummy_4;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_104;
-    *(ADDR_QSPI+1) = addr;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(ADDR_QSPI+2+i);
+    *(_addr_qspi+1) = addr;
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
 }
 
 void s25fl128s_qpp(int addr, int* array, int byte_size){
@@ -228,10 +228,10 @@ void s25fl128s_qpp(int addr, int* array, int byte_size){
     tmp += qspi_dummy_3;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_80;
-    *(ADDR_QSPI+1) = addr;
-    *ADDR_QSPI = tmp;
-    for(int i=0;i<ceil(byte_size/4);i++) *(ADDR_QSPI+2+i) = array[i];
-    while(*(ADDR_QSPI+10)!=1){}
+    *(_addr_qspi+1) = addr;
+    *_addr_qspi = tmp;
+    for(int i=0;i<ceil(byte_size/4);i++) *(_addr_qspi+2+i) = array[i];
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void qspi_custom_write(int addr, int* array, int instr, int mode, int dummy, int byte_size, int prescaler){
@@ -242,10 +242,10 @@ void qspi_custom_write(int addr, int* array, int instr, int mode, int dummy, int
     tmp += (byte_size-1) << 16;
     tmp += prescaler << 25;
     tmp += 1 << 31;
-    *(ADDR_QSPI+1) = addr;
-    for(int i=0;i<ceil(byte_size/4);i++) *(ADDR_QSPI+2+i) = array[i];
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
+    *(_addr_qspi+1) = addr;
+    for(int i=0;i<ceil(byte_size/4);i++) *(_addr_qspi+2+i) = array[i];
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
 }
 
 void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int byte_size, int prescaler){
@@ -255,10 +255,10 @@ void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int 
     tmp += (byte_size-1) << 16;
     tmp += prescaler << 25;
     tmp += 1 << 31;
-    *(ADDR_QSPI+1) = addr;
-    *ADDR_QSPI = tmp;
-    while(*(ADDR_QSPI+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(ADDR_QSPI+2+i);
+    *(_addr_qspi+1) = addr;
+    *_addr_qspi = tmp;
+    while(*(_addr_qspi+10)!=1){}
+    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
 }
 
   /////////////
@@ -266,33 +266,33 @@ void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int 
 /////////////
 
 void timer_conf(int prescaler, int auto_reload, int mode){
-    *ADDR_TIMER = prescaler;
-    *(ADDR_TIMER+1) = auto_reload;
-    *(ADDR_TIMER+4) = mode;
+    *_addr_timer = prescaler;
+    *(_addr_timer+1) = auto_reload;
+    *(_addr_timer+4) = mode;
 }
 
 int timer_read_counter(){
-    return *(ADDR_TIMER+5);
+    return *(_addr_timer+5);
 }
 
 int timer_read_event(){
-    return *(ADDR_TIMER+6);
+    return *(_addr_timer+6);
 }
 
 void timer_clear_counter(){
-    *(ADDR_TIMER+2) = 1;
+    *(_addr_timer+2) = 1;
 }
 
 void timer_clear_event(){
-    *(ADDR_TIMER+7) = 1;
+    *(_addr_timer+7) = 1;
 }
 
 void timer_enable(){
-    *(ADDR_TIMER+3) = 1;
+    *(_addr_timer+3) = 1;
 }
 
 void timer_disable(){
-    *(ADDR_TIMER+3) = 0;
+    *(_addr_timer+3) = 0;
 }
 
   ///////////
@@ -310,11 +310,11 @@ void timer_disable(){
 ////////////
 
 void gpio_write(short in){
-    *(ADDR_GPIO+1) = in;
+    *(_addr_gpio+1) = in;
 }
 
 short gpio_read(){
-    return *ADDR_GPIO;
+    return *_addr_gpio;
 }
 
   /////////////////
@@ -322,5 +322,5 @@ short gpio_read(){
 /////////////////
 
 void instr_mem_write(int addr, int data){
-    *(ADDR_INSTR_MEM+addr) = data;
+    *(_addr_instr_mem+addr) = data;
 }

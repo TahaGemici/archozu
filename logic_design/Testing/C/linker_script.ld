@@ -1,7 +1,7 @@
 MEMORY
 {
     /* Define memory regions */
-    FLASH (rx) : ORIGIN = 0x00002000, LENGTH = 8K
+    FLASH (x) : ORIGIN = 0x00002000, LENGTH = 8K
     RAM (rw)  : ORIGIN = 0x00000000, LENGTH = 8K
     PERIPHERALS (rw) : ORIGIN = 0x00004000, LENGTH = 112K
 }
