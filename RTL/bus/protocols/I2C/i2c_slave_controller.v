@@ -210,10 +210,10 @@ always @ (posedge RST or negedge SCL)
 begin
         if (RST)
         begin
-                reg_00 <= 8'h00;
-                reg_01 <= 8'h00;
-                reg_02 <= 8'h00;
-                reg_03 <= 8'h00;
+                reg_00 <= $random;
+                reg_01 <= $random;
+                reg_02 <= $random;
+                reg_03 <= $random;
         end//the moment the input_shift has one byte=8bits
         else if (write_strobe && (index_pointer == 8'h00))
                 reg_00 <= input_shift;

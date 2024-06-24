@@ -1,5 +1,5 @@
 #include <math.h>
-#define CLK_FREQ_MHZ 100.0
+#define CLK_FREQ_MHZ 50.0
 
 extern int* const _addr_instr_mem;
 extern int* const _addr_uart;
