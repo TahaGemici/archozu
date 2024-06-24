@@ -8,7 +8,7 @@
  ┣ 📜 timer ✔ (taha)
  ┣ 📜 GPIO ✔ (taha)
  ┣ 📜 USB 🌱 (utku)
- ┣ 📜 clk_gen 🌱 (taha)
+ ┣ 📜 clk_gen ✔ (taha)
  ┣ 📜 JTAG 🌱 (utku)
  ┗ 📜 perip_mem ✔ (taha)
 
@@ -32,6 +32,8 @@
  ┃ ┗ 📜 *undiscussed* ❌
  ┣ 📂 JTAG
  ┃ ┗ 📜 *undiscussed* ❌
+ ┣ 📜 linker_script ✔ (taha)
+ ┣ 📜 peripherals.h ✔ (taha)
  ┗ 📜 perip_mem ✔ (taha)
 
 📦 OpenLane 🌱 (metin)
