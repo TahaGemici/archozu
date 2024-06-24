@@ -1,6 +1,5 @@
 module I2C_master(
     input clk_i,
-    input clk_i2c,
     input rst_i,
     input write_i,
     input [3:0] data_be_i,
@@ -76,6 +75,29 @@ module I2C_master(
 	wire[7:0] addr_read = {data_o_perip[6:0], read};
 	assign (pull1, pull0) sda_io = 1;
 	assign sda_io = sda_o;
+
+
+
+    reg[5:0] clk_counter, clk_counter_nxt;
+    reg clk_i2c, clk_i2c_nxt;
+
+    initial begin
+        clk_counter_nxt = 0;
+        clk_i2c_nxt = 0;
+    end
+
+    always @(posedge clk_i) begin
+        counter <= counter_nxt;
+        clk_i2c <= clk_i2c_nxt;
+    end
+    always @* begin
+        clk_counter_nxt = clk_counter + 1;
+        if(clk_counter==62) begin
+            clk_counter_nxt = 0;
+            clk_i2c_nxt = ~clk_i2c;
+        end
+    end
+
 	assign scl_io = scln | clk_i2c;
 
 	reg clk_i2c_prv;

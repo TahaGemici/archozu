@@ -1,6 +1,5 @@
 module QSPI_master(
     input clk_i,
-    input clk_qspi,
     input rst_i,
     input write_i,
     input[3:0] data_be_i,
@@ -8,7 +7,7 @@ module QSPI_master(
     input[31:0] wdata_i,
     output[31:0] rdata_o,
 
-	output reg sclk_o,
+	output reg sclk,
     output reg cs_no,
     inout[3:0] io
 );
@@ -26,7 +25,7 @@ module QSPI_master(
     reg[31:0] rdaddr_perip;
     wire[31:0] data_o_perip;
     
-    perip_mem #(43, 43'h0_ff_ff_ff_ff_7f) qspi_mem(
+    perip_mem #(44, 44'h0_ff_ff_ff_ff_7f) qspi_mem(
         clk_i,
         
         write_i,
@@ -68,36 +67,6 @@ module QSPI_master(
     /////////////////////
 	// Clock Generator //
     /////////////////////
-	
-    reg sclk_d;
-    reg[5:0] cntr_sclk_d, cntr_sclk_q;
-
-    always @(posedge clk_qspi) begin
-        sclk_o <= sclk_d;
-        cntr_sclk_q <= cntr_sclk_d;
-    end
-
-    /////////
-    // FSM //
-    /////////
-
-    reg[7:0] cntr_state_q, cntr_state_d;
-    reg[3:0] io_q, io_d;
-    reg[3:0] io_en_q, io_en_d;
-    
-    always @(negedge (sclk_o | cs_no)) begin
-        io_q <= io_d;
-        io_en_q <= io_en_d;
-        state_q <= state_d;
-        cntr_state_q <= cntr_state_d;
-    end
-
-    assign io[0] = io_en_q[0] ? io_q[0] : 1'bz;
-    assign io[1] = io_en_q[1] ? io_q[1] : 1'bz;
-    assign io[2] = io_en_q[2] ? io_q[2] : 1'bz;
-    assign io[3] = io_en_q[3] ? io_q[3] : 1'bz;
-
-
 
 //  WREN       8'h06 + 8b cmd                         133Mhz x0 xxxx xxxx xxxx
 //  WRDI       8'h04 + 8b cmd                         133Mhz x0 xxxx xxxx xxxx
@@ -126,7 +95,36 @@ module QSPI_master(
 //                                       + 64B data
 //                                       + 64B data
 //                                       + 64B data
+	
+    reg sclk_o, sclk_d;
+    reg[5:0] cntr_sclk_d, cntr_sclk_q;
+
+    always @(posedge clk_qspi) begin
+        sclk <= |state_q;
+        sclk_o <= sclk_d;
+        cntr_sclk_q <= cntr_sclk_d;
+    end
+
+    /////////
+    // FSM //
+    /////////
+
+    reg[7:0] cntr_state_q, cntr_state_d;
+    reg[3:0] io_q, io_d;
+    reg[3:0] io_en_q, io_en_d;
     
+    always @(negedge sclk_o) begin
+        io_q <= io_d;
+        io_en_q <= io_en_d;
+        state_q <= state_d;
+        cntr_state_q <= cntr_state_d;
+    end
+
+    assign io[0] = io_en_q[0] ? io_q[0] : 1'bz;
+    assign io[1] = io_en_q[1] ? io_q[1] : 1'bz;
+    assign io[2] = io_en_q[2] ? io_q[2] : 1'bz;
+    assign io[3] = io_en_q[3] ? io_q[3] : 1'bz;
+
     localparam STATE_IDLE    = 2'b00;
     localparam STATE_CMD     = 2'b01;
     localparam STATE_DUMMY   = 2'b10;
@@ -151,7 +149,7 @@ module QSPI_master(
         QSPI_DUMMY_nxt     = QSPI_DUMMY;
         QSPI_WRITE_nxt     = QSPI_WRITE;
         QSPI_SIZE_nxt      = QSPI_SIZE;
-        cntr_sclk_d        = 0;
+        cntr_sclk_d        = -2;
         if(write_i & (~|addr_i[5:2])) begin
             case(addr_i[1:0])
                 2'b00: begin
@@ -160,7 +158,6 @@ module QSPI_master(
                     QSPI_DUMMY_nxt     = data_be_i[1] ? wdata_i[15:11] : QSPI_DUMMY;
                     QSPI_WRITE_nxt     = data_be_i[1] ? wdata_i[10]    : QSPI_WRITE;
                     QSPI_SIZE_nxt      = data_be_i[2] ? wdata_i[20:16] : QSPI_SIZE;
-                    cntr_sclk_d        = QSPI_PRESCALER_nxt;
                     cs_nd = ~wdata_i[31];
                 end
                 2'b01: begin
@@ -181,7 +178,7 @@ module QSPI_master(
                     cs_nd = ~wdata_i[7];
                 end
             endcase
-            cntr_sclk_d = QSPI_PRESCALER_nxt;
+            cntr_sclk_d = QSPI_PRESCALER_nxt-2;
         end
         sclk_d = 0;
         if(~cs_no) begin

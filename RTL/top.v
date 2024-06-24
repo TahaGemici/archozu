@@ -87,7 +87,7 @@ module top(
 
     cv32e40p_top cv32e40p_top (
         // Clock and Reset
-        .clk_i(clk_bus),
+        .clk_i(clk),
         .rst_ni(rstn),
 
         .pulp_clock_en_i(0),  // PULP clock enable (only used if COREV_CLUSTER = 1)
@@ -134,9 +134,7 @@ module top(
     );
 
     bus bus(
-        clk_bus,
-        clk_i2c,
-        clk_qspi,
+        clk,
         rst,
 
         data_req,

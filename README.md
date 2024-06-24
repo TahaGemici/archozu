@@ -8,7 +8,6 @@
  ┣ 📜 timer ✔ (taha)
  ┣ 📜 GPIO ✔ (taha)
  ┣ 📜 USB 🌱 (utku)
- ┣ 📜 clk_gen ✔ (taha)
  ┣ 📜 JTAG 🌱 (utku)
  ┗ 📜 perip_mem ✔ (taha)
 

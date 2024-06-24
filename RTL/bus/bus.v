@@ -1,7 +1,5 @@
 module bus(
     input clk_i,
-    input clk_i2c_i,
-    input clk_qspi_i,
     input rst_i,
     
     input data_req_i,
@@ -43,7 +41,6 @@ module bus(
     wire[31:0] i2c_out;
     I2C_master I2C_master(
         clk_i,
-        clk_i2c_i,
         rst_i,
         i2c_en & we,
         data_be_i,
@@ -58,7 +55,6 @@ module bus(
     wire[31:0] qspi_out;
     QSPI_master QSPI_master(
         clk_i,
-        clk_qspi_i,
         rst_i,
         qspi_en & we,
         data_be_i,
