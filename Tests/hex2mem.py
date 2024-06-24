@@ -1,7 +1,7 @@
 # .hex ----> .mem
 import sys
 f = open(sys.argv[1], "r")
-out = open("s25fl128s.mem", "w")
+out = open("../RTL/bus/memories/s25fl128s.mem", "w")
 y = ""
 state=0
 counter=0
