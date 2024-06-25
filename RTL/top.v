@@ -76,15 +76,6 @@ module top(
     
     wire debug_req, debug_havereset, debug_running, debug_halted;
 
-    wire clk_bus, clk_i2c, clk_qspi;
-    clk_gen clk_gen(
-        rst,
-        clk,
-        clk_bus,
-        clk_i2c,
-        clk_qspi
-    );
-
     cv32e40p_top cv32e40p_top (
         // Clock and Reset
         .clk_i(clk),

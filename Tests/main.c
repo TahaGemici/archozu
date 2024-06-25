@@ -21,6 +21,7 @@ void calculator_gpio(){
 }
 
 int main(){
-	knightrider_i2c();
-    calculator_gpio();
+	//knightrider_i2c();
+    //calculator_gpio();
+	i2c_write(5,4);
 }

@@ -7,7 +7,6 @@ module data_mem(
     output reg[31:0] data_o
 );
     reg[7:0] mem[0:(8*1024+2)], mem_nxt[0:(8*1024+2)];
-    wire[3:0] write = be_sel_i & {4{write_i}};
     reg[8194:0] mem_wren;
 
     genvar i;

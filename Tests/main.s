@@ -6,600 +6,606 @@ Disassembly of section .text:
 
 00002000 <main>:
     2000:	1141                	addi	sp,sp,-16
-    2002:	c606                	sw	ra,12(sp)
-    2004:	299d                	jal	247a <knightrider_i2c>
+    2002:	4515                	li	a0,5
+    2004:	4591                	li	a1,4
+    2006:	c606                	sw	ra,12(sp)
+    2008:	20a1                	jal	2050 <i2c_write>
+    200a:	40b2                	lw	ra,12(sp)
+    200c:	4501                	li	a0,0
+    200e:	0141                	addi	sp,sp,16
+    2010:	8082                	ret
 
 Disassembly of section .text.uart_conf:
 
-00002006 <uart_conf>:
-    2006:	6799                	lui	a5,0x6
-    2008:	0007a783          	lw	a5,0(a5) # 6000 <_addr_uart>
-    200c:	c388                	sw	a0,0(a5)
-    200e:	c3cc                	sw	a1,4(a5)
-    2010:	8082                	ret
+00002012 <uart_conf>:
+    2012:	6799                	lui	a5,0x6
+    2014:	0007a783          	lw	a5,0(a5) # 6000 <_addr_uart>
+    2018:	c388                	sw	a0,0(a5)
+    201a:	c3cc                	sw	a1,4(a5)
+    201c:	8082                	ret
 
 Disassembly of section .text.uart_read:
 
-00002012 <uart_read>:
-    2012:	6799                	lui	a5,0x6
-    2014:	0007a783          	lw	a5,0(a5) # 6000 <_addr_uart>
-    2018:	4709                	li	a4,2
-    201a:	4b94                	lw	a3,16(a5)
-    201c:	00e68363          	beq	a3,a4,2022 <uart_read+0x10>
-    2020:	a001                	j	2020 <uart_read+0xe>
-    2022:	0087c503          	lbu	a0,8(a5)
-    2026:	0007a823          	sw	zero,16(a5)
-    202a:	8082                	ret
+0000201e <uart_read>:
+    201e:	6799                	lui	a5,0x6
+    2020:	0007a783          	lw	a5,0(a5) # 6000 <_addr_uart>
+    2024:	4709                	li	a4,2
+    2026:	4b94                	lw	a3,16(a5)
+    2028:	00e68363          	beq	a3,a4,202e <uart_read+0x10>
+    202c:	a001                	j	202c <uart_read+0xe>
+    202e:	0087c503          	lbu	a0,8(a5)
+    2032:	0007a823          	sw	zero,16(a5)
+    2036:	8082                	ret
 
 Disassembly of section .text.uart_write:
 
-0000202c <uart_write>:
-    202c:	6799                	lui	a5,0x6
-    202e:	0007a783          	lw	a5,0(a5) # 6000 <_addr_uart>
-    2032:	4705                	li	a4,1
-    2034:	c7c8                	sw	a0,12(a5)
-    2036:	cb98                	sw	a4,16(a5)
-    2038:	a001                	j	2038 <uart_write+0xc>
+00002038 <uart_write>:
+    2038:	6799                	lui	a5,0x6
+    203a:	0007a783          	lw	a5,0(a5) # 6000 <_addr_uart>
+    203e:	4705                	li	a4,1
+    2040:	c7c8                	sw	a0,12(a5)
+    2042:	cb98                	sw	a4,16(a5)
+    2044:	a001                	j	2044 <uart_write+0xc>
 
 Disassembly of section .text.i2c_conf:
 
-0000203a <i2c_conf>:
-    203a:	67a1                	lui	a5,0x8
-    203c:	0007a783          	lw	a5,0(a5) # 8000 <_addr_i2c>
-    2040:	c3c8                	sw	a0,4(a5)
-    2042:	8082                	ret
+00002046 <i2c_conf>:
+    2046:	67a1                	lui	a5,0x8
+    2048:	0007a783          	lw	a5,0(a5) # 8000 <_addr_i2c>
+    204c:	c3c8                	sw	a0,4(a5)
+    204e:	8082                	ret
 
 Disassembly of section .text.i2c_write:
 
-00002044 <i2c_write>:
-    2044:	67a1                	lui	a5,0x8
-    2046:	0007a783          	lw	a5,0(a5) # 8000 <_addr_i2c>
-    204a:	4705                	li	a4,1
-    204c:	cb98                	sw	a4,16(a5)
-    204e:	c38c                	sw	a1,0(a5)
-    2050:	c7c8                	sw	a0,12(a5)
-    2052:	470d                	li	a4,3
-    2054:	4b94                	lw	a3,16(a5)
-    2056:	fee69fe3          	bne	a3,a4,2054 <i2c_write+0x10>
-    205a:	0007a823          	sw	zero,16(a5)
-    205e:	8082                	ret
+00002050 <i2c_write>:
+    2050:	67a1                	lui	a5,0x8
+    2052:	0007a783          	lw	a5,0(a5) # 8000 <_addr_i2c>
+    2056:	4705                	li	a4,1
+    2058:	cb98                	sw	a4,16(a5)
+    205a:	c38c                	sw	a1,0(a5)
+    205c:	c7c8                	sw	a0,12(a5)
+    205e:	470d                	li	a4,3
+    2060:	4b94                	lw	a3,16(a5)
+    2062:	fee69fe3          	bne	a3,a4,2060 <i2c_write+0x10>
+    2066:	0007a823          	sw	zero,16(a5)
+    206a:	8082                	ret
 
 Disassembly of section .text.i2c_read:
 
-00002060 <i2c_read>:
-    2060:	67a1                	lui	a5,0x8
-    2062:	0007a783          	lw	a5,0(a5) # 8000 <_addr_i2c>
-    2066:	4711                	li	a4,4
-    2068:	c388                	sw	a0,0(a5)
-    206a:	cb98                	sw	a4,16(a5)
-    206c:	a001                	j	206c <i2c_read+0xc>
+0000206c <i2c_read>:
+    206c:	67a1                	lui	a5,0x8
+    206e:	0007a783          	lw	a5,0(a5) # 8000 <_addr_i2c>
+    2072:	4711                	li	a4,4
+    2074:	c388                	sw	a0,0(a5)
+    2076:	cb98                	sw	a4,16(a5)
+    2078:	a001                	j	2078 <i2c_read+0xc>
 
 Disassembly of section .text.s25fl128s_wren:
 
-0000206e <s25fl128s_wren>:
-    206e:	67a9                	lui	a5,0xa
-    2070:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
-    2074:	800007b7          	lui	a5,0x80000
-    2078:	0799                	addi	a5,a5,6 # 80000006 <_addr_gpio+0x7fff0006>
-    207a:	c31c                	sw	a5,0(a4)
-    207c:	5718                	lw	a4,40(a4)
-    207e:	4785                	li	a5,1
-    2080:	00f70363          	beq	a4,a5,2086 <s25fl128s_wren+0x18>
-    2084:	a001                	j	2084 <s25fl128s_wren+0x16>
-    2086:	8082                	ret
+0000207a <s25fl128s_wren>:
+    207a:	67a9                	lui	a5,0xa
+    207c:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
+    2080:	800007b7          	lui	a5,0x80000
+    2084:	0799                	addi	a5,a5,6 # 80000006 <_addr_gpio+0x7fff0006>
+    2086:	c31c                	sw	a5,0(a4)
+    2088:	5718                	lw	a4,40(a4)
+    208a:	4785                	li	a5,1
+    208c:	00f70363          	beq	a4,a5,2092 <s25fl128s_wren+0x18>
+    2090:	a001                	j	2090 <s25fl128s_wren+0x16>
+    2092:	8082                	ret
 
 Disassembly of section .text.s25fl128s_wrdi:
 
-00002088 <s25fl128s_wrdi>:
-    2088:	67a9                	lui	a5,0xa
-    208a:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
-    208e:	800007b7          	lui	a5,0x80000
-    2092:	0791                	addi	a5,a5,4 # 80000004 <_addr_gpio+0x7fff0004>
-    2094:	c31c                	sw	a5,0(a4)
-    2096:	5718                	lw	a4,40(a4)
-    2098:	4785                	li	a5,1
-    209a:	00f70363          	beq	a4,a5,20a0 <s25fl128s_wrdi+0x18>
-    209e:	a001                	j	209e <s25fl128s_wrdi+0x16>
-    20a0:	8082                	ret
+00002094 <s25fl128s_wrdi>:
+    2094:	67a9                	lui	a5,0xa
+    2096:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
+    209a:	800007b7          	lui	a5,0x80000
+    209e:	0791                	addi	a5,a5,4 # 80000004 <_addr_gpio+0x7fff0004>
+    20a0:	c31c                	sw	a5,0(a4)
+    20a2:	5718                	lw	a4,40(a4)
+    20a4:	4785                	li	a5,1
+    20a6:	00f70363          	beq	a4,a5,20ac <s25fl128s_wrdi+0x18>
+    20aa:	a001                	j	20aa <s25fl128s_wrdi+0x16>
+    20ac:	8082                	ret
 
 Disassembly of section .text.s25fl128s_clsr:
 
-000020a2 <s25fl128s_clsr>:
-    20a2:	67a9                	lui	a5,0xa
-    20a4:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
-    20a8:	800007b7          	lui	a5,0x80000
-    20ac:	03078793          	addi	a5,a5,48 # 80000030 <_addr_gpio+0x7fff0030>
-    20b0:	c31c                	sw	a5,0(a4)
-    20b2:	5718                	lw	a4,40(a4)
-    20b4:	4785                	li	a5,1
-    20b6:	00f70363          	beq	a4,a5,20bc <s25fl128s_clsr+0x1a>
-    20ba:	a001                	j	20ba <s25fl128s_clsr+0x18>
-    20bc:	8082                	ret
+000020ae <s25fl128s_clsr>:
+    20ae:	67a9                	lui	a5,0xa
+    20b0:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
+    20b4:	800007b7          	lui	a5,0x80000
+    20b8:	03078793          	addi	a5,a5,48 # 80000030 <_addr_gpio+0x7fff0030>
+    20bc:	c31c                	sw	a5,0(a4)
+    20be:	5718                	lw	a4,40(a4)
+    20c0:	4785                	li	a5,1
+    20c2:	00f70363          	beq	a4,a5,20c8 <s25fl128s_clsr+0x1a>
+    20c6:	a001                	j	20c6 <s25fl128s_clsr+0x18>
+    20c8:	8082                	ret
 
 Disassembly of section .text.s25fl128s_reset:
 
-000020be <s25fl128s_reset>:
-    20be:	67a9                	lui	a5,0xa
-    20c0:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
-    20c4:	800007b7          	lui	a5,0x80000
-    20c8:	0f078793          	addi	a5,a5,240 # 800000f0 <_addr_gpio+0x7fff00f0>
-    20cc:	c31c                	sw	a5,0(a4)
-    20ce:	5718                	lw	a4,40(a4)
-    20d0:	4785                	li	a5,1
-    20d2:	00f70363          	beq	a4,a5,20d8 <s25fl128s_reset+0x1a>
-    20d6:	a001                	j	20d6 <s25fl128s_reset+0x18>
-    20d8:	8082                	ret
+000020ca <s25fl128s_reset>:
+    20ca:	67a9                	lui	a5,0xa
+    20cc:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
+    20d0:	800007b7          	lui	a5,0x80000
+    20d4:	0f078793          	addi	a5,a5,240 # 800000f0 <_addr_gpio+0x7fff00f0>
+    20d8:	c31c                	sw	a5,0(a4)
+    20da:	5718                	lw	a4,40(a4)
+    20dc:	4785                	li	a5,1
+    20de:	00f70363          	beq	a4,a5,20e4 <s25fl128s_reset+0x1a>
+    20e2:	a001                	j	20e2 <s25fl128s_reset+0x18>
+    20e4:	8082                	ret
 
 Disassembly of section .text.s25fl128s_rdid:
 
-000020da <s25fl128s_rdid>:
-    20da:	67a9                	lui	a5,0xa
-    20dc:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    20e0:	fff58713          	addi	a4,a1,-1
-    20e4:	800006b7          	lui	a3,0x80000
-    20e8:	19f68693          	addi	a3,a3,415 # 8000019f <_addr_gpio+0x7fff019f>
-    20ec:	0742                	slli	a4,a4,0x10
-    20ee:	9736                	add	a4,a4,a3
-    20f0:	5794                	lw	a3,40(a5)
-    20f2:	c398                	sw	a4,0(a5)
-    20f4:	4705                	li	a4,1
-    20f6:	00e68363          	beq	a3,a4,20fc <s25fl128s_rdid+0x22>
-    20fa:	a001                	j	20fa <s25fl128s_rdid+0x20>
-    20fc:	4711                	li	a4,4
-    20fe:	02e5c5b3          	div	a1,a1,a4
-    2102:	07a1                	addi	a5,a5,8
-    2104:	4701                	li	a4,0
-    2106:	00b74363          	blt	a4,a1,210c <s25fl128s_rdid+0x32>
-    210a:	8082                	ret
-    210c:	4390                	lw	a2,0(a5)
-    210e:	00271693          	slli	a3,a4,0x2
-    2112:	96aa                	add	a3,a3,a0
-    2114:	c290                	sw	a2,0(a3)
-    2116:	0705                	addi	a4,a4,1
-    2118:	0791                	addi	a5,a5,4
-    211a:	b7f5                	j	2106 <s25fl128s_rdid+0x2c>
+000020e6 <s25fl128s_rdid>:
+    20e6:	67a9                	lui	a5,0xa
+    20e8:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    20ec:	fff58713          	addi	a4,a1,-1
+    20f0:	800006b7          	lui	a3,0x80000
+    20f4:	19f68693          	addi	a3,a3,415 # 8000019f <_addr_gpio+0x7fff019f>
+    20f8:	0742                	slli	a4,a4,0x10
+    20fa:	9736                	add	a4,a4,a3
+    20fc:	5794                	lw	a3,40(a5)
+    20fe:	c398                	sw	a4,0(a5)
+    2100:	4705                	li	a4,1
+    2102:	00e68363          	beq	a3,a4,2108 <s25fl128s_rdid+0x22>
+    2106:	a001                	j	2106 <s25fl128s_rdid+0x20>
+    2108:	4711                	li	a4,4
+    210a:	02e5c5b3          	div	a1,a1,a4
+    210e:	07a1                	addi	a5,a5,8
+    2110:	4701                	li	a4,0
+    2112:	00b74363          	blt	a4,a1,2118 <s25fl128s_rdid+0x32>
+    2116:	8082                	ret
+    2118:	4390                	lw	a2,0(a5)
+    211a:	00271693          	slli	a3,a4,0x2
+    211e:	96aa                	add	a3,a3,a0
+    2120:	c290                	sw	a2,0(a3)
+    2122:	0705                	addi	a4,a4,1
+    2124:	0791                	addi	a5,a5,4
+    2126:	b7f5                	j	2112 <s25fl128s_rdid+0x2c>
 
 Disassembly of section .text.s25fl128s_rdsr1:
 
-0000211c <s25fl128s_rdsr1>:
-    211c:	67a9                	lui	a5,0xa
-    211e:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    2122:	80000737          	lui	a4,0x80000
-    2126:	10570713          	addi	a4,a4,261 # 80000105 <_addr_gpio+0x7fff0105>
-    212a:	5794                	lw	a3,40(a5)
-    212c:	c398                	sw	a4,0(a5)
-    212e:	4705                	li	a4,1
-    2130:	00e68363          	beq	a3,a4,2136 <s25fl128s_rdsr1+0x1a>
-    2134:	a001                	j	2134 <s25fl128s_rdsr1+0x18>
-    2136:	0087c503          	lbu	a0,8(a5)
-    213a:	8082                	ret
+00002128 <s25fl128s_rdsr1>:
+    2128:	67a9                	lui	a5,0xa
+    212a:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    212e:	80000737          	lui	a4,0x80000
+    2132:	10570713          	addi	a4,a4,261 # 80000105 <_addr_gpio+0x7fff0105>
+    2136:	5794                	lw	a3,40(a5)
+    2138:	c398                	sw	a4,0(a5)
+    213a:	4705                	li	a4,1
+    213c:	00e68363          	beq	a3,a4,2142 <s25fl128s_rdsr1+0x1a>
+    2140:	a001                	j	2140 <s25fl128s_rdsr1+0x18>
+    2142:	0087c503          	lbu	a0,8(a5)
+    2146:	8082                	ret
 
 Disassembly of section .text.s25fl128s_rdsr2:
 
-0000213c <s25fl128s_rdsr2>:
-    213c:	67a9                	lui	a5,0xa
-    213e:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    2142:	80000737          	lui	a4,0x80000
-    2146:	10770713          	addi	a4,a4,263 # 80000107 <_addr_gpio+0x7fff0107>
-    214a:	5794                	lw	a3,40(a5)
-    214c:	c398                	sw	a4,0(a5)
-    214e:	4705                	li	a4,1
-    2150:	00e68363          	beq	a3,a4,2156 <s25fl128s_rdsr2+0x1a>
-    2154:	a001                	j	2154 <s25fl128s_rdsr2+0x18>
-    2156:	0087c503          	lbu	a0,8(a5)
-    215a:	8082                	ret
+00002148 <s25fl128s_rdsr2>:
+    2148:	67a9                	lui	a5,0xa
+    214a:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    214e:	80000737          	lui	a4,0x80000
+    2152:	10770713          	addi	a4,a4,263 # 80000107 <_addr_gpio+0x7fff0107>
+    2156:	5794                	lw	a3,40(a5)
+    2158:	c398                	sw	a4,0(a5)
+    215a:	4705                	li	a4,1
+    215c:	00e68363          	beq	a3,a4,2162 <s25fl128s_rdsr2+0x1a>
+    2160:	a001                	j	2160 <s25fl128s_rdsr2+0x18>
+    2162:	0087c503          	lbu	a0,8(a5)
+    2166:	8082                	ret
 
 Disassembly of section .text.s25fl128s_rdcr:
 
-0000215c <s25fl128s_rdcr>:
-    215c:	67a9                	lui	a5,0xa
-    215e:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    2162:	80000737          	lui	a4,0x80000
-    2166:	13570713          	addi	a4,a4,309 # 80000135 <_addr_gpio+0x7fff0135>
-    216a:	5794                	lw	a3,40(a5)
-    216c:	c398                	sw	a4,0(a5)
-    216e:	4705                	li	a4,1
-    2170:	00e68363          	beq	a3,a4,2176 <s25fl128s_rdcr+0x1a>
-    2174:	a001                	j	2174 <s25fl128s_rdcr+0x18>
-    2176:	0087c503          	lbu	a0,8(a5)
-    217a:	8082                	ret
+00002168 <s25fl128s_rdcr>:
+    2168:	67a9                	lui	a5,0xa
+    216a:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    216e:	80000737          	lui	a4,0x80000
+    2172:	13570713          	addi	a4,a4,309 # 80000135 <_addr_gpio+0x7fff0135>
+    2176:	5794                	lw	a3,40(a5)
+    2178:	c398                	sw	a4,0(a5)
+    217a:	4705                	li	a4,1
+    217c:	00e68363          	beq	a3,a4,2182 <s25fl128s_rdcr+0x1a>
+    2180:	a001                	j	2180 <s25fl128s_rdcr+0x18>
+    2182:	0087c503          	lbu	a0,8(a5)
+    2186:	8082                	ret
 
 Disassembly of section .text.s25fl128s_read_id:
 
-0000217c <s25fl128s_read_id>:
-    217c:	67a9                	lui	a5,0xa
-    217e:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    2182:	80012737          	lui	a4,0x80012
-    2186:	99070713          	addi	a4,a4,-1648 # 80011990 <_addr_gpio+0x80001990>
-    218a:	5794                	lw	a3,40(a5)
-    218c:	c398                	sw	a4,0(a5)
-    218e:	c3c8                	sw	a0,4(a5)
-    2190:	4705                	li	a4,1
-    2192:	00e68363          	beq	a3,a4,2198 <s25fl128s_read_id+0x1c>
-    2196:	a001                	j	2196 <s25fl128s_read_id+0x1a>
-    2198:	00879503          	lh	a0,8(a5)
-    219c:	8082                	ret
+00002188 <s25fl128s_read_id>:
+    2188:	67a9                	lui	a5,0xa
+    218a:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    218e:	80012737          	lui	a4,0x80012
+    2192:	99070713          	addi	a4,a4,-1648 # 80011990 <_addr_gpio+0x80001990>
+    2196:	5794                	lw	a3,40(a5)
+    2198:	c398                	sw	a4,0(a5)
+    219a:	c3c8                	sw	a0,4(a5)
+    219c:	4705                	li	a4,1
+    219e:	00e68363          	beq	a3,a4,21a4 <s25fl128s_read_id+0x1c>
+    21a2:	a001                	j	21a2 <s25fl128s_read_id+0x1a>
+    21a4:	00879503          	lh	a0,8(a5)
+    21a8:	8082                	ret
 
 Disassembly of section .text.s25fl128s_res:
 
-0000219e <s25fl128s_res>:
-    219e:	67a9                	lui	a5,0xa
-    21a0:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    21a4:	80002737          	lui	a4,0x80002
-    21a8:	9ab70713          	addi	a4,a4,-1621 # 800019ab <_addr_gpio+0x7fff19ab>
-    21ac:	5794                	lw	a3,40(a5)
-    21ae:	c398                	sw	a4,0(a5)
-    21b0:	4705                	li	a4,1
-    21b2:	00e68363          	beq	a3,a4,21b8 <s25fl128s_res+0x1a>
-    21b6:	a001                	j	21b6 <s25fl128s_res+0x18>
-    21b8:	0087c503          	lbu	a0,8(a5)
-    21bc:	8082                	ret
+000021aa <s25fl128s_res>:
+    21aa:	67a9                	lui	a5,0xa
+    21ac:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    21b0:	80002737          	lui	a4,0x80002
+    21b4:	9ab70713          	addi	a4,a4,-1621 # 800019ab <_addr_gpio+0x7fff19ab>
+    21b8:	5794                	lw	a3,40(a5)
+    21ba:	c398                	sw	a4,0(a5)
+    21bc:	4705                	li	a4,1
+    21be:	00e68363          	beq	a3,a4,21c4 <s25fl128s_res+0x1a>
+    21c2:	a001                	j	21c2 <s25fl128s_res+0x18>
+    21c4:	0087c503          	lbu	a0,8(a5)
+    21c8:	8082                	ret
 
 Disassembly of section .text.s25fl128s_wrr:
 
-000021be <s25fl128s_wrr>:
-    21be:	67a9                	lui	a5,0xa
-    21c0:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    21c4:	80010737          	lui	a4,0x80010
-    21c8:	50170713          	addi	a4,a4,1281 # 80010501 <_addr_gpio+0x80000501>
-    21cc:	c398                	sw	a4,0(a5)
-    21ce:	5798                	lw	a4,40(a5)
-    21d0:	c788                	sw	a0,8(a5)
-    21d2:	4785                	li	a5,1
-    21d4:	00f70363          	beq	a4,a5,21da <s25fl128s_wrr+0x1c>
-    21d8:	a001                	j	21d8 <s25fl128s_wrr+0x1a>
-    21da:	8082                	ret
+000021ca <s25fl128s_wrr>:
+    21ca:	67a9                	lui	a5,0xa
+    21cc:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    21d0:	80010737          	lui	a4,0x80010
+    21d4:	50170713          	addi	a4,a4,1281 # 80010501 <_addr_gpio+0x80000501>
+    21d8:	c398                	sw	a4,0(a5)
+    21da:	5798                	lw	a4,40(a5)
+    21dc:	c788                	sw	a0,8(a5)
+    21de:	4785                	li	a5,1
+    21e0:	00f70363          	beq	a4,a5,21e6 <s25fl128s_wrr+0x1c>
+    21e4:	a001                	j	21e4 <s25fl128s_wrr+0x1a>
+    21e6:	8082                	ret
 
 Disassembly of section .text.s25fl128s_read:
 
-000021dc <s25fl128s_read>:
-    21dc:	67a9                	lui	a5,0xa
-    21de:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    21e2:	fff60713          	addi	a4,a2,-1
-    21e6:	800026b7          	lui	a3,0x80002
-    21ea:	90368693          	addi	a3,a3,-1789 # 80001903 <_addr_gpio+0x7fff1903>
-    21ee:	0742                	slli	a4,a4,0x10
-    21f0:	9736                	add	a4,a4,a3
-    21f2:	5794                	lw	a3,40(a5)
-    21f4:	c398                	sw	a4,0(a5)
-    21f6:	c3c8                	sw	a0,4(a5)
-    21f8:	4705                	li	a4,1
-    21fa:	00e68363          	beq	a3,a4,2200 <s25fl128s_read+0x24>
-    21fe:	a001                	j	21fe <s25fl128s_read+0x22>
-    2200:	4711                	li	a4,4
-    2202:	02e64633          	div	a2,a2,a4
-    2206:	07a1                	addi	a5,a5,8
-    2208:	4701                	li	a4,0
-    220a:	00c74363          	blt	a4,a2,2210 <s25fl128s_read+0x34>
-    220e:	8082                	ret
-    2210:	4388                	lw	a0,0(a5)
-    2212:	00271693          	slli	a3,a4,0x2
-    2216:	96ae                	add	a3,a3,a1
-    2218:	c288                	sw	a0,0(a3)
-    221a:	0705                	addi	a4,a4,1
-    221c:	0791                	addi	a5,a5,4
-    221e:	b7f5                	j	220a <s25fl128s_read+0x2e>
+000021e8 <s25fl128s_read>:
+    21e8:	67a9                	lui	a5,0xa
+    21ea:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    21ee:	fff60713          	addi	a4,a2,-1
+    21f2:	800026b7          	lui	a3,0x80002
+    21f6:	90368693          	addi	a3,a3,-1789 # 80001903 <_addr_gpio+0x7fff1903>
+    21fa:	0742                	slli	a4,a4,0x10
+    21fc:	9736                	add	a4,a4,a3
+    21fe:	5794                	lw	a3,40(a5)
+    2200:	c398                	sw	a4,0(a5)
+    2202:	c3c8                	sw	a0,4(a5)
+    2204:	4705                	li	a4,1
+    2206:	00e68363          	beq	a3,a4,220c <s25fl128s_read+0x24>
+    220a:	a001                	j	220a <s25fl128s_read+0x22>
+    220c:	4711                	li	a4,4
+    220e:	02e64633          	div	a2,a2,a4
+    2212:	07a1                	addi	a5,a5,8
+    2214:	4701                	li	a4,0
+    2216:	00c74363          	blt	a4,a2,221c <s25fl128s_read+0x34>
+    221a:	8082                	ret
+    221c:	4388                	lw	a0,0(a5)
+    221e:	00271693          	slli	a3,a4,0x2
+    2222:	96ae                	add	a3,a3,a1
+    2224:	c288                	sw	a0,0(a3)
+    2226:	0705                	addi	a4,a4,1
+    2228:	0791                	addi	a5,a5,4
+    222a:	b7f5                	j	2216 <s25fl128s_read+0x2e>
 
 Disassembly of section .text.s25fl128s_pp:
 
-00002220 <s25fl128s_pp>:
-    2220:	fff60793          	addi	a5,a2,-1
-    2224:	80002737          	lui	a4,0x80002
-    2228:	d0270713          	addi	a4,a4,-766 # 80001d02 <_addr_gpio+0x7fff1d02>
-    222c:	07c2                	slli	a5,a5,0x10
-    222e:	97ba                	add	a5,a5,a4
-    2230:	6729                	lui	a4,0xa
-    2232:	00072703          	lw	a4,0(a4) # a000 <_addr_qspi>
-    2236:	4691                	li	a3,4
-    2238:	02d64633          	div	a2,a2,a3
-    223c:	c348                	sw	a0,4(a4)
-    223e:	4681                	li	a3,0
-    2240:	00870513          	addi	a0,a4,8
-    2244:	00c6c863          	blt	a3,a2,2254 <s25fl128s_pp+0x34>
-    2248:	c31c                	sw	a5,0(a4)
-    224a:	5718                	lw	a4,40(a4)
-    224c:	4785                	li	a5,1
-    224e:	00f70d63          	beq	a4,a5,2268 <s25fl128s_pp+0x48>
-    2252:	a001                	j	2252 <s25fl128s_pp+0x32>
-    2254:	00269813          	slli	a6,a3,0x2
-    2258:	982e                	add	a6,a6,a1
-    225a:	00082803          	lw	a6,0(a6)
-    225e:	0685                	addi	a3,a3,1
-    2260:	01052023          	sw	a6,0(a0)
-    2264:	0511                	addi	a0,a0,4
-    2266:	bff9                	j	2244 <s25fl128s_pp+0x24>
-    2268:	8082                	ret
+0000222c <s25fl128s_pp>:
+    222c:	fff60793          	addi	a5,a2,-1
+    2230:	80002737          	lui	a4,0x80002
+    2234:	d0270713          	addi	a4,a4,-766 # 80001d02 <_addr_gpio+0x7fff1d02>
+    2238:	07c2                	slli	a5,a5,0x10
+    223a:	97ba                	add	a5,a5,a4
+    223c:	6729                	lui	a4,0xa
+    223e:	00072703          	lw	a4,0(a4) # a000 <_addr_qspi>
+    2242:	4691                	li	a3,4
+    2244:	02d64633          	div	a2,a2,a3
+    2248:	c348                	sw	a0,4(a4)
+    224a:	4681                	li	a3,0
+    224c:	00870513          	addi	a0,a4,8
+    2250:	00c6c863          	blt	a3,a2,2260 <s25fl128s_pp+0x34>
+    2254:	c31c                	sw	a5,0(a4)
+    2256:	5718                	lw	a4,40(a4)
+    2258:	4785                	li	a5,1
+    225a:	00f70d63          	beq	a4,a5,2274 <s25fl128s_pp+0x48>
+    225e:	a001                	j	225e <s25fl128s_pp+0x32>
+    2260:	00269813          	slli	a6,a3,0x2
+    2264:	982e                	add	a6,a6,a1
+    2266:	00082803          	lw	a6,0(a6)
+    226a:	0685                	addi	a3,a3,1
+    226c:	01052023          	sw	a6,0(a0)
+    2270:	0511                	addi	a0,a0,4
+    2272:	bff9                	j	2250 <s25fl128s_pp+0x24>
+    2274:	8082                	ret
 
 Disassembly of section .text.s25fl128s_se:
 
-0000226a <s25fl128s_se>:
-    226a:	67a9                	lui	a5,0xa
-    226c:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    2270:	80020737          	lui	a4,0x80020
-    2274:	5d870713          	addi	a4,a4,1496 # 800205d8 <_addr_gpio+0x800105d8>
-    2278:	c398                	sw	a4,0(a5)
-    227a:	5798                	lw	a4,40(a5)
-    227c:	c788                	sw	a0,8(a5)
-    227e:	4785                	li	a5,1
-    2280:	00f70363          	beq	a4,a5,2286 <s25fl128s_se+0x1c>
-    2284:	a001                	j	2284 <s25fl128s_se+0x1a>
-    2286:	8082                	ret
+00002276 <s25fl128s_se>:
+    2276:	67a9                	lui	a5,0xa
+    2278:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    227c:	80020737          	lui	a4,0x80020
+    2280:	5d870713          	addi	a4,a4,1496 # 800205d8 <_addr_gpio+0x800105d8>
+    2284:	c398                	sw	a4,0(a5)
+    2286:	5798                	lw	a4,40(a5)
+    2288:	c788                	sw	a0,8(a5)
+    228a:	4785                	li	a5,1
+    228c:	00f70363          	beq	a4,a5,2292 <s25fl128s_se+0x1c>
+    2290:	a001                	j	2290 <s25fl128s_se+0x1a>
+    2292:	8082                	ret
 
 Disassembly of section .text.s25fl128s_dor:
 
-00002288 <s25fl128s_dor>:
-    2288:	67a9                	lui	a5,0xa
-    228a:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    228e:	fff60713          	addi	a4,a2,-1
-    2292:	800026b7          	lui	a3,0x80002
-    2296:	23b68693          	addi	a3,a3,571 # 8000223b <_addr_gpio+0x7fff223b>
-    229a:	0742                	slli	a4,a4,0x10
-    229c:	9736                	add	a4,a4,a3
-    229e:	5794                	lw	a3,40(a5)
-    22a0:	c398                	sw	a4,0(a5)
-    22a2:	c3c8                	sw	a0,4(a5)
-    22a4:	4705                	li	a4,1
-    22a6:	00e68363          	beq	a3,a4,22ac <s25fl128s_dor+0x24>
-    22aa:	a001                	j	22aa <s25fl128s_dor+0x22>
-    22ac:	4711                	li	a4,4
-    22ae:	02e64633          	div	a2,a2,a4
-    22b2:	07a1                	addi	a5,a5,8
-    22b4:	4701                	li	a4,0
-    22b6:	00c74363          	blt	a4,a2,22bc <s25fl128s_dor+0x34>
-    22ba:	8082                	ret
-    22bc:	4388                	lw	a0,0(a5)
-    22be:	00271693          	slli	a3,a4,0x2
-    22c2:	96ae                	add	a3,a3,a1
-    22c4:	c288                	sw	a0,0(a3)
-    22c6:	0705                	addi	a4,a4,1
-    22c8:	0791                	addi	a5,a5,4
-    22ca:	b7f5                	j	22b6 <s25fl128s_dor+0x2e>
+00002294 <s25fl128s_dor>:
+    2294:	67a9                	lui	a5,0xa
+    2296:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    229a:	fff60713          	addi	a4,a2,-1
+    229e:	800026b7          	lui	a3,0x80002
+    22a2:	23b68693          	addi	a3,a3,571 # 8000223b <_addr_gpio+0x7fff223b>
+    22a6:	0742                	slli	a4,a4,0x10
+    22a8:	9736                	add	a4,a4,a3
+    22aa:	5794                	lw	a3,40(a5)
+    22ac:	c398                	sw	a4,0(a5)
+    22ae:	c3c8                	sw	a0,4(a5)
+    22b0:	4705                	li	a4,1
+    22b2:	00e68363          	beq	a3,a4,22b8 <s25fl128s_dor+0x24>
+    22b6:	a001                	j	22b6 <s25fl128s_dor+0x22>
+    22b8:	4711                	li	a4,4
+    22ba:	02e64633          	div	a2,a2,a4
+    22be:	07a1                	addi	a5,a5,8
+    22c0:	4701                	li	a4,0
+    22c2:	00c74363          	blt	a4,a2,22c8 <s25fl128s_dor+0x34>
+    22c6:	8082                	ret
+    22c8:	4388                	lw	a0,0(a5)
+    22ca:	00271693          	slli	a3,a4,0x2
+    22ce:	96ae                	add	a3,a3,a1
+    22d0:	c288                	sw	a0,0(a3)
+    22d2:	0705                	addi	a4,a4,1
+    22d4:	0791                	addi	a5,a5,4
+    22d6:	b7f5                	j	22c2 <s25fl128s_dor+0x2e>
 
 Disassembly of section .text.s25fl128s_qor:
 
-000022cc <s25fl128s_qor>:
-    22cc:	67a9                	lui	a5,0xa
-    22ce:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
-    22d2:	fff60713          	addi	a4,a2,-1
-    22d6:	800026b7          	lui	a3,0x80002
-    22da:	36b68693          	addi	a3,a3,875 # 8000236b <_addr_gpio+0x7fff236b>
-    22de:	0742                	slli	a4,a4,0x10
-    22e0:	9736                	add	a4,a4,a3
-    22e2:	5794                	lw	a3,40(a5)
-    22e4:	c398                	sw	a4,0(a5)
-    22e6:	c3c8                	sw	a0,4(a5)
-    22e8:	4705                	li	a4,1
-    22ea:	00e68363          	beq	a3,a4,22f0 <s25fl128s_qor+0x24>
-    22ee:	a001                	j	22ee <s25fl128s_qor+0x22>
-    22f0:	4711                	li	a4,4
-    22f2:	02e64633          	div	a2,a2,a4
-    22f6:	07a1                	addi	a5,a5,8
-    22f8:	4701                	li	a4,0
-    22fa:	00c74363          	blt	a4,a2,2300 <s25fl128s_qor+0x34>
-    22fe:	8082                	ret
-    2300:	4388                	lw	a0,0(a5)
-    2302:	00271693          	slli	a3,a4,0x2
-    2306:	96ae                	add	a3,a3,a1
-    2308:	c288                	sw	a0,0(a3)
-    230a:	0705                	addi	a4,a4,1
-    230c:	0791                	addi	a5,a5,4
-    230e:	b7f5                	j	22fa <s25fl128s_qor+0x2e>
+000022d8 <s25fl128s_qor>:
+    22d8:	67a9                	lui	a5,0xa
+    22da:	0007a783          	lw	a5,0(a5) # a000 <_addr_qspi>
+    22de:	fff60713          	addi	a4,a2,-1
+    22e2:	800026b7          	lui	a3,0x80002
+    22e6:	36b68693          	addi	a3,a3,875 # 8000236b <_addr_gpio+0x7fff236b>
+    22ea:	0742                	slli	a4,a4,0x10
+    22ec:	9736                	add	a4,a4,a3
+    22ee:	5794                	lw	a3,40(a5)
+    22f0:	c398                	sw	a4,0(a5)
+    22f2:	c3c8                	sw	a0,4(a5)
+    22f4:	4705                	li	a4,1
+    22f6:	00e68363          	beq	a3,a4,22fc <s25fl128s_qor+0x24>
+    22fa:	a001                	j	22fa <s25fl128s_qor+0x22>
+    22fc:	4711                	li	a4,4
+    22fe:	02e64633          	div	a2,a2,a4
+    2302:	07a1                	addi	a5,a5,8
+    2304:	4701                	li	a4,0
+    2306:	00c74363          	blt	a4,a2,230c <s25fl128s_qor+0x34>
+    230a:	8082                	ret
+    230c:	4388                	lw	a0,0(a5)
+    230e:	00271693          	slli	a3,a4,0x2
+    2312:	96ae                	add	a3,a3,a1
+    2314:	c288                	sw	a0,0(a3)
+    2316:	0705                	addi	a4,a4,1
+    2318:	0791                	addi	a5,a5,4
+    231a:	b7f5                	j	2306 <s25fl128s_qor+0x2e>
 
 Disassembly of section .text.s25fl128s_qpp:
 
-00002310 <s25fl128s_qpp>:
-    2310:	67a9                	lui	a5,0xa
-    2312:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
-    2316:	800026b7          	lui	a3,0x80002
-    231a:	fff60793          	addi	a5,a2,-1
-    231e:	f3268693          	addi	a3,a3,-206 # 80001f32 <_addr_gpio+0x7fff1f32>
-    2322:	07c2                	slli	a5,a5,0x10
-    2324:	97b6                	add	a5,a5,a3
-    2326:	c31c                	sw	a5,0(a4)
-    2328:	4791                	li	a5,4
-    232a:	02f64633          	div	a2,a2,a5
-    232e:	c348                	sw	a0,4(a4)
-    2330:	00870693          	addi	a3,a4,8
-    2334:	4781                	li	a5,0
-    2336:	00c7c763          	blt	a5,a2,2344 <s25fl128s_qpp+0x34>
-    233a:	5718                	lw	a4,40(a4)
-    233c:	4785                	li	a5,1
-    233e:	00f70b63          	beq	a4,a5,2354 <s25fl128s_qpp+0x44>
-    2342:	a001                	j	2342 <s25fl128s_qpp+0x32>
-    2344:	00279513          	slli	a0,a5,0x2
-    2348:	952e                	add	a0,a0,a1
-    234a:	4108                	lw	a0,0(a0)
-    234c:	0785                	addi	a5,a5,1
-    234e:	c288                	sw	a0,0(a3)
-    2350:	0691                	addi	a3,a3,4
-    2352:	b7d5                	j	2336 <s25fl128s_qpp+0x26>
-    2354:	8082                	ret
+0000231c <s25fl128s_qpp>:
+    231c:	67a9                	lui	a5,0xa
+    231e:	0007a703          	lw	a4,0(a5) # a000 <_addr_qspi>
+    2322:	800026b7          	lui	a3,0x80002
+    2326:	fff60793          	addi	a5,a2,-1
+    232a:	f3268693          	addi	a3,a3,-206 # 80001f32 <_addr_gpio+0x7fff1f32>
+    232e:	07c2                	slli	a5,a5,0x10
+    2330:	97b6                	add	a5,a5,a3
+    2332:	c31c                	sw	a5,0(a4)
+    2334:	4791                	li	a5,4
+    2336:	02f64633          	div	a2,a2,a5
+    233a:	c348                	sw	a0,4(a4)
+    233c:	00870693          	addi	a3,a4,8
+    2340:	4781                	li	a5,0
+    2342:	00c7c763          	blt	a5,a2,2350 <s25fl128s_qpp+0x34>
+    2346:	5718                	lw	a4,40(a4)
+    2348:	4785                	li	a5,1
+    234a:	00f70b63          	beq	a4,a5,2360 <s25fl128s_qpp+0x44>
+    234e:	a001                	j	234e <s25fl128s_qpp+0x32>
+    2350:	00279513          	slli	a0,a5,0x2
+    2354:	952e                	add	a0,a0,a1
+    2356:	4108                	lw	a0,0(a0)
+    2358:	0785                	addi	a5,a5,1
+    235a:	c288                	sw	a0,0(a3)
+    235c:	0691                	addi	a3,a3,4
+    235e:	b7d5                	j	2342 <s25fl128s_qpp+0x26>
+    2360:	8082                	ret
 
 Disassembly of section .text.qspi_custom_write:
 
-00002356 <qspi_custom_write>:
-    2356:	0ff67613          	zext.b	a2,a2
-    235a:	06a2                	slli	a3,a3,0x8
-    235c:	96b2                	add	a3,a3,a2
-    235e:	072e                	slli	a4,a4,0xb
-    2360:	40068693          	addi	a3,a3,1024
-    2364:	96ba                	add	a3,a3,a4
-    2366:	fff78713          	addi	a4,a5,-1
-    236a:	0742                	slli	a4,a4,0x10
-    236c:	9736                	add	a4,a4,a3
-    236e:	0866                	slli	a6,a6,0x19
-    2370:	983a                	add	a6,a6,a4
-    2372:	80000737          	lui	a4,0x80000
-    2376:	983a                	add	a6,a6,a4
-    2378:	6729                	lui	a4,0xa
-    237a:	00072703          	lw	a4,0(a4) # a000 <_addr_qspi>
-    237e:	4691                	li	a3,4
-    2380:	02d7c7b3          	div	a5,a5,a3
-    2384:	c348                	sw	a0,4(a4)
-    2386:	00870613          	addi	a2,a4,8
-    238a:	4681                	li	a3,0
-    238c:	00f6c963          	blt	a3,a5,239e <qspi_custom_write+0x48>
-    2390:	01072023          	sw	a6,0(a4)
-    2394:	5718                	lw	a4,40(a4)
-    2396:	4785                	li	a5,1
-    2398:	00f70b63          	beq	a4,a5,23ae <qspi_custom_write+0x58>
-    239c:	a001                	j	239c <qspi_custom_write+0x46>
-    239e:	00269513          	slli	a0,a3,0x2
-    23a2:	952e                	add	a0,a0,a1
-    23a4:	4108                	lw	a0,0(a0)
-    23a6:	0685                	addi	a3,a3,1
-    23a8:	c208                	sw	a0,0(a2)
-    23aa:	0611                	addi	a2,a2,4
-    23ac:	b7c5                	j	238c <qspi_custom_write+0x36>
-    23ae:	8082                	ret
+00002362 <qspi_custom_write>:
+    2362:	0ff67613          	zext.b	a2,a2
+    2366:	06a2                	slli	a3,a3,0x8
+    2368:	96b2                	add	a3,a3,a2
+    236a:	072e                	slli	a4,a4,0xb
+    236c:	40068693          	addi	a3,a3,1024
+    2370:	96ba                	add	a3,a3,a4
+    2372:	fff78713          	addi	a4,a5,-1
+    2376:	0742                	slli	a4,a4,0x10
+    2378:	9736                	add	a4,a4,a3
+    237a:	0866                	slli	a6,a6,0x19
+    237c:	983a                	add	a6,a6,a4
+    237e:	80000737          	lui	a4,0x80000
+    2382:	983a                	add	a6,a6,a4
+    2384:	6729                	lui	a4,0xa
+    2386:	00072703          	lw	a4,0(a4) # a000 <_addr_qspi>
+    238a:	4691                	li	a3,4
+    238c:	02d7c7b3          	div	a5,a5,a3
+    2390:	c348                	sw	a0,4(a4)
+    2392:	00870613          	addi	a2,a4,8
+    2396:	4681                	li	a3,0
+    2398:	00f6c963          	blt	a3,a5,23aa <qspi_custom_write+0x48>
+    239c:	01072023          	sw	a6,0(a4)
+    23a0:	5718                	lw	a4,40(a4)
+    23a2:	4785                	li	a5,1
+    23a4:	00f70b63          	beq	a4,a5,23ba <qspi_custom_write+0x58>
+    23a8:	a001                	j	23a8 <qspi_custom_write+0x46>
+    23aa:	00269513          	slli	a0,a3,0x2
+    23ae:	952e                	add	a0,a0,a1
+    23b0:	4108                	lw	a0,0(a0)
+    23b2:	0685                	addi	a3,a3,1
+    23b4:	c208                	sw	a0,0(a2)
+    23b6:	0611                	addi	a2,a2,4
+    23b8:	b7c5                	j	2398 <qspi_custom_write+0x36>
+    23ba:	8082                	ret
 
 Disassembly of section .text.qspi_custom_read:
 
-000023b0 <qspi_custom_read>:
-    23b0:	0ff67613          	zext.b	a2,a2
-    23b4:	06a2                	slli	a3,a3,0x8
-    23b6:	96b2                	add	a3,a3,a2
-    23b8:	072e                	slli	a4,a4,0xb
-    23ba:	96ba                	add	a3,a3,a4
-    23bc:	fff78713          	addi	a4,a5,-1
-    23c0:	0742                	slli	a4,a4,0x10
-    23c2:	9736                	add	a4,a4,a3
-    23c4:	0866                	slli	a6,a6,0x19
-    23c6:	983a                	add	a6,a6,a4
-    23c8:	6729                	lui	a4,0xa
-    23ca:	00072703          	lw	a4,0(a4) # a000 <_addr_qspi>
-    23ce:	800006b7          	lui	a3,0x80000
-    23d2:	9836                	add	a6,a6,a3
-    23d4:	5710                	lw	a2,40(a4)
-    23d6:	c348                	sw	a0,4(a4)
-    23d8:	01072023          	sw	a6,0(a4)
-    23dc:	4685                	li	a3,1
-    23de:	00d60363          	beq	a2,a3,23e4 <qspi_custom_read+0x34>
-    23e2:	a001                	j	23e2 <qspi_custom_read+0x32>
-    23e4:	4691                	li	a3,4
-    23e6:	02d7c7b3          	div	a5,a5,a3
-    23ea:	0721                	addi	a4,a4,8
-    23ec:	4681                	li	a3,0
-    23ee:	00f6c363          	blt	a3,a5,23f4 <qspi_custom_read+0x44>
-    23f2:	8082                	ret
-    23f4:	4308                	lw	a0,0(a4)
-    23f6:	00269613          	slli	a2,a3,0x2
-    23fa:	962e                	add	a2,a2,a1
-    23fc:	c208                	sw	a0,0(a2)
-    23fe:	0685                	addi	a3,a3,1 # 80000001 <_addr_gpio+0x7fff0001>
-    2400:	0711                	addi	a4,a4,4
-    2402:	b7f5                	j	23ee <qspi_custom_read+0x3e>
+000023bc <qspi_custom_read>:
+    23bc:	0ff67613          	zext.b	a2,a2
+    23c0:	06a2                	slli	a3,a3,0x8
+    23c2:	96b2                	add	a3,a3,a2
+    23c4:	072e                	slli	a4,a4,0xb
+    23c6:	96ba                	add	a3,a3,a4
+    23c8:	fff78713          	addi	a4,a5,-1
+    23cc:	0742                	slli	a4,a4,0x10
+    23ce:	9736                	add	a4,a4,a3
+    23d0:	0866                	slli	a6,a6,0x19
+    23d2:	983a                	add	a6,a6,a4
+    23d4:	6729                	lui	a4,0xa
+    23d6:	00072703          	lw	a4,0(a4) # a000 <_addr_qspi>
+    23da:	800006b7          	lui	a3,0x80000
+    23de:	9836                	add	a6,a6,a3
+    23e0:	5710                	lw	a2,40(a4)
+    23e2:	c348                	sw	a0,4(a4)
+    23e4:	01072023          	sw	a6,0(a4)
+    23e8:	4685                	li	a3,1
+    23ea:	00d60363          	beq	a2,a3,23f0 <qspi_custom_read+0x34>
+    23ee:	a001                	j	23ee <qspi_custom_read+0x32>
+    23f0:	4691                	li	a3,4
+    23f2:	02d7c7b3          	div	a5,a5,a3
+    23f6:	0721                	addi	a4,a4,8
+    23f8:	4681                	li	a3,0
+    23fa:	00f6c363          	blt	a3,a5,2400 <qspi_custom_read+0x44>
+    23fe:	8082                	ret
+    2400:	4308                	lw	a0,0(a4)
+    2402:	00269613          	slli	a2,a3,0x2
+    2406:	962e                	add	a2,a2,a1
+    2408:	c208                	sw	a0,0(a2)
+    240a:	0685                	addi	a3,a3,1 # 80000001 <_addr_gpio+0x7fff0001>
+    240c:	0711                	addi	a4,a4,4
+    240e:	b7f5                	j	23fa <qspi_custom_read+0x3e>
 
 Disassembly of section .text.timer_conf:
 
-00002404 <timer_conf>:
-    2404:	67b1                	lui	a5,0xc
-    2406:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
-    240a:	c388                	sw	a0,0(a5)
-    240c:	c3cc                	sw	a1,4(a5)
-    240e:	cb90                	sw	a2,16(a5)
-    2410:	8082                	ret
+00002410 <timer_conf>:
+    2410:	67b1                	lui	a5,0xc
+    2412:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
+    2416:	c388                	sw	a0,0(a5)
+    2418:	c3cc                	sw	a1,4(a5)
+    241a:	cb90                	sw	a2,16(a5)
+    241c:	8082                	ret
 
 Disassembly of section .text.timer_read_counter:
 
-00002412 <timer_read_counter>:
-    2412:	67b1                	lui	a5,0xc
-    2414:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
-    2418:	4bc8                	lw	a0,20(a5)
-    241a:	8082                	ret
+0000241e <timer_read_counter>:
+    241e:	67b1                	lui	a5,0xc
+    2420:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
+    2424:	4bc8                	lw	a0,20(a5)
+    2426:	8082                	ret
 
 Disassembly of section .text.timer_read_event:
 
-0000241c <timer_read_event>:
-    241c:	67b1                	lui	a5,0xc
-    241e:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
-    2422:	4f88                	lw	a0,24(a5)
-    2424:	8082                	ret
+00002428 <timer_read_event>:
+    2428:	67b1                	lui	a5,0xc
+    242a:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
+    242e:	4f88                	lw	a0,24(a5)
+    2430:	8082                	ret
 
 Disassembly of section .text.timer_clear_counter:
 
-00002426 <timer_clear_counter>:
-    2426:	67b1                	lui	a5,0xc
-    2428:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
-    242c:	4705                	li	a4,1
-    242e:	c798                	sw	a4,8(a5)
-    2430:	8082                	ret
-
-Disassembly of section .text.timer_clear_event:
-
-00002432 <timer_clear_event>:
+00002432 <timer_clear_counter>:
     2432:	67b1                	lui	a5,0xc
     2434:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
     2438:	4705                	li	a4,1
-    243a:	cfd8                	sw	a4,28(a5)
+    243a:	c798                	sw	a4,8(a5)
     243c:	8082                	ret
 
-Disassembly of section .text.timer_enable:
+Disassembly of section .text.timer_clear_event:
 
-0000243e <timer_enable>:
+0000243e <timer_clear_event>:
     243e:	67b1                	lui	a5,0xc
     2440:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
     2444:	4705                	li	a4,1
-    2446:	c7d8                	sw	a4,12(a5)
+    2446:	cfd8                	sw	a4,28(a5)
     2448:	8082                	ret
+
+Disassembly of section .text.timer_enable:
+
+0000244a <timer_enable>:
+    244a:	67b1                	lui	a5,0xc
+    244c:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
+    2450:	4705                	li	a4,1
+    2452:	c7d8                	sw	a4,12(a5)
+    2454:	8082                	ret
 
 Disassembly of section .text.timer_disable:
 
-0000244a <timer_disable>:
-    244a:	67b1                	lui	a5,0xc
-    244c:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
-    2450:	0007a623          	sw	zero,12(a5)
-    2454:	8082                	ret
+00002456 <timer_disable>:
+    2456:	67b1                	lui	a5,0xc
+    2458:	0007a783          	lw	a5,0(a5) # c000 <_addr_timer>
+    245c:	0007a623          	sw	zero,12(a5)
+    2460:	8082                	ret
 
 Disassembly of section .text.gpio_write:
 
-00002456 <gpio_write>:
-    2456:	67c1                	lui	a5,0x10
-    2458:	0007a783          	lw	a5,0(a5) # 10000 <_addr_gpio>
-    245c:	c3c8                	sw	a0,4(a5)
-    245e:	8082                	ret
+00002462 <gpio_write>:
+    2462:	67c1                	lui	a5,0x10
+    2464:	0007a783          	lw	a5,0(a5) # 10000 <_addr_gpio>
+    2468:	c3c8                	sw	a0,4(a5)
+    246a:	8082                	ret
 
 Disassembly of section .text.gpio_read:
 
-00002460 <gpio_read>:
-    2460:	67c1                	lui	a5,0x10
-    2462:	0007a783          	lw	a5,0(a5) # 10000 <_addr_gpio>
-    2466:	00079503          	lh	a0,0(a5)
-    246a:	8082                	ret
+0000246c <gpio_read>:
+    246c:	67c1                	lui	a5,0x10
+    246e:	0007a783          	lw	a5,0(a5) # 10000 <_addr_gpio>
+    2472:	00079503          	lh	a0,0(a5)
+    2476:	8082                	ret
 
 Disassembly of section .text.instr_mem_write:
 
-0000246c <instr_mem_write>:
-    246c:	6791                	lui	a5,0x4
-    246e:	0007a783          	lw	a5,0(a5) # 4000 <_addr_instr_mem>
-    2472:	050a                	slli	a0,a0,0x2
-    2474:	97aa                	add	a5,a5,a0
-    2476:	c38c                	sw	a1,0(a5)
-    2478:	8082                	ret
+00002478 <instr_mem_write>:
+    2478:	6791                	lui	a5,0x4
+    247a:	0007a783          	lw	a5,0(a5) # 4000 <_addr_instr_mem>
+    247e:	050a                	slli	a0,a0,0x2
+    2480:	97aa                	add	a5,a5,a0
+    2482:	c38c                	sw	a1,0(a5)
+    2484:	8082                	ret
 
 Disassembly of section .text.knightrider_i2c:
 
-0000247a <knightrider_i2c>:
-    247a:	1141                	addi	sp,sp,-16
-    247c:	c422                	sw	s0,8(sp)
-    247e:	c226                	sw	s1,4(sp)
-    2480:	c606                	sw	ra,12(sp)
-    2482:	447d                	li	s0,31
-    2484:	4485                	li	s1,1
-    2486:	0486                	slli	s1,s1,0x1
-    2488:	4591                	li	a1,4
-    248a:	8526                	mv	a0,s1
-    248c:	147d                	addi	s0,s0,-1
-    248e:	3e5d                	jal	2044 <i2c_write>
-    2490:	f87d                	bnez	s0,2486 <knightrider_i2c+0xc>
-    2492:	80000437          	lui	s0,0x80000
-    2496:	8405                	srai	s0,s0,0x1
-    2498:	4591                	li	a1,4
-    249a:	8522                	mv	a0,s0
-    249c:	3665                	jal	2044 <i2c_write>
-    249e:	bfe5                	j	2496 <knightrider_i2c+0x1c>
+00002486 <knightrider_i2c>:
+    2486:	1141                	addi	sp,sp,-16
+    2488:	c422                	sw	s0,8(sp)
+    248a:	c226                	sw	s1,4(sp)
+    248c:	c606                	sw	ra,12(sp)
+    248e:	447d                	li	s0,31
+    2490:	4485                	li	s1,1
+    2492:	0486                	slli	s1,s1,0x1
+    2494:	4591                	li	a1,4
+    2496:	8526                	mv	a0,s1
+    2498:	147d                	addi	s0,s0,-1
+    249a:	3e5d                	jal	2050 <i2c_write>
+    249c:	f87d                	bnez	s0,2492 <knightrider_i2c+0xc>
+    249e:	80000437          	lui	s0,0x80000
+    24a2:	8405                	srai	s0,s0,0x1
+    24a4:	4591                	li	a1,4
+    24a6:	8522                	mv	a0,s0
+    24a8:	3665                	jal	2050 <i2c_write>
+    24aa:	bfe5                	j	24a2 <knightrider_i2c+0x1c>
 
 Disassembly of section .text.calculator_gpio:
 
-000024a0 <calculator_gpio>:
-    24a0:	8082                	ret
+000024ac <calculator_gpio>:
+    24ac:	8082                	ret
