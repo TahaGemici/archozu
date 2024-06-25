@@ -44,7 +44,7 @@ void i2c_write(int data, char byte_size){
     *_addr_i2c     = byte_size;
     *(_addr_i2c+3) = data;
     *(_addr_i2c+4) = 1;
-    while(*(_addr_i2c+4)!=3){}
+    while(*((volatile int*)_addr_i2c+4)!=3){}
     *(_addr_i2c+4) = 0;
 }
 

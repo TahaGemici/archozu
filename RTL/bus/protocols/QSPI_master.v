@@ -106,7 +106,7 @@ module QSPI_master(
 
     reg[7:0] cntr_state_q, cntr_state_d;
     reg[3:0] io_q, io_d;
-    reg[3:0] io_en_q, io_en_d;
+    reg[3:0] io_en_q=0, io_en_d;
     
     always @(negedge (sclk_o|cs_no)) begin
         io_q <= io_d;
@@ -147,6 +147,10 @@ module QSPI_master(
         QSPI_SIZE_nxt      = QSPI_SIZE;
         cntr_sclk_d        = QSPI_PRESCALER-1;
         state_d = state_q;
+        cntr_state_d = cntr_state_q - 1;
+        io_en_d = 4'b0001;
+        io_d[3:1] = 4'b0000;
+        io_d[0] = data_o_perip[7];
         if(write_i & (~|addr_i[5:2])) begin
             case(addr_i[1:0])
                 2'b00: begin
@@ -155,6 +159,7 @@ module QSPI_master(
                     QSPI_DUMMY_nxt     = data_be_i[1] ? wdata_i[15:11] : QSPI_DUMMY;
                     QSPI_WRITE_nxt     = data_be_i[1] ? wdata_i[10]    : QSPI_WRITE;
                     QSPI_SIZE_nxt      = data_be_i[2] ? wdata_i[20:16] : QSPI_SIZE;
+                    if(data_be_i[0]) io_d[0] = wdata_i[7];
                     if(wdata_i[31]) begin
                         cs_nd = 1'b0;
                         state_d = STATE_CMD;
@@ -200,9 +205,6 @@ module QSPI_master(
                 end
             end
         end
-        cntr_state_d = cntr_state_q - 1;
-        io_en_d = 4'b0001;
-        io_d = 4'b0000;
 
         write_perip = 0;
         be_perip = 4'b1111;
@@ -212,9 +214,9 @@ module QSPI_master(
         case(state_q)
             STATE_IDLE: begin
                 cntr_state_d = 6;
-                io_d[0] = (data_be_i[0] & (~|addr_i[1:0])) ? wdata_i[7] : data_o_perip[7];
                 write_perip = 1;
                 data_i_perip = 1;
+                if(state_d!=STATE_CMD) io_en_d = 4'b0000;
             end
             
             STATE_CMD: begin

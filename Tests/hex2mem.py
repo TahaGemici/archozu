@@ -16,8 +16,8 @@ for line in f.readlines():
         if(counter!=32):
             y+="@"+hex(int(lines[0],16)-8192)[2:].zfill(6)+"\n"
         counter=0
-        for i in lines[-1:0:-1]:
+        for i in lines[1:]:
             counter+=len(i)
-            for j in range(len(i),0,-2):
-                y+=i[(j-2):j]+"\n"
+            for j in range(0,len(i),2):
+                y+=i[j:(j+2)]+"\n"
 out.write(y)

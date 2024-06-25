@@ -78,21 +78,17 @@ module I2C_master(
 
 
 
-    reg[5:0] clk_counter, clk_counter_nxt;
-    reg clk_i2c, clk_i2c_nxt;
-
-    initial begin
-        clk_counter_nxt = 0;
-        clk_i2c_nxt = 0;
-    end
+    reg[7:0] clk_counter=0, clk_counter_nxt;
+    reg clk_i2c=0, clk_i2c_nxt;
 
     always @(posedge clk_i) begin
-        counter <= counter_nxt;
+        clk_counter <= clk_counter_nxt;
         clk_i2c <= clk_i2c_nxt;
     end
     always @* begin
         clk_counter_nxt = clk_counter + 1;
-        if(clk_counter==62) begin
+        clk_i2c_nxt = clk_i2c;
+        if(clk_counter==124) begin
             clk_counter_nxt = 0;
             clk_i2c_nxt = ~clk_i2c;
         end

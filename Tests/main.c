@@ -1,10 +1,5 @@
 #include "peripherals.h"
 
-int main(){
-	knightrider_i2c();
-    calculator_gpio();
-}
-
 void knightrider_i2c(){
     int data=1;
     for(int i=0;i<100;i++){
@@ -23,4 +18,9 @@ void calculator_gpio(){
     for(int i=0;i<1000;i++){
         
     }
+}
+
+int main(){
+	knightrider_i2c();
+    calculator_gpio();
 }
