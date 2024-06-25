@@ -1,8 +1,13 @@
 #include "peripherals.h"
 
 int main(){
-	int data=1;
-	while(1){
+	knightrider_i2c();
+    calculator_gpio();
+}
+
+void knightrider_i2c(){
+    int data=1;
+    for(int i=0;i<100;i++){
 		while(data!=(1<<31)){
 			data<<=1;
 			i2c_write(data, 4);
@@ -12,4 +17,10 @@ int main(){
 			i2c_write(data, 4);
 		}
 	}
+}
+
+void calculator_gpio(){
+    for(int i=0;i<1000;i++){
+        
+    }
 }
