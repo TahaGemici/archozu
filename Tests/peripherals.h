@@ -1,35 +1,36 @@
-#include <math.h>
-#define CLK_FREQ_MHZ 50.0
+#define CLK_FREQ_MHZ 50
+#define CEIL_CLK(x) CLK_FREQ_MHZ/x+(CLK_FREQ_MHZ%x!=0)
+#define CEIL_SIZE(x) (x+3)>>2
 
-extern int* const _addr_instr_mem;
-extern int* const _addr_uart;
-extern int* const _addr_i2c;
-extern int* const _addr_qspi;
-extern int* const _addr_timer;
-extern int* const _addr_usb;
-extern int* const _addr_gpio;
+volatile int* const _addr_instr_mem = (int*)0x04000;
+volatile int* const _addr_uart      = (int*)0x06000;
+volatile int* const _addr_i2c       = (int*)0x08000;
+volatile int* const _addr_qspi      = (int*)0x0A000;
+volatile int* const _addr_timer     = (int*)0x0C000;
+volatile int* const _addr_usb       = (int*)0x0E000;
+volatile int* const _addr_gpio      = (int*)0x10000;
 
   ////////////
  //  UART  //
 ////////////
 
 void uart_conf(int baud_quotient, char stop_bit){
-    *_addr_uart = baud_quotient;
-    *(_addr_uart+1) = stop_bit;
+    _addr_uart[0] = baud_quotient;
+    _addr_uart[1] = stop_bit;
 }
 
 char uart_read(){
-    while(*(_addr_uart+4)!=2){}
-    char tmp = *(_addr_uart+2); //sıralama kasıtlı: önce veriyi al, sonra 0'a çek
-    *(_addr_uart+4) = 0;
+    while(_addr_uart[4]!=2){}
+    char tmp = _addr_uart[2];
+    _addr_uart[4] = 0;
     return tmp;
 }
 
 void uart_write(char data){
-    *(_addr_uart+3) = data;
-    *(_addr_uart+4) = 1;
-    while(*(_addr_uart+4)!=5){}
-    *(_addr_uart+4) = 0;
+    _addr_uart[3] = data;
+    _addr_uart[4] = 1;
+    while(_addr_uart[4]!=5){}
+    _addr_uart[4] = 0;
 }
 
   ///////////
@@ -37,58 +38,58 @@ void uart_write(char data){
 ///////////
 
 void i2c_conf(char addr){
-    *(_addr_i2c+1) = addr;
+    _addr_i2c[1] = addr;
 }
 
 void i2c_write(int data, char byte_size){
-    *_addr_i2c     = byte_size;
-    *(_addr_i2c+3) = data;
-    *(_addr_i2c+4) = 1;
-    while(*((volatile int*)_addr_i2c+4)!=3){}
-    *(_addr_i2c+4) = 0;
+    _addr_i2c[0] = byte_size;
+    _addr_i2c[3] = data;
+    _addr_i2c[4] = 1;
+    while(_addr_i2c[4]!=3){}
+    _addr_i2c[4] = 0;
 }
 
 int i2c_read(char byte_size){
-    *_addr_i2c     = byte_size;
-    *(_addr_i2c+4) = 4;
-    while(*(_addr_i2c+4)!=12){}
-    *(_addr_i2c+4) = 0;
-    return *(_addr_i2c+2);
+    _addr_i2c[0]     = byte_size;
+    _addr_i2c[4] = 4;
+    while(_addr_i2c[4]!=12){}
+    _addr_i2c[4] = 0;
+    return _addr_i2c[2];
 }
 
   ////////////
  //  QSPI  //
 ////////////
 
-const int qspi_clk_133 = (((int)ceil(CLK_FREQ_MHZ / 133) - 1) << 25) + (1<<31);
-const int qspi_clk_104 = (((int)ceil(CLK_FREQ_MHZ / 104) - 1) << 25) + (1<<31);
-const int qspi_clk_80  = (((int)ceil(CLK_FREQ_MHZ /  80) - 1) << 25) + (1<<31);
-const int qspi_clk_50  = (((int)ceil(CLK_FREQ_MHZ /  50) - 1) << 25) + (1<<31);
-const int qspi_mode_x1 = 1 << 8;
-const int qspi_mode_x2 = 2 << 8;
-const int qspi_mode_x4 = 3 << 8;
-const int qspi_write   = 1 << 10;
-const int qspi_dummy_3 = 3 << 11;
-const int qspi_dummy_4 = 4 << 11;
+int const qspi_clk_133 = ((CEIL_CLK(133) - 1) << 25) + (1<<31);
+int const qspi_clk_104 = ((CEIL_CLK(104) - 1) << 25) + (1<<31);
+int const qspi_clk_80  = ((CEIL_CLK( 80) - 1) << 25) + (1<<31);
+int const qspi_clk_50  = ((CEIL_CLK( 50) - 1) << 25) + (1<<31);
+int const qspi_mode_x1 = 1 << 8;
+int const qspi_mode_x2 = 2 << 8;
+int const qspi_mode_x4 = 3 << 8;
+int const qspi_write   = 1 << 10;
+int const qspi_dummy_3 = 3 << 11;
+int const qspi_dummy_4 = 4 << 11;
 
 void s25fl128s_wren(){
-    *_addr_qspi = qspi_clk_133 + 0x06;
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[0] = qspi_clk_133 + 0x06;
+    while(_addr_qspi[10]!=1){}
 }
 
 void s25fl128s_wrdi(){
-    *_addr_qspi = qspi_clk_133 + 0x04;
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[0] = qspi_clk_133 + 0x04;
+    while(_addr_qspi[10]!=1){}
 }
 
 void s25fl128s_clsr(){
-    *_addr_qspi = qspi_clk_133 + 0x30;
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[0] = qspi_clk_133 + 0x30;
+    while(_addr_qspi[10]!=1){}
 }
 
 void s25fl128s_reset(){
-    *_addr_qspi = qspi_clk_133 + 0xF0;
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[0] = qspi_clk_133 + 0xF0;
+    while(_addr_qspi[10]!=1){}
 }
 
 void s25fl128s_rdid(int* array, int byte_size){
@@ -96,16 +97,16 @@ void s25fl128s_rdid(int* array, int byte_size){
     tmp += qspi_mode_x1;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_133;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    for(int i=0;i<ceil(byte_size/4);i++) array[i] = _addr_qspi[2+i];
 }
 
 char s25fl128s_rdsr1(){
     int tmp = 0x05;
     tmp += qspi_mode_x1;
     tmp += qspi_clk_133;
-    *_addr_qspi = tmp;
+    _addr_qspi[0] = tmp;
     while(*(_addr_qspi+10)!=1){}
     return *(_addr_qspi+2);
 }
@@ -266,33 +267,33 @@ void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int 
 /////////////
 
 void timer_conf(int prescaler, int auto_reload, int mode){
-    *_addr_timer = prescaler;
-    *(_addr_timer+1) = auto_reload;
-    *(_addr_timer+4) = mode;
+    _addr_timer[0] = prescaler;
+    _addr_timer[1] = auto_reload;
+    _addr_timer[4] = mode;
 }
 
 int timer_read_counter(){
-    return *(_addr_timer+5);
+    return _addr_timer[5];
 }
 
 int timer_read_event(){
-    return *(_addr_timer+6);
+    return _addr_timer[6];
 }
 
 void timer_clear_counter(){
-    *(_addr_timer+2) = 1;
+    _addr_timer[2] = 1;
 }
 
 void timer_clear_event(){
-    *(_addr_timer+7) = 1;
+    _addr_timer[7] = 1;
 }
 
 void timer_enable(){
-    *(_addr_timer+3) = 1;
+    _addr_timer[3] = 1;
 }
 
 void timer_disable(){
-    *(_addr_timer+3) = 0;
+    _addr_timer[3] = 0;
 }
 
   ///////////
@@ -310,11 +311,11 @@ void timer_disable(){
 ////////////
 
 void gpio_write(short in){
-    *(_addr_gpio+1) = in;
+    _addr_gpio[1] = in;
 }
 
 short gpio_read(){
-    return *_addr_gpio;
+    return _addr_gpio[0];
 }
 
   /////////////////
@@ -322,5 +323,5 @@ short gpio_read(){
 /////////////////
 
 void instr_mem_write(int addr, int data){
-    *(_addr_instr_mem+addr) = data;
+    _addr_instr_mem[addr] = data;
 }
