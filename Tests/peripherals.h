@@ -107,26 +107,26 @@ char s25fl128s_rdsr1(){
     tmp += qspi_mode_x1;
     tmp += qspi_clk_133;
     _addr_qspi[0] = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    return *(_addr_qspi+2);
+    while(_addr_qspi[10]!=1){}
+    return _addr_qspi[2];
 }
 
 char s25fl128s_rdsr2(){
     int tmp = 0x07;
     tmp += qspi_mode_x1;
     tmp += qspi_clk_133;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    return *(_addr_qspi+2);
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    return _addr_qspi[2];
 }
 
 char s25fl128s_rdcr(){
     int tmp = 0x35;
     tmp += qspi_mode_x1;
     tmp += qspi_clk_133;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    return *(_addr_qspi+2);
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    return _addr_qspi[2];
 }
 
 short s25fl128s_read_id(int addr){
@@ -135,10 +135,10 @@ short s25fl128s_read_id(int addr){
     tmp += qspi_dummy_3;
     tmp += 1 << 16;
     tmp += qspi_clk_133;
-    *(_addr_qspi+1) = addr;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    return *(_addr_qspi+2);
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    return _addr_qspi[2];
 }
 
 char s25fl128s_res(){
@@ -146,9 +146,9 @@ char s25fl128s_res(){
     tmp += qspi_mode_x1;
     tmp += qspi_dummy_3;
     tmp += qspi_clk_50;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    return *(_addr_qspi+2);
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    return _addr_qspi[2];
 }
 
 void s25fl128s_wrr(short data){
@@ -157,9 +157,9 @@ void s25fl128s_wrr(short data){
     tmp += qspi_write;
     tmp += 1 << 16;
     tmp += qspi_clk_133;
-    *(_addr_qspi+2) = data;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[2] = data;
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
 }
 
 void s25fl128s_read(int addr, int* array, int byte_size){
@@ -168,10 +168,10 @@ void s25fl128s_read(int addr, int* array, int byte_size){
     tmp += qspi_dummy_3;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_50;
-    *(_addr_qspi+1) = addr;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = *(_addr_qspi+2+i);
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
 }
 
 void s25fl128s_pp(int addr, int* array, int byte_size){
@@ -181,10 +181,10 @@ void s25fl128s_pp(int addr, int* array, int byte_size){
     tmp += qspi_dummy_3;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_133;
-    *(_addr_qspi+1) = addr;
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) *(_addr_qspi+2+i) = array[i];
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[1] = addr;
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) _addr_qspi[2+i] = array[i];
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
 }
 
 void s25fl128s_se(int data){
@@ -193,9 +193,9 @@ void s25fl128s_se(int data){
     tmp += qspi_write;
     tmp += 2 << 16;
     tmp += qspi_clk_133;
-    *(_addr_qspi+2) = data;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[2] = data;
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
 }
 
 void s25fl128s_dor(int addr, int* array, int byte_size){
@@ -204,10 +204,10 @@ void s25fl128s_dor(int addr, int* array, int byte_size){
     tmp += qspi_dummy_4;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_104;
-    *(_addr_qspi+1) = addr;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = *(_addr_qspi+2+i);
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
 }
  
 void s25fl128s_qor(int addr, int* array, int byte_size){
@@ -216,10 +216,10 @@ void s25fl128s_qor(int addr, int* array, int byte_size){
     tmp += qspi_dummy_4;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_104;
-    *(_addr_qspi+1) = addr;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = *(_addr_qspi+2+i);
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
 }
 
 void s25fl128s_qpp(int addr, int* array, int byte_size){
@@ -229,10 +229,10 @@ void s25fl128s_qpp(int addr, int* array, int byte_size){
     tmp += qspi_dummy_3;
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_80;
-    *(_addr_qspi+1) = addr;
-    *_addr_qspi = tmp;
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) *(_addr_qspi+2+i) = array[i];
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = tmp;
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) _addr_qspi[2+i] = array[i];
+    while(_addr_qspi[10]!=1){}
 }
 
 void qspi_custom_write(int addr, int* array, int instr, int mode, int dummy, int byte_size, int prescaler){
@@ -243,10 +243,10 @@ void qspi_custom_write(int addr, int* array, int instr, int mode, int dummy, int
     tmp += (byte_size-1) << 16;
     tmp += prescaler << 25;
     tmp += 1 << 31;
-    *(_addr_qspi+1) = addr;
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) *(_addr_qspi+2+i) = array[i];
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
+    _addr_qspi[1] = addr;
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) _addr_qspi[2+i] = array[i];
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
 }
 
 void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int byte_size, int prescaler){
@@ -256,10 +256,10 @@ void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int 
     tmp += (byte_size-1) << 16;
     tmp += prescaler << 25;
     tmp += 1 << 31;
-    *(_addr_qspi+1) = addr;
-    *_addr_qspi = tmp;
-    while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = *(_addr_qspi+2+i);
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = tmp;
+    while(_addr_qspi[10]!=1){}
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
 }
 
   /////////////
