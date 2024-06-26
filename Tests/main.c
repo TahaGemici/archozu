@@ -14,14 +14,15 @@ void knightrider_i2c(){
 		}
 	}
 }
-
-void calculator_gpio(){
-    for(int i=0;i<1000;i++){
-        
-    }
+/*
+void sil_beni(){
+    char abc[1000]="291eajsdıoasjdoıasjdlıasjdlkasjdlkasjdlasjdlıjaslıdjaslıdjasldjasldjaslıdjaldjaslıjdaslıjdasljdasldjaslıdjasıldjaslıdjasldaldnq2vdu9mq3ip9rfqfoa";
+    for(int i=0;i<1000;i+=4){
+		i2c_write(abc[i], 4);
+	}
 }
-
+*/
 int main(){
 	knightrider_i2c();
-    calculator_gpio();
+	//sil_beni();
 }

@@ -7,10 +7,11 @@ state=0
 counter=0
 for line in f.readlines():
     if(line.startswith("Contents")):
+        state=0
         if(line[20:25]==".text"):
             state=1
-        else:
-            state=0
+        if(line[20:27]==".rodata"):
+            state=1
     elif(state):
         lines = line[0:41].split()
         if(counter!=32):

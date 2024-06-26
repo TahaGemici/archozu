@@ -111,8 +111,8 @@ module QSPI_master(
     always @(negedge (sclk_o|cs_no)) begin
         io_q <= io_d;
         io_en_q <= io_en_d;
-        state_q_prv <= ~|state_q;
         state_q <= state_d;
+        state_q_prv <= ~|state_q;
         cntr_state_q <= cntr_state_d;
     end
 
@@ -139,7 +139,7 @@ module QSPI_master(
         QSPI_SIZE      <= QSPI_SIZE_nxt;
     end    
     always @* begin
-        cs_nd = state_q ? 1'b0 : state_q_prv;
+        cs_nd = state_q ? 1'b0 : ((QSPI_DATA_MODE && (!QSPI_WRITE)) ? (~|state_q) : state_q_prv);
         QSPI_PRESCALER_nxt = QSPI_PRESCALER;
         QSPI_DATA_MODE_nxt = QSPI_DATA_MODE;
         QSPI_DUMMY_nxt     = QSPI_DUMMY;
@@ -200,8 +200,15 @@ module QSPI_master(
             cntr_sclk_d = cntr_sclk_q + 1;
             if(cntr_sclk_q == QSPI_PRESCALER) begin
                 cntr_sclk_d = 0;
-                if((|state_q)|(~state_q_prv)) begin
+                if(state_q) begin
                     sclk_d = ~sclk_o;
+                end else begin
+                    if(!state_q_prv) begin
+                        sclk_d = ~sclk_o;
+                    end
+                    if(QSPI_DATA_MODE && (!QSPI_WRITE)) begin
+                        sclk_d = sclk_o;
+                    end
                 end
             end
         end
@@ -226,8 +233,8 @@ module QSPI_master(
                 if(cntr_state_q[2:0]==0) begin
                     cntr_state_d = -1;
                     if(QSPI_DATA_MODE) begin
-                        if(QSPI_DUMMY) state_d = STATE_DUMMY;
-                        else state_d = STATE_EXECUTE;
+                        state_d = STATE_EXECUTE;
+                        if(QSPI_DUMMY||(!QSPI_WRITE)) state_d = STATE_DUMMY;
                     end else begin
                         state_d = STATE_IDLE;
                     end
@@ -237,14 +244,16 @@ module QSPI_master(
             STATE_DUMMY: begin
                 rdaddr_perip = QSPI_ADR - 1;
                 io_d[0] = data_o_perip[cntr_state_q[4:0]];
-                if(cntr_state_q=={~QSPI_DUMMY,3'b111}) begin
+                if(cntr_state_q[7:1]=={~QSPI_DUMMY, 2'b11}) begin
                     io_en_d = 4'b0000;
-                    state_d = STATE_EXECUTE;
-                    case(QSPI_DATA_MODE)
-                        default: cntr_state_d = 8'b1111_1111;
-                        2'b10: cntr_state_d = 8'b1111_1110;
-                        2'b11: cntr_state_d = 8'b1111_1100;
-                    endcase
+                    if(QSPI_WRITE | (~|QSPI_DUMMY) | (~cntr_state_q[0])) begin
+                        state_d = STATE_EXECUTE;
+                        case(QSPI_DATA_MODE)
+                            default: cntr_state_d = 8'b1111_1111;
+                            2'b10: cntr_state_d = 8'b1111_1110;
+                            2'b11: cntr_state_d = 8'b1111_1100;
+                        endcase
+                    end
                 end
             end
 
