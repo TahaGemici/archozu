@@ -99,7 +99,7 @@ void s25fl128s_rdid(int* array, int byte_size){
     tmp += qspi_clk_133;
     _addr_qspi[0] = tmp;
     while(_addr_qspi[10]!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = _addr_qspi[2+i];
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
 }
 
 char s25fl128s_rdsr1(){
@@ -171,7 +171,7 @@ void s25fl128s_read(int addr, int* array, int byte_size){
     *(_addr_qspi+1) = addr;
     *_addr_qspi = tmp;
     while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = *(_addr_qspi+2+i);
 }
 
 void s25fl128s_pp(int addr, int* array, int byte_size){
@@ -182,7 +182,7 @@ void s25fl128s_pp(int addr, int* array, int byte_size){
     tmp += (byte_size-1) << 16;
     tmp += qspi_clk_133;
     *(_addr_qspi+1) = addr;
-    for(int i=0;i<ceil(byte_size/4);i++) *(_addr_qspi+2+i) = array[i];
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) *(_addr_qspi+2+i) = array[i];
     *_addr_qspi = tmp;
     while(*(_addr_qspi+10)!=1){}
 }
@@ -207,7 +207,7 @@ void s25fl128s_dor(int addr, int* array, int byte_size){
     *(_addr_qspi+1) = addr;
     *_addr_qspi = tmp;
     while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = *(_addr_qspi+2+i);
 }
  
 void s25fl128s_qor(int addr, int* array, int byte_size){
@@ -219,7 +219,7 @@ void s25fl128s_qor(int addr, int* array, int byte_size){
     *(_addr_qspi+1) = addr;
     *_addr_qspi = tmp;
     while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = *(_addr_qspi+2+i);
 }
 
 void s25fl128s_qpp(int addr, int* array, int byte_size){
@@ -231,7 +231,7 @@ void s25fl128s_qpp(int addr, int* array, int byte_size){
     tmp += qspi_clk_80;
     *(_addr_qspi+1) = addr;
     *_addr_qspi = tmp;
-    for(int i=0;i<ceil(byte_size/4);i++) *(_addr_qspi+2+i) = array[i];
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) *(_addr_qspi+2+i) = array[i];
     while(*(_addr_qspi+10)!=1){}
 }
 
@@ -244,7 +244,7 @@ void qspi_custom_write(int addr, int* array, int instr, int mode, int dummy, int
     tmp += prescaler << 25;
     tmp += 1 << 31;
     *(_addr_qspi+1) = addr;
-    for(int i=0;i<ceil(byte_size/4);i++) *(_addr_qspi+2+i) = array[i];
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) *(_addr_qspi+2+i) = array[i];
     *_addr_qspi = tmp;
     while(*(_addr_qspi+10)!=1){}
 }
@@ -259,7 +259,7 @@ void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int 
     *(_addr_qspi+1) = addr;
     *_addr_qspi = tmp;
     while(*(_addr_qspi+10)!=1){}
-    for(int i=0;i<ceil(byte_size/4);i++) array[i] = *(_addr_qspi+2+i);
+    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = *(_addr_qspi+2+i);
 }
 
   /////////////
