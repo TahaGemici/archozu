@@ -15,6 +15,6 @@ void knightrider_i2c(){
 	}
 }
 int main(){
-	knightrider_i2c();
+	//knightrider_i2c();
 	timer_conf(2, 5, 1);
 }

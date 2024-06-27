@@ -32,6 +32,7 @@ module timer(
     
     timer_mem timer_mem(
         clk_i,
+        rst_i,
         
         write_i,
         data_be_i,
@@ -55,16 +56,21 @@ module timer(
     );
 
 	always @(posedge clk_i) begin
-        irq_7_o <= irq_ack_i ? 0 : irq_7_o_nxt;
+        irq_7_o   <= irq_ack_i ? 0 : irq_7_o_nxt;
 		condition <= condition_nxt;
+		counter   <= counter_nxt;
 	end
 
 	always @* begin
+        TIM_CLR_i = 0;
+        TIM_CNT_i = TIM_CNT_o;
+        TIM_EVN_i = TIM_EVN_o;
+        TIM_EVC_i = 0;
         counter_nxt = counter;
-        irq_7_o_nxt = irq_7_o;
+        irq_7_o_nxt = 0;
 
         condition_nxt = (&TIM_PRE_o) ? (`CLK_FREQ - 1) : TIM_PRE_o;
-        counter_nxt = counter + 1;
+        counter_nxt = counter + TIM_ENA_o;
         if(TIM_ENA_o & (counter==condition)) begin
             counter_nxt = 0;
             
@@ -78,15 +84,8 @@ module timer(
             end
         end
 
-        if(TIM_CLR_o) begin
-            TIM_CNT_i = 0;
-            TIM_CLR_i = 0;
-        end
-
-        if(TIM_EVC_o) begin
-            TIM_EVN_i = 0;
-            TIM_EVC_i = 0;
-        end
+        if(TIM_CLR_o) TIM_CNT_i = 0;
+        if(TIM_EVC_o) TIM_EVN_i = 0;
 
         if(rst_i) begin
             irq_7_o_nxt = 0;

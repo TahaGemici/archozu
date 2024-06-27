@@ -291,11 +291,12 @@ void timer_disable(){
 }
 
 void timer_conf(int prescaler, int auto_reload, int mode){
+    int num_128 = 128;
+    asm("csrrsi x0, 0x, ");
+
     _addr_timer[0] = prescaler;
     _addr_timer[1] = auto_reload;
     _addr_timer[4] = mode;
-    timer_clear_counter();
-    timer_clear_event();
     timer_enable();
 }
 

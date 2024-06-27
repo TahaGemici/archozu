@@ -1,5 +1,6 @@
 module timer_mem(
     input clk_i,
+    input rst_i,
 
     input write_bus,
     input[3:0] be_bus,
@@ -26,11 +27,6 @@ module timer_mem(
 
     reg[7:0] mem[0:SIZE-1], mem_nxt[0:SIZE-1];
     reg[(SIZE-1):0] mem_wren_bus;
-    
-    integer j;
-    initial begin
-        for(j=0; j<SIZE; j=j+1) mem[j] = 0;
-    end
 
     assign TIM_PRE_o = {mem[3], mem[2], mem[1], mem[0]};
     assign TIM_ARE_o = {mem[7], mem[6], mem[5], mem[4]};
@@ -43,8 +39,8 @@ module timer_mem(
 
     genvar i;
     generate
-        for(i=0;i<SIZE;i=i+1) begin
-            always @(posedge clk_i) mem[i] <= mem_nxt[i];
+        for(i=0;i<SIZE-3;i=i+1) begin
+            always @(posedge clk_i) mem[i] <= rst_i ? 0 : mem_nxt[i];
         end
         for(i=0;i<8;i=i+1) begin
             always @* begin
@@ -83,6 +79,9 @@ module timer_mem(
             if(mem_wren_bus[27]) mem_nxt[27] = data_i_bus[{3-addr_bus[1:0], 3'b0}+:8];
             mem_nxt[28] = {7'b0, TIM_EVC_i};
             if(mem_wren_bus[28]) mem_nxt[28] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
+            mem[29] = 0;
+            mem[30] = 0;
+            mem[31] = 0;
         end
 
         for(i=0;i<4;i=i+1) begin
