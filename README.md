@@ -2,7 +2,7 @@
 ```
 📦 RTL
  ┣ 📜 bus ✔ (taha)
- ┣ 📜 UART ✔ (utku)
+ ┣ 📜 UART 🌱 (utku)
  ┣ 📜 I2C_master ✔ (taha)
  ┣ 📜 QSPI_master ✔ (taha)
  ┣ 📜 timer ✔ (taha)
@@ -14,10 +14,8 @@
 📦 Testing
  ┣ 📜 UART[UVM] 🌱 (kutay)
  ┣ 📂 I2C_master
- ┃ ┣ 📜 1B write ✔ (metin)
- ┃ ┣ 📜 2-4B write ❌
- ┃ ┣ 📜 1-4B read ❌
- ┃ ┗ 📜 random 1-4B R/W ❌
+ ┃ ┣ 📜 1-4B write ✔
+ ┃ ┗ 📜 1-4B read ❌
  ┣ 📂 QSPI_master
  ┃ ┣ 📜 WREN, WRR, RDSR1, QOR ✔ (taha)
  ┃ ┗ 📜 *other commands* ❌
@@ -26,8 +24,6 @@
  ┣ 📂 GPIO
  ┃ ┗ 📜 *undiscussed* ❌
  ┣ 📂 USB
- ┃ ┗ 📜 *undiscussed* ❌
- ┣ 📂 clk_gen
  ┃ ┗ 📜 *undiscussed* ❌
  ┣ 📂 JTAG
  ┃ ┗ 📜 *undiscussed* ❌

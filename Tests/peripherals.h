@@ -266,12 +266,6 @@ void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int 
  //  TIMER  //
 /////////////
 
-void timer_conf(int prescaler, int auto_reload, int mode){
-    _addr_timer[0] = prescaler;
-    _addr_timer[1] = auto_reload;
-    _addr_timer[4] = mode;
-}
-
 int timer_read_counter(){
     return _addr_timer[5];
 }
@@ -294,6 +288,15 @@ void timer_enable(){
 
 void timer_disable(){
     _addr_timer[3] = 0;
+}
+
+void timer_conf(int prescaler, int auto_reload, int mode){
+    _addr_timer[0] = prescaler;
+    _addr_timer[1] = auto_reload;
+    _addr_timer[4] = mode;
+    timer_clear_counter();
+    timer_clear_event();
+    timer_enable();
 }
 
   ///////////
