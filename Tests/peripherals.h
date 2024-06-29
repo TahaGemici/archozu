@@ -291,12 +291,20 @@ void timer_disable(){
 }
 
 void timer_conf(int prescaler, int auto_reload, int mode){
-    int num_128 = 128;
-    asm("csrrsi x0, 0x, ");
-
     _addr_timer[0] = prescaler;
     _addr_timer[1] = auto_reload;
     _addr_timer[4] = mode;
+
+    asm("li a0, 128\n\t"
+        "csrrsi zero, mstatus, 8\n\t" //enable machine interrupt
+        "csrrs zero, mie, a0\n\t" //enable timer interrupt
+        "lui a1, 0x21\n\t"
+        "srli a1, a1, 4\n\t"
+        "csrrw zero, mtvec, a1\n\t" //locate interrupt()
+        "_mie_check:\n\t"
+        "csrrs a2, mip, zero\n\t" //check whether mie is ready or not
+        "beqz a2, _mie_check");
+
     timer_enable();
 }
 

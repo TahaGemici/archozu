@@ -1,55 +1,3 @@
-`ifdef TEST
-module top();
-    reg clk, rstn;
-    initial begin
-        clk = 0;
-        forever clk = #(`CLK_PERIOD/2.0) ~clk;
-    end
-    initial begin
-        rstn = 0;
-        #500000; //flash_mem için bu kadar uzun
-        rstn = 1;
-        #100000000;
-        $finish;
-    end
-
-    wire rst = ~rstn;
-    wire sda_io, scl_io;
-    i2c_slave_controller #(123) I2C_slave0(
-        scl_io,
-        sda_io,
-        rst
-    );
-    i2c_slave_controller #(74) I2C_slave1(
-        scl_io,
-        sda_io,
-        rst
-    );
-    i2c_slave_controller #(12) I2C_slave2(
-        scl_io,
-        sda_io,
-        rst
-    );
-    i2c_slave_controller #(31) I2C_slave3(
-        scl_io,
-        sda_io,
-        rst
-    );
-
-    wire sclk, cs;
-    wire[3:0] io;
-    s25fl128s flash_mem(
-        io[0],
-        io[1],
-        sclk,
-        cs,
-        ~rst,
-        io[2],
-        io[3]
-    );
-
-    wire[15:0] in, out;
-`else
 module top(
     input rstn,
     input clk,
@@ -61,7 +9,6 @@ module top(
     input in,
     output out
 );
-`endif
     wire rst = ~rstn;
     wire instr_req, instr_gnt, instr_rvalid;
     wire[31:0] instr_addr, instr_rdata;
@@ -74,7 +21,7 @@ module top(
     wire irq_ack;
     wire[4:0] irq_id;
     
-    wire debug_req, debug_havereset, debug_running, debug_halted;
+    wire debug_havereset, debug_running, debug_halted;
 
     cv32e40p_top cv32e40p_top (
         // Clock and Reset
@@ -114,7 +61,7 @@ module top(
         .irq_id_o(irq_id),
 
         // Debug Interface
-        .debug_req_i(debug_req),
+        .debug_req_i(0),
         .debug_havereset_o(debug_havereset),
         .debug_running_o(debug_running),
         .debug_halted_o(debug_halted),
