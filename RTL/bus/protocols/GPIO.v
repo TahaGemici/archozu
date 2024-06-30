@@ -22,7 +22,7 @@ module GPIO(
         4'b0011,
         32'b0,
         input_i,
-        32'b1,
+        32'h4,
         output_o
     );
 endmodule
