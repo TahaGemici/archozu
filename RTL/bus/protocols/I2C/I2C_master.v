@@ -28,7 +28,7 @@ module I2C_master(
 */
 
 	// registers
-	reg [2:0] state=IDLE, state_nxt;
+	reg [2:0] state, state_nxt;
 	reg read, read_nxt;
 
 	localparam I2C_NBY = 0;
@@ -76,10 +76,8 @@ module I2C_master(
 	assign (pull1, pull0) sda_io = 1;
 	assign sda_io = sda_o;
 
-
-
-    reg[7:0] clk_counter=0, clk_counter_nxt;
-    reg clk_i2c=0, clk_i2c_nxt;
+    reg[7:0] clk_counter, clk_counter_nxt;
+    reg clk_i2c, clk_i2c_nxt;
 
     always @(posedge clk_i) begin
         clk_counter <= clk_counter_nxt;
@@ -99,13 +97,7 @@ module I2C_master(
 	reg clk_i2c_prv;
 	always @(posedge clk_i) begin
 		clk_i2c_prv <= clk_i2c; 
-	end
-
-	always @(posedge clk_i2c) begin
 		scln <= scln_nxt;
-	end
-	
-	always @(negedge clk_i2c) begin
 		state <= state_nxt;
 		counter <= counter_nxt;
 		nby_counter <= nby_counter_nxt;
@@ -113,8 +105,8 @@ module I2C_master(
 	end
 
 	always @* begin
-		scln_nxt = rst_i;
 		state_nxt = state;
+		scln_nxt = 0;
 		counter_nxt = counter - 1;
 		nby_counter_nxt = nby_counter;
 		read_nxt = read;
@@ -202,5 +194,21 @@ module I2C_master(
 			ACK1:  sda_o = read ? (state_nxt == STOP) : 1'bz;
 			STOP:  sda_o = 1'b0;
 		endcase
+
+		if(clk_i2c | (~clk_i2c_nxt)) begin
+			state_nxt = state;
+			counter_nxt = counter;
+			nby_counter_nxt = nby_counter;
+			read_nxt = read;
+		end
+		if(clk_i2c_nxt | (~clk_i2c)) begin
+			scln_nxt = scln;
+		end
+		if(rst_i) begin
+			state_nxt = IDLE;
+			scln_nxt = 1;
+    		clk_counter_nxt = 0;
+    		clk_i2c_nxt = 1;
+		end
 	end
 endmodule

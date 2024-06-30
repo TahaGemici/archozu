@@ -9,14 +9,6 @@ module GPIO(
     input [15:0] input_i,
     output [15:0] output_o
 );
-`ifdef TEST
-    reg[15:0] input_i2;
-    initial begin
-        forever input_i2 = #500 $random;
-    end
-`else
-    wire[15:0] input_i2 = input_i;
-`endif
     perip_mem #(9, 9'h0_30) gpio_mem(
         clk_i,
         
@@ -29,7 +21,7 @@ module GPIO(
         1'b1,
         4'b0011,
         32'b0,
-        input_i2,
+        input_i,
         32'b1,
         output_o
     );

@@ -24,8 +24,9 @@ module bus(
     output cs,
     inout[3:0] io,
 
-    input irq_ack_i,
     output irq_7_o,
+    input irq_ack_i,
+    input[4:0] irq_id_i,
 
     input[15:0] out,
     output[15:0] in
@@ -76,8 +77,9 @@ module bus(
         data_addr_i,
         data_wdata_i,
         timer_out,
+        irq_7_o,
         irq_ack_i,
-        irq_7_o
+        irq_id_i
     );
 
 

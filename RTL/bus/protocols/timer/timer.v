@@ -7,14 +7,15 @@ module timer(
     input [31:0] wdata_i,
     output [31:0] rdata_o,
 
+    output reg irq_7_o,
     input irq_ack_i,
-    output reg irq_7_o
+    input[4:0] irq_id_i
 );
 
     //registers
     reg irq_7_o_nxt;
-    reg[31:0] counter, counter_nxt;
-    reg[31:0] condition, condition_nxt;
+    reg[30:0] counter, counter_nxt;
+    reg[30:0] condition, condition_nxt;
 
     reg TIM_CLR_i;
     reg[31:0] TIM_CNT_i;
@@ -56,7 +57,7 @@ module timer(
     );
 
 	always @(posedge clk_i) begin
-        irq_7_o   <= irq_ack_i ? 0 : irq_7_o_nxt;
+        irq_7_o   <= irq_7_o_nxt;
 		condition <= condition_nxt;
 		counter   <= counter_nxt;
 	end
@@ -67,9 +68,9 @@ module timer(
         TIM_EVN_i = TIM_EVN_o;
         TIM_EVC_i = 0;
         counter_nxt = counter;
-        irq_7_o_nxt = 0;
+        irq_7_o_nxt = (irq_ack_i && (irq_id_i==7)) ? 0 : irq_7_o;
 
-        condition_nxt = (&TIM_PRE_o) ? (`CLK_FREQ - 1) : TIM_PRE_o;
+        condition_nxt = (&TIM_PRE_o) ? (`CLK_FREQ/2 - 1) : TIM_PRE_o[31:1];
         counter_nxt = counter + TIM_ENA_o;
         if(TIM_ENA_o & (counter==condition)) begin
             counter_nxt = 0;

@@ -7,8 +7,8 @@ module QSPI_master(
     input[31:0] wdata_i,
     output[31:0] rdata_o,
 
-	output reg sclk_o=1,
-    output reg cs_no=1,
+	output reg sclk_o,
+    output reg cs_no,
     inout[3:0] io
 );
 
@@ -81,23 +81,36 @@ module QSPI_master(
 //                                       + 64B data
 //                                       + 64B data
 	
-
-
-
-
-
     /////////////////////////
     // Client Select Conf. //
     /////////////////////////
 
-    reg cs_nd, sclk_d, state_q_prv=1;
-    reg[1:0] state_q=0, state_d;
+    reg cs_nd, sclk_d, state_q_prv, state_q_prv_nxt;
+    reg[1:0] state_q, state_d;
     reg[5:0] cntr_sclk_d, cntr_sclk_q;
+    
+    reg QSPI_WRITE, QSPI_WRITE_nxt;
+    reg[1:0] QSPI_DATA_MODE, QSPI_DATA_MODE_nxt;
+    reg[7:0] QSPI_DUMMY, QSPI_DUMMY_nxt;
+    reg[4:0] QSPI_SIZE, QSPI_SIZE_nxt;
+    reg[5:0] QSPI_PRESCALER, QSPI_PRESCALER_nxt;
 
     always @(posedge clk_i) begin
-        cs_no <= rst_i | cs_nd;
+        cs_no <= cs_nd;
         sclk_o <= sclk_d;
         cntr_sclk_q <= cntr_sclk_d;
+        
+        QSPI_PRESCALER <= QSPI_PRESCALER_nxt;
+        QSPI_DATA_MODE <= QSPI_DATA_MODE_nxt;
+        QSPI_DUMMY     <= QSPI_DUMMY_nxt;
+        QSPI_WRITE     <= QSPI_WRITE_nxt;
+        QSPI_SIZE      <= QSPI_SIZE_nxt;
+
+        io_q <= io_d;
+        io_en_q <= io_en_d;
+        state_q <= state_d;
+        state_q_prv <= state_q_prv_nxt;
+        cntr_state_q <= cntr_state_d;
     end
 
     /////////
@@ -106,15 +119,7 @@ module QSPI_master(
 
     reg[7:0] cntr_state_q, cntr_state_d;
     reg[3:0] io_q, io_d;
-    reg[3:0] io_en_q=0, io_en_d;
-    
-    always @(negedge (sclk_o|cs_no)) begin
-        io_q <= io_d;
-        io_en_q <= io_en_d;
-        state_q <= state_d;
-        state_q_prv <= ~|state_q;
-        cntr_state_q <= cntr_state_d;
-    end
+    reg[3:0] io_en_q, io_en_d;
 
     assign io[0] = io_en_q[0] ? io_q[0] : 1'bz;
     assign io[1] = io_en_q[1] ? io_q[1] : 1'bz;
@@ -126,19 +131,8 @@ module QSPI_master(
     localparam STATE_DUMMY   = 2'b10;
     localparam STATE_EXECUTE = 2'b11;
 
-    reg QSPI_WRITE, QSPI_WRITE_nxt;
-    reg[1:0] QSPI_DATA_MODE, QSPI_DATA_MODE_nxt;
-    reg[7:0] QSPI_DUMMY, QSPI_DUMMY_nxt;
-    reg[4:0] QSPI_SIZE, QSPI_SIZE_nxt;
-    reg[5:0] QSPI_PRESCALER, QSPI_PRESCALER_nxt;
-    always @(posedge clk_i) begin
-        QSPI_PRESCALER <= QSPI_PRESCALER_nxt;
-        QSPI_DATA_MODE <= QSPI_DATA_MODE_nxt;
-        QSPI_DUMMY     <= QSPI_DUMMY_nxt;
-        QSPI_WRITE     <= QSPI_WRITE_nxt;
-        QSPI_SIZE      <= QSPI_SIZE_nxt;
-    end    
     always @* begin
+        state_q_prv_nxt = ~|state_q;
         cs_nd = state_q ? 1'b0 : ((QSPI_DATA_MODE && (!QSPI_WRITE)) ? (~|state_q) : state_q_prv);
         QSPI_PRESCALER_nxt = QSPI_PRESCALER;
         QSPI_DATA_MODE_nxt = QSPI_DATA_MODE;
@@ -312,5 +306,21 @@ module QSPI_master(
 
             end
         endcase
+
+        if((cs_no | (~cs_nd))&(sclk_o | (~sclk_d))) begin
+            io_d            = io_q;
+            io_en_d         = io_en_q;
+            state_d         = state_q;
+            cntr_state_d    = cntr_state_q;
+            state_q_prv_nxt = state_q_prv;
+        end
+
+        if(rst_i) begin
+            cs_nd  = 1;
+            sclk_d = 1;
+            io_en_d = 4'b0001;
+            state_q = STATE_IDLE;
+            state_q_prv = 1;
+        end
     end
 endmodule

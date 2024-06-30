@@ -13,27 +13,31 @@ module top_tb();
         #100000000;
         $finish;
     end
+    reg[15:0] in;
+    initial begin
+        forever in = #500 $random;
+    end
 
     wire sda_io, scl_io;
     i2c_slave_controller #(123) I2C_slave0(
         scl_io,
         sda_io,
-        rst
+        ~rstn
     );
     i2c_slave_controller #(74) I2C_slave1(
         scl_io,
         sda_io,
-        rst
+        ~rstn
     );
     i2c_slave_controller #(12) I2C_slave2(
         scl_io,
         sda_io,
-        rst
+        ~rstn
     );
     i2c_slave_controller #(31) I2C_slave3(
         scl_io,
         sda_io,
-        rst
+        ~rstn
     );
 
     wire sclk, cs;
@@ -43,12 +47,12 @@ module top_tb();
         io[1],
         sclk,
         cs,
-        ~rst,
+        rstn,
         io[2],
         io[3]
     );
 
-    wire[15:0] in, out;
+    wire[15:0] out;
     top dut(
         rstn,
         clk,

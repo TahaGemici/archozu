@@ -97,8 +97,9 @@ module top(
         cs,
         io,
     
-        irq_ack,
         irq[7],
+        irq_ack,
+        irq_id,
 
         out,
         in
