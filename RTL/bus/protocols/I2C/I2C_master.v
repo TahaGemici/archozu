@@ -196,13 +196,13 @@ module I2C_master(
 		endcase
 
 		if(clk_i2c | (~clk_i2c_nxt)) begin
+			scln_nxt = scln;
+		end
+		if(clk_i2c_nxt | (~clk_i2c)) begin
 			state_nxt = state;
 			counter_nxt = counter;
 			nby_counter_nxt = nby_counter;
 			read_nxt = read;
-		end
-		if(clk_i2c_nxt | (~clk_i2c)) begin
-			scln_nxt = scln;
 		end
 		if(rst_i) begin
 			state_nxt = IDLE;

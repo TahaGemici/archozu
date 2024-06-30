@@ -143,7 +143,7 @@ module QSPI_master(
         state_d = state_q;
         cntr_state_d = cntr_state_q - 1;
         io_en_d = 4'b0001;
-        io_d[3:1] = 4'b0000;
+        io_d[3:1] = 3'b000;
         io_d[0] = data_o_perip[7];
         if(write_i & (~|addr_i[5:2])) begin
             case(addr_i[1:0])
@@ -307,7 +307,7 @@ module QSPI_master(
             end
         endcase
 
-        if((cs_no | (~cs_nd))&(sclk_o | (~sclk_d))) begin
+        if((cs_nd | (~cs_no))&(sclk_d | (~sclk_o))) begin
             io_d            = io_q;
             io_en_d         = io_en_q;
             state_d         = state_q;
@@ -317,8 +317,8 @@ module QSPI_master(
 
         if(rst_i) begin
             cs_nd  = 1;
-            sclk_d = 1;
-            io_en_d = 4'b0001;
+            sclk_d = 0;
+            io_en_d = 4'b0000;
             state_q = STATE_IDLE;
             state_q_prv = 1;
         end

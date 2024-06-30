@@ -6,8 +6,8 @@ module top(
     output sclk,
     output cs,
     inout[3:0] io,
-    input in,
-    output out
+    input[15:0] in,
+    output[15:0] out
 );
     wire rst = ~rstn;
     wire instr_req, instr_gnt, instr_rvalid;

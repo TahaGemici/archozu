@@ -22,7 +22,5 @@ int main(){
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
-	timer_reset();
-	
 	gpio_write(123);
 }

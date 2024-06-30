@@ -1,5 +1,5 @@
-#define CLK_FREQ_MHZ 50
-#define CEIL_CLK(x) CLK_FREQ_MHZ/x+(CLK_FREQ_MHZ%x!=0)
+#define CLK_FREQ_DIV_2 50
+#define CEIL_CLK(x) CLK_FREQ_DIV_2/x+(CLK_FREQ_DIV_2%x!=0)
 #define CEIL_SIZE(x) (x+3)>>2
 
 volatile int* const _addr_instr_mem = (int*)0x04000;
@@ -290,29 +290,15 @@ void timer_disable(){
     _addr_timer[3] = 0;
 }
 
-void timer_reset(){
-    /*
-    asm("csrrs zero, mie, a0\n\t" //enable timer interrupt
-        "_mie_check:\n\t"
-        "csrrs a2, mip, zero\n\t" //check whether mie is ready or not
-        "beqz a2, _mie_check");
-    */
-}
-
 void timer_conf(int prescaler, int auto_reload, int mode){
     _addr_timer[0] = prescaler;
     _addr_timer[1] = auto_reload;
     _addr_timer[4] = mode;
     asm("li a0, 128\n\t"
-        "lui a1, 0x21\n\t"
-        "srli a1, a1, 4\n\t"
+        "li a1, 0x2100\n\t"
         "csrrw zero, mtvec, a1\n\t" //locate interrupt()
-        "csrrsi zero, mstatus, 8\n\t"); //enable machine interrupt
-    asm("csrrs zero, mie, a0\n\t" //enable timer interrupt
-        "_mie_check:\n\t"
-        "csrrs a2, mip, zero\n\t" //check whether mie is ready or not
-        "beqz a2, _mie_check");
-    //timer_reset();
+        "csrrsi zero, mstatus, 8\n\t" //enable machine interrupt
+        "csrrs zero, mie, a0\n\t"); //enable timer interrupt
 }
 
   ///////////
