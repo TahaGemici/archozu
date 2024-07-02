@@ -90,6 +90,10 @@ module I2C_master(
             clk_counter_nxt = 0;
             clk_i2c_nxt = ~clk_i2c;
         end
+		if(rst_i) begin
+    		clk_counter_nxt = 0;
+    		clk_i2c_nxt = 1;
+		end
     end
 
 	assign scl_io = scln | clk_i2c;
@@ -207,8 +211,6 @@ module I2C_master(
 		if(rst_i) begin
 			state_nxt = IDLE;
 			scln_nxt = 1;
-    		clk_counter_nxt = 0;
-    		clk_i2c_nxt = 1;
 		end
 	end
 endmodule

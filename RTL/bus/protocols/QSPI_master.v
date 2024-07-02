@@ -88,6 +88,9 @@ module QSPI_master(
     reg cs_nd, sclk_d, state_q_prv, state_q_prv_nxt;
     reg[1:0] state_q, state_d;
     reg[5:0] cntr_sclk_d, cntr_sclk_q;
+    reg[7:0] cntr_state_q, cntr_state_d;
+    reg[3:0] io_q, io_d;
+    reg[3:0] io_en_q, io_en_d;
     
     reg QSPI_WRITE, QSPI_WRITE_nxt;
     reg[1:0] QSPI_DATA_MODE, QSPI_DATA_MODE_nxt;
@@ -116,10 +119,6 @@ module QSPI_master(
     /////////
     // FSM //
     /////////
-
-    reg[7:0] cntr_state_q, cntr_state_d;
-    reg[3:0] io_q, io_d;
-    reg[3:0] io_en_q, io_en_d;
 
     assign io[0] = io_en_q[0] ? io_q[0] : 1'bz;
     assign io[1] = io_en_q[1] ? io_q[1] : 1'bz;
@@ -319,8 +318,8 @@ module QSPI_master(
             cs_nd  = 1;
             sclk_d = 0;
             io_en_d = 4'b0000;
-            state_q = STATE_IDLE;
-            state_q_prv = 1;
+            state_d = STATE_IDLE;
+            state_q_prv_nxt = 1;
         end
     end
 endmodule
