@@ -11,14 +11,11 @@ Disassembly of section .text:
     2008:	4509                	li	a0,2
     200a:	c606                	sw	ra,12(sp)
     200c:	2b95                	jal	2580 <timer_conf>
-    200e:	67b1                	lui	a5,0xc
-    2010:	4705                	li	a4,1
-    2012:	c7d8                	sw	a4,12(a5)
-    2014:	67c1                	lui	a5,0x10
-    2016:	0791                	addi	a5,a5,4 # 10004 <__GNU_EH_FRAME_HDR+0xd614>
-    2018:	4771                	li	a4,28
-    201a:	c398                	sw	a4,0(a5)
-    201c:	bffd                	j	201a <main+0x1a>
+    200e:	67a1                	lui	a5,0x8
+    2010:	07b00713          	li	a4,123
+    2014:	c3d8                	sw	a4,4(a5)
+    2016:	235d                	jal	25bc <knightrider_i2c>
+    2018:	bffd                	j	2016 <main+0x16>
 	...
 
 00002100 <interrupt>:

@@ -15,9 +15,11 @@ void knightrider_i2c(){
 }
 int main(){
 	timer_conf(2, 1000, 1);
-	timer_enable();
+	//timer_enable();
+	i2c_conf(123);
 	while(1){
-		gpio_write(28);
+		//gpio_write(28);
+		knightrider_i2c();
 	}
 }
 

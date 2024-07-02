@@ -7,7 +7,7 @@ module I2C_master(
     input [31:0] wdata_i,
     output [31:0] rdata_o,
 
-	inout sda_io,
+	tri1 sda_io,
 	output scl_io
 );
 
@@ -69,11 +69,11 @@ module I2C_master(
 	// registers
 	reg [2:0] nby_counter, nby_counter_nxt;
 	reg [2:0] counter, counter_nxt;
-	reg sda_o;
 	reg scln, scln_nxt;
     
 	wire[7:0] addr_read = {data_o_perip[6:0], read};
-	assign (pull1, pull0) sda_io = 1;
+	
+	reg sda_o;
 	assign sda_io = sda_o;
 
     reg[7:0] clk_counter, clk_counter_nxt;
@@ -187,7 +187,8 @@ module I2C_master(
 				data_i_perip[{read,1'b0}+:2] = 2'b11;
 			end
 		endcase
-		
+
+		sda_o  = 1'bz;
 		case(state)
 			IDLE:  sda_o = 1'b1;
 			START: sda_o = 1'b0;
@@ -195,7 +196,7 @@ module I2C_master(
 			ACK0:  sda_o = 1'bz;
 			WDATA: sda_o = data_o_perip[{nby_counter[1:0], counter}];
 			RDATA: sda_o = 1'bz;
-			ACK1:  sda_o = read ? (state_nxt == STOP) : 1'bz;
+			ACK1:  if(read) sda_o = (state_nxt == STOP);
 			STOP:  sda_o = 1'b0;
 		endcase
 
