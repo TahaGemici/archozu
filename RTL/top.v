@@ -1,5 +1,5 @@
 module top(
-    input rstn,
+    input rst,
     input clk,
     inout sda_io,
     output scl_io,
@@ -9,7 +9,7 @@ module top(
     input[15:0] in,
     output[15:0] out
 );
-    wire rst = ~rstn;
+    wire rstn = ~rst;
     wire instr_req, instr_gnt, instr_rvalid;
     wire[31:0] instr_addr, instr_rdata;
 

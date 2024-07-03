@@ -1,5 +1,5 @@
 module top_tb();
-    reg clk, rstn;
+    reg clk, rst;
     initial begin
         clk = 0;
         forever begin
@@ -7,9 +7,9 @@ module top_tb();
         end
     end
     initial begin
-        rstn = 0;
+        rst = 1;
         #500000; //flash_mem için bu kadar uzun
-        rstn = 1;
+        rst = 0;
         #100000000;
         $finish;
     end
@@ -22,22 +22,22 @@ module top_tb();
     i2c_slave_controller #(123) I2C_slave0(
         scl_io,
         sda_io,
-        ~rstn
+        rst
     );
     i2c_slave_controller #(74) I2C_slave1(
         scl_io,
         sda_io,
-        ~rstn
+        rst
     );
     i2c_slave_controller #(12) I2C_slave2(
         scl_io,
         sda_io,
-        ~rstn
+        rst
     );
     i2c_slave_controller #(31) I2C_slave3(
         scl_io,
         sda_io,
-        ~rstn
+        rst
     );
 
     wire sclk, cs;
@@ -47,14 +47,14 @@ module top_tb();
         io[1],
         sclk,
         cs,
-        rstn,
+        ~rst,
         io[2],
         io[3]
     );
 
     wire[15:0] out;
     top dut(
-        rstn,
+        ~rst,
         clk,
         sda_io,
         scl_io,

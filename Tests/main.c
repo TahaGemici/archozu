@@ -13,16 +13,21 @@ void knightrider_i2c(){
 		}
 	}
 }
+
 int main(){
-	timer_conf(2, 1000, 1);
-	//timer_enable();
-	i2c_conf(123);
+	volatile short* arr = (short*)3;
+	arr[0] = 0x0123;
+	arr[1] = 0x4567;
+	arr[2] = 0x89ab;
+	arr[3] = 0xcdef;
 	while(1){
-		//gpio_write(28);
-		knightrider_i2c();
+		gpio_write(arr[0]);
+		gpio_write(arr[1]);
+		gpio_write(arr[2]);
+		gpio_write(arr[3]);
 	}
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
-	gpio_write(123);
+	gpio_write(311);
 }

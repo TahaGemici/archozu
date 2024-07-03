@@ -99,6 +99,7 @@ module bus(
     wire[31:0] data_mem_out;
     data_mem data_mem(
         clk_i,
+        rst_i,
         data_mem_en & we,
         data_be_i,
         data_addr_i,
@@ -109,14 +110,14 @@ module bus(
     instr_mem instr_mem(
         clk_i,
 
-        instr_addr[31:2],
+        instr_addr,
         instr_req,
         instr_gnt,
         instr_rvalid,
         instr_rdata,
 
         instr_mem_en & we,
-        data_addr_i[31:2],
+        data_addr_i,
         data_wdata_i
     );
 
