@@ -82,39 +82,18 @@ xpm_memory_spram_inst (
 
 `else
 
-    reg[31:0] data_o_reg;
-    assign data_o = data_o_reg;
-    reg[7:0] mem[0:(8*1024+2)], mem_nxt[0:(8*1024+2)];
-    reg[8194:0] mem_wren;
+    reg[7:0] mem[0:8191];
 
-    genvar i;
-    generate
-        for(i=0;i<8192;i=i+1) begin
-            always @(posedge clk_i) mem[i] <= mem_nxt[i];
+    assign data_o[ 0+:8] = mem[{addr_i[12:2], 2'b00}];
+    assign data_o[ 8+:8] = mem[{addr_i[12:2], 2'b01}];
+    assign data_o[16+:8] = mem[{addr_i[12:2], 2'b10}];
+    assign data_o[24+:8] = mem[{addr_i[12:2], 2'b11}];
 
-            always @* begin
-                mem_nxt[i] = mem[i];
-                if(mem_wren[i]) begin
-                    mem_nxt[i] = data_i[{i[1:0]-addr_i[1:0], 3'b0}+:8];
-                end
-            end
-        end
-
-        for(i=0;i<4;i=i+1) begin
-            always @* begin
-                data_o_reg[(8*i)+:8] = be_sel_i[i] ? mem[addr_i + i] : 0;
-            end
-        end
-    endgenerate
-
-    always @* begin
-        mem[8192] = 0;
-        mem[8193] = 0;
-        mem[8194] = 0;
-        mem_wren = 0;
-        if(write_i) begin
-            mem_wren[addr_i+:4] = be_sel_i;
-        end
+    always @(posedge clk_i) begin
+        mem[{addr_i[12:2], 2'b00}] <= (write_i & be_sel_i[0]) ? data_i[ 0+:8] : mem[{addr_i[12:2], 2'b00}];
+        mem[{addr_i[12:2], 2'b01}] <= (write_i & be_sel_i[1]) ? data_i[ 8+:8] : mem[{addr_i[12:2], 2'b01}];
+        mem[{addr_i[12:2], 2'b10}] <= (write_i & be_sel_i[2]) ? data_i[16+:8] : mem[{addr_i[12:2], 2'b10}];
+        mem[{addr_i[12:2], 2'b11}] <= (write_i & be_sel_i[3]) ? data_i[24+:8] : mem[{addr_i[12:2], 2'b11}];
     end
 
 `endif
