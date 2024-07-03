@@ -19,7 +19,6 @@ module QSPI_master(
 */
 
     reg write_perip;
-    reg[3:0] be_perip;
     reg[31:0] wraddr_perip;
     reg[31:0] data_i_perip;
     reg[31:0] rdaddr_perip;
@@ -35,7 +34,6 @@ module QSPI_master(
         rdata_o,
         
         write_perip,
-        be_perip,
         wraddr_perip,
         data_i_perip,
         rdaddr_perip,
@@ -207,7 +205,6 @@ module QSPI_master(
         end
 
         write_perip = 0;
-        be_perip = 4'b1111;
         wraddr_perip = QSPI_STA;
         rdaddr_perip = QSPI_CCR;
 

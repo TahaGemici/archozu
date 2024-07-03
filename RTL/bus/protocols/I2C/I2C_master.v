@@ -43,7 +43,7 @@ module I2C_master(
     reg[31:0] rdaddr_perip;
     wire[31:0] data_o_perip;
     
-    perip_mem #(20, 20'h1_ff_11) i2c_mem(
+    perip_mem #(5, 5'b11011) i2c_mem(
         clk_i,
         
         write_i,
@@ -53,7 +53,6 @@ module I2C_master(
         rdata_o,
         
         write_perip,
-        4'b1111,
         wraddr_perip,
         data_i_perip,
         rdaddr_perip,

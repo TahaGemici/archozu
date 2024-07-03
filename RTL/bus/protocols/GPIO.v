@@ -9,7 +9,7 @@ module GPIO(
     input [15:0] input_i,
     output [15:0] output_o
 );
-    perip_mem #(9, 9'h0_30) gpio_mem(
+    perip_mem #(2, 2'b10) gpio_mem(
         clk_i,
         
         write_i,
@@ -19,9 +19,8 @@ module GPIO(
         rdata_o,
         
         1'b1,
-        4'b0011,
         32'b0,
-        input_i,
+        {16'h0000, input_i},
         32'h4,
         output_o
     );
