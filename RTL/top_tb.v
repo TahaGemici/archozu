@@ -54,7 +54,7 @@ module top_tb();
 
     wire[15:0] out;
     top dut(
-        ~rst,
+        rst,
         clk,
         sda_io,
         scl_io,

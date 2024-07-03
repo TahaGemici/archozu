@@ -117,10 +117,6 @@ xpm_memory_spram_inst (
         end
     end
 
-
-
 `endif
-
-
 
 endmodule

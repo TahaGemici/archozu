@@ -24,7 +24,7 @@ module QSPI_master(
     reg[31:0] rdaddr_perip;
     wire[31:0] data_o_perip;
     
-    perip_mem #(44, 44'h0_ff_ff_ff_ff_7f) qspi_mem(
+    perip_mem #(11, 11'b0_11111111_1_1) qspi_mem(
         clk_i,
         
         write_i,
@@ -128,6 +128,8 @@ module QSPI_master(
     localparam STATE_DUMMY   = 2'b10;
     localparam STATE_EXECUTE = 2'b11;
 
+    wire[31:0] addr32 = {data_o_perip, 8'h00};
+
     always @* begin
         state_q_prv_nxt = ~|state_q;
         cs_nd = state_q ? 1'b0 : ((QSPI_DATA_MODE && (!QSPI_WRITE)) ? (~|state_q) : state_q_prv);
@@ -143,46 +145,16 @@ module QSPI_master(
         io_d[3:1] = 3'b000;
         io_d[0] = data_o_perip[7];
         if(write_i & (~|addr_i[5:2])) begin
-            case(addr_i[1:0])
-                2'b00: begin
-                    QSPI_PRESCALER_nxt = data_be_i[3] ? wdata_i[30:25] : QSPI_PRESCALER;
-                    QSPI_DATA_MODE_nxt = data_be_i[1] ? wdata_i[9:8]   : QSPI_DATA_MODE;
-                    QSPI_DUMMY_nxt     = data_be_i[1] ? {(~wdata_i[15:11])+wdata_i[10], {3{~wdata_i[10]}}} : QSPI_DUMMY;
-                    QSPI_WRITE_nxt     = data_be_i[1] ? wdata_i[10]    : QSPI_WRITE;
-                    QSPI_SIZE_nxt      = data_be_i[2] ? wdata_i[20:16] : QSPI_SIZE;
-                    if(data_be_i[0]) io_d[0] = wdata_i[7];
-                    if(wdata_i[31]) begin
-                        cs_nd = 1'b0;
-                        state_d = STATE_CMD;
-                    end
-                end
-                2'b01: begin
-                    QSPI_PRESCALER_nxt = data_be_i[2] ? wdata_i[22:17] : QSPI_PRESCALER;
-                    QSPI_DATA_MODE_nxt = data_be_i[0] ? wdata_i[1:0]   : QSPI_DATA_MODE;
-                    QSPI_DUMMY_nxt     = data_be_i[0] ? {(~wdata_i[7:3])+wdata_i[2], {3{~wdata_i[2]}}} : QSPI_DUMMY;
-                    QSPI_WRITE_nxt     = data_be_i[0] ? wdata_i[2]     : QSPI_WRITE;
-                    QSPI_SIZE_nxt      = data_be_i[1] ? wdata_i[12:8]  : QSPI_SIZE;
-                    if(wdata_i[23]) begin
-                        cs_nd = 1'b0;
-                        state_d = STATE_CMD;
-                    end
-                end
-                2'b10: begin
-                    QSPI_PRESCALER_nxt = data_be_i[1] ? wdata_i[14: 9] : QSPI_PRESCALER;
-                    QSPI_SIZE_nxt      = data_be_i[0] ? wdata_i[4:0]   : QSPI_SIZE;
-                    if(wdata_i[15]) begin
-                        cs_nd = 1'b0;
-                        state_d = STATE_CMD;
-                    end
-                end
-                2'b11: begin
-                    QSPI_PRESCALER_nxt = data_be_i[0] ? wdata_i[6:1] : QSPI_PRESCALER;
-                    if(wdata_i[7]) begin
-                        cs_nd = 1'b0;
-                        state_d = STATE_CMD;
-                    end
-                end
-            endcase
+            QSPI_PRESCALER_nxt = data_be_i[3] ? wdata_i[30:25] : QSPI_PRESCALER;
+            QSPI_DATA_MODE_nxt = data_be_i[1] ? wdata_i[9:8] : QSPI_DATA_MODE;
+            QSPI_DUMMY_nxt     = data_be_i[1] ? {(~wdata_i[15:11])+wdata_i[10], {3{~wdata_i[10]}}} : QSPI_DUMMY;
+            QSPI_WRITE_nxt     = data_be_i[1] ? wdata_i[10]    : QSPI_WRITE;
+            QSPI_SIZE_nxt      = data_be_i[2] ? wdata_i[20:16] : QSPI_SIZE;
+            if(data_be_i[0]) io_d[0] = wdata_i[7];
+            if(wdata_i[31]) begin
+                cs_nd = 1'b0;
+                state_d = STATE_CMD;
+            end
             cntr_sclk_d = QSPI_PRESCALER_nxt-1;
         end
         sclk_d = 0;
@@ -236,8 +208,8 @@ module QSPI_master(
             end
             
             STATE_DUMMY: begin
-                rdaddr_perip = QSPI_ADR - 1;
-                io_d[0] = data_o_perip[cntr_state_q[4:0]];
+                rdaddr_perip = QSPI_ADR;
+                io_d[0] = addr32[cntr_state_q[4:0]];
                 if(cntr_state_q==QSPI_DUMMY) begin
                     io_en_d = 4'b0000;
                     state_d = STATE_EXECUTE;

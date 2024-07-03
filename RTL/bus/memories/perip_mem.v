@@ -56,6 +56,6 @@ module perip_mem(
         mem_wren_perip[wraddr_perip[31:2]] = write_perip;
 
         mem_wren_bus = 0;
-        mem_wren_perip[addr_bus[31:2]] = write_bus & ALLOW_WRITE[addr_bus[31:2]];
+        mem_wren_bus[addr_bus[31:2]] = write_bus & ALLOW_WRITE[addr_bus[31:2]];
     end
 endmodule

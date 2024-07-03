@@ -22,79 +22,87 @@ module timer_mem(
     output[31:0] TIM_EVN_o,
     output TIM_EVC_o
 );
-    parameter SIZE=32;
-    parameter[SIZE-1:0] ALLOW_WRITE=32'h10_01_11_ff;
+    parameter SIZE=8;
+    parameter[SIZE-1:0] ALLOW_WRITE=8'b10011111;
 
-    reg[7:0] mem[0:SIZE-1], mem_nxt[0:SIZE-1];
+    reg[31:0] mem[0:SIZE-1], mem_nxt[0:SIZE-1];
     reg[(SIZE-1):0] mem_wren_bus;
 
-    assign TIM_PRE_o = {mem[3], mem[2], mem[1], mem[0]};
-    assign TIM_ARE_o = {mem[7], mem[6], mem[5], mem[4]};
-    assign TIM_CLR_o = mem[8][0];
-    assign TIM_ENA_o = mem[12][0];
-    assign TIM_MOD_o = mem[16][0];
-    assign TIM_CNT_o = {mem[23], mem[22], mem[21], mem[20]};
-    assign TIM_EVN_o = {mem[27], mem[26], mem[25], mem[24]};
-    assign TIM_EVC_o = mem[28][0];
+    assign TIM_PRE_o = mem[0];
+    assign TIM_ARE_o = mem[1];
+    assign TIM_CLR_o = mem[2][0];
+    assign TIM_ENA_o = mem[3][0];
+    assign TIM_MOD_o = mem[4][0];
+    assign TIM_CNT_o = mem[5];
+    assign TIM_EVN_o = mem[6];
+    assign TIM_EVC_o = mem[7][0];
 
     genvar i;
     generate
-        for(i=0;i<SIZE-3;i=i+1) begin
+        for(i=0;i<SIZE;i=i+1) begin
             always @(posedge clk_i) mem[i] <= rst_i ? 0 : mem_nxt[i];
         end
-        for(i=0;i<8;i=i+1) begin
+        for(i=0;i<2;i=i+1) begin
             always @* begin
                 mem_nxt[i] = mem[i];
                 if(mem_wren_bus[i]) begin
-                    mem_nxt[i] = data_i_bus[{i[1:0]-addr_bus[1:0], 3'b0}+:8];
+                    mem_nxt[i][ 0+:8] = be_bus[0] ? data_i_bus[ 0+:8] : mem[i][ 0+:8];
+                    mem_nxt[i][ 8+:8] = be_bus[1] ? data_i_bus[ 8+:8] : mem[i][ 8+:8];
+                    mem_nxt[i][16+:8] = be_bus[2] ? data_i_bus[16+:8] : mem[i][16+:8];
+                    mem_nxt[i][24+:8] = be_bus[3] ? data_i_bus[24+:8] : mem[i][24+:8];
                 end
             end
         end
-        for(i=9;i<20;i=i+1) begin
+        for(i=3;i<5;i=i+1) begin
             always @* begin
                 mem_nxt[i] = mem[i];
                 if(mem_wren_bus[i]) begin
-                    mem_nxt[i] = data_i_bus[{i[1:0]-addr_bus[1:0], 3'b0}+:8];
+                    mem_nxt[i][ 0+:8] = be_bus[0] ? data_i_bus[ 0+:8] : mem[i][ 0+:8];
+                    mem_nxt[i][ 8+:8] = be_bus[1] ? data_i_bus[ 8+:8] : mem[i][ 8+:8];
+                    mem_nxt[i][16+:8] = be_bus[2] ? data_i_bus[16+:8] : mem[i][16+:8];
+                    mem_nxt[i][24+:8] = be_bus[3] ? data_i_bus[24+:8] : mem[i][24+:8];
                 end
             end
         end
         always @* begin
-            mem_nxt[ 8] = {7'b0, TIM_CLR_i};
-            if(mem_wren_bus[8]) mem_nxt[8] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[20] = TIM_CNT_i[0+:8];
-            if(mem_wren_bus[20]) mem_nxt[20] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[21] = TIM_CNT_i[8+:8];
-            if(mem_wren_bus[21]) mem_nxt[21] = data_i_bus[{1-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[22] = TIM_CNT_i[16+:8];
-            if(mem_wren_bus[22]) mem_nxt[22] = data_i_bus[{2-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[23] = TIM_CNT_i[24+:8];
-            if(mem_wren_bus[23]) mem_nxt[23] = data_i_bus[{3-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[24] = TIM_EVN_i[0+:8];
-            if(mem_wren_bus[24]) mem_nxt[24] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[25] = TIM_EVN_i[8+:8];
-            if(mem_wren_bus[25]) mem_nxt[25] = data_i_bus[{1-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[26] = TIM_EVN_i[16+:8];
-            if(mem_wren_bus[26]) mem_nxt[26] = data_i_bus[{2-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[27] = TIM_EVN_i[24+:8];
-            if(mem_wren_bus[27]) mem_nxt[27] = data_i_bus[{3-addr_bus[1:0], 3'b0}+:8];
-            mem_nxt[28] = {7'b0, TIM_EVC_i};
-            if(mem_wren_bus[28]) mem_nxt[28] = data_i_bus[{0-addr_bus[1:0], 3'b0}+:8];
-            mem[29] = 0;
-            mem[30] = 0;
-            mem[31] = 0;
-        end
+            mem_nxt[2] = {30'b0, TIM_CLR_i};
+            if(mem_wren_bus[2]) begin
+                mem_nxt[2][ 0+:8] = be_bus[0] ? data_i_bus[ 0+:8] : mem[2][ 0+:8];
+                mem_nxt[2][ 8+:8] = be_bus[1] ? data_i_bus[ 8+:8] : mem[2][ 8+:8];
+                mem_nxt[2][16+:8] = be_bus[2] ? data_i_bus[16+:8] : mem[2][16+:8];
+                mem_nxt[2][24+:8] = be_bus[3] ? data_i_bus[24+:8] : mem[2][24+:8];
+            end
 
-        for(i=0;i<4;i=i+1) begin
-            always @* begin
-                data_o_bus[(8*i)+:8] = be_bus[i] ? mem[addr_bus + i] : 0;
+            mem_nxt[5] = TIM_CNT_i;
+            if(mem_wren_bus[5]) begin
+                mem_nxt[5][ 0+:8] = be_bus[0] ? data_i_bus[ 0+:8] : mem[5][ 0+:8];
+                mem_nxt[5][ 8+:8] = be_bus[1] ? data_i_bus[ 8+:8] : mem[5][ 8+:8];
+                mem_nxt[5][16+:8] = be_bus[2] ? data_i_bus[16+:8] : mem[5][16+:8];
+                mem_nxt[5][24+:8] = be_bus[3] ? data_i_bus[24+:8] : mem[5][24+:8];
+            end
+
+            mem_nxt[6] = TIM_EVN_i;
+            if(mem_wren_bus[6]) begin
+                mem_nxt[6][ 0+:8] = be_bus[0] ? data_i_bus[ 0+:8] : mem[6][ 0+:8];
+                mem_nxt[6][ 8+:8] = be_bus[1] ? data_i_bus[ 8+:8] : mem[6][ 8+:8];
+                mem_nxt[6][16+:8] = be_bus[2] ? data_i_bus[16+:8] : mem[6][16+:8];
+                mem_nxt[6][24+:8] = be_bus[3] ? data_i_bus[24+:8] : mem[6][24+:8];
+            end
+
+            mem_nxt[7] = {30'b0, TIM_EVC_i};
+            if(mem_wren_bus[7]) begin
+                mem_nxt[7][ 0+:8] = be_bus[0] ? data_i_bus[ 0+:8] : mem[7][ 0+:8];
+                mem_nxt[7][ 8+:8] = be_bus[1] ? data_i_bus[ 8+:8] : mem[7][ 8+:8];
+                mem_nxt[7][16+:8] = be_bus[2] ? data_i_bus[16+:8] : mem[7][16+:8];
+                mem_nxt[7][24+:8] = be_bus[3] ? data_i_bus[24+:8] : mem[7][24+:8];
             end
         end
+
     endgenerate
 
     always @* begin
         mem_wren_bus = 0;
-        if(write_bus) begin
-            mem_wren_bus[addr_bus+:4] = be_bus & ALLOW_WRITE[addr_bus+:4];
-        end
+        mem_wren_bus[addr_bus[31:2]] = write_bus & ALLOW_WRITE[addr_bus[31:2]];
+        data_o_bus = mem[addr_bus[31:2]];
     end
 endmodule
