@@ -1,4 +1,4 @@
-module top(
+module mcu(
     input rst,
     input clk,
     inout sda_io,

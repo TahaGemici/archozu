@@ -1,4 +1,4 @@
-module top_tb();
+module mcu_tb();
     reg clk, rst;
     initial begin
         clk = 0;
@@ -40,8 +40,12 @@ module top_tb();
         rst
     );
 
+    wire[15:0] out;
     wire sclk, cs;
     wire[3:0] io;
+
+`ifndef NO_FLASH
+
     s25fl128s flash_mem(
         io[0],
         io[1],
@@ -52,8 +56,9 @@ module top_tb();
         io[3]
     );
 
-    wire[15:0] out;
-    top dut(
+`endif
+
+    mcu mcu(
         rst,
         clk,
         sda_io,
