@@ -2,7 +2,9 @@
 import sys
 f = open(sys.argv[1], "r")
 out = open("../RTL/bus/memories/s25fl128s.mem", "w")
-y = ""
+out2 = open("../RTL/bus/memories/instr_mem_no_flash.mem", "w")
+out_data = ""
+out2_data = ""
 state=0
 counter=0
 for line in f.readlines():
@@ -15,10 +17,16 @@ for line in f.readlines():
     elif(state):
         lines = line[0:41].split()
         if(counter!=32):
-            y+="@"+hex(int(lines[0],16)-8192)[2:].zfill(6)+"\n"
+            tmp = "@"+hex(int(lines[0],16)-8192)[2:].zfill(6)+"\n"
+            out_data+= tmp
+            out2_data+= tmp
         counter=0
         for i in lines[1:]:
             counter+=len(i)
+            tmp=""
             for j in range(0,len(i),2):
-                y+=i[j:(j+2)]+"\n"
-out.write(y)
+                out_data+=i[j:(j+2)]+"\n"
+                tmp+=i[(len(i)-2-j):(len(i)-j)]
+            out2_data += tmp.zfill(8)+"\n"
+out.write(out_data)
+out2.write(out2_data)
