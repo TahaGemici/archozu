@@ -14,20 +14,16 @@ void knightrider_i2c(){
 	}
 }
 
+int abc=0;
+
 int main(){
-	volatile short* arr = (short*)3;
-	arr[0] = 0x0123;
-	arr[1] = 0x4567;
-	arr[2] = 0x89ab;
-	arr[3] = 0xcdef;
+	timer_conf(-1,0,1);
+	timer_enable();
 	while(1){
-		gpio_write(arr[0]);
-		gpio_write(arr[1]);
-		gpio_write(arr[2]);
-		gpio_write(arr[3]);
+		gpio_write(abc);
 	}
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
-	gpio_write(311);
+	abc++;
 }
