@@ -101,7 +101,7 @@ module mcu(
         irq_ack,
         irq_id,
 
-        out,
-        in
+        in,
+        out
     );
 endmodule

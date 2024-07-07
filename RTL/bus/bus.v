@@ -28,8 +28,8 @@ module bus(
     input irq_ack_i,
     input[4:0] irq_id_i,
 
-    input[15:0] out,
-    output[15:0] in
+    input[15:0] in,
+    output[15:0] out
 );
     assign data_gnt_o = 1;
     always @(posedge clk_i) data_rvalid_o <= data_req_i;
@@ -45,7 +45,7 @@ module bus(
         rst_i,
         i2c_en & we,
         data_be_i,
-        data_addr_i,
+        data_addr_i[4:0],
         data_wdata_i,
         i2c_out,
 	    sda_io,
@@ -59,7 +59,7 @@ module bus(
         rst_i,
         qspi_en & we,
         data_be_i,
-        data_addr_i,
+        data_addr_i[5:0],
         data_wdata_i,
         qspi_out,
 	    sclk,
@@ -74,7 +74,7 @@ module bus(
         rst_i,
         timer_en & we,
         data_be_i,
-        data_addr_i,
+        data_addr_i[4:0],
         data_wdata_i,
         timer_out,
         irq_7_o,
@@ -88,7 +88,7 @@ module bus(
         clk_i,
         gpio_en & we,
         data_be_i,
-        data_addr_i,
+        data_addr_i[5:0],
         data_wdata_i,
         gpio_out,
         in,
@@ -102,7 +102,7 @@ module bus(
         rst_i,
         data_mem_en & we,
         data_be_i,
-        data_addr_i,
+        data_addr_i[12:0],
         data_wdata_i,
         data_mem_out
     );
@@ -110,21 +110,21 @@ module bus(
     instr_mem instr_mem(
         clk_i,
 
-        instr_addr,
+        instr_addr[13:0],
         instr_req,
         instr_gnt,
         instr_rvalid,
         instr_rdata,
 
         instr_mem_en & we,
-        data_addr_i,
+        data_addr_i[12:0],
         data_wdata_i
     );
 
-    wire[31:0] usb_out;
+    wire[31:0] usb_out = 0;
     //USB EKSİK
 
-    wire[31:0] uart_out;
+    wire[31:0] uart_out = 0;
     //UART EKSİK
 
     always @(posedge clk_i) data_rdata_o <= data_rdata_o_nxt;

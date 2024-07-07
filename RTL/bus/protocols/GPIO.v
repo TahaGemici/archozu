@@ -9,6 +9,7 @@ module GPIO(
     input [15:0] input_i,
     output [15:0] output_o
 );
+    wire[31:0] output_raw;
     perip_mem #(2, 2'b10) gpio_mem(
         clk_i,
         
@@ -22,6 +23,8 @@ module GPIO(
         32'b0,
         {16'h0000, input_i},
         32'h4,
-        output_o
+        output_raw
     );
+
+    assign output_o = output_raw[15:0];
 endmodule

@@ -316,7 +316,7 @@ void timer_conf(int prescaler, int auto_reload, int mode){
 ////////////
 
 void gpio_write(unsigned short in){
-    _addr_gpio[2] = in;
+    _addr_gpio[1] = in;
 }
 
 unsigned short gpio_read(){

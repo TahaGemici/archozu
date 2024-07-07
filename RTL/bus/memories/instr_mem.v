@@ -14,7 +14,7 @@ module instr_mem(
 
     wire[31:0] rom_out;
     rom rom(
-        addr_i[13:2],
+        addr_i[7:2],
         rom_out
     );
     
@@ -110,7 +110,7 @@ xpm_memory_sdpram_inst (
                                     // Synchronously resets output port doutb to the value specified by
                                     // parameter READ_RESET_VALUE_B.
 
-   .sleep(),                   // 1-bit input: sleep signal to enable the dynamic power saving feature.
+   .sleep(1'b0),                   // 1-bit input: sleep signal to enable the dynamic power saving feature.
    .wea(write_i)                        // WRITE_DATA_WIDTH_A/BYTE_WRITE_WIDTH_A-bit input: Write enable vector
                                     // for port A input data port dina. 1 bit wide when word-wide writes are
                                     // used. In byte-wide write configurations, each bit controls the
@@ -119,13 +119,6 @@ xpm_memory_sdpram_inst (
                                     // is 32, wea would be 4'b0010.
 
 );
-
-
-
-
-
-
-
 
 
     `else

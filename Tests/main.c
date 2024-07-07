@@ -1,14 +1,5 @@
 #include "peripherals.h"
 
-
-int main(){
-	while(1){
-		gpio_write(gpio_read());
-	}
-}
-
-
-/*
 void knightrider_i2c(){
     unsigned int data=1;
     for(int i=0;i<2;i++){
@@ -23,7 +14,7 @@ void knightrider_i2c(){
 	}
 }
 
-int abc=0x1234;
+int abc=0x00001234;
 
 int main(){
 	timer_conf(-1,0,1);
@@ -34,6 +25,5 @@ int main(){
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
-	abc++;
+	abc+=gpio_read();
 }
-*/
