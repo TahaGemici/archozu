@@ -180,11 +180,11 @@ module QSPI_master(
         wraddr_perip = QSPI_STA;
         rdaddr_perip = QSPI_CCR;
 
+        data_i_perip = 1;
         case(state_q)
             STATE_IDLE: begin
                 cntr_state_d = 6;
                 write_perip = 1;
-                data_i_perip = 1;
                 if(state_d!=STATE_CMD) io_en_d = 4'b0000;
             end
             

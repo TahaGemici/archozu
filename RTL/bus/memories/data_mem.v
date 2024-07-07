@@ -36,7 +36,7 @@ xpm_memory_spram #(
    .WAKEUP_TIME("disable_sleep"), // String
    .WRITE_DATA_WIDTH_A(32),       // DECIMAL
    .WRITE_MODE_A("write_first"),  // String
-   .WRITE_PROTECT(0)              // DECIMAL
+   .WRITE_PROTECT(1)              // DECIMAL
 )
 xpm_memory_spram_inst (
    .dbiterra(),             // 1-bit output: Status signal to indicate double bit error occurrence
