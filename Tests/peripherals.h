@@ -130,7 +130,7 @@ unsigned char s25fl128s_rdcr(){
 }
 
 unsigned short s25fl128s_read_id(unsigned int addr){
-    int tmp = 0x90;
+    unsigned int tmp = 0x90;
     tmp += qspi_mode_x1;
     tmp += qspi_dummy_3;
     tmp += 1 << 16;
@@ -141,8 +141,8 @@ unsigned short s25fl128s_read_id(unsigned int addr){
     return _addr_qspi[2];
 }
 
-char s25fl128s_res(){
-    int tmp = 0xAB;
+unsigned char s25fl128s_res(){
+    unsigned int tmp = 0xAB;
     tmp += qspi_mode_x1;
     tmp += qspi_dummy_3;
     tmp += qspi_clk_50;
@@ -151,8 +151,8 @@ char s25fl128s_res(){
     return _addr_qspi[2];
 }
 
-void s25fl128s_wrr(short data){
-    int tmp = 0x01;
+void s25fl128s_wrr(unsigned short data){
+    unsigned int tmp = 0x01;
     tmp += qspi_mode_x1;
     tmp += qspi_write;
     tmp += 1 << 16;
@@ -162,8 +162,8 @@ void s25fl128s_wrr(short data){
     while(_addr_qspi[10]!=1){}
 }
 
-void s25fl128s_read(int addr, int* array, int byte_size){
-    int tmp = 0x03;
+void s25fl128s_read(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int tmp = 0x03;
     tmp += qspi_mode_x1;
     tmp += qspi_dummy_3;
     tmp += (byte_size-1) << 16;
@@ -174,8 +174,8 @@ void s25fl128s_read(int addr, int* array, int byte_size){
     for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
 }
 
-void s25fl128s_pp(int addr, int* array, int byte_size){
-    int tmp = 0x02;
+void s25fl128s_pp(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int tmp = 0x02;
     tmp += qspi_mode_x1;
     tmp += qspi_write;
     tmp += qspi_dummy_3;
@@ -187,8 +187,8 @@ void s25fl128s_pp(int addr, int* array, int byte_size){
     while(_addr_qspi[10]!=1){}
 }
 
-void s25fl128s_se(int data){
-    int tmp = 0xD8;
+void s25fl128s_se(unsigned int data){
+    unsigned int tmp = 0xD8;
     tmp += qspi_mode_x1;
     tmp += qspi_write;
     tmp += 2 << 16;
@@ -198,8 +198,8 @@ void s25fl128s_se(int data){
     while(_addr_qspi[10]!=1){}
 }
 
-void s25fl128s_dor(int addr, int* array, int byte_size){
-    int tmp = 0x3B;
+void s25fl128s_dor(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int tmp = 0x3B;
     tmp += qspi_mode_x2;
     tmp += qspi_dummy_4;
     tmp += (byte_size-1) << 16;
@@ -210,8 +210,8 @@ void s25fl128s_dor(int addr, int* array, int byte_size){
     for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
 }
  
-void s25fl128s_qor(int addr, int* array, int byte_size){
-    int tmp = 0x6B;
+void s25fl128s_qor(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int tmp = 0x6B;
     tmp += qspi_mode_x4;
     tmp += qspi_dummy_4;
     tmp += (byte_size-1) << 16;
@@ -222,8 +222,8 @@ void s25fl128s_qor(int addr, int* array, int byte_size){
     for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
 }
 
-void s25fl128s_qpp(int addr, int* array, int byte_size){
-    int tmp = 0x32;
+void s25fl128s_qpp(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int tmp = 0x32;
     tmp += qspi_mode_x4;
     tmp += qspi_write;
     tmp += qspi_dummy_3;
@@ -235,8 +235,9 @@ void s25fl128s_qpp(int addr, int* array, int byte_size){
     while(_addr_qspi[10]!=1){}
 }
 
-void qspi_custom_write(int addr, int* array, int instr, int mode, int dummy, int byte_size, int prescaler){
-    int tmp = instr & 255;
+void qspi_custom_write(unsigned int addr, unsigned int* array, unsigned int instr, \
+    unsigned int mode, unsigned int dummy, unsigned int byte_size, unsigned int prescaler){
+    unsigned int tmp = instr & 255;
     tmp += mode << 8;
     tmp += qspi_write;
     tmp += dummy << 11;
@@ -249,8 +250,9 @@ void qspi_custom_write(int addr, int* array, int instr, int mode, int dummy, int
     while(_addr_qspi[10]!=1){}
 }
 
-void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int byte_size, int prescaler){
-    int tmp = instr & 255;
+void qspi_custom_read(unsigned int addr, unsigned int* array, unsigned int instr, \
+    unsigned int mode, unsigned int dummy, unsigned int byte_size, unsigned int prescaler){
+    unsigned int tmp = instr & 255;
     tmp += mode << 8;
     tmp += dummy << 11;
     tmp += (byte_size-1) << 16;
@@ -266,11 +268,11 @@ void qspi_custom_read(int addr, int* array, int instr, int mode, int dummy, int 
  //  TIMER  //
 /////////////
 
-int timer_read_counter(){
+unsigned int timer_read_counter(){
     return _addr_timer[5];
 }
 
-int timer_read_event(){
+unsigned int timer_read_event(){
     return _addr_timer[6];
 }
 
@@ -290,7 +292,7 @@ void timer_disable(){
     _addr_timer[3] = 0;
 }
 
-void timer_conf(int prescaler, int auto_reload, int mode){
+void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int mode){
     _addr_timer[0] = prescaler;
     _addr_timer[1] = auto_reload;
     _addr_timer[4] = mode;
@@ -327,6 +329,6 @@ unsigned short gpio_read(){
  //  INSTR_MEM  //
 /////////////////
 
-void instr_mem_write(int addr, int data){
+void instr_mem_write(unsigned int addr, unsigned int data){
     _addr_instr_mem[addr] = data;
 }
