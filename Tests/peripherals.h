@@ -1,4 +1,4 @@
-#define CLK_FREQ_DIV_2 50
+#define CLK_FREQ_DIV_2 25
 #define CEIL_CLK(x) CLK_FREQ_DIV_2/x+(CLK_FREQ_DIV_2%x!=0)
 #define CEIL_SIZE(x) (x+3)>>2
 
