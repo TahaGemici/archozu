@@ -19,7 +19,7 @@ module mcu_tb();
     end
 
     wire sda_io, scl_io;
-    i2c_slave_controller #(123) I2C_slave0(
+    i2c_slave_controller #(121) I2C_slave0(
         scl_io,
         sda_io,
         rst
