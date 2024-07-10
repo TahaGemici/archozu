@@ -1,6 +1,8 @@
 module mcu(
     input rst,
     input clk,
+    input rx,
+    output tx,
     inout sda_io,
     output scl_io,
     output sclk,
@@ -89,6 +91,9 @@ module mcu(
         instr_rvalid,
         instr_addr,
         instr_rdata,
+
+        rx,
+        tx,
 
         sda_io,
         scl_io,

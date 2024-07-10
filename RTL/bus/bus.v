@@ -17,6 +17,9 @@ module bus(
     input[31:0] instr_addr,
     output[31:0] instr_rdata,
 
+    input rx,
+    output tx,
+
     inout sda_io,
     output scl_io,
 
@@ -38,6 +41,19 @@ module bus(
     reg uart_en, i2c_en, qspi_en, timer_en, usb_en, gpio_en, instr_mem_en, data_mem_en;
     reg[31:0] data_rdata_o_nxt;
 
+
+    wire[31:0] uart_out = 0;
+    UART UART(
+        clk_i,
+        rst_i,
+        uart_en & we,
+        data_be_i,
+        data_addr_i[4:0],
+        data_wdata_i,
+        uart_out,
+	    rx,
+	    tx
+    );
 
     wire[31:0] i2c_out;
     I2C_master I2C_master(
@@ -123,9 +139,6 @@ module bus(
 
     wire[31:0] usb_out = 0;
     //USB EKSİK
-
-    wire[31:0] uart_out = 0;
-    //UART EKSİK
 
     always @(posedge clk_i) data_rdata_o <= data_rdata_o_nxt;
 

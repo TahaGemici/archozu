@@ -18,7 +18,13 @@ module mcu_tb();
         forever in = #500 $random;
     end
 
-    wire sda_io, scl_io;
+    wire sda_io, scl_io, rx, tx, sclk, cs;
+    wire[3:0] io;
+    wire[15:0] out;
+
+    //UART SLAVE KOY
+
+
     i2c_slave_controller #(121) I2C_slave0(
         scl_io,
         sda_io,
@@ -40,10 +46,6 @@ module mcu_tb();
         rst
     );
 
-    wire[15:0] out;
-    wire sclk, cs;
-    wire[3:0] io;
-
 `ifndef NO_FLASH
 
     s25fl128s flash_mem(
@@ -61,6 +63,8 @@ module mcu_tb();
     mcu mcu(
         rst,
         clk,
+        rx,
+        tx,
         sda_io,
         scl_io,
         sclk,
