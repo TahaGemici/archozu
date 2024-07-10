@@ -9,7 +9,7 @@ module uart_core(
     input[15:0] cbp_i,
     input[1:0] stop_bits_i,
     input[7:0] tx_data_i,
-    input cfg_i,
+    input[2:0] cfg_i,
 
     input rx,
     output reg tx
@@ -32,8 +32,8 @@ module uart_core(
     reg rx_state_en, rx_state_en_nxt;
     reg tx_state_en, tx_state_en_nxt;
     always @(posedge clk_i) begin
-        rx_state    <= rx_state;
-        tx_state    <= tx_state;
+        rx_state    <= rx_state_nxt;
+        tx_state    <= tx_state_nxt;
         rx_state_en <= rx_state_en_nxt;
         tx_state_en <= tx_state_en_nxt;
         rx_clk_cntr <= rx_clk_cntr_nxt;
@@ -44,6 +44,7 @@ module uart_core(
         rx_data_o <= rx_data_o_nxt;
         rx_done_o <= rx_done_o_nxt;
         tx_done_o <= tx_done_o_nxt;
+        rx_data_tmp <= rx_data_tmp_nxt;
     end
     always @* begin
         rx_state_en_nxt = rst_i;
@@ -52,24 +53,24 @@ module uart_core(
         tx_clk_cntr_nxt = tx_clk_cntr + 1;
 
         if(tx_state == STATE_STOP) begin
-            tx_clk_cntr_nxt = tx_clk_cntr + 2;
+            tx_clk_cntr_nxt = {tx_clk_cntr[14:1] + 1, 1'b0};
         end
 
-        if(rx_clk_cntr == cbp[15:1]) begin
+        if(rx_clk_cntr == cbp_i[15:1]) begin
             rx_clk_cntr_nxt = 0;
             rx_state_en_nxt = 1;
         end
-        if(tx_clk_cntr == cbp[15:1]) begin
+        if(tx_clk_cntr == cbp_i[15:1]) begin
             tx_clk_cntr_nxt = 0;
             tx_state_en_nxt = 1;
         end
 
         if(rx_state == STATE_IDLE) begin
-            rx_clk_cntr_nxt = {1'b0, cbp[15:2]};
+            rx_clk_cntr_nxt = {1'b0, cbp_i[15:2]};
         end
         
         if(tx_state == STATE_IDLE) begin
-            tx_clk_cntr_nxt = cbp[15:1];
+            tx_clk_cntr_nxt = 0;
         end
     end
 
@@ -111,6 +112,7 @@ module uart_core(
 
         if(rst_i) begin
             rx_state_nxt = STATE_IDLE;
+            rx_done_o_nxt = 1'b0;
         end
     end
     
@@ -137,12 +139,12 @@ module uart_core(
                 end
             end
             STATE_STOP: begin
-                tx_state_nxt = STATE_IDLE;
-                case(stop_bits_i)
-                    2'b00: if(tx_cntr == 3'b000) tx_state_nxt = tx_state;
-                    2'b01: if(tx_cntr == 3'b001) tx_state_nxt = tx_state;
-                    2'b10: if(tx_cntr == 3'b010) tx_state_nxt = tx_state;
-                    2'b11: if(tx_cntr == 3'b010) tx_state_nxt = tx_state;
+                tx = 1;
+                tx_state_nxt = tx_state;
+                case(tx_cntr)
+                    3'b001: if(stop_bits_i == 2'b00) tx_state_nxt = STATE_IDLE;
+                    3'b010: if(stop_bits_i == 2'b01) tx_state_nxt = STATE_IDLE;
+                    3'b011: tx_state_nxt = STATE_IDLE;
                 endcase
             end
         endcase
@@ -155,6 +157,7 @@ module uart_core(
         
         if(rst_i) begin
             tx_state_nxt = STATE_IDLE;
+            tx_done_o_nxt = 1'b0;
         end
     end
 

@@ -15,7 +15,7 @@ module uart_mem(
     output[15:0] cbp_o,
     output[1:0]  stop_bits_o,
     output[7:0]  tx_data_o,
-    output     cfg_o
+    output[2:0]  cfg_o
 );
     parameter SIZE=5;
     parameter[SIZE-1:0] ALLOW_WRITE=5'b11011;

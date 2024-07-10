@@ -42,7 +42,7 @@ module bus(
     reg[31:0] data_rdata_o_nxt;
 
 
-    wire[31:0] uart_out = 0;
+    wire[31:0] uart_out;
     UART UART(
         clk_i,
         rst_i,
