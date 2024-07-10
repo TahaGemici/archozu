@@ -1,6 +1,5 @@
 module data_mem(
     input clk_i,
-    input rst_i,
     input write_i,
     input[3:0] be_sel_i,
     input[12:0] addr_i,
@@ -64,7 +63,7 @@ xpm_memory_spram_inst (
    .regcea(),                 // 1-bit input: Clock Enable for the last register stage on the output
                                     // data path.
 
-   .rsta(rst_i),                     // 1-bit input: Reset signal for the final port A output register stage.
+   .rsta(),                     // 1-bit input: Reset signal for the final port A output register stage.
                                     // Synchronously resets output port douta to the value specified by
                                     // parameter READ_RESET_VALUE_A.
 

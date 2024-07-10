@@ -1,5 +1,6 @@
 module GPIO(
     input clk_i,
+    input rst_i,
     input write_i,
     input [3:0] data_be_i,
     input [5:0] addr_i,
@@ -12,6 +13,7 @@ module GPIO(
     wire[31:0] output_raw;
     perip_mem #(2, 2'b10) gpio_mem(
         clk_i,
+        rst_i,
         
         write_i,
         data_be_i,

@@ -11,23 +11,18 @@ module UART(
 	output tx
 );
 
-
-
-
-	localparam I2C_NBY = 0;
-	localparam I2C_ADR = 4;
-	localparam I2C_RDR = 8;
-	localparam I2C_TDR = 12;
-	localparam I2C_CFG = 16;
-
-    reg write_perip;
-    reg[31:0] wraddr_perip;
-    reg[31:0] data_i_perip;
-    reg[31:0] rdaddr_perip;
-    wire[31:0] data_o_perip;
+    wire[15:0] cbp;
+    wire[1:0]  stop_bits;
+    wire[7:0]  tx_data;
+    wire     tx_en;
     
-    perip_mem #(5, 5'b11011) i2c_mem(
+    wire[7:0]  rx_data;
+    wire   rx_done;
+    wire   tx_done;
+    
+    uart_mem uart_mem(
         clk_i,
+        rst_i,
         
         write_i,
         data_be_i,
@@ -35,11 +30,31 @@ module UART(
         wdata_i,
         rdata_o,
         
-        write_perip,
-        wraddr_perip,
-        data_i_perip,
-        rdaddr_perip,
-        data_o_perip
+        rx_data,
+        rx_done,
+        tx_done,
+
+        cbp,
+        stop_bits,
+        tx_data,
+        tx_en
+    );
+
+    UART_core UART_core(
+        clk_i,
+        rst_i,
+
+        rx_data,
+        rx_done,
+        tx_done,
+
+        cbp,
+        stop_bits,
+        tx_data,
+        tx_en,
+
+        rx,
+        tx
     );
 
 endmodule

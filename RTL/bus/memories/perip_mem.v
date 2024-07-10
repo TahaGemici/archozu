@@ -1,5 +1,6 @@
 module perip_mem(
     input clk_i,
+    input rst_i,
 
     input write_bus,
     input[3:0] be_bus,
@@ -29,7 +30,7 @@ module perip_mem(
     genvar i;
     generate
         for(i=0;i<SIZE;i=i+1) begin
-            always @(posedge clk_i) mem[i] <= mem_nxt[i];
+            always @(posedge clk_i) mem[i] <= rst_i ? 0 : mem_nxt[i];
 
             always @* begin
                 mem_nxt[i] = mem[i];

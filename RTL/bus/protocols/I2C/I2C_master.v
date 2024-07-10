@@ -45,6 +45,7 @@ module I2C_master(
     
     perip_mem #(5, 5'b11011) i2c_mem(
         clk_i,
+        rst_i,
         
         write_i,
         data_be_i,

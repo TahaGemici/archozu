@@ -102,6 +102,7 @@ module bus(
     wire[31:0] gpio_out;
     GPIO GPIO(
         clk_i,
+        rst_i,
         gpio_en & we,
         data_be_i,
         data_addr_i[5:0],
@@ -115,7 +116,6 @@ module bus(
     wire[31:0] data_mem_out;
     data_mem data_mem(
         clk_i,
-        rst_i,
         data_mem_en & we,
         data_be_i,
         data_addr_i[12:0],

@@ -26,6 +26,7 @@ module QSPI_master(
     
     perip_mem #(11, 11'b0_11111111_1_1) qspi_mem(
         clk_i,
+        rst_i,
         
         write_i,
         data_be_i,
