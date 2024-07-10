@@ -1,4 +1,4 @@
-module UART_core(
+module uart_core(
     input clk_i,
     input rst_i,
 
@@ -9,7 +9,7 @@ module UART_core(
     input[15:0] cbp_i,
     input[1:0] stop_bits_i,
     input[7:0] tx_data_i,
-    input tx_en_i,
+    input cfg_i,
 
     input rx,
     output reg tx
@@ -50,6 +50,11 @@ module UART_core(
         tx_state_en_nxt = rst_i;
         rx_clk_cntr_nxt = rx_clk_cntr + 1;
         tx_clk_cntr_nxt = tx_clk_cntr + 1;
+
+        if(tx_state == STATE_STOP) begin
+            tx_clk_cntr_nxt = tx_clk_cntr + 2;
+        end
+
         if(rx_clk_cntr == cbp[15:1]) begin
             rx_clk_cntr_nxt = 0;
             rx_state_en_nxt = 1;
@@ -84,7 +89,10 @@ module UART_core(
             end
             STATE_DATA: begin
                 rx_data_tmp_nxt[rx_cntr] = rx;
-                rx_state_nxt = (&rx_cntr) ? STATE_STOP : rx_state;
+                rx_state_nxt = rx_state;
+                if(&rx_cntr) begin
+                    rx_state_nxt = STATE_STOP;
+                end
             end
             STATE_STOP: begin
                 rx_data_o_nxt = rx_data_tmp;
@@ -97,7 +105,7 @@ module UART_core(
             rx_cntr_nxt   = rx_cntr;
             rx_state_nxt  = rx_state;
             rx_data_o_nxt = rx_data_o;
-            rx_done_o_nxt = rx_done_o;
+            rx_done_o_nxt = cfg_i[1];
             rx_data_tmp_nxt = rx_data_tmp;
         end
 
@@ -113,7 +121,7 @@ module UART_core(
         case(tx_state)
             STATE_IDLE: begin
                 tx = 1;
-                tx_state_nxt = ((~tx_done_o) & tx_en_i) ? STATE_START : tx_state;
+                tx_state_nxt = ((~tx_done_o) & cfg_i[0]) ? STATE_START : tx_state;
             end
             STATE_START: begin
                 tx = 0;
@@ -122,18 +130,27 @@ module UART_core(
             end
             STATE_DATA: begin
                 tx = tx_data_i[tx_cntr];
-                tx_state_nxt = (&tx_cntr) ? STATE_STOP : tx_state;
+                tx_state_nxt = tx_state;
+                if(&tx_cntr) begin
+                    tx_state_nxt = STATE_STOP;
+                    tx_done_o_nxt = 1'b1;
+                end
             end
             STATE_STOP: begin
-                tx_done_o_nxt = 1'b1;
                 tx_state_nxt = STATE_IDLE;
+                case(stop_bits_i)
+                    2'b00: if(tx_cntr == 3'b000) tx_state_nxt = tx_state;
+                    2'b01: if(tx_cntr == 3'b001) tx_state_nxt = tx_state;
+                    2'b10: if(tx_cntr == 3'b010) tx_state_nxt = tx_state;
+                    2'b11: if(tx_cntr == 3'b010) tx_state_nxt = tx_state;
+                endcase
             end
         endcase
         
         if((tx_state != STATE_IDLE) && (!tx_state_en)) begin
             tx_cntr_nxt   = tx_cntr;
             tx_state_nxt  = tx_state;
-            tx_done_o_nxt = tx_done_o;
+            tx_done_o_nxt = cfg_i[2];
         end
         
         if(rst_i) begin

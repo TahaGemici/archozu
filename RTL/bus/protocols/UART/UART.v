@@ -1,6 +1,7 @@
 module UART(
     input clk_i,
     input rst_i,
+    
     input write_i,
     input [3:0] data_be_i,
     input [4:0] addr_i,
@@ -14,7 +15,7 @@ module UART(
     wire[15:0] cbp;
     wire[1:0]  stop_bits;
     wire[7:0]  tx_data;
-    wire     tx_en;
+    wire[2:0]  cfg;
     
     wire[7:0]  rx_data;
     wire   rx_done;
@@ -37,10 +38,10 @@ module UART(
         cbp,
         stop_bits,
         tx_data,
-        tx_en
+        cfg
     );
 
-    UART_core UART_core(
+    uart_core uart_core(
         clk_i,
         rst_i,
 
@@ -51,7 +52,7 @@ module UART(
         cbp,
         stop_bits,
         tx_data,
-        tx_en,
+        cfg,
 
         rx,
         tx

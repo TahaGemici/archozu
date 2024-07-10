@@ -15,7 +15,7 @@ module uart_mem(
     output[15:0] cbp_o,
     output[1:0]  stop_bits_o,
     output[7:0]  tx_data_o,
-    output     tx_en_o
+    output     cfg_o
 );
     parameter SIZE=5;
     parameter[SIZE-1:0] ALLOW_WRITE=5'b11011;
@@ -33,7 +33,7 @@ module uart_mem(
     assign cbp_o       = mem[0][15:0];
     assign stop_bits_o = mem[1][1:0];
     assign tx_data_o   = mem[3][7:0];
-    assign tx_en_o     = mem[4][0];
+    assign cfg_o       = mem[4][2:0];
 
     genvar i;
     generate
