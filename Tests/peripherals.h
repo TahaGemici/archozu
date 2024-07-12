@@ -1,4 +1,5 @@
-#define CLK_FREQ_DIV_2 25
+#define CLK_FREQ 50
+#define CLK_FREQ_DIV_2 (CLK_FREQ / 2)
 #define CEIL_CLK(x) CLK_FREQ_DIV_2/x+(CLK_FREQ_DIV_2%x!=0)
 #define CEIL_SIZE(x) (x+3)>>2
 
@@ -14,8 +15,8 @@ volatile unsigned int* const _addr_gpio      = (unsigned int*)0x10000;
  //  UART  //
 ////////////
 
-void uart_conf(unsigned int baud_quotient, unsigned char stop_bit){
-    _addr_uart[0] = baud_quotient;
+void uart_conf(unsigned int baud_rate, unsigned char stop_bit){
+    _addr_uart[0] = CLK_FREQ / baud_rate;
     _addr_uart[1] = stop_bit;
 }
 
