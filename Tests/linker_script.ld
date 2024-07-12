@@ -17,7 +17,7 @@ SECTIONS {
     .text : 
     {
         *(.text.startup.main)
-        . = 0x0100;
+        . = 0x0200;
         *(.text.interrupt)
         *(.text)
     } > INSTR_MEM :text

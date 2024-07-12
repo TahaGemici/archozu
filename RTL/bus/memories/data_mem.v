@@ -18,7 +18,11 @@ xpm_memory_spram #(
    .ECC_MODE("no_ecc"),           // String
    .ECC_TYPE("none"),             // String
    .IGNORE_INIT_SYNTH(1),         // DECIMAL
-   .MEMORY_INIT_FILE("none"),     // String
+`ifdef NO_FLASH
+   .MEMORY_INIT_FILE("data_mem_no_flash.mem"),      // String
+`else
+   .MEMORY_INIT_FILE("none"),      // String
+`endif
    .MEMORY_INIT_PARAM("0"),       // String
    .MEMORY_OPTIMIZATION("true"),  // String
    .MEMORY_PRIMITIVE("auto"),     // String
@@ -30,8 +34,8 @@ xpm_memory_spram #(
    .READ_RESET_VALUE_A("0"),      // String
    .RST_MODE_A("SYNC"),           // String
    .SIM_ASSERT_CHK(0),            // DECIMAL; 0=disable simulation messages, 1=enable simulation messages
-   .USE_MEM_INIT(0),              // DECIMAL
-   .USE_MEM_INIT_MMI(0),          // DECIMAL
+   .USE_MEM_INIT(1),              // DECIMAL
+   .USE_MEM_INIT_MMI(1),          // DECIMAL
    .WAKEUP_TIME("disable_sleep"), // String
    .WRITE_DATA_WIDTH_A(32),       // DECIMAL
    .WRITE_MODE_A("write_first"),  // String
@@ -82,6 +86,12 @@ xpm_memory_spram_inst (
 `else
 
     reg[7:0] mem[0:8191];
+    
+    `ifdef NO_FLASH
+        initial begin
+            $readmemh("s25fl128s.mem",mem);
+        end
+    `endif
 
     assign data_o[ 0+:8] = mem[{addr_i[12:2], 2'b00}];
     assign data_o[ 8+:8] = mem[{addr_i[12:2], 2'b01}];

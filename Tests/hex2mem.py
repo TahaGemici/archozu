@@ -4,25 +4,19 @@ f = open(sys.argv[1], "r")
 out = open("../RTL/bus/memories/s25fl128s.mem", "w")
 out2 = open("../RTL/bus/memories/instr_mem_no_flash.mem", "w")
 out_data = ""
-out2_data = ""
 state=0
 counter=1
-tmp=0
 flag=1
 for line in f.readlines():
     if(line.startswith("Contents")):
         state=0
-        if((line[20:25]==".text")|(line[20:27]==".rodata")):
+        if((line[20:28]!=".comment")&(line[20:37]!=".riscv.attributes")):
             state=1
             flag=1
     elif(state):
         lines = line[0:41].split()
         if(flag):
-            tmp = int(lines[0],16)-8192
-            if(counter!=tmp):
-                out_data += "@"+hex(tmp)[2:].zfill(6)+"\n"
-                counter=tmp
-            flag=0
+            out_data += "@"+lines[0].zfill(6)+"\n"
         for i in lines[1:]:
             counter+=len(i)/2
             for j in range(0,len(i),2):

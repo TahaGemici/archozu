@@ -22,8 +22,30 @@ module mcu_tb();
     wire[3:0] io;
     wire[15:0] out;
 
-    //UART SLAVE KOY
+    wire tx_done;
+    reg tx_en;
+    wire[7:0] rx_data;
+    reg[7:0] tx_data;
 
+    initial begin
+        tx_en=0;
+        wait(rst==0);
+        #1000;
+        tx_en=1;
+        forever tx_data = #500 $random;
+    end
+
+    uart_test #(5208) uart_test( //BAUDRATE=9600
+        clk_i,
+
+        tx,
+        rx_data,
+
+        rx,
+        tx_en,
+        tx_data,
+        tx_done
+    );
 
     i2c_slave_controller #(121) I2C_slave0(
         scl_io,

@@ -1,12 +1,15 @@
 #include "peripherals.h"
 
+char* abc = "sadasdasda";
+int i=102;
+
 int main(){
-	uart_conf(2000, 2);
-	char abc = 123;
-	while(1){
-		uart_write(abc);
-	}
+    for(int j=0;j<i;j++){
+        gpio_write(abc[i]);
+    }
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
+    abc="dasdasda";
+    i++;
 }

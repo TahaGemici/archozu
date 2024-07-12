@@ -1,95 +1,85 @@
 @000000
-0000a137
-000041b7
-80000537
-00656513
-070000ef
-80010537
-50156513
-20006213
-00412423
-05c000ef
-80000537
-10556513
-050000ef
-00812203
-00127213
-fe021ae3
-02816213
-821f2537
-36b56513
-000022b7
-000065b3
-02c000ef
-00810313
-003583b3
-00032083
-0013a023
-00458593
-00430313
-fe4316e3
-fe5590e3
-00002137
-00010067
-00a12023
-00b12223
-02812603
-00167613
-fe060ce3
-00008067
+800007b7
+67290799
+67a9c31c
+02878793
+43944705
+fee69fe3
+071367a9
+c7982000
+800107b7
+50178793
+c31c6729
+879367a9
+47050287
+9fe34394
+06b7fee6
+66298000
+65a96729
+10568693
+02860613
+07214505
+421cc194
+fea79fe3
+8b85431c
+4401dbf5
+69916909
+02000613
+8522100c
+06132091
+858a0200
+01240533
+84a22825
+06934781
+10180200
+4318973e
+0733c098
+431000f1
+00249713
+c310974e
+04850791
+fed793e3
+11e30421
+2137fd24
+00670000
+45010001
+fff60793
+80002737
+36b70713
+97ba07c2
+c3486729
+c31c6729
+879367a9
+47050287
+9fe34394
+060dfee6
+9a716729
+07214781
+00c79363
+86b38082
+428800e7
+00f586b3
+c2880791
+0000b7f5
+00000000
 
 /*
-.global _boot
-.text
 
-_boot:
-    lui x2, 10
-    lui x3, 4
-    
-    lui x10, 0x80000
-    ori x10, x10, 6
-    jal x1, qspi_func
-    
-    lui x10, 0x80010
-    ori x10, x10, 0x501
-    ori x4, x0, 512
-    sw x4, 8(x2)
-    jal x1, qspi_func
-    
-    lui x10, 0x80000
-    ori x10, x10, 0x105
-    loop_rdsr1:
-    jal x1, qspi_func
-    lw x4, 8(x2)
-    andi x4, x4, 1
-    bne x4, x0, loop_rdsr1
-    
-    ori x4, x2, 40
-    lui x10, 0x821F2
-    ori x10, x10, 0x36B
-    lui x5, 2
-    or x11, x0, x0
-    loop_qor0:
-    jal x1, qspi_func
-    addi x6, x2, 8
-    loop_qor1:
-    add x7, x11, x3
-    lw x1, 0(x6)
-    sw x1, 0(x7)
-    addi x11, x11, 4
-    addi x6, x6, 4
-    bne x6, x4, loop_qor1   
-    bne x11, x5, loop_qor0
-    
-    lui x2, 2
-    jalr x0, x2, 0
-    
-	qspi_func:
-    sw x10, 0(x2) 
-	sw x11, 4(x2)
-    not_finished:
-    lw x12, 40(x2)
-    andi x12, x12, 1
-    beq x12, x0, not_finished
-    jalr x0, x1, 0
+int __attribute__((naked)) main(){
+	s25fl128s_wren();
+	s25fl128s_wrr(1<<9);
+	while(!(s25fl128s_rdsr1() & 1)){}
+
+	int instr_arr[8], data_arr[8];
+	for(int i=0x0000;i<0x2000; i+=8){
+		s25fl128s_qor(i, data_arr, 32);
+		s25fl128s_qor(i+0x2000, instr_arr, 32);
+		for(int j=0;j<8;j++){
+			*(int*)(i+j) = data_arr[j];
+			instr_mem_write(i+j, instr_arr[j]);
+		}
+	}
+	asm("lui x2, 0x2\n\t"
+    	"jalr x0, x2, 0");
+}
 */

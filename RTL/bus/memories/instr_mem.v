@@ -126,8 +126,13 @@ xpm_memory_sdpram_inst (
     reg[7:0] mem[0:(8*1024-1)];
 
     `ifdef NO_FLASH
+        reg[7:0] mem2[0:(16*1024-1)];
+        integer i;
         initial begin
-            $readmemh("s25fl128s.mem",mem);
+            $readmemh("s25fl128s.mem",mem2);
+            for(i=0;i<8192;i=i+1) begin
+                mem[i] = mem2[i+8192];
+            end
         end
     `endif
 
