@@ -297,7 +297,7 @@ void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int m
     _addr_timer[1] = auto_reload;
     _addr_timer[4] = mode;
     asm("li a0, 128\n\t"
-        //"li a1, 0x2100\n\t"
+        //"li a1, 0x2200\n\t"
         //"csrrw zero, mtvec, a1\n\t" //locate interrupt()
         "csrrsi zero, mstatus, 8\n\t" //enable machine interrupt
         "csrrs zero, mie, a0\n\t"); //enable timer interrupt
