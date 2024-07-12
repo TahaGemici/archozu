@@ -35,7 +35,7 @@ module mcu(
 
         // Core ID, Cluster ID, debug mode halt address and boot address are considered more or less static
         .boot_addr_i(0),
-        .mtvec_addr_i(0),
+        .mtvec_addr_i(32'h00_00_22_00),
         .dm_halt_addr_i(0),
         .hart_id_i(0),
         .dm_exception_addr_i(0),
