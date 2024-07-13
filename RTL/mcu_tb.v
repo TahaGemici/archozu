@@ -69,7 +69,6 @@ module mcu_tb();
     );
 
 `ifndef NO_FLASH
-
     s25fl128s flash_mem(
         io[0],
         io[1],

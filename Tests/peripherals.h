@@ -1,7 +1,5 @@
 #define CLK_FREQ 50
-#define CLK_FREQ_DIV_2 (CLK_FREQ / 2)
-#define CEIL_CLK(x) CLK_FREQ_DIV_2/x+(CLK_FREQ_DIV_2%x!=0)
-#define CEIL_SIZE(x) (x+3)>>2
+#define CEIL_CLK(x) (CLK_FREQ/2/x)+((CLK_FREQ/2)%x!=0)
 
 volatile unsigned int* const _addr_instr_mem = (unsigned int*)0x04000;
 volatile unsigned int* const _addr_uart      = (unsigned int*)0x06000;
@@ -22,9 +20,9 @@ void uart_conf(unsigned int baud_rate, unsigned char stop_bit){
 
 unsigned char uart_read(){
     while(_addr_uart[4]!=2){}
-    char tmp = _addr_uart[2];
+    unsigned char data = _addr_uart[2];
     _addr_uart[4] = 0;
-    return tmp;
+    return data;
 }
 
 void uart_write(unsigned char data){
@@ -51,7 +49,7 @@ void i2c_write(unsigned int data, unsigned char byte_size){
 }
 
 unsigned int i2c_read(unsigned char byte_size){
-    _addr_i2c[0]     = byte_size;
+    _addr_i2c[0] = byte_size;
     _addr_i2c[4] = 4;
     while(_addr_i2c[4]!=12){}
     _addr_i2c[4] = 0;
@@ -73,196 +71,215 @@ unsigned int const qspi_write   = 1 << 10;
 unsigned int const qspi_dummy_3 = 3 << 11;
 unsigned int const qspi_dummy_4 = 4 << 11;
 
+void qspi_wait(){
+    while(_addr_qspi[10]!=1){}
+    while(_addr_qspi[10]!=1){}
+}
+
+void qspi_read_array(unsigned int* array, unsigned int byte_size){
+    byte_size = (byte_size+3) >> 2;
+    for(int i=0; i<byte_size; i++){
+        array[i] = _addr_qspi[2+i];
+    }
+}
+
+void qspi_write_array(unsigned int* array, unsigned int byte_size){
+    byte_size = (byte_size+3) >> 2;
+    for(int i=0; i<byte_size; i++){
+        _addr_qspi[2+i] = array[i];
+    }
+}
+
 void s25fl128s_wren(){
     _addr_qspi[0] = qspi_clk_133 + 0x06;
-    while(_addr_qspi[10]!=1){}
+    qspi_wait();
 }
 
 void s25fl128s_wrdi(){
     _addr_qspi[0] = qspi_clk_133 + 0x04;
-    while(_addr_qspi[10]!=1){}
+    qspi_wait();
 }
 
 void s25fl128s_clsr(){
     _addr_qspi[0] = qspi_clk_133 + 0x30;
-    while(_addr_qspi[10]!=1){}
+    qspi_wait();
 }
 
 void s25fl128s_reset(){
     _addr_qspi[0] = qspi_clk_133 + 0xF0;
-    while(_addr_qspi[10]!=1){}
+    qspi_wait();
 }
 
 void s25fl128s_rdid(unsigned int* array, unsigned int byte_size){
-    unsigned int tmp = 0x9F;
-    tmp += qspi_mode_x1;
-    tmp += (byte_size-1) << 16;
-    tmp += qspi_clk_133;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
+    unsigned int cmd = 0x9F;
+    cmd += qspi_mode_x1;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
 }
 
 unsigned char s25fl128s_rdsr1(){
-    unsigned int tmp = 0x05;
-    tmp += qspi_mode_x1;
-    tmp += qspi_clk_133;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    unsigned int cmd = 0x05;
+    cmd += qspi_mode_x1;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
     return _addr_qspi[2];
 }
 
 unsigned char s25fl128s_rdsr2(){
-    unsigned int tmp = 0x07;
-    tmp += qspi_mode_x1;
-    tmp += qspi_clk_133;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    unsigned int cmd = 0x07;
+    cmd += qspi_mode_x1;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
     return _addr_qspi[2];
 }
 
 unsigned char s25fl128s_rdcr(){
-    unsigned int tmp = 0x35;
-    tmp += qspi_mode_x1;
-    tmp += qspi_clk_133;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    unsigned int cmd = 0x35;
+    cmd += qspi_mode_x1;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
     return _addr_qspi[2];
 }
 
 unsigned short s25fl128s_read_id(unsigned int addr){
-    unsigned int tmp = 0x90;
-    tmp += qspi_mode_x1;
-    tmp += qspi_dummy_3;
-    tmp += 1 << 16;
-    tmp += qspi_clk_133;
+    unsigned int cmd = 0x90;
+    cmd += qspi_mode_x1;
+    cmd += qspi_dummy_3;
+    cmd += 1 << 16;
+    cmd += qspi_clk_133;
     _addr_qspi[1] = addr;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    _addr_qspi[0] = cmd;
+    qspi_wait();
     return _addr_qspi[2];
 }
 
 unsigned char s25fl128s_res(){
-    unsigned int tmp = 0xAB;
-    tmp += qspi_mode_x1;
-    tmp += qspi_dummy_3;
-    tmp += qspi_clk_50;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    unsigned int cmd = 0xAB;
+    cmd += qspi_mode_x1;
+    cmd += qspi_dummy_3;
+    cmd += qspi_clk_50;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
     return _addr_qspi[2];
 }
 
 void s25fl128s_wrr(unsigned short data){
-    unsigned int tmp = 0x01;
-    tmp += qspi_mode_x1;
-    tmp += qspi_write;
-    tmp += 1 << 16;
-    tmp += qspi_clk_133;
+    unsigned int cmd = 0x01;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += 1 << 16;
+    cmd += qspi_clk_133;
     _addr_qspi[2] = data;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    _addr_qspi[0] = cmd;
+    qspi_wait();
 }
 
 void s25fl128s_read(unsigned int addr, unsigned int* array, unsigned int byte_size){
-    unsigned int tmp = 0x03;
-    tmp += qspi_mode_x1;
-    tmp += qspi_dummy_3;
-    tmp += (byte_size-1) << 16;
-    tmp += qspi_clk_50;
+    unsigned int cmd = 0x03;
+    cmd += qspi_mode_x1;
+    cmd += qspi_dummy_3;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_50;
     _addr_qspi[1] = addr;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
 }
 
 void s25fl128s_pp(unsigned int addr, unsigned int* array, unsigned int byte_size){
-    unsigned int tmp = 0x02;
-    tmp += qspi_mode_x1;
-    tmp += qspi_write;
-    tmp += qspi_dummy_3;
-    tmp += (byte_size-1) << 16;
-    tmp += qspi_clk_133;
+    unsigned int cmd = 0x02;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += qspi_dummy_3;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_133;
     _addr_qspi[1] = addr;
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) _addr_qspi[2+i] = array[i];
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    qspi_write_array(array, byte_size);
+    _addr_qspi[0] = cmd;
+    qspi_wait();
 }
 
 void s25fl128s_se(unsigned int data){
-    unsigned int tmp = 0xD8;
-    tmp += qspi_mode_x1;
-    tmp += qspi_write;
-    tmp += 2 << 16;
-    tmp += qspi_clk_133;
+    unsigned int cmd = 0xD8;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += 2 << 16;
+    cmd += qspi_clk_133;
     _addr_qspi[2] = data;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    _addr_qspi[0] = cmd;
+    qspi_wait();
 }
 
 void s25fl128s_dor(unsigned int addr, unsigned int* array, unsigned int byte_size){
-    unsigned int tmp = 0x3B;
-    tmp += qspi_mode_x2;
-    tmp += qspi_dummy_4;
-    tmp += (byte_size-1) << 16;
-    tmp += qspi_clk_104;
+    unsigned int cmd = 0x3B;
+    cmd += qspi_mode_x2;
+    cmd += qspi_dummy_4;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_104;
     _addr_qspi[1] = addr;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
 }
  
 void s25fl128s_qor(unsigned int addr, unsigned int* array, unsigned int byte_size){
-    unsigned int tmp = 0x6B;
-    tmp += qspi_mode_x4;
-    tmp += qspi_dummy_4;
-    tmp += (byte_size-1) << 16;
-    tmp += qspi_clk_104;
+    unsigned int cmd = 0x6B;
+    cmd += qspi_mode_x4;
+    cmd += qspi_dummy_4;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_104;
     _addr_qspi[1] = addr;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
 }
 
 void s25fl128s_qpp(unsigned int addr, unsigned int* array, unsigned int byte_size){
-    unsigned int tmp = 0x32;
-    tmp += qspi_mode_x4;
-    tmp += qspi_write;
-    tmp += qspi_dummy_3;
-    tmp += (byte_size-1) << 16;
-    tmp += qspi_clk_80;
+    unsigned int cmd = 0x32;
+    cmd += qspi_mode_x4;
+    cmd += qspi_write;
+    cmd += qspi_dummy_3;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_80;
     _addr_qspi[1] = addr;
-    _addr_qspi[0] = tmp;
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) _addr_qspi[2+i] = array[i];
-    while(_addr_qspi[10]!=1){}
+    _addr_qspi[0] = cmd;
+    qspi_write_array(array, byte_size);
+    qspi_wait();
 }
 
 void qspi_custom_write(unsigned int addr, unsigned int* array, unsigned int instr, \
     unsigned int mode, unsigned int dummy, unsigned int byte_size, unsigned int prescaler){
-    unsigned int tmp = instr & 255;
-    tmp += mode << 8;
-    tmp += qspi_write;
-    tmp += dummy << 11;
-    tmp += (byte_size-1) << 16;
-    tmp += prescaler << 25;
-    tmp += 1 << 31;
+    unsigned int cmd = instr & 255;
+    cmd += mode << 8;
+    cmd += qspi_write;
+    cmd += dummy << 11;
+    cmd += (byte_size-1) << 16;
+    cmd += prescaler << 25;
+    cmd += 1 << 31;
     _addr_qspi[1] = addr;
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) _addr_qspi[2+i] = array[i];
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
+    qspi_write_array(array, byte_size);
+    _addr_qspi[0] = cmd;
+    qspi_wait();
 }
 
 void qspi_custom_read(unsigned int addr, unsigned int* array, unsigned int instr, \
     unsigned int mode, unsigned int dummy, unsigned int byte_size, unsigned int prescaler){
-    unsigned int tmp = instr & 255;
-    tmp += mode << 8;
-    tmp += dummy << 11;
-    tmp += (byte_size-1) << 16;
-    tmp += prescaler << 25;
-    tmp += 1 << 31;
+    unsigned int cmd = instr & 255;
+    cmd += mode << 8;
+    cmd += dummy << 11;
+    cmd += (byte_size-1) << 16;
+    cmd += prescaler << 25;
+    cmd += 1 << 31;
     _addr_qspi[1] = addr;
-    _addr_qspi[0] = tmp;
-    while(_addr_qspi[10]!=1){}
-    for(int i=0;i<CEIL_SIZE(byte_size);i++) array[i] = _addr_qspi[2+i];
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
 }
 
   /////////////
