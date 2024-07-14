@@ -286,39 +286,33 @@ void qspi_custom_read(unsigned int addr, unsigned int* array, unsigned int instr
  //  TIMER  //
 /////////////
 
-unsigned int timer_read_counter(){
+unsigned int timer_counter(){
     return _addr_timer[5];
 }
 
-unsigned int timer_read_event(){
+unsigned int timer_event(){
     return _addr_timer[6];
 }
 
-void timer_clear_counter(){
+void timer_clear(){
     _addr_timer[2] = 1;
-}
-
-void timer_clear_event(){
     _addr_timer[7] = 1;
 }
 
-void timer_enable(){
-    _addr_timer[3] = 1;
-}
-
-void timer_disable(){
-    _addr_timer[3] = 0;
+void timer_enabled(unsigned int data){
+    _addr_timer[3] = data;
 }
 
 void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int mode){
     _addr_timer[0] = prescaler;
     _addr_timer[1] = auto_reload;
     _addr_timer[4] = mode;
-    asm("li a0, 128\n\t"
+    asm("li a2, 128\n\t"
         //"li a1, 0x2200\n\t"
         //"csrrw zero, mtvec, a1\n\t" //locate interrupt()
         "csrrsi zero, mstatus, 8\n\t" //enable machine interrupt
-        "csrrs zero, mie, a0\n\t"); //enable timer interrupt
+        "csrrs zero, mie, a2\n\t"); //enable timer interrupt
+    timer_enabled(1);
 }
 
   ///////////
