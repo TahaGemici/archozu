@@ -27,8 +27,8 @@ module uart_core(
     localparam STATE_DATA  = 2;
     localparam STATE_STOP  = 3;
 
-    reg[14:0] rx_clk_cntr, rx_clk_cntr_nxt;
-    reg[14:0] tx_clk_cntr, tx_clk_cntr_nxt;
+    reg[15:0] rx_clk_cntr, rx_clk_cntr_nxt;
+    reg[15:0] tx_clk_cntr, tx_clk_cntr_nxt;
     reg rx_state_en, rx_state_en_nxt;
     reg tx_state_en, tx_state_en_nxt;
     always @(posedge clk_i) begin
@@ -53,20 +53,20 @@ module uart_core(
         tx_clk_cntr_nxt = tx_clk_cntr + 1;
 
         if(tx_state == STATE_STOP) begin
-            tx_clk_cntr_nxt = {tx_clk_cntr[14:1] + 1, 1'b0};
+            tx_clk_cntr_nxt = {tx_clk_cntr[15:1] + 1, cbp_i[0]};
         end
 
-        if(rx_clk_cntr == cbp_i[15:1]) begin
+        if(rx_clk_cntr == cbp_i) begin
             rx_clk_cntr_nxt = 0;
             rx_state_en_nxt = 1;
         end
-        if(tx_clk_cntr == cbp_i[15:1]) begin
+        if(tx_clk_cntr == cbp_i) begin
             tx_clk_cntr_nxt = 0;
             tx_state_en_nxt = 1;
         end
 
         if(rx_state == STATE_IDLE) begin
-            rx_clk_cntr_nxt = {1'b0, cbp_i[15:2]};
+            rx_clk_cntr_nxt = {1'b0, cbp_i[15:1]};
         end
         
         if(tx_state == STATE_IDLE) begin

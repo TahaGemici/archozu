@@ -14,7 +14,7 @@ volatile unsigned int* const _addr_gpio      = (unsigned int*)0x10000;
 ////////////
 
 void uart_conf(unsigned int baud_rate, unsigned char stop_bit){
-    _addr_uart[0] = CLK_FREQ / baud_rate;
+    _addr_uart[0] = (CLK_FREQ*1000000) / baud_rate - 1;
     _addr_uart[1] = stop_bit;
 }
 

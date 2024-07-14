@@ -28,15 +28,20 @@ module mcu_tb();
     reg[7:0] tx_data;
 
     initial begin
-        tx_en=0;
+        tx_en = 0;
         wait(rst==0);
-        #1000;
-        tx_en=1;
-        forever tx_data = #500 $random;
+        #8000000;
+        forever begin
+            tx_data = $random;
+            tx_en = 1;
+            #100;
+            tx_en = 0;
+            #300000;
+        end
     end
 
-    uart_test #(5208) uart_test( //BAUDRATE=9600
-        clk_i,
+    uart_test #(5207) uart_test( //BAUDRATE=9600
+        clk,
 
         tx,
         rx_data,
