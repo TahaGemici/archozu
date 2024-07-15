@@ -9,14 +9,17 @@ Disassembly of section .text:
     2002:	45778793          	addi	a5,a5,1111 # 1457 <_GLOBAL_OFFSET_TABLE_+0x13cf>
     2006:	6719                	lui	a4,0x6
     2008:	c31c                	sw	a5,0(a4)
-    200a:	6799                	lui	a5,0x6
-    200c:	0007a223          	sw	zero,4(a5) # 6004 <__GNU_EH_FRAME_HDR+0x35a0>
-    2010:	4501                	li	a0,0
-    2012:	0ff57513          	zext.b	a0,a0
-    2016:	2405                	jal	2236 <uart_write>
-    2018:	2411                	jal	221c <uart_read>
-    201a:	0505                	addi	a0,a0,1
-    201c:	bfdd                	j	2012 <main+0x12>
+    200a:	6441                	lui	s0,0x10
+    200c:	6799                	lui	a5,0x6
+    200e:	0007a223          	sw	zero,4(a5) # 6004 <__GNU_EH_FRAME_HDR+0x35d0>
+    2012:	07b00513          	li	a0,123
+    2016:	0411                	addi	s0,s0,4 # 10004 <__GNU_EH_FRAME_HDR+0xd5d0>
+    2018:	0ff57513          	zext.b	a0,a0
+    201c:	2c29                	jal	2236 <uart_write>
+    201e:	2afd                	jal	221c <uart_read>
+    2020:	0505                	addi	a0,a0,1
+    2022:	c008                	sw	a0,0(s0)
+    2024:	bfd5                	j	2018 <main+0x18>
 	...
 
 00002200 <interrupt>:
@@ -26,7 +29,7 @@ Disassembly of section .text.uart_conf:
 
 00002204 <uart_conf>:
     2204:	02faf7b7          	lui	a5,0x2faf
-    2208:	08078793          	addi	a5,a5,128 # 2faf080 <__GNU_EH_FRAME_HDR+0x2fac61c>
+    2208:	08078793          	addi	a5,a5,128 # 2faf080 <__GNU_EH_FRAME_HDR+0x2fac64c>
     220c:	02a7d7b3          	divu	a5,a5,a0
     2210:	6719                	lui	a4,0x6
     2212:	17fd                	addi	a5,a5,-1
@@ -39,7 +42,7 @@ Disassembly of section .text.uart_read:
 
 0000221c <uart_read>:
     221c:	6799                	lui	a5,0x6
-    221e:	07c1                	addi	a5,a5,16 # 6010 <__GNU_EH_FRAME_HDR+0x35ac>
+    221e:	07c1                	addi	a5,a5,16 # 6010 <__GNU_EH_FRAME_HDR+0x35dc>
     2220:	4709                	li	a4,2
     2222:	4394                	lw	a3,0(a5)
     2224:	fee69fe3          	bne	a3,a4,2222 <uart_read+0x6>
@@ -56,7 +59,7 @@ Disassembly of section .text.uart_write:
     2238:	c7c8                	sw	a0,12(a5)
     223a:	6799                	lui	a5,0x6
     223c:	4705                	li	a4,1
-    223e:	07c1                	addi	a5,a5,16 # 6010 <__GNU_EH_FRAME_HDR+0x35ac>
+    223e:	07c1                	addi	a5,a5,16 # 6010 <__GNU_EH_FRAME_HDR+0x35dc>
     2240:	c398                	sw	a4,0(a5)
     2242:	4715                	li	a4,5
     2244:	4394                	lw	a3,0(a5)
@@ -79,7 +82,7 @@ Disassembly of section .text.i2c_write:
     225a:	c7c8                	sw	a0,12(a5)
     225c:	67a1                	lui	a5,0x8
     225e:	4705                	li	a4,1
-    2260:	07c1                	addi	a5,a5,16 # 8010 <__GNU_EH_FRAME_HDR+0x55ac>
+    2260:	07c1                	addi	a5,a5,16 # 8010 <__GNU_EH_FRAME_HDR+0x55dc>
     2262:	c398                	sw	a4,0(a5)
     2264:	470d                	li	a4,3
     2266:	4394                	lw	a3,0(a5)
@@ -93,7 +96,7 @@ Disassembly of section .text.i2c_read:
     2272:	67a1                	lui	a5,0x8
     2274:	c388                	sw	a0,0(a5)
     2276:	4711                	li	a4,4
-    2278:	07c1                	addi	a5,a5,16 # 8010 <__GNU_EH_FRAME_HDR+0x55ac>
+    2278:	07c1                	addi	a5,a5,16 # 8010 <__GNU_EH_FRAME_HDR+0x55dc>
     227a:	c398                	sw	a4,0(a5)
     227c:	4731                	li	a4,12
     227e:	4394                	lw	a3,0(a5)
@@ -107,12 +110,12 @@ Disassembly of section .text.qspi_wait:
 
 0000228e <qspi_wait>:
     228e:	67a9                	lui	a5,0xa
-    2290:	02878793          	addi	a5,a5,40 # a028 <__GNU_EH_FRAME_HDR+0x75c4>
+    2290:	02878793          	addi	a5,a5,40 # a028 <__GNU_EH_FRAME_HDR+0x75f4>
     2294:	4705                	li	a4,1
     2296:	4394                	lw	a3,0(a5)
     2298:	fee69fe3          	bne	a3,a4,2296 <qspi_wait+0x8>
     229c:	67a9                	lui	a5,0xa
-    229e:	02878793          	addi	a5,a5,40 # a028 <__GNU_EH_FRAME_HDR+0x75c4>
+    229e:	02878793          	addi	a5,a5,40 # a028 <__GNU_EH_FRAME_HDR+0x75f4>
     22a2:	4705                	li	a4,1
     22a4:	4394                	lw	a3,0(a5)
     22a6:	fee69fe3          	bne	a3,a4,22a4 <qspi_wait+0x16>
@@ -125,7 +128,7 @@ Disassembly of section .text.qspi_read_array:
     22ae:	6729                	lui	a4,0xa
     22b0:	99f1                	andi	a1,a1,-4
     22b2:	4781                	li	a5,0
-    22b4:	0721                	addi	a4,a4,8 # a008 <__GNU_EH_FRAME_HDR+0x75a4>
+    22b4:	0721                	addi	a4,a4,8 # a008 <__GNU_EH_FRAME_HDR+0x75d4>
     22b6:	00b79363          	bne	a5,a1,22bc <qspi_read_array+0x10>
     22ba:	8082                	ret
     22bc:	00e786b3          	add	a3,a5,a4
@@ -142,7 +145,7 @@ Disassembly of section .text.qspi_write_array:
     22ce:	6729                	lui	a4,0xa
     22d0:	99f1                	andi	a1,a1,-4
     22d2:	4781                	li	a5,0
-    22d4:	0721                	addi	a4,a4,8 # a008 <__GNU_EH_FRAME_HDR+0x75a4>
+    22d4:	0721                	addi	a4,a4,8 # a008 <__GNU_EH_FRAME_HDR+0x75d4>
     22d6:	00b79363          	bne	a5,a1,22dc <qspi_write_array+0x10>
     22da:	8082                	ret
     22dc:	00f50633          	add	a2,a0,a5
@@ -156,7 +159,7 @@ Disassembly of section .text.s25fl128s_wren:
 
 000022ec <s25fl128s_wren>:
     22ec:	800007b7          	lui	a5,0x80000
-    22f0:	0799                	addi	a5,a5,6 # 80000006 <__GNU_EH_FRAME_HDR+0x7fffd5a2>
+    22f0:	0799                	addi	a5,a5,6 # 80000006 <__GNU_EH_FRAME_HDR+0x7fffd5d2>
     22f2:	6729                	lui	a4,0xa
     22f4:	c31c                	sw	a5,0(a4)
     22f6:	bf61                	j	228e <qspi_wait>
@@ -165,7 +168,7 @@ Disassembly of section .text.s25fl128s_wrdi:
 
 000022f8 <s25fl128s_wrdi>:
     22f8:	800007b7          	lui	a5,0x80000
-    22fc:	0791                	addi	a5,a5,4 # 80000004 <__GNU_EH_FRAME_HDR+0x7fffd5a0>
+    22fc:	0791                	addi	a5,a5,4 # 80000004 <__GNU_EH_FRAME_HDR+0x7fffd5d0>
     22fe:	6729                	lui	a4,0xa
     2300:	c31c                	sw	a5,0(a4)
     2302:	b771                	j	228e <qspi_wait>
@@ -174,7 +177,7 @@ Disassembly of section .text.s25fl128s_clsr:
 
 00002304 <s25fl128s_clsr>:
     2304:	800007b7          	lui	a5,0x80000
-    2308:	03078793          	addi	a5,a5,48 # 80000030 <__GNU_EH_FRAME_HDR+0x7fffd5cc>
+    2308:	03078793          	addi	a5,a5,48 # 80000030 <__GNU_EH_FRAME_HDR+0x7fffd5fc>
     230c:	6729                	lui	a4,0xa
     230e:	c31c                	sw	a5,0(a4)
     2310:	bfbd                	j	228e <qspi_wait>
@@ -183,7 +186,7 @@ Disassembly of section .text.s25fl128s_reset:
 
 00002312 <s25fl128s_reset>:
     2312:	800007b7          	lui	a5,0x80000
-    2316:	0f078793          	addi	a5,a5,240 # 800000f0 <__GNU_EH_FRAME_HDR+0x7fffd68c>
+    2316:	0f078793          	addi	a5,a5,240 # 800000f0 <__GNU_EH_FRAME_HDR+0x7fffd6bc>
     231a:	6729                	lui	a4,0xa
     231c:	c31c                	sw	a5,0(a4)
     231e:	bf85                	j	228e <qspi_wait>
@@ -194,7 +197,7 @@ Disassembly of section .text.s25fl128s_rdid:
     2320:	fff58793          	addi	a5,a1,-1
     2324:	80000737          	lui	a4,0x80000
     2328:	1101                	addi	sp,sp,-32
-    232a:	19f70713          	addi	a4,a4,415 # 8000019f <__GNU_EH_FRAME_HDR+0x7fffd73b>
+    232a:	19f70713          	addi	a4,a4,415 # 8000019f <__GNU_EH_FRAME_HDR+0x7fffd76b>
     232e:	07c2                	slli	a5,a5,0x10
     2330:	ce06                	sw	ra,28(sp)
     2332:	c62a                	sw	a0,12(sp)
@@ -215,7 +218,7 @@ Disassembly of section .text.s25fl128s_rdsr1:
     2348:	1141                	addi	sp,sp,-16
     234a:	800007b7          	lui	a5,0x80000
     234e:	c606                	sw	ra,12(sp)
-    2350:	10578793          	addi	a5,a5,261 # 80000105 <__GNU_EH_FRAME_HDR+0x7fffd6a1>
+    2350:	10578793          	addi	a5,a5,261 # 80000105 <__GNU_EH_FRAME_HDR+0x7fffd6d1>
     2354:	6729                	lui	a4,0xa
     2356:	c31c                	sw	a5,0(a4)
     2358:	3f1d                	jal	228e <qspi_wait>
@@ -232,7 +235,7 @@ Disassembly of section .text.s25fl128s_rdsr2:
     2368:	1141                	addi	sp,sp,-16
     236a:	800007b7          	lui	a5,0x80000
     236e:	c606                	sw	ra,12(sp)
-    2370:	10778793          	addi	a5,a5,263 # 80000107 <__GNU_EH_FRAME_HDR+0x7fffd6a3>
+    2370:	10778793          	addi	a5,a5,263 # 80000107 <__GNU_EH_FRAME_HDR+0x7fffd6d3>
     2374:	6729                	lui	a4,0xa
     2376:	c31c                	sw	a5,0(a4)
     2378:	3f19                	jal	228e <qspi_wait>
@@ -249,7 +252,7 @@ Disassembly of section .text.s25fl128s_rdcr:
     2388:	1141                	addi	sp,sp,-16
     238a:	800007b7          	lui	a5,0x80000
     238e:	c606                	sw	ra,12(sp)
-    2390:	13578793          	addi	a5,a5,309 # 80000135 <__GNU_EH_FRAME_HDR+0x7fffd6d1>
+    2390:	13578793          	addi	a5,a5,309 # 80000135 <__GNU_EH_FRAME_HDR+0x7fffd701>
     2394:	6729                	lui	a4,0xa
     2396:	c31c                	sw	a5,0(a4)
     2398:	3ddd                	jal	228e <qspi_wait>
@@ -268,7 +271,7 @@ Disassembly of section .text.s25fl128s_read_id:
     23ac:	67a9                	lui	a5,0xa
     23ae:	c3c8                	sw	a0,4(a5)
     23b0:	800127b7          	lui	a5,0x80012
-    23b4:	99078793          	addi	a5,a5,-1648 # 80011990 <__GNU_EH_FRAME_HDR+0x8000ef2c>
+    23b4:	99078793          	addi	a5,a5,-1648 # 80011990 <__GNU_EH_FRAME_HDR+0x8000ef5c>
     23b8:	6729                	lui	a4,0xa
     23ba:	c31c                	sw	a5,0(a4)
     23bc:	3dc9                	jal	228e <qspi_wait>
@@ -286,7 +289,7 @@ Disassembly of section .text.s25fl128s_res:
     23cc:	1141                	addi	sp,sp,-16
     23ce:	800027b7          	lui	a5,0x80002
     23d2:	c606                	sw	ra,12(sp)
-    23d4:	9ab78793          	addi	a5,a5,-1621 # 800019ab <__GNU_EH_FRAME_HDR+0x7fffef47>
+    23d4:	9ab78793          	addi	a5,a5,-1621 # 800019ab <__GNU_EH_FRAME_HDR+0x7fffef77>
     23d8:	6729                	lui	a4,0xa
     23da:	c31c                	sw	a5,0(a4)
     23dc:	3d4d                	jal	228e <qspi_wait>
@@ -303,7 +306,7 @@ Disassembly of section .text.s25fl128s_wrr:
     23ec:	67a9                	lui	a5,0xa
     23ee:	c788                	sw	a0,8(a5)
     23f0:	800107b7          	lui	a5,0x80010
-    23f4:	50178793          	addi	a5,a5,1281 # 80010501 <__GNU_EH_FRAME_HDR+0x8000da9d>
+    23f4:	50178793          	addi	a5,a5,1281 # 80010501 <__GNU_EH_FRAME_HDR+0x8000dacd>
     23f8:	6729                	lui	a4,0xa
     23fa:	c31c                	sw	a5,0(a4)
     23fc:	bd49                	j	228e <qspi_wait>
@@ -314,7 +317,7 @@ Disassembly of section .text.s25fl128s_read:
     23fe:	fff60793          	addi	a5,a2,-1
     2402:	80002737          	lui	a4,0x80002
     2406:	1141                	addi	sp,sp,-16
-    2408:	90370713          	addi	a4,a4,-1789 # 80001903 <__GNU_EH_FRAME_HDR+0x7fffee9f>
+    2408:	90370713          	addi	a4,a4,-1789 # 80001903 <__GNU_EH_FRAME_HDR+0x7fffeecf>
     240c:	07c2                	slli	a5,a5,0x10
     240e:	c422                	sw	s0,8(sp)
     2410:	c226                	sw	s1,4(sp)
@@ -342,7 +345,7 @@ Disassembly of section .text.s25fl128s_pp:
     2434:	c422                	sw	s0,8(sp)
     2436:	800027b7          	lui	a5,0x80002
     243a:	fff60413          	addi	s0,a2,-1
-    243e:	d0278793          	addi	a5,a5,-766 # 80001d02 <__GNU_EH_FRAME_HDR+0x7ffff29e>
+    243e:	d0278793          	addi	a5,a5,-766 # 80001d02 <__GNU_EH_FRAME_HDR+0x7ffff2ce>
     2442:	0442                	slli	s0,s0,0x10
     2444:	c606                	sw	ra,12(sp)
     2446:	872a                	mv	a4,a0
@@ -365,7 +368,7 @@ Disassembly of section .text.s25fl128s_se:
     2460:	67a9                	lui	a5,0xa
     2462:	c788                	sw	a0,8(a5)
     2464:	800207b7          	lui	a5,0x80020
-    2468:	5d878793          	addi	a5,a5,1496 # 800205d8 <__GNU_EH_FRAME_HDR+0x8001db74>
+    2468:	5d878793          	addi	a5,a5,1496 # 800205d8 <__GNU_EH_FRAME_HDR+0x8001dba4>
     246c:	6729                	lui	a4,0xa
     246e:	c31c                	sw	a5,0(a4)
     2470:	bd39                	j	228e <qspi_wait>
@@ -376,7 +379,7 @@ Disassembly of section .text.s25fl128s_dor:
     2472:	fff60793          	addi	a5,a2,-1
     2476:	80002737          	lui	a4,0x80002
     247a:	1141                	addi	sp,sp,-16
-    247c:	23b70713          	addi	a4,a4,571 # 8000223b <__GNU_EH_FRAME_HDR+0x7ffff7d7>
+    247c:	23b70713          	addi	a4,a4,571 # 8000223b <__GNU_EH_FRAME_HDR+0x7ffff807>
     2480:	07c2                	slli	a5,a5,0x10
     2482:	c422                	sw	s0,8(sp)
     2484:	c226                	sw	s1,4(sp)
@@ -403,7 +406,7 @@ Disassembly of section .text.s25fl128s_qor:
     24a6:	fff60793          	addi	a5,a2,-1
     24aa:	80002737          	lui	a4,0x80002
     24ae:	1141                	addi	sp,sp,-16
-    24b0:	36b70713          	addi	a4,a4,875 # 8000236b <__GNU_EH_FRAME_HDR+0x7ffff907>
+    24b0:	36b70713          	addi	a4,a4,875 # 8000236b <__GNU_EH_FRAME_HDR+0x7ffff937>
     24b4:	07c2                	slli	a5,a5,0x10
     24b6:	c422                	sw	s0,8(sp)
     24b8:	c226                	sw	s1,4(sp)
@@ -430,7 +433,7 @@ Disassembly of section .text.s25fl128s_qpp:
     24da:	fff60793          	addi	a5,a2,-1
     24de:	80002737          	lui	a4,0x80002
     24e2:	1141                	addi	sp,sp,-16
-    24e4:	f3270713          	addi	a4,a4,-206 # 80001f32 <__GNU_EH_FRAME_HDR+0x7ffff4ce>
+    24e4:	f3270713          	addi	a4,a4,-206 # 80001f32 <__GNU_EH_FRAME_HDR+0x7ffff4fe>
     24e8:	07c2                	slli	a5,a5,0x10
     24ea:	c606                	sw	ra,12(sp)
     24ec:	86aa                	mv	a3,a0
@@ -453,7 +456,7 @@ Disassembly of section .text.qspi_custom_write:
     2506:	852e                	mv	a0,a1
     2508:	85be                	mv	a1,a5
     250a:	800007b7          	lui	a5,0x80000
-    250e:	40078793          	addi	a5,a5,1024 # 80000400 <__GNU_EH_FRAME_HDR+0x7fffd99c>
+    250e:	40078793          	addi	a5,a5,1024 # 80000400 <__GNU_EH_FRAME_HDR+0x7fffd9cc>
     2512:	0866                	slli	a6,a6,0x19
     2514:	983e                	add	a6,a6,a5
     2516:	072e                	slli	a4,a4,0xb
@@ -468,7 +471,7 @@ Disassembly of section .text.qspi_custom_write:
     252a:	67a9                	lui	a5,0xa
     252c:	0ff67613          	zext.b	a2,a2
     2530:	9836                	add	a6,a6,a3
-    2532:	0117a223          	sw	a7,4(a5) # a004 <__GNU_EH_FRAME_HDR+0x75a0>
+    2532:	0117a223          	sw	a7,4(a5) # a004 <__GNU_EH_FRAME_HDR+0x75d0>
     2536:	00c80433          	add	s0,a6,a2
     253a:	3b49                	jal	22cc <qspi_write_array>
     253c:	67a9                	lui	a5,0xa
@@ -501,7 +504,7 @@ Disassembly of section .text.qspi_custom_read:
     2570:	c3c8                	sw	a0,4(a5)
     2572:	9832                	add	a6,a6,a2
     2574:	67a9                	lui	a5,0xa
-    2576:	0107a023          	sw	a6,0(a5) # a000 <__GNU_EH_FRAME_HDR+0x759c>
+    2576:	0107a023          	sw	a6,0(a5) # a000 <__GNU_EH_FRAME_HDR+0x75cc>
     257a:	84ae                	mv	s1,a1
     257c:	3b09                	jal	228e <qspi_wait>
     257e:	85a2                	mv	a1,s0
@@ -512,85 +515,74 @@ Disassembly of section .text.qspi_custom_read:
     2588:	0141                	addi	sp,sp,16
     258a:	b30d                	j	22ac <qspi_read_array>
 
-Disassembly of section .text.timer_read_counter:
+Disassembly of section .text.timer_counter:
 
-0000258c <timer_read_counter>:
+0000258c <timer_counter>:
     258c:	67b1                	lui	a5,0xc
     258e:	4bc8                	lw	a0,20(a5)
     2590:	8082                	ret
 
-Disassembly of section .text.timer_read_event:
+Disassembly of section .text.timer_event:
 
-00002592 <timer_read_event>:
+00002592 <timer_event>:
     2592:	67b1                	lui	a5,0xc
     2594:	4f88                	lw	a0,24(a5)
     2596:	8082                	ret
 
-Disassembly of section .text.timer_clear_counter:
+Disassembly of section .text.timer_clear:
 
-00002598 <timer_clear_counter>:
+00002598 <timer_clear>:
     2598:	67b1                	lui	a5,0xc
     259a:	4705                	li	a4,1
     259c:	c798                	sw	a4,8(a5)
-    259e:	8082                	ret
+    259e:	67b1                	lui	a5,0xc
+    25a0:	cfd8                	sw	a4,28(a5)
+    25a2:	8082                	ret
 
-Disassembly of section .text.timer_clear_event:
+Disassembly of section .text.timer_enabled:
 
-000025a0 <timer_clear_event>:
-    25a0:	67b1                	lui	a5,0xc
-    25a2:	4705                	li	a4,1
-    25a4:	cfd8                	sw	a4,28(a5)
-    25a6:	8082                	ret
-
-Disassembly of section .text.timer_enable:
-
-000025a8 <timer_enable>:
-    25a8:	67b1                	lui	a5,0xc
-    25aa:	4705                	li	a4,1
-    25ac:	c7d8                	sw	a4,12(a5)
-    25ae:	8082                	ret
-
-Disassembly of section .text.timer_disable:
-
-000025b0 <timer_disable>:
-    25b0:	67b1                	lui	a5,0xc
-    25b2:	0007a623          	sw	zero,12(a5) # c00c <__GNU_EH_FRAME_HDR+0x95a8>
-    25b6:	8082                	ret
+000025a4 <timer_enabled>:
+    25a4:	67b1                	lui	a5,0xc
+    25a6:	c7c8                	sw	a0,12(a5)
+    25a8:	8082                	ret
 
 Disassembly of section .text.timer_conf:
 
-000025b8 <timer_conf>:
-    25b8:	67b1                	lui	a5,0xc
-    25ba:	c388                	sw	a0,0(a5)
-    25bc:	c3cc                	sw	a1,4(a5)
-    25be:	67b1                	lui	a5,0xc
-    25c0:	cb90                	sw	a2,16(a5)
-    25c2:	08000513          	li	a0,128
-    25c6:	30046073          	csrsi	mstatus,8
-    25ca:	30452073          	csrs	mie,a0
-    25ce:	8082                	ret
+000025aa <timer_conf>:
+    25aa:	67b1                	lui	a5,0xc
+    25ac:	c388                	sw	a0,0(a5)
+    25ae:	c3cc                	sw	a1,4(a5)
+    25b0:	67b1                	lui	a5,0xc
+    25b2:	cb90                	sw	a2,16(a5)
+    25b4:	08000613          	li	a2,128
+    25b8:	30046073          	csrsi	mstatus,8
+    25bc:	30462073          	csrs	mie,a2
+    25c0:	67b1                	lui	a5,0xc
+    25c2:	4705                	li	a4,1
+    25c4:	c7d8                	sw	a4,12(a5)
+    25c6:	8082                	ret
 
 Disassembly of section .text.gpio_write:
 
-000025d0 <gpio_write>:
-    25d0:	67c1                	lui	a5,0x10
-    25d2:	c3c8                	sw	a0,4(a5)
-    25d4:	8082                	ret
+000025c8 <gpio_write>:
+    25c8:	67c1                	lui	a5,0x10
+    25ca:	c3c8                	sw	a0,4(a5)
+    25cc:	8082                	ret
 
 Disassembly of section .text.gpio_read:
 
-000025d6 <gpio_read>:
-    25d6:	67c1                	lui	a5,0x10
-    25d8:	4388                	lw	a0,0(a5)
-    25da:	0542                	slli	a0,a0,0x10
-    25dc:	8141                	srli	a0,a0,0x10
-    25de:	8082                	ret
+000025ce <gpio_read>:
+    25ce:	67c1                	lui	a5,0x10
+    25d0:	4388                	lw	a0,0(a5)
+    25d2:	0542                	slli	a0,a0,0x10
+    25d4:	8141                	srli	a0,a0,0x10
+    25d6:	8082                	ret
 
 Disassembly of section .text.instr_mem_write:
 
-000025e0 <instr_mem_write>:
-    25e0:	050a                	slli	a0,a0,0x2
-    25e2:	6791                	lui	a5,0x4
-    25e4:	97aa                	add	a5,a5,a0
-    25e6:	c38c                	sw	a1,0(a5)
-    25e8:	8082                	ret
+000025d8 <instr_mem_write>:
+    25d8:	050a                	slli	a0,a0,0x2
+    25da:	6791                	lui	a5,0x4
+    25dc:	97aa                	add	a5,a5,a0
+    25de:	c38c                	sw	a1,0(a5)
+    25e0:	8082                	ret

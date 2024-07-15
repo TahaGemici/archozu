@@ -16,7 +16,7 @@ module uart_core(
 );
     reg[7:0] rx_data_o_nxt;
     reg[7:0] rx_data_tmp, rx_data_tmp_nxt;
-    reg rx_done_o_nxt, tx_done_o_nxt;
+    reg rx_done_o_prv, tx_done_o_prv;
     reg[2:0] rx_cntr, rx_cntr_nxt;
     reg[2:0] tx_cntr, tx_cntr_nxt;
 
@@ -42,9 +42,9 @@ module uart_core(
         rx_cntr   <= rx_cntr_nxt;
         tx_cntr   <= tx_cntr_nxt;
         rx_data_o <= rx_data_o_nxt;
-        rx_done_o <= rx_done_o_nxt;
-        tx_done_o <= tx_done_o_nxt;
         rx_data_tmp <= rx_data_tmp_nxt;
+        rx_done_o_prv <= rx_done_o;
+        tx_done_o_prv <= tx_done_o;
     end
     always @* begin
         rx_state_en_nxt = rst_i;
@@ -77,7 +77,7 @@ module uart_core(
     // Receiver
     always @* begin
         rx_data_o_nxt = rx_data_o;
-        rx_done_o_nxt = rx_done_o;
+        rx_done_o = rx_done_o_prv;
         rx_cntr_nxt = rx_cntr + 1;
         rx_data_tmp_nxt = rx_data_tmp;
         case(rx_state)
@@ -93,37 +93,37 @@ module uart_core(
                 rx_state_nxt = rx_state;
                 if(&rx_cntr) begin
                     rx_state_nxt = STATE_STOP;
+                    rx_done_o = 1'b1;
+                    rx_data_o_nxt = rx_data_tmp_nxt;
                 end
             end
             STATE_STOP: begin
-                rx_data_o_nxt = rx_data_tmp;
-                rx_done_o_nxt = 1'b1;
                 rx_state_nxt = STATE_IDLE;
             end
         endcase
 
         if((rx_state != STATE_IDLE) && (!rx_state_en)) begin
+            rx_done_o = cfg_i[1];
             rx_cntr_nxt   = rx_cntr;
             rx_state_nxt  = rx_state;
             rx_data_o_nxt = rx_data_o;
-            rx_done_o_nxt = cfg_i[1];
             rx_data_tmp_nxt = rx_data_tmp;
         end
 
         if(rst_i) begin
             rx_state_nxt = STATE_IDLE;
-            rx_done_o_nxt = 1'b0;
+            rx_done_o = 1'b0;
         end
     end
     
     // Transmitter
     always @* begin
-        tx_done_o_nxt = tx_done_o;
+        tx_done_o = tx_done_o_prv;
         tx_cntr_nxt = tx_cntr + 1;
         case(tx_state)
             STATE_IDLE: begin
                 tx = 1;
-                tx_state_nxt = ((~tx_done_o) & cfg_i[0]) ? STATE_START : tx_state;
+                tx_state_nxt = ((~tx_done_o_prv) & cfg_i[0]) ? STATE_START : tx_state;
             end
             STATE_START: begin
                 tx = 0;
@@ -135,7 +135,7 @@ module uart_core(
                 tx_state_nxt = tx_state;
                 if(&tx_cntr) begin
                     tx_state_nxt = STATE_STOP;
-                    tx_done_o_nxt = 1'b1;
+                    tx_done_o = 1'b1;
                 end
             end
             STATE_STOP: begin
@@ -152,12 +152,12 @@ module uart_core(
         if((tx_state != STATE_IDLE) && (!tx_state_en)) begin
             tx_cntr_nxt   = tx_cntr;
             tx_state_nxt  = tx_state;
-            tx_done_o_nxt = cfg_i[2];
+            tx_done_o = cfg_i[2];
         end
         
         if(rst_i) begin
             tx_state_nxt = STATE_IDLE;
-            tx_done_o_nxt = 1'b0;
+            tx_done_o = 1'b0;
         end
     end
 

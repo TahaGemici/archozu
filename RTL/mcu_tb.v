@@ -32,7 +32,7 @@ module mcu_tb();
         wait(rst==0);
         #8000000;
         forever begin
-            tx_data = $random;
+            tx_data = rx_data;
             tx_en = 1;
             #100;
             tx_en = 0;
