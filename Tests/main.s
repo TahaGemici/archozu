@@ -5,21 +5,15 @@ a.out:     file format elf32-littleriscv
 Disassembly of section .text:
 
 00002000 <main>:
-    2000:	6785                	lui	a5,0x1
-    2002:	45778793          	addi	a5,a5,1111 # 1457 <_GLOBAL_OFFSET_TABLE_+0x13cf>
-    2006:	6719                	lui	a4,0x6
-    2008:	c31c                	sw	a5,0(a4)
-    200a:	6441                	lui	s0,0x10
-    200c:	6799                	lui	a5,0x6
-    200e:	0007a223          	sw	zero,4(a5) # 6004 <__GNU_EH_FRAME_HDR+0x35d0>
-    2012:	07b00513          	li	a0,123
-    2016:	0411                	addi	s0,s0,4 # 10004 <__GNU_EH_FRAME_HDR+0xd5d0>
-    2018:	0ff57513          	zext.b	a0,a0
-    201c:	2c29                	jal	2236 <uart_write>
-    201e:	2afd                	jal	221c <uart_read>
-    2020:	0505                	addi	a0,a0,1
-    2022:	c008                	sw	a0,0(s0)
-    2024:	bfd5                	j	2018 <main+0x18>
+    2000:	67a1                	lui	a5,0x8
+    2002:	07900713          	li	a4,121
+    2006:	c3d8                	sw	a4,4(a5)
+    2008:	04e00513          	li	a0,78
+    200c:	4585                	li	a1,1
+    200e:	24a1                	jal	2256 <i2c_write>
+    2010:	4505                	li	a0,1
+    2012:	2485                	jal	2272 <i2c_read>
+    2014:	bfe5                	j	200c <main+0xc>
 	...
 
 00002200 <interrupt>:
