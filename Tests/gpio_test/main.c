@@ -3,7 +3,7 @@
 int __attribute__((naked)) main(){
     int abc;
     while(1){
-        abc = gpio_read() + 1;
+        abc = gpio_read();
         gpio_write(abc);
     }
 }
