@@ -1,0 +1,194 @@
+
+===========================================================================
+report_checks -unconstrained
+===========================================================================
+======================= Typical Corner ===================================
+
+Startpoint: _234_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _228_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ _234_/CLK (sky130_fd_sc_hd__dfxtp_2)
+     8    0.03    0.17    0.40    0.40 ^ _234_/Q (sky130_fd_sc_hd__dfxtp_2)
+                                         bus.UART.uart_core.tx_state[0] (net)
+                  0.17    0.00    0.40 ^ _124_/A2 (sky130_fd_sc_hd__a21o_2)
+     6    0.02    0.12    0.22    0.62 ^ _124_/X (sky130_fd_sc_hd__a21o_2)
+                                         _090_ (net)
+                  0.12    0.00    0.62 ^ _133_/D (sky130_fd_sc_hd__and4_2)
+     6    0.02    0.14    0.31    0.93 ^ _133_/X (sky130_fd_sc_hd__and4_2)
+                                         _096_ (net)
+                  0.14    0.00    0.93 ^ _142_/D (sky130_fd_sc_hd__and4_2)
+     6    0.02    0.14    0.32    1.25 ^ _142_/X (sky130_fd_sc_hd__and4_2)
+                                         _029_ (net)
+                  0.14    0.00    1.25 ^ _151_/D (sky130_fd_sc_hd__and4_2)
+     6    0.02    0.14    0.32    1.57 ^ _151_/X (sky130_fd_sc_hd__and4_2)
+                                         _035_ (net)
+                  0.14    0.00    1.57 ^ _160_/D (sky130_fd_sc_hd__and4_2)
+     1    0.00    0.05    0.23    1.79 ^ _160_/X (sky130_fd_sc_hd__and4_2)
+                                         _041_ (net)
+                  0.05    0.00    1.79 ^ _161_/A (sky130_fd_sc_hd__buf_1)
+     6    0.02    0.28    0.25    2.04 ^ _161_/X (sky130_fd_sc_hd__buf_1)
+                                         _042_ (net)
+                  0.28    0.00    2.04 ^ _167_/C (sky130_fd_sc_hd__nand3_2)
+     2    0.01    0.08    0.12    2.16 v _167_/Y (sky130_fd_sc_hd__nand3_2)
+                                         _046_ (net)
+                  0.08    0.00    2.16 v _168_/C (sky130_fd_sc_hd__and3_2)
+     1    0.00    0.04    0.21    2.37 v _168_/X (sky130_fd_sc_hd__and3_2)
+                                         _047_ (net)
+                  0.04    0.00    2.37 v _169_/A (sky130_fd_sc_hd__buf_1)
+     1    0.00    0.02    0.08    2.45 v _169_/X (sky130_fd_sc_hd__buf_1)
+                                         _015_ (net)
+                  0.02    0.00    2.45 v _228_/D (sky130_fd_sc_hd__dfxtp_2)
+                                  2.45   data arrival time
+
+                  0.00   20.00   20.00   clock clk (rise edge)
+                          0.00   20.00   clock network delay (ideal)
+                          0.00   20.00   clock reconvergence pessimism
+                                 20.00 ^ _228_/CLK (sky130_fd_sc_hd__dfxtp_2)
+                         -0.11   19.89   library setup time
+                                 19.89   data required time
+-----------------------------------------------------------------------------
+                                 19.89   data required time
+                                 -2.45   data arrival time
+-----------------------------------------------------------------------------
+                                 17.44   slack (MET)
+
+
+
+
+===========================================================================
+report_checks --slack_max -0.01
+============================================================================
+======================= Typical Corner ===================================
+
+No paths found.
+
+
+===========================================================================
+ report_check_types -max_slew -max_cap -max_fanout -violators
+============================================================================
+======================= Typical Corner ===================================
+
+
+max slew violations count Typical: 0
+max fanout violations count Typical: 0
+max cap violations count Typical: 0
+
+===========================================================================
+report_parasitic_annotation -report_unannotated
+============================================================================
+Found 44 unannotated drivers.
+ clk
+ in[0]
+ in[10]
+ in[11]
+ in[12]
+ in[13]
+ in[14]
+ in[15]
+ in[1]
+ in[2]
+ in[3]
+ in[4]
+ in[5]
+ in[6]
+ in[7]
+ in[8]
+ in[9]
+ rx
+ sda_io
+ _242_/LO
+ _243_/LO
+ _244_/LO
+ _245_/LO
+ _246_/HI
+ _247_/HI
+ _248_/HI
+ _249_/HI
+ _250_/HI
+ _251_/HI
+ _252_/HI
+ _253_/HI
+ _254_/HI
+ _255_/HI
+ _256_/HI
+ _257_/HI
+ _258_/HI
+ _259_/HI
+ _260_/HI
+ _261_/HI
+ _262_/HI
+ _263_/HI
+ _264_/HI
+ _265_/HI
+ _266_/HI
+Found 4 partially unannotated drivers.
+ io[0]
+ io[1]
+ io[2]
+ io[3]
+
+===========================================================================
+max slew violation count 0
+max fanout violation count 0
+max cap violation count 0
+============================================================================
+
+===========================================================================
+check_setup -verbose -unconstrained_endpoints -multiple_clock -no_clock -no_input_delay -loops -generated_clocks
+===========================================================================
+Warning: There are 23 input ports missing set_input_delay.
+  in[0]
+  in[10]
+  in[11]
+  in[12]
+  in[13]
+  in[14]
+  in[15]
+  in[1]
+  in[2]
+  in[3]
+  in[4]
+  in[5]
+  in[6]
+  in[7]
+  in[8]
+  in[9]
+  io[0]
+  io[1]
+  io[2]
+  io[3]
+  rst
+  rx
+  sda_io
+Warning: There are 25 unconstrained endpoints.
+  cs
+  io[0]
+  io[1]
+  io[2]
+  io[3]
+  out[0]
+  out[10]
+  out[11]
+  out[12]
+  out[13]
+  out[14]
+  out[15]
+  out[1]
+  out[2]
+  out[3]
+  out[4]
+  out[5]
+  out[6]
+  out[7]
+  out[8]
+  out[9]
+  scl_io
+  sclk
+  sda_io
+  tx

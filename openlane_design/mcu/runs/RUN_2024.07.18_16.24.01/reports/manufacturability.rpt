@@ -1,0 +1,19 @@
+Design Name: mcu
+Run Directory: /openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01
+----------------------------------------
+
+Magic DRC Summary:
+Source: /openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/reports/signoff/drc.rpt
+Total Magic DRC violations is 0
+----------------------------------------
+
+LVS Summary:
+Source: /openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/logs/signoff/38-mcu.lef.lvs.log
+Number of nets: 199                        |Number of nets: 199                        
+Design is LVS clean.
+----------------------------------------
+
+Antenna Summary:
+Source: /openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/logs/signoff/41-arc.log
+Pin violations: 0
+Net violations: 0

@@ -1,0 +1,26 @@
+
+68. Printing statistics.
+
+=== mcu ===
+
+   Number of wires:                221
+   Number of wire bits:            378
+   Number of public wires:          18
+   Number of public wire bits:      77
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                229
+     $_ANDNOT_                      39
+     $_AND_                          2
+     $_MUX_                         55
+     $_NAND_                        16
+     $_NOR_                          4
+     $_NOT_                         11
+     $_ORNOT_                        3
+     $_OR_                          31
+     $_XNOR_                        11
+     $_XOR_                         24
+     sky130_fd_sc_hd__dfxtp_2       29
+     sky130_fd_sc_hd__ebufn_2        4
+

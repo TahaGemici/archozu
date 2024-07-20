@@ -1,0 +1,14 @@
+Warning: Yosys has only limited support for tri-state logic at the moment. (/openlane/designs/mcu/src/QSPI_master.v:122)
+Warning: Yosys has only limited support for tri-state logic at the moment. (/openlane/designs/mcu/src/QSPI_master.v:123)
+Warning: Yosys has only limited support for tri-state logic at the moment. (/openlane/designs/mcu/src/QSPI_master.v:124)
+Warning: Yosys has only limited support for tri-state logic at the moment. (/openlane/designs/mcu/src/QSPI_master.v:125)
+Warning: Replacing memory \mem_nxt with list of registers. See /openlane/designs/mcu/src/uart_mem.v:45, /openlane/designs/mcu/src/uart_mem.v:55
+Warning: Replacing memory \mem with list of registers. See /openlane/designs/mcu/src/uart_mem.v:41, /openlane/designs/mcu/src/uart_mem.v:29
+Warning: Replacing memory \mem_nxt with list of registers. See /openlane/designs/mcu/src/perip_mem.v:36
+Warning: Replacing memory \mem with list of registers. See /openlane/designs/mcu/src/perip_mem.v:33, /openlane/designs/mcu/src/perip_mem.v:26
+Warning: Replacing memory \mem with list of registers. See /openlane/designs/mcu/src/timer_mem.v:43
+Warning: Replacing memory \mem_nxt with list of registers. See /openlane/designs/mcu/src/timer_mem.v:58, /openlane/designs/mcu/src/timer_mem.v:47, /openlane/designs/mcu/src/timer_mem.v:68
+Warning: Replacing memory \mem_nxt with list of registers. See /openlane/designs/mcu/src/perip_mem.v:36
+Warning: Replacing memory \mem with list of registers. See /openlane/designs/mcu/src/perip_mem.v:33, /openlane/designs/mcu/src/perip_mem.v:26
+ABC: Warning: Detected 2 multi-output gates (for example, "sky130_fd_sc_hd__fa_1").
+Warnings: 10 unique messages, 12 total

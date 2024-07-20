@@ -1,0 +1,2647 @@
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.38 (git sha1 543faed9c8c, clang++ 16.0.6 -fPIC -Os)
+
+[TCL: yosys -import] Command name collision: found pre-existing command `cd' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `eval' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `exec' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `read' -> skip.
+[TCL: yosys -import] Command name collision: found pre-existing command `trace' -> skip.
+
+1. Executing Liberty frontend: /home/metin/.volare/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+Imported 428 cell types from liberty file.
+
+2. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/timer.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/timer.v' to AST representation.
+Storing AST representation for module `$abstract\timer'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/uart_mem.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/uart_mem.v' to AST representation.
+Storing AST representation for module `$abstract\uart_mem'.
+Successfully finished Verilog frontend.
+
+4. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/timer_mem.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/timer_mem.v' to AST representation.
+Storing AST representation for module `$abstract\timer_mem'.
+Successfully finished Verilog frontend.
+
+5. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/rom.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/rom.v' to AST representation.
+Storing AST representation for module `$abstract\rom'.
+Successfully finished Verilog frontend.
+
+6. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/UART.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/UART.v' to AST representation.
+Storing AST representation for module `$abstract\UART'.
+Successfully finished Verilog frontend.
+
+7. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/instr_mem.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/instr_mem.v' to AST representation.
+Storing AST representation for module `$abstract\instr_mem'.
+Successfully finished Verilog frontend.
+
+8. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/defines.vh
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/defines.vh' to AST representation.
+Successfully finished Verilog frontend.
+
+9. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/GPIO.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/GPIO.v' to AST representation.
+Storing AST representation for module `$abstract\GPIO'.
+Successfully finished Verilog frontend.
+
+10. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/QSPI_master.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/QSPI_master.v' to AST representation.
+Warning: Yosys has only limited support for tri-state logic at the moment. (/openlane/designs/mcu/src/QSPI_master.v:122)
+Warning: Yosys has only limited support for tri-state logic at the moment. (/openlane/designs/mcu/src/QSPI_master.v:123)
+Warning: Yosys has only limited support for tri-state logic at the moment. (/openlane/designs/mcu/src/QSPI_master.v:124)
+Warning: Yosys has only limited support for tri-state logic at the moment. (/openlane/designs/mcu/src/QSPI_master.v:125)
+Storing AST representation for module `$abstract\QSPI_master'.
+Successfully finished Verilog frontend.
+
+11. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/mcu.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/mcu.v' to AST representation.
+Storing AST representation for module `$abstract\mcu'.
+Successfully finished Verilog frontend.
+
+12. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/bus.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/bus.v' to AST representation.
+Storing AST representation for module `$abstract\bus'.
+Successfully finished Verilog frontend.
+
+13. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/data_mem.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/data_mem.v' to AST representation.
+Storing AST representation for module `$abstract\data_mem'.
+Successfully finished Verilog frontend.
+
+14. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/perip_mem.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/perip_mem.v' to AST representation.
+Storing AST representation for module `$abstract\perip_mem'.
+Successfully finished Verilog frontend.
+
+15. Executing Verilog-2005 frontend: /openlane/designs/mcu/src/uart_core.v
+Parsing SystemVerilog input from `/openlane/designs/mcu/src/uart_core.v' to AST representation.
+Storing AST representation for module `$abstract\uart_core'.
+Successfully finished Verilog frontend.
+
+16. Executing HIERARCHY pass (managing design hierarchy).
+
+17. Executing AST frontend in derive mode using pre-parsed AST for module `\mcu'.
+Generating RTLIL representation for module `\mcu'.
+
+17.1. Analyzing design hierarchy..
+Top module:  \mcu
+
+17.2. Executing AST frontend in derive mode using pre-parsed AST for module `\bus'.
+Generating RTLIL representation for module `\bus'.
+
+17.3. Analyzing design hierarchy..
+Top module:  \mcu
+Used module:     \bus
+
+17.4. Executing AST frontend in derive mode using pre-parsed AST for module `\instr_mem'.
+Generating RTLIL representation for module `\instr_mem'.
+
+17.5. Executing AST frontend in derive mode using pre-parsed AST for module `\data_mem'.
+Generating RTLIL representation for module `\data_mem'.
+
+17.6. Executing AST frontend in derive mode using pre-parsed AST for module `\GPIO'.
+Generating RTLIL representation for module `\GPIO'.
+
+17.7. Executing AST frontend in derive mode using pre-parsed AST for module `\timer'.
+Generating RTLIL representation for module `\timer'.
+
+17.8. Executing AST frontend in derive mode using pre-parsed AST for module `\QSPI_master'.
+Generating RTLIL representation for module `\QSPI_master'.
+
+17.9. Executing AST frontend in derive mode using pre-parsed AST for module `\UART'.
+Generating RTLIL representation for module `\UART'.
+
+17.10. Analyzing design hierarchy..
+Top module:  \mcu
+Used module:     \bus
+Used module:         \instr_mem
+Used module:         \data_mem
+Used module:         \GPIO
+Used module:         \timer
+Used module:         \QSPI_master
+Used module:         \UART
+
+17.11. Executing AST frontend in derive mode using pre-parsed AST for module `\uart_core'.
+Generating RTLIL representation for module `\uart_core'.
+
+17.12. Executing AST frontend in derive mode using pre-parsed AST for module `\uart_mem'.
+Generating RTLIL representation for module `\uart_mem'.
+Warning: Replacing memory \mem_nxt with list of registers. See /openlane/designs/mcu/src/uart_mem.v:45, /openlane/designs/mcu/src/uart_mem.v:55
+Warning: Replacing memory \mem with list of registers. See /openlane/designs/mcu/src/uart_mem.v:41, /openlane/designs/mcu/src/uart_mem.v:29
+Parameter 1 (\SIZE) = 11
+Parameter 2 (\ALLOW_WRITE) = 11'01111111111
+
+17.13. Executing AST frontend in derive mode using pre-parsed AST for module `\perip_mem'.
+Parameter 1 (\SIZE) = 11
+Parameter 2 (\ALLOW_WRITE) = 11'01111111111
+Generating RTLIL representation for module `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem'.
+Warning: Replacing memory \mem_nxt with list of registers. See /openlane/designs/mcu/src/perip_mem.v:36
+Warning: Replacing memory \mem with list of registers. See /openlane/designs/mcu/src/perip_mem.v:33, /openlane/designs/mcu/src/perip_mem.v:26
+
+17.14. Executing AST frontend in derive mode using pre-parsed AST for module `\timer_mem'.
+Generating RTLIL representation for module `\timer_mem'.
+Warning: Replacing memory \mem with list of registers. See /openlane/designs/mcu/src/timer_mem.v:43
+Warning: Replacing memory \mem_nxt with list of registers. See /openlane/designs/mcu/src/timer_mem.v:58, /openlane/designs/mcu/src/timer_mem.v:47, /openlane/designs/mcu/src/timer_mem.v:68
+Parameter 1 (\SIZE) = 2
+Parameter 2 (\ALLOW_WRITE) = 2'10
+
+17.15. Executing AST frontend in derive mode using pre-parsed AST for module `\perip_mem'.
+Parameter 1 (\SIZE) = 2
+Parameter 2 (\ALLOW_WRITE) = 2'10
+Generating RTLIL representation for module `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10'.
+Warning: Replacing memory \mem_nxt with list of registers. See /openlane/designs/mcu/src/perip_mem.v:36
+Warning: Replacing memory \mem with list of registers. See /openlane/designs/mcu/src/perip_mem.v:33, /openlane/designs/mcu/src/perip_mem.v:26
+
+17.16. Executing AST frontend in derive mode using pre-parsed AST for module `\rom'.
+Generating RTLIL representation for module `\rom'.
+
+17.17. Analyzing design hierarchy..
+Top module:  \mcu
+Used module:     \bus
+Used module:         \instr_mem
+Used module:             \rom
+Used module:         \data_mem
+Used module:         \GPIO
+Used module:             $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10
+Used module:         \timer
+Used module:             \timer_mem
+Used module:         \QSPI_master
+Used module:             $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem
+Used module:         \UART
+Used module:             \uart_core
+Used module:             \uart_mem
+
+17.18. Analyzing design hierarchy..
+Top module:  \mcu
+Used module:     \bus
+Used module:         \instr_mem
+Used module:             \rom
+Used module:         \data_mem
+Used module:         \GPIO
+Used module:             $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10
+Used module:         \timer
+Used module:             \timer_mem
+Used module:         \QSPI_master
+Used module:             $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem
+Used module:         \UART
+Used module:             \uart_core
+Used module:             \uart_mem
+Removing unused module `$abstract\uart_core'.
+Removing unused module `$abstract\perip_mem'.
+Removing unused module `$abstract\data_mem'.
+Removing unused module `$abstract\bus'.
+Removing unused module `$abstract\mcu'.
+Removing unused module `$abstract\QSPI_master'.
+Removing unused module `$abstract\GPIO'.
+Removing unused module `$abstract\instr_mem'.
+Removing unused module `$abstract\UART'.
+Removing unused module `$abstract\rom'.
+Removing unused module `$abstract\timer_mem'.
+Removing unused module `$abstract\uart_mem'.
+Removing unused module `$abstract\timer'.
+Removed 13 unused modules.
+Mapping positional arguments of cell mcu.bus (bus).
+Mapping positional arguments of cell UART.uart_core (uart_core).
+Mapping positional arguments of cell UART.uart_mem (uart_mem).
+Mapping positional arguments of cell QSPI_master.qspi_mem ($paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem).
+Mapping positional arguments of cell timer.timer_mem (timer_mem).
+Mapping positional arguments of cell GPIO.gpio_mem ($paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10).
+Mapping positional arguments of cell instr_mem.rom (rom).
+Mapping positional arguments of cell bus.instr_mem (instr_mem).
+Mapping positional arguments of cell bus.data_mem (data_mem).
+Mapping positional arguments of cell bus.GPIO (GPIO).
+Mapping positional arguments of cell bus.timer (timer).
+Mapping positional arguments of cell bus.QSPI_master (QSPI_master).
+Mapping positional arguments of cell bus.UART (UART).
+
+18. Generating Graphviz representation of design.
+Writing dot description to `/openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/tmp/synthesis/hierarchy.dot'.
+Dumping module mcu to page 1.
+Renaming module mcu to mcu.
+
+19. Executing TRIBUF pass.
+
+20. Executing HIERARCHY pass (managing design hierarchy).
+
+20.1. Analyzing design hierarchy..
+Top module:  \mcu
+Used module:     \bus
+Used module:         \instr_mem
+Used module:             \rom
+Used module:         \data_mem
+Used module:         \GPIO
+Used module:             $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10
+Used module:         \timer
+Used module:             \timer_mem
+Used module:         \QSPI_master
+Used module:             $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem
+Used module:         \UART
+Used module:             \uart_core
+Used module:             \uart_mem
+
+20.2. Analyzing design hierarchy..
+Top module:  \mcu
+Used module:     \bus
+Used module:         \instr_mem
+Used module:             \rom
+Used module:         \data_mem
+Used module:         \GPIO
+Used module:             $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10
+Used module:         \timer
+Used module:             \timer_mem
+Used module:         \QSPI_master
+Used module:             $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem
+Used module:         \UART
+Used module:             \uart_core
+Used module:             \uart_mem
+Removed 0 unused modules.
+
+21. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 2 empty switches in `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:0$582'.
+Found and cleaned up 11 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:0$468'.
+Found and cleaned up 5 empty switches in `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:0$360'.
+Cleaned up 18 empty switches.
+
+22. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$577 in module $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$570 in module $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.
+Removed 2 dead cases from process $proc$/openlane/designs/mcu/src/perip_mem.v:49$542 in module $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:49$542 in module $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/timer_mem.v:57$533 in module timer_mem.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/timer_mem.v:57$528 in module timer_mem.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/timer_mem.v:46$523 in module timer_mem.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/timer_mem.v:46$518 in module timer_mem.
+Removed 1 dead cases from process $proc$/openlane/designs/mcu/src/timer_mem.v:103$488 in module timer_mem.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/timer_mem.v:103$488 in module timer_mem.
+Marked 4 switch rules as full_case in process $proc$/openlane/designs/mcu/src/timer_mem.v:67$471 in module timer_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$463 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$456 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$449 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$442 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$435 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$428 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$421 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$414 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$407 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$400 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:35$393 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/perip_mem.v:49$365 in module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/uart_mem.v:44$355 in module uart_mem.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/uart_mem.v:44$350 in module uart_mem.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/uart_mem.v:76$326 in module uart_mem.
+Marked 2 switch rules as full_case in process $proc$/openlane/designs/mcu/src/uart_mem.v:54$317 in module uart_mem.
+Removed 1 dead cases from process $proc$/openlane/designs/mcu/src/uart_core.v:120$302 in module uart_core.
+Marked 7 switch rules as full_case in process $proc$/openlane/designs/mcu/src/uart_core.v:120$302 in module uart_core.
+Removed 1 dead cases from process $proc$/openlane/designs/mcu/src/uart_core.v:78$285 in module uart_core.
+Marked 4 switch rules as full_case in process $proc$/openlane/designs/mcu/src/uart_core.v:78$285 in module uart_core.
+Marked 5 switch rules as full_case in process $proc$/openlane/designs/mcu/src/uart_core.v:49$276 in module uart_core.
+Removed 1 dead cases from process $proc$/openlane/designs/mcu/src/QSPI_master.v:134$119 in module QSPI_master.
+Marked 22 switch rules as full_case in process $proc$/openlane/designs/mcu/src/QSPI_master.v:134$119 in module QSPI_master.
+Marked 6 switch rules as full_case in process $proc$/openlane/designs/mcu/src/timer.v:65$92 in module timer.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/instr_mem.v:138$53 in module instr_mem.
+Marked 1 switch rules as full_case in process $proc$/openlane/designs/mcu/src/bus.v:134$13 in module bus.
+Removed a total of 6 dead cases.
+
+23. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 210 assignments to connections.
+
+24. Executing PROC_INIT pass (extract init attributes).
+Found init rule in `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:0$582'.
+  Set init value: \mem[0] = 0
+Found init rule in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:0$468'.
+  Set init value: \mem[10] = 0
+Found init rule in `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:0$360'.
+  Set init value: \mem[2] = 0
+
+25. Executing PROC_ARST pass (detect async resets in processes).
+
+26. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 1 switch.
+<suppressed ~89 debug messages>
+
+27. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+Creating decoders for process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:0$582'.
+Creating decoders for process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:35$577'.
+     1/5: $2\mem_nxt[1][31:0] [31:24]
+     2/5: $2\mem_nxt[1][31:0] [15:8]
+     3/5: $2\mem_nxt[1][31:0] [7:0]
+     4/5: $2\mem_nxt[1][31:0] [23:16]
+     5/5: $1\mem_nxt[1][31:0]
+Creating decoders for process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:33$575'.
+Creating decoders for process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:35$570'.
+     1/5: $2\mem_nxt[0][31:0] [31:24]
+     2/5: $2\mem_nxt[0][31:0] [15:8]
+     3/5: $2\mem_nxt[0][31:0] [7:0]
+     4/5: $2\mem_nxt[0][31:0] [23:16]
+     5/5: $1\mem_nxt[0][31:0]
+Creating decoders for process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:33$568'.
+Creating decoders for process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:55$549'.
+Creating decoders for process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+     1/2: $1$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:51$541_DATA[31:0]$548
+     2/2: $1$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:50$540_DATA[31:0]$547
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:57$533'.
+     1/4: $1\mem_nxt[4][31:0] [31:24]
+     2/4: $1\mem_nxt[4][31:0] [15:8]
+     3/4: $1\mem_nxt[4][31:0] [7:0]
+     4/4: $1\mem_nxt[4][31:0] [23:16]
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:57$528'.
+     1/4: $1\mem_nxt[3][31:0] [31:24]
+     2/4: $1\mem_nxt[3][31:0] [15:8]
+     3/4: $1\mem_nxt[3][31:0] [7:0]
+     4/4: $1\mem_nxt[3][31:0] [23:16]
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:46$523'.
+     1/4: $1\mem_nxt[1][31:0] [31:24]
+     2/4: $1\mem_nxt[1][31:0] [15:8]
+     3/4: $1\mem_nxt[1][31:0] [7:0]
+     4/4: $1\mem_nxt[1][31:0] [23:16]
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:46$518'.
+     1/4: $1\mem_nxt[0][31:0] [31:24]
+     2/4: $1\mem_nxt[0][31:0] [15:8]
+     3/4: $1\mem_nxt[0][31:0] [7:0]
+     4/4: $1\mem_nxt[0][31:0] [23:16]
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$516'.
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$514'.
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$512'.
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$510'.
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$508'.
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$506'.
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$504'.
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$502'.
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:103$488'.
+     1/1: $1$mem2reg_rd$\mem$/openlane/designs/mcu/src/timer_mem.v:106$470_DATA[31:0]$501
+Creating decoders for process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:67$471'.
+     1/16: $1\mem_nxt[7][31:0] [31:24]
+     2/16: $1\mem_nxt[7][31:0] [15:8]
+     3/16: $1\mem_nxt[7][31:0] [7:0]
+     4/16: $1\mem_nxt[7][31:0] [23:16]
+     5/16: $1\mem_nxt[6][31:0] [31:24]
+     6/16: $1\mem_nxt[6][31:0] [15:8]
+     7/16: $1\mem_nxt[6][31:0] [7:0]
+     8/16: $1\mem_nxt[6][31:0] [23:16]
+     9/16: $1\mem_nxt[5][31:0] [31:24]
+    10/16: $1\mem_nxt[5][31:0] [15:8]
+    11/16: $1\mem_nxt[5][31:0] [7:0]
+    12/16: $1\mem_nxt[5][31:0] [23:16]
+    13/16: $1\mem_nxt[2][31:0] [31:24]
+    14/16: $1\mem_nxt[2][31:0] [15:8]
+    15/16: $1\mem_nxt[2][31:0] [7:0]
+    16/16: $1\mem_nxt[2][31:0] [23:16]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:0$468'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$463'.
+     1/5: $2\mem_nxt[10][31:0] [31:24]
+     2/5: $2\mem_nxt[10][31:0] [15:8]
+     3/5: $2\mem_nxt[10][31:0] [7:0]
+     4/5: $2\mem_nxt[10][31:0] [23:16]
+     5/5: $1\mem_nxt[10][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$461'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$456'.
+     1/5: $2\mem_nxt[9][31:0] [31:24]
+     2/5: $2\mem_nxt[9][31:0] [15:8]
+     3/5: $2\mem_nxt[9][31:0] [7:0]
+     4/5: $2\mem_nxt[9][31:0] [23:16]
+     5/5: $1\mem_nxt[9][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$454'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$449'.
+     1/5: $2\mem_nxt[8][31:0] [31:24]
+     2/5: $2\mem_nxt[8][31:0] [15:8]
+     3/5: $2\mem_nxt[8][31:0] [7:0]
+     4/5: $2\mem_nxt[8][31:0] [23:16]
+     5/5: $1\mem_nxt[8][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$447'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$442'.
+     1/5: $2\mem_nxt[7][31:0] [31:24]
+     2/5: $2\mem_nxt[7][31:0] [15:8]
+     3/5: $2\mem_nxt[7][31:0] [7:0]
+     4/5: $2\mem_nxt[7][31:0] [23:16]
+     5/5: $1\mem_nxt[7][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$440'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$435'.
+     1/5: $2\mem_nxt[6][31:0] [31:24]
+     2/5: $2\mem_nxt[6][31:0] [15:8]
+     3/5: $2\mem_nxt[6][31:0] [7:0]
+     4/5: $2\mem_nxt[6][31:0] [23:16]
+     5/5: $1\mem_nxt[6][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$433'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$428'.
+     1/5: $2\mem_nxt[5][31:0] [31:24]
+     2/5: $2\mem_nxt[5][31:0] [15:8]
+     3/5: $2\mem_nxt[5][31:0] [7:0]
+     4/5: $2\mem_nxt[5][31:0] [23:16]
+     5/5: $1\mem_nxt[5][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$426'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$421'.
+     1/5: $2\mem_nxt[4][31:0] [31:24]
+     2/5: $2\mem_nxt[4][31:0] [15:8]
+     3/5: $2\mem_nxt[4][31:0] [7:0]
+     4/5: $2\mem_nxt[4][31:0] [23:16]
+     5/5: $1\mem_nxt[4][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$419'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$414'.
+     1/5: $2\mem_nxt[3][31:0] [31:24]
+     2/5: $2\mem_nxt[3][31:0] [15:8]
+     3/5: $2\mem_nxt[3][31:0] [7:0]
+     4/5: $2\mem_nxt[3][31:0] [23:16]
+     5/5: $1\mem_nxt[3][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$412'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$407'.
+     1/5: $2\mem_nxt[2][31:0] [31:24]
+     2/5: $2\mem_nxt[2][31:0] [15:8]
+     3/5: $2\mem_nxt[2][31:0] [7:0]
+     4/5: $2\mem_nxt[2][31:0] [23:16]
+     5/5: $1\mem_nxt[2][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$405'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$400'.
+     1/5: $2\mem_nxt[1][31:0] [31:24]
+     2/5: $2\mem_nxt[1][31:0] [15:8]
+     3/5: $2\mem_nxt[1][31:0] [7:0]
+     4/5: $2\mem_nxt[1][31:0] [23:16]
+     5/5: $1\mem_nxt[1][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$398'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$393'.
+     1/5: $2\mem_nxt[0][31:0] [31:24]
+     2/5: $2\mem_nxt[0][31:0] [15:8]
+     3/5: $2\mem_nxt[0][31:0] [7:0]
+     4/5: $2\mem_nxt[0][31:0] [23:16]
+     5/5: $1\mem_nxt[0][31:0]
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$391'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:55$372'.
+Creating decoders for process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+     1/2: $1$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:51$364_DATA[31:0]$371
+     2/2: $1$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:50$363_DATA[31:0]$370
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:0$360'.
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:44$355'.
+     1/4: $1\mem_nxt[1][31:0] [31:24]
+     2/4: $1\mem_nxt[1][31:0] [15:8]
+     3/4: $1\mem_nxt[1][31:0] [7:0]
+     4/4: $1\mem_nxt[1][31:0] [23:16]
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:44$350'.
+     1/4: $1\mem_nxt[0][31:0] [31:24]
+     2/4: $1\mem_nxt[0][31:0] [15:8]
+     3/4: $1\mem_nxt[0][31:0] [7:0]
+     4/4: $1\mem_nxt[0][31:0] [23:16]
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$348'.
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$346'.
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$344'.
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$342'.
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$340'.
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:76$326'.
+     1/1: $1$mem2reg_rd$\mem$/openlane/designs/mcu/src/uart_mem.v:79$316_DATA[31:0]$339
+Creating decoders for process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:54$317'.
+     1/8: $1\mem_nxt[4][31:0] [31:24]
+     2/8: $1\mem_nxt[4][31:0] [15:8]
+     3/8: $1\mem_nxt[4][31:0] [7:0]
+     4/8: $1\mem_nxt[4][31:0] [23:16]
+     5/8: $1\mem_nxt[3][31:0] [31:24]
+     6/8: $1\mem_nxt[3][31:0] [15:8]
+     7/8: $1\mem_nxt[3][31:0] [7:0]
+     8/8: $1\mem_nxt[3][31:0] [23:16]
+Creating decoders for process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:120$302'.
+     1/14: $4\tx_done_o[0:0]
+     2/14: $7\tx_state_nxt[1:0]
+     3/14: $3\tx_done_o[0:0]
+     4/14: $6\tx_state_nxt[1:0]
+     5/14: $2\tx_cntr_nxt[2:0]
+     6/14: $5\tx_state_nxt[1:0]
+     7/14: $4\tx_state_nxt[1:0]
+     8/14: $3\tx_state_nxt[1:0]
+     9/14: $2\tx_done_o[0:0]
+    10/14: $2\tx_state_nxt[1:0]
+    11/14: $1\tx_state_nxt[1:0]
+    12/14: $1\tx[0:0]
+    13/14: $1\tx_cntr_nxt[2:0]
+    14/14: $1\tx_done_o[0:0]
+Creating decoders for process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+     1/16: $4\rx_done_o[0:0]
+     2/16: $4\rx_state_nxt[1:0]
+     3/16: $2\rx_data_tmp_nxt[7:0]
+     4/16: $3\rx_data_o_nxt[7:0]
+     5/16: $3\rx_state_nxt[1:0]
+     6/16: $2\rx_cntr_nxt[2:0]
+     7/16: $3\rx_done_o[0:0]
+     8/16: $2\rx_data_o_nxt[7:0]
+     9/16: $2\rx_done_o[0:0]
+    10/16: $2\rx_state_nxt[1:0]
+    11/16: $1\rx_state_nxt[1:0]
+    12/16: $1$bitselwrite$pos$/openlane/designs/mcu/src/uart_core.v:92$274[2:0]$288
+    13/16: $1\rx_cntr_nxt[2:0]
+    14/16: $1\rx_data_tmp_nxt[7:0]
+    15/16: $1\rx_data_o_nxt[7:0]
+    16/16: $1\rx_done_o[0:0]
+Creating decoders for process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:49$276'.
+     1/7: $3\tx_clk_cntr_nxt[15:0]
+     2/7: $2\rx_clk_cntr_nxt[15:0]
+     3/7: $1\tx_state_en_nxt[0:0]
+     4/7: $2\tx_clk_cntr_nxt[15:0]
+     5/7: $1\rx_state_en_nxt[0:0]
+     6/7: $1\rx_clk_cntr_nxt[15:0]
+     7/7: $1\tx_clk_cntr_nxt[15:0]
+Creating decoders for process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+Creating decoders for process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+     1/83: $2\state_q_prv_nxt[0:0]
+     2/83: $11\state_d[1:0]
+     3/83: $7\io_en_d[3:0]
+     4/83: $6\sclk_d[0:0]
+     5/83: $3\cs_nd[0:0]
+     6/83: $1\state_q_prv_nxt[0:0]
+     7/83: $8\cntr_state_d[7:0]
+     8/83: $10\state_d[1:0]
+     9/83: $6\io_en_d[3:0]
+    10/83: $6\io_d[3:0]
+    11/83: $9\state_d[1:0]
+    12/83: $3\data_i_perip[31:0]
+    13/83: $3$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:255$107[4:0]$202
+    14/83: $3$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:266$113[4:0]$208
+    15/83: $3$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:265$112[4:0]$207
+    16/83: $3$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:264$111[4:0]$206
+    17/83: $3$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:263$110[4:0]$205
+    18/83: $3$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:259$109[4:0]$204
+    19/83: $3$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:258$108[4:0]$203
+    20/83: $7\cntr_state_d[7:0]
+    21/83: $5\io_d[3:0] [3]
+    22/83: $5\io_d[3:0] [1]
+    23/83: $5\io_d[3:0] [0]
+    24/83: $5\io_en_d[3:0]
+    25/83: $5\io_d[3:0] [2]
+    26/83: $6\cntr_state_d[7:0]
+    27/83: $4\io_en_d[3:0]
+    28/83: $4\io_d[3:0]
+    29/83: $5\cntr_state_d[7:0]
+    30/83: $2$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:266$113[4:0]$185
+    31/83: $2$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:265$112[4:0]$184
+    32/83: $2$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:264$111[4:0]$183
+    33/83: $2$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:263$110[4:0]$182
+    34/83: $2$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:259$109[4:0]$181
+    35/83: $2$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:258$108[4:0]$180
+    36/83: $2$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:255$107[4:0]$179
+    37/83: $2\data_i_perip[31:0]
+    38/83: $2\write_perip[0:0]
+    39/83: $3\io_d[3:0] [3:1]
+    40/83: $3\cntr_state_d[7:0]
+    41/83: $8\state_d[1:0]
+    42/83: $3\io_en_d[3:0]
+    43/83: $7\state_d[1:0]
+    44/83: $6\state_d[1:0]
+    45/83: $5\state_d[1:0]
+    46/83: $4\state_d[1:0]
+    47/83: $2\cntr_state_d[7:0]
+    48/83: $3\io_d[3:0] [0]
+    49/83: $4\cntr_state_d[7:0]
+    50/83: $1\io_en_d[3:0]
+    51/83: $1\write_perip[0:0]
+    52/83: $1\cntr_state_d[7:0]
+    53/83: $1$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:266$113[4:0]$165
+    54/83: $1$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:265$112[4:0]$164
+    55/83: $1$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:264$111[4:0]$163
+    56/83: $1$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:263$110[4:0]$162
+    57/83: $1$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:259$109[4:0]$161
+    58/83: $1$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:258$108[4:0]$160
+    59/83: $1$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:255$107[4:0]$159
+    60/83: $2\io_en_d[3:0]
+    61/83: $3\state_d[1:0]
+    62/83: $1\rdaddr_perip[31:0]
+    63/83: $1\data_i_perip[31:0]
+    64/83: $1\wraddr_perip[31:0]
+    65/83: $5\sclk_d[0:0]
+    66/83: $4\sclk_d[0:0]
+    67/83: $3\sclk_d[0:0]
+    68/83: $2\sclk_d[0:0]
+    69/83: $3\cntr_sclk_d[5:0]
+    70/83: $2\cntr_sclk_d[5:0]
+    71/83: $1\sclk_d[0:0]
+    72/83: $2\state_d[1:0]
+    73/83: $2\cs_nd[0:0]
+    74/83: $2\io_d[0:0]
+    75/83: $1\cntr_sclk_d[5:0]
+    76/83: $1\state_d[1:0]
+    77/83: $1\cs_nd[0:0]
+    78/83: $1\io_d[0:0]
+    79/83: $1\QSPI_SIZE_nxt[4:0]
+    80/83: $1\QSPI_WRITE_nxt[0:0]
+    81/83: $1\QSPI_DUMMY_nxt[7:0]
+    82/83: $1\QSPI_DATA_MODE_nxt[1:0]
+    83/83: $1\QSPI_PRESCALER_nxt[5:0]
+Creating decoders for process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+Creating decoders for process `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+     1/12: $2\counter_nxt[30:0]
+     2/12: $3\irq_7_o_nxt[0:0]
+     3/12: $3\TIM_EVN_i[31:0]
+     4/12: $4\TIM_CNT_i[31:0]
+     5/12: $2\irq_7_o_nxt[0:0]
+     6/12: $2\TIM_EVN_i[31:0]
+     7/12: $3\TIM_CNT_i[31:0]
+     8/12: $2\TIM_CNT_i[31:0]
+     9/12: $1\TIM_EVN_i[31:0]
+    10/12: $1\TIM_CNT_i[31:0]
+    11/12: $1\irq_7_o_nxt[0:0]
+    12/12: $1\counter_nxt[30:0]
+Creating decoders for process `\timer.$proc$/openlane/designs/mcu/src/timer.v:59$91'.
+Creating decoders for process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+Creating decoders for process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:138$53'.
+     1/4: $1\rdata_o_nxt[31:0] [31:24]
+     2/4: $1\rdata_o_nxt[31:0] [15:8]
+     3/4: $1\rdata_o_nxt[31:0] [7:0]
+     4/4: $1\rdata_o_nxt[31:0] [23:16]
+Creating decoders for process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+Creating decoders for process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:23$31'.
+Creating decoders for process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+     1/1: { $1\data_mem_en[0:0] $1\instr_mem_en[0:0] $1\gpio_en[0:0] $1\usb_en[0:0] $1\timer_en[0:0] $1\qspi_en[0:0] $1\i2c_en[0:0] $1\uart_en[0:0] }
+Creating decoders for process `\bus.$proc$/openlane/designs/mcu/src/bus.v:132$12'.
+Creating decoders for process `\bus.$proc$/openlane/designs/mcu/src/bus.v:38$4'.
+
+28. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\rom.$memwr$\mem$/openlane/designs/mcu/src/rom.v:12$583_EN' from process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+No latch inferred for signal `\rom.$memwr$\mem$/openlane/designs/mcu/src/rom.v:13$584_EN' from process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+No latch inferred for signal `\rom.$memwr$\mem$/openlane/designs/mcu/src/rom.v:14$585_EN' from process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+No latch inferred for signal `\rom.$memwr$\mem$/openlane/designs/mcu/src/rom.v:15$586_EN' from process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+No latch inferred for signal `\rom.$memwr$\mem$/openlane/designs/mcu/src/rom.v:16$587_EN' from process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+No latch inferred for signal `\rom.$memwr$\mem$/openlane/designs/mcu/src/rom.v:17$588_EN' from process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+No latch inferred for signal `\rom.$memwr$\mem$/openlane/designs/mcu/src/rom.v:18$589_EN' from process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+No latch inferred for signal `\rom.$memwr$\mem$/openlane/designs/mcu/src/rom.v:19$590_EN' from process `\rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\j' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:0$582'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\mem_nxt[1]' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:35$577'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\mem_nxt[0]' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:35$570'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\mem_wren_bus' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:55$549'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\mem_wren_perip' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:55$549'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$bitselwrite$pos$/openlane/designs/mcu/src/perip_mem.v:57$538' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:55$549'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$bitselwrite$pos$/openlane/designs/mcu/src/perip_mem.v:60$539' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:55$549'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\data_o_perip' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\data_o_bus' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:50$540_ADDR' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:50$540_DATA' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:51$541_ADDR' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+No latch inferred for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:51$541_DATA' from process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+No latch inferred for signal `\timer_mem.\mem_nxt[4]' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:57$533'.
+No latch inferred for signal `\timer_mem.\mem_nxt[3]' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:57$528'.
+No latch inferred for signal `\timer_mem.\mem_nxt[1]' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:46$523'.
+No latch inferred for signal `\timer_mem.\mem_nxt[0]' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:46$518'.
+No latch inferred for signal `\timer_mem.\data_o_bus' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:103$488'.
+No latch inferred for signal `\timer_mem.\mem_wren_bus' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:103$488'.
+No latch inferred for signal `\timer_mem.$bitselwrite$pos$/openlane/designs/mcu/src/timer_mem.v:105$469' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:103$488'.
+No latch inferred for signal `\timer_mem.$mem2reg_rd$\mem$/openlane/designs/mcu/src/timer_mem.v:106$470_ADDR' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:103$488'.
+No latch inferred for signal `\timer_mem.$mem2reg_rd$\mem$/openlane/designs/mcu/src/timer_mem.v:106$470_DATA' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:103$488'.
+No latch inferred for signal `\timer_mem.\mem_nxt[2]' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:67$471'.
+No latch inferred for signal `\timer_mem.\mem_nxt[5]' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:67$471'.
+No latch inferred for signal `\timer_mem.\mem_nxt[6]' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:67$471'.
+No latch inferred for signal `\timer_mem.\mem_nxt[7]' from process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:67$471'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\j' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:0$468'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[10]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$463'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[9]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$456'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[8]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$449'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[7]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$442'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[6]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$435'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[5]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$428'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[4]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$421'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[3]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$414'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[2]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$407'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[1]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$400'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_nxt[0]' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$393'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_wren_bus' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:55$372'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem_wren_perip' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:55$372'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$bitselwrite$pos$/openlane/designs/mcu/src/perip_mem.v:57$361' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:55$372'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$bitselwrite$pos$/openlane/designs/mcu/src/perip_mem.v:60$362' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:55$372'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\data_o_perip' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\data_o_bus' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:50$363_ADDR' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:50$363_DATA' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:51$364_ADDR' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+No latch inferred for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$mem2reg_rd$\mem$/openlane/designs/mcu/src/perip_mem.v:51$364_DATA' from process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+No latch inferred for signal `\uart_mem.\j' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:0$360'.
+No latch inferred for signal `\uart_mem.\mem_nxt[1]' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:44$355'.
+No latch inferred for signal `\uart_mem.\mem_nxt[0]' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:44$350'.
+No latch inferred for signal `\uart_mem.\data_o_bus' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:76$326'.
+No latch inferred for signal `\uart_mem.\mem_wren_bus' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:76$326'.
+No latch inferred for signal `\uart_mem.$bitselwrite$pos$/openlane/designs/mcu/src/uart_mem.v:78$315' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:76$326'.
+No latch inferred for signal `\uart_mem.$mem2reg_rd$\mem$/openlane/designs/mcu/src/uart_mem.v:79$316_ADDR' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:76$326'.
+No latch inferred for signal `\uart_mem.$mem2reg_rd$\mem$/openlane/designs/mcu/src/uart_mem.v:79$316_DATA' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:76$326'.
+No latch inferred for signal `\uart_mem.\mem_nxt[2]' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:54$317'.
+No latch inferred for signal `\uart_mem.\mem_nxt[3]' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:54$317'.
+No latch inferred for signal `\uart_mem.\mem_nxt[4]' from process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:54$317'.
+No latch inferred for signal `\uart_core.\tx' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:120$302'.
+No latch inferred for signal `\uart_core.\tx_done_o' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:120$302'.
+No latch inferred for signal `\uart_core.\tx_cntr_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:120$302'.
+No latch inferred for signal `\uart_core.\tx_state_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:120$302'.
+No latch inferred for signal `\uart_core.\rx_done_o' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+No latch inferred for signal `\uart_core.\rx_data_o_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+No latch inferred for signal `\uart_core.\rx_data_tmp_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+No latch inferred for signal `\uart_core.\rx_cntr_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+No latch inferred for signal `\uart_core.\rx_state_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+No latch inferred for signal `\uart_core.$bitselwrite$pos$/openlane/designs/mcu/src/uart_core.v:92$274' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+No latch inferred for signal `\uart_core.\rx_clk_cntr_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:49$276'.
+No latch inferred for signal `\uart_core.\tx_clk_cntr_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:49$276'.
+No latch inferred for signal `\uart_core.\rx_state_en_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:49$276'.
+No latch inferred for signal `\uart_core.\tx_state_en_nxt' from process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:49$276'.
+No latch inferred for signal `\QSPI_master.\write_perip' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\wraddr_perip' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\data_i_perip' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\rdaddr_perip' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\cs_nd' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\sclk_d' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\state_q_prv_nxt' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\state_d' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\cntr_sclk_d' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\cntr_state_d' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\io_d' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\io_en_d' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\QSPI_WRITE_nxt' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\QSPI_DATA_MODE_nxt' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\QSPI_DUMMY_nxt' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\QSPI_SIZE_nxt' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.\QSPI_PRESCALER_nxt' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:255$107' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:258$108' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:259$109' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:263$110' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:264$111' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:265$112' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\QSPI_master.$bitselwrite$pos$/openlane/designs/mcu/src/QSPI_master.v:266$113' from process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+No latch inferred for signal `\timer.\irq_7_o_nxt' from process `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+No latch inferred for signal `\timer.\counter_nxt' from process `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+No latch inferred for signal `\timer.\condition_nxt' from process `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+No latch inferred for signal `\timer.\TIM_CLR_i' from process `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+No latch inferred for signal `\timer.\TIM_CNT_i' from process `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+No latch inferred for signal `\timer.\TIM_EVN_i' from process `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+No latch inferred for signal `\timer.\TIM_EVC_i' from process `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+No latch inferred for signal `\instr_mem.\rdata_o_nxt' from process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:138$53'.
+No latch inferred for signal `\bus.\uart_en' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+No latch inferred for signal `\bus.\i2c_en' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+No latch inferred for signal `\bus.\qspi_en' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+No latch inferred for signal `\bus.\timer_en' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+No latch inferred for signal `\bus.\usb_en' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+No latch inferred for signal `\bus.\gpio_en' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+No latch inferred for signal `\bus.\instr_mem_en' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+No latch inferred for signal `\bus.\data_mem_en' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+No latch inferred for signal `\bus.\data_rdata_o_nxt' from process `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+
+29. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\mem[1]' using process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:33$575'.
+  created $dff cell `$procdff$1720' with positive edge clock.
+Creating register for signal `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.\mem[0]' using process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:33$568'.
+  created $dff cell `$procdff$1721' with positive edge clock.
+Creating register for signal `\timer_mem.\mem[7]' using process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$516'.
+  created $dff cell `$procdff$1722' with positive edge clock.
+Creating register for signal `\timer_mem.\mem[6]' using process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$514'.
+  created $dff cell `$procdff$1723' with positive edge clock.
+Creating register for signal `\timer_mem.\mem[5]' using process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$512'.
+  created $dff cell `$procdff$1724' with positive edge clock.
+Creating register for signal `\timer_mem.\mem[4]' using process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$510'.
+  created $dff cell `$procdff$1725' with positive edge clock.
+Creating register for signal `\timer_mem.\mem[3]' using process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$508'.
+  created $dff cell `$procdff$1726' with positive edge clock.
+Creating register for signal `\timer_mem.\mem[2]' using process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$506'.
+  created $dff cell `$procdff$1727' with positive edge clock.
+Creating register for signal `\timer_mem.\mem[1]' using process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$504'.
+  created $dff cell `$procdff$1728' with positive edge clock.
+Creating register for signal `\timer_mem.\mem[0]' using process `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$502'.
+  created $dff cell `$procdff$1729' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[10]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$461'.
+  created $dff cell `$procdff$1730' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[9]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$454'.
+  created $dff cell `$procdff$1731' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[8]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$447'.
+  created $dff cell `$procdff$1732' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[7]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$440'.
+  created $dff cell `$procdff$1733' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[6]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$433'.
+  created $dff cell `$procdff$1734' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[5]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$426'.
+  created $dff cell `$procdff$1735' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[4]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$419'.
+  created $dff cell `$procdff$1736' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[3]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$412'.
+  created $dff cell `$procdff$1737' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[2]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$405'.
+  created $dff cell `$procdff$1738' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[1]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$398'.
+  created $dff cell `$procdff$1739' with positive edge clock.
+Creating register for signal `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.\mem[0]' using process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$391'.
+  created $dff cell `$procdff$1740' with positive edge clock.
+Creating register for signal `\uart_mem.\mem[4]' using process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$348'.
+  created $dff cell `$procdff$1741' with positive edge clock.
+Creating register for signal `\uart_mem.\mem[3]' using process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$346'.
+  created $dff cell `$procdff$1742' with positive edge clock.
+Creating register for signal `\uart_mem.\mem[2]' using process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$344'.
+  created $dff cell `$procdff$1743' with positive edge clock.
+Creating register for signal `\uart_mem.\mem[1]' using process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$342'.
+  created $dff cell `$procdff$1744' with positive edge clock.
+Creating register for signal `\uart_mem.\mem[0]' using process `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$340'.
+  created $dff cell `$procdff$1745' with positive edge clock.
+Creating register for signal `\uart_core.\rx_data_o' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1746' with positive edge clock.
+Creating register for signal `\uart_core.\rx_data_tmp' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1747' with positive edge clock.
+Creating register for signal `\uart_core.\rx_done_o_prv' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1748' with positive edge clock.
+Creating register for signal `\uart_core.\tx_done_o_prv' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1749' with positive edge clock.
+Creating register for signal `\uart_core.\rx_cntr' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1750' with positive edge clock.
+Creating register for signal `\uart_core.\tx_cntr' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1751' with positive edge clock.
+Creating register for signal `\uart_core.\rx_state' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1752' with positive edge clock.
+Creating register for signal `\uart_core.\tx_state' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1753' with positive edge clock.
+Creating register for signal `\uart_core.\rx_clk_cntr' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1754' with positive edge clock.
+Creating register for signal `\uart_core.\tx_clk_cntr' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1755' with positive edge clock.
+Creating register for signal `\uart_core.\rx_state_en' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1756' with positive edge clock.
+Creating register for signal `\uart_core.\tx_state_en' using process `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+  created $dff cell `$procdff$1757' with positive edge clock.
+Creating register for signal `\QSPI_master.\sclk_o' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1758' with positive edge clock.
+Creating register for signal `\QSPI_master.\cs_no' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1759' with positive edge clock.
+Creating register for signal `\QSPI_master.\state_q_prv' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1760' with positive edge clock.
+Creating register for signal `\QSPI_master.\state_q' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1761' with positive edge clock.
+Creating register for signal `\QSPI_master.\cntr_sclk_q' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1762' with positive edge clock.
+Creating register for signal `\QSPI_master.\cntr_state_q' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1763' with positive edge clock.
+Creating register for signal `\QSPI_master.\io_q' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1764' with positive edge clock.
+Creating register for signal `\QSPI_master.\io_en_q' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1765' with positive edge clock.
+Creating register for signal `\QSPI_master.\QSPI_WRITE' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1766' with positive edge clock.
+Creating register for signal `\QSPI_master.\QSPI_DATA_MODE' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1767' with positive edge clock.
+Creating register for signal `\QSPI_master.\QSPI_DUMMY' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1768' with positive edge clock.
+Creating register for signal `\QSPI_master.\QSPI_SIZE' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1769' with positive edge clock.
+Creating register for signal `\QSPI_master.\QSPI_PRESCALER' using process `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+  created $dff cell `$procdff$1770' with positive edge clock.
+Creating register for signal `\timer.\irq_7_o' using process `\timer.$proc$/openlane/designs/mcu/src/timer.v:59$91'.
+  created $dff cell `$procdff$1771' with positive edge clock.
+Creating register for signal `\timer.\counter' using process `\timer.$proc$/openlane/designs/mcu/src/timer.v:59$91'.
+  created $dff cell `$procdff$1772' with positive edge clock.
+Creating register for signal `\timer.\condition' using process `\timer.$proc$/openlane/designs/mcu/src/timer.v:59$91'.
+  created $dff cell `$procdff$1773' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:99$58_ADDR' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1774' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:99$58_DATA' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1775' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:99$58_EN' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1776' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:100$59_ADDR' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1777' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:100$59_DATA' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1778' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:100$59_EN' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1779' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:101$60_ADDR' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1780' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:101$60_DATA' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1781' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:101$60_EN' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1782' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:102$61_ADDR' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1783' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:102$61_DATA' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1784' with positive edge clock.
+Creating register for signal `\data_mem.$memwr$\mem$/openlane/designs/mcu/src/data_mem.v:102$61_EN' using process `\data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+  created $dff cell `$procdff$1785' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:132$27_ADDR' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1786' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:132$27_DATA' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1787' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:132$27_EN' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1788' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:133$28_ADDR' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1789' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:133$28_DATA' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1790' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:133$28_EN' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1791' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:134$29_ADDR' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1792' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:134$29_DATA' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1793' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:134$29_EN' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1794' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:135$30_ADDR' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1795' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:135$30_DATA' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1796' with positive edge clock.
+Creating register for signal `\instr_mem.$memwr$\mem$/openlane/designs/mcu/src/instr_mem.v:135$30_EN' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+  created $dff cell `$procdff$1797' with positive edge clock.
+Creating register for signal `\instr_mem.\rvalid_o' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:23$31'.
+  created $dff cell `$procdff$1798' with positive edge clock.
+Creating register for signal `\instr_mem.\rdata_o' using process `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:23$31'.
+  created $dff cell `$procdff$1799' with positive edge clock.
+Creating register for signal `\bus.\data_rdata_o' using process `\bus.$proc$/openlane/designs/mcu/src/bus.v:132$12'.
+  created $dff cell `$procdff$1800' with positive edge clock.
+Creating register for signal `\bus.\data_rvalid_o' using process `\bus.$proc$/openlane/designs/mcu/src/bus.v:38$4'.
+  created $dff cell `$procdff$1801' with positive edge clock.
+
+30. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+31. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `rom.$proc$/openlane/designs/mcu/src/rom.v:0$603'.
+Removing empty process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:0$582'.
+Found and cleaned up 2 empty switches in `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:35$577'.
+Removing empty process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:35$577'.
+Removing empty process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:33$575'.
+Found and cleaned up 2 empty switches in `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:35$570'.
+Removing empty process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:35$570'.
+Removing empty process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:33$568'.
+Removing empty process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:55$549'.
+Found and cleaned up 2 empty switches in `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+Removing empty process `$paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.$proc$/openlane/designs/mcu/src/perip_mem.v:49$542'.
+Found and cleaned up 1 empty switch in `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:57$533'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:57$533'.
+Found and cleaned up 1 empty switch in `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:57$528'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:57$528'.
+Found and cleaned up 1 empty switch in `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:46$523'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:46$523'.
+Found and cleaned up 1 empty switch in `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:46$518'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:46$518'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$516'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$514'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$512'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$510'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$508'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$506'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$504'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:43$502'.
+Found and cleaned up 1 empty switch in `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:103$488'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:103$488'.
+Found and cleaned up 4 empty switches in `\timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:67$471'.
+Removing empty process `timer_mem.$proc$/openlane/designs/mcu/src/timer_mem.v:67$471'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:0$468'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$463'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$463'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$461'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$456'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$456'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$454'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$449'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$449'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$447'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$442'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$442'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$440'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$435'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$435'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$433'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$428'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$428'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$426'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$421'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$421'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$419'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$414'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$414'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$412'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$407'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$407'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$405'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$400'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$400'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$398'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$393'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:35$393'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:33$391'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:55$372'.
+Found and cleaned up 2 empty switches in `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+Removing empty process `$paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.$proc$/openlane/designs/mcu/src/perip_mem.v:49$365'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:0$360'.
+Found and cleaned up 1 empty switch in `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:44$355'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:44$355'.
+Found and cleaned up 1 empty switch in `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:44$350'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:44$350'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$348'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$346'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$344'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$342'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:41$340'.
+Found and cleaned up 1 empty switch in `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:76$326'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:76$326'.
+Found and cleaned up 2 empty switches in `\uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:54$317'.
+Removing empty process `uart_mem.$proc$/openlane/designs/mcu/src/uart_mem.v:54$317'.
+Found and cleaned up 7 empty switches in `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:120$302'.
+Removing empty process `uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:120$302'.
+Found and cleaned up 4 empty switches in `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+Removing empty process `uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:78$285'.
+Found and cleaned up 5 empty switches in `\uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:49$276'.
+Removing empty process `uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:49$276'.
+Removing empty process `uart_core.$proc$/openlane/designs/mcu/src/uart_core.v:34$275'.
+Found and cleaned up 22 empty switches in `\QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+Removing empty process `QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:134$119'.
+Removing empty process `QSPI_master.$proc$/openlane/designs/mcu/src/QSPI_master.v:100$114'.
+Found and cleaned up 6 empty switches in `\timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+Removing empty process `timer.$proc$/openlane/designs/mcu/src/timer.v:65$92'.
+Removing empty process `timer.$proc$/openlane/designs/mcu/src/timer.v:59$91'.
+Removing empty process `data_mem.$proc$/openlane/designs/mcu/src/data_mem.v:98$66'.
+Found and cleaned up 1 empty switch in `\instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:138$53'.
+Removing empty process `instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:138$53'.
+Removing empty process `instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:131$32'.
+Removing empty process `instr_mem.$proc$/openlane/designs/mcu/src/instr_mem.v:23$31'.
+Found and cleaned up 1 empty switch in `\bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+Removing empty process `bus.$proc$/openlane/designs/mcu/src/bus.v:134$13'.
+Removing empty process `bus.$proc$/openlane/designs/mcu/src/bus.v:132$12'.
+Removing empty process `bus.$proc$/openlane/designs/mcu/src/bus.v:38$4'.
+Cleaned up 90 empty switches.
+
+32. Executing CHECK pass (checking for obvious problems).
+Checking module mcu...
+Checking module rom...
+Checking module $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10...
+Checking module timer_mem...
+Checking module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem...
+Checking module uart_mem...
+Checking module uart_core...
+Checking module UART...
+Checking module QSPI_master...
+Checking module timer...
+Checking module GPIO...
+Checking module data_mem...
+Checking module instr_mem...
+Checking module bus...
+Found and reported 0 problems.
+
+33. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+Optimizing module rom.
+Optimizing module $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.
+<suppressed ~6 debug messages>
+Optimizing module timer_mem.
+<suppressed ~3 debug messages>
+Optimizing module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+<suppressed ~6 debug messages>
+Optimizing module uart_mem.
+<suppressed ~3 debug messages>
+Optimizing module uart_core.
+<suppressed ~15 debug messages>
+Optimizing module UART.
+Optimizing module QSPI_master.
+<suppressed ~26 debug messages>
+Optimizing module timer.
+Optimizing module GPIO.
+Optimizing module data_mem.
+Optimizing module instr_mem.
+Optimizing module bus.
+<suppressed ~4 debug messages>
+
+34. Executing FLATTEN pass (flatten design).
+Deleting now unused module rom.
+Deleting now unused module $paramod\perip_mem\SIZE=s32'00000000000000000000000000000010\ALLOW_WRITE=2'10.
+Deleting now unused module timer_mem.
+Deleting now unused module $paramod$f83cda20d339437b7a0d99e4e0c285679d13d2bb\perip_mem.
+Deleting now unused module uart_mem.
+Deleting now unused module uart_core.
+Deleting now unused module UART.
+Deleting now unused module QSPI_master.
+Deleting now unused module timer.
+Deleting now unused module GPIO.
+Deleting now unused module data_mem.
+Deleting now unused module instr_mem.
+Deleting now unused module bus.
+<suppressed ~13 debug messages>
+
+35. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~337 debug messages>
+
+36. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 250 unused cells and 1309 unused wires.
+<suppressed ~302 debug messages>
+
+37. Executing OPT pass (performing simple optimizations).
+
+37.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+37.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+<suppressed ~405 debug messages>
+Removed a total of 135 cells.
+
+37.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1313.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1315.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1303.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1321.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1323.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1330.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1332.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1337.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1342.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1347.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1387.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1392.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1403.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1409.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1415.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1425.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1427.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1429.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1431.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1440.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1442.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1444.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1452.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1454.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1461.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1468.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1305.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1481.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1483.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1541.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1569.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1571.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1573.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1581.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1583.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1585.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1592.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1594.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1600.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1606.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1023.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1025.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1033.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1035.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1199.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1042.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1048.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1054.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1207.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1209.
+    dead port 1/2 on $mux $flatten\bus.\QSPI_master.$procmux$1276.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1278.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1284.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1286.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1107.
+    dead port 2/2 on $mux $flatten\bus.\UART.\uart_core.$procmux$1113.
+    dead port 2/3 on $pmux $flatten\bus.\GPIO.\gpio_mem.$procmux$649.
+    dead port 3/3 on $pmux $flatten\bus.\GPIO.\gpio_mem.$procmux$649.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1293.
+    dead port 2/2 on $mux $flatten\bus.\QSPI_master.$procmux$1295.
+Removed 60 multiplexer ports.
+<suppressed ~46 debug messages>
+
+37.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1490: { $auto$opt_reduce.cc:134:opt_pmux$1811 $flatten\bus.\QSPI_master.$procmux$1396_CMP $flatten\bus.\QSPI_master.$procmux$1200_CMP }
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1548: { $auto$opt_reduce.cc:134:opt_pmux$1813 $flatten\bus.\QSPI_master.$procmux$1396_CMP $flatten\bus.\QSPI_master.$procmux$1200_CMP }
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1553: { $flatten\bus.\QSPI_master.$procmux$1397_CMP $auto$opt_reduce.cc:134:opt_pmux$1815 $flatten\bus.\QSPI_master.$procmux$1200_CMP }
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1558: { $auto$opt_reduce.cc:134:opt_pmux$1817 $flatten\bus.\QSPI_master.$procmux$1200_CMP }
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1394: { $auto$opt_reduce.cc:134:opt_pmux$1819 $flatten\bus.\QSPI_master.$procmux$1200_CMP }
+    New ctrl vector for $pmux cell $flatten\bus.\UART.\uart_core.$procmux$1061: { $flatten\bus.\UART.\uart_core.$procmux$1059_CMP $flatten\bus.\UART.\uart_core.$procmux$1049_CMP $auto$opt_reduce.cc:134:opt_pmux$1821 }
+    New ctrl vector for $pmux cell $flatten\bus.\UART.\uart_core.$procmux$1066: { $flatten\bus.\UART.\uart_core.$procmux$1059_CMP $auto$opt_reduce.cc:134:opt_pmux$1823 }
+    New ctrl vector for $pmux cell $flatten\bus.\UART.\uart_core.$procmux$1071: { $flatten\bus.\UART.\uart_core.$procmux$1049_CMP $auto$opt_reduce.cc:134:opt_pmux$1825 }
+    New ctrl vector for $pmux cell $flatten\bus.\UART.\uart_core.$procmux$1125: { $flatten\bus.\UART.\uart_core.$procmux$1118_CMP $auto$opt_reduce.cc:134:opt_pmux$1827 }
+    New ctrl vector for $pmux cell $flatten\bus.\UART.\uart_core.$procmux$1140: { $flatten\bus.\UART.\uart_core.$procmux$1108_CMP $auto$opt_reduce.cc:134:opt_pmux$1829 }
+  Optimizing cells in module \mcu.
+Performed a total of 10 changes.
+
+37.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+<suppressed ~9 debug messages>
+Removed a total of 3 cells.
+
+37.6. Executing OPT_DFF pass (perform DFF optimizations).
+Handling D = Q on $flatten\bus.\QSPI_master.$procdff$1770 ($dff) from module mcu (removing D path).
+Handling D = Q on $flatten\bus.\QSPI_master.$procdff$1769 ($dff) from module mcu (removing D path).
+Handling D = Q on $flatten\bus.\QSPI_master.$procdff$1768 ($dff) from module mcu (removing D path).
+Handling D = Q on $flatten\bus.\QSPI_master.$procdff$1767 ($dff) from module mcu (removing D path).
+Handling D = Q on $flatten\bus.\QSPI_master.$procdff$1766 ($dff) from module mcu (removing D path).
+
+37.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 2 unused cells and 244 unused wires.
+<suppressed ~50 debug messages>
+
+37.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~23 debug messages>
+
+37.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+37.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 1/4 on $pmux $flatten\bus.\QSPI_master.$procmux$1202.
+    dead port 2/4 on $pmux $flatten\bus.\QSPI_master.$procmux$1202.
+    dead port 3/4 on $pmux $flatten\bus.\QSPI_master.$procmux$1202.
+    dead port 1/3 on $pmux $flatten\bus.\QSPI_master.$procmux$1290.
+    dead port 2/3 on $pmux $flatten\bus.\QSPI_master.$procmux$1290.
+    dead port 3/3 on $pmux $flatten\bus.\QSPI_master.$procmux$1290.
+    dead port 1/4 on $pmux $flatten\bus.\QSPI_master.$procmux$1299.
+    dead port 2/4 on $pmux $flatten\bus.\QSPI_master.$procmux$1299.
+    dead port 3/4 on $pmux $flatten\bus.\QSPI_master.$procmux$1299.
+    dead port 4/4 on $pmux $flatten\bus.\QSPI_master.$procmux$1299.
+    dead port 1/3 on $pmux $flatten\bus.\QSPI_master.$procmux$1327.
+    dead port 2/3 on $pmux $flatten\bus.\QSPI_master.$procmux$1327.
+Removed 12 multiplexer ports.
+<suppressed ~43 debug messages>
+
+37.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1394: $auto$opt_reduce.cc:134:opt_pmux$1831
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1470: { $flatten\bus.\QSPI_master.$procmux$1397_CMP $flatten\bus.\QSPI_master.$procmux$1396_CMP $auto$opt_reduce.cc:134:opt_pmux$1833 }
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1485: { $flatten\bus.\QSPI_master.$procmux$1398_CMP $flatten\bus.\QSPI_master.$procmux$1397_CMP $flatten\bus.\QSPI_master.$procmux$1396_CMP }
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1490: { $auto$opt_reduce.cc:134:opt_pmux$1811 $flatten\bus.\QSPI_master.$procmux$1396_CMP }
+    New input vector for $reduce_or cell $auto$opt_reduce.cc:128:opt_pmux$1830: { $flatten\bus.\QSPI_master.$procmux$1398_CMP $flatten\bus.\QSPI_master.$procmux$1397_CMP $flatten\bus.\QSPI_master.$procmux$1396_CMP $flatten\bus.\QSPI_master.$procmux$1200_CMP }
+  Optimizing cells in module \mcu.
+Performed a total of 5 changes.
+
+37.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+37.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+37.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 52 unused cells and 76 unused wires.
+<suppressed ~53 debug messages>
+
+37.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+37.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+37.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~42 debug messages>
+
+37.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+Performed a total of 0 changes.
+
+37.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+37.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+37.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+37.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+37.23. Finished OPT passes. (There is nothing left to do.)
+
+38. Executing FSM pass (extract and optimize FSM).
+
+38.1. Executing FSM_DETECT pass (finding FSMs in design).
+Not marking mcu.bus.GPIO.gpio_mem.mem[1] as FSM state register:
+    Register is connected to module port.
+    Users of register don't seem to benefit from recoding.
+Not marking mcu.bus.QSPI_master.io_en_q as FSM state register:
+    Users of register don't seem to benefit from recoding.
+Not marking mcu.bus.QSPI_master.state_q as FSM state register:
+    Users of register don't seem to benefit from recoding.
+Not marking mcu.bus.UART.uart_mem.mem[0] as FSM state register:
+    Users of register don't seem to benefit from recoding.
+Not marking mcu.bus.UART.uart_mem.mem[1] as FSM state register:
+    Users of register don't seem to benefit from recoding.
+Not marking mcu.bus.UART.uart_mem.mem[3] as FSM state register:
+    Users of register don't seem to benefit from recoding.
+
+38.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+38.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+38.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+38.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+38.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+38.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+38.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+39. Executing OPT pass (performing simple optimizations).
+
+39.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+39.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+39.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~42 debug messages>
+
+39.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+Performed a total of 0 changes.
+
+39.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+39.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $flatten\bus.\UART.\uart_mem.$procdff$1745 ($dff) from module mcu (D = 0, Q = \bus.UART.uart_mem.mem[0]).
+Adding EN signal on $flatten\bus.\UART.\uart_mem.$procdff$1744 ($dff) from module mcu (D = 0, Q = \bus.UART.uart_mem.mem[1]).
+Adding EN signal on $flatten\bus.\UART.\uart_mem.$procdff$1742 ($dff) from module mcu (D = 0, Q = \bus.UART.uart_mem.mem[3]).
+Adding SRST signal on $flatten\bus.\UART.\uart_mem.$procdff$1741 ($dff) from module mcu (D = { \bus.UART.tx_done \bus.UART.rx_done }, Q = \bus.UART.uart_mem.mem[4] [2:1], rval = 2'00).
+Adding EN signal on $flatten\bus.\UART.\uart_mem.$procdff$1741 ($dff) from module mcu (D = 30'000000000000000000000000000000, Q = { \bus.UART.uart_mem.mem[4] [31:3] \bus.UART.uart_mem.mem[4] [0] }).
+Adding SRST signal on $flatten\bus.\UART.\uart_core.$procdff$1757 ($dff) from module mcu (D = \rst, Q = \bus.UART.uart_core.tx_state_en, rval = 1'1).
+Adding SRST signal on $flatten\bus.\UART.\uart_core.$procdff$1756 ($dff) from module mcu (D = \rst, Q = \bus.UART.uart_core.rx_state_en, rval = 1'1).
+Adding SRST signal on $flatten\bus.\UART.\uart_core.$procdff$1755 ($dff) from module mcu (D = $flatten\bus.\UART.\uart_core.$1\tx_clk_cntr_nxt[15:0], Q = \bus.UART.uart_core.tx_clk_cntr, rval = 16'0000000000000000).
+Adding SRST signal on $flatten\bus.\UART.\uart_core.$procdff$1754 ($dff) from module mcu (D = $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:52$277_Y [15], Q = \bus.UART.uart_core.rx_clk_cntr [15], rval = 1'0).
+Adding SRST signal on $flatten\bus.\UART.\uart_core.$procdff$1753 ($dff) from module mcu (D = $flatten\bus.\UART.\uart_core.$6\tx_state_nxt[1:0], Q = \bus.UART.uart_core.tx_state, rval = 2'00).
+Adding EN signal on $auto$ff.cc:266:slice$1849 ($sdff) from module mcu (D = $flatten\bus.\UART.\uart_core.$1\tx_state_nxt[1:0], Q = \bus.UART.uart_core.tx_state).
+Adding SRST signal on $flatten\bus.\UART.\uart_core.$procdff$1752 ($dff) from module mcu (D = $flatten\bus.\UART.\uart_core.$3\rx_state_nxt[1:0], Q = \bus.UART.uart_core.rx_state, rval = 2'00).
+Adding EN signal on $auto$ff.cc:266:slice$1865 ($sdff) from module mcu (D = $flatten\bus.\UART.\uart_core.$1\rx_state_nxt[1:0], Q = \bus.UART.uart_core.rx_state).
+Adding EN signal on $flatten\bus.\UART.\uart_core.$procdff$1751 ($dff) from module mcu (D = $flatten\bus.\UART.\uart_core.$1\tx_cntr_nxt[2:0], Q = \bus.UART.uart_core.tx_cntr).
+Adding EN signal on $flatten\bus.\UART.\uart_core.$procdff$1750 ($dff) from module mcu (D = $flatten\bus.\UART.\uart_core.$1\rx_cntr_nxt[2:0], Q = \bus.UART.uart_core.rx_cntr).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1740 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[0], Q = \bus.QSPI_master.qspi_mem.mem[0], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1877 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[0]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1739 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[1], Q = \bus.QSPI_master.qspi_mem.mem[1], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1879 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[1]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1738 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[2], Q = \bus.QSPI_master.qspi_mem.mem[2], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1881 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[2]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1737 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[3], Q = \bus.QSPI_master.qspi_mem.mem[3], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1883 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[3]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1736 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[4], Q = \bus.QSPI_master.qspi_mem.mem[4], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1885 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[4]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1735 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[5], Q = \bus.QSPI_master.qspi_mem.mem[5], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1887 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[5]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1734 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[6], Q = \bus.QSPI_master.qspi_mem.mem[6], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1889 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[6]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1733 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[7], Q = \bus.QSPI_master.qspi_mem.mem[7], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1891 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[7]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1732 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[8], Q = \bus.QSPI_master.qspi_mem.mem[8], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1893 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[8]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1731 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[9], Q = \bus.QSPI_master.qspi_mem.mem[9], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1895 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[9]).
+Adding SRST signal on $flatten\bus.\QSPI_master.\qspi_mem.$procdff$1730 ($dff) from module mcu (D = \bus.QSPI_master.qspi_mem.mem_nxt[10], Q = \bus.QSPI_master.qspi_mem.mem[10], rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$1897 ($sdff) from module mcu (D = \bus.QSPI_master.qspi_mem.data_i_perip, Q = \bus.QSPI_master.qspi_mem.mem[10]).
+Adding SRST signal on $flatten\bus.\QSPI_master.$procdff$1765 ($dff) from module mcu (D = $flatten\bus.\QSPI_master.$6\io_en_d[3:0], Q = \bus.QSPI_master.io_en_q, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:266:slice$1899 ($sdff) from module mcu (D = $flatten\bus.\QSPI_master.$1\io_en_d[3:0], Q = \bus.QSPI_master.io_en_q).
+Adding EN signal on $flatten\bus.\QSPI_master.$procdff$1764 ($dff) from module mcu (D = $flatten\bus.\QSPI_master.$3\io_d[3:0], Q = \bus.QSPI_master.io_q).
+Adding SRST signal on $auto$ff.cc:266:slice$1901 ($dffe) from module mcu (D = 3'x, Q = \bus.QSPI_master.io_q [3:1], rval = 3'000).
+Adding EN signal on $flatten\bus.\QSPI_master.$procdff$1763 ($dff) from module mcu (D = $flatten\bus.\QSPI_master.$1\cntr_state_d[7:0], Q = \bus.QSPI_master.cntr_state_q).
+Adding SRST signal on $flatten\bus.\QSPI_master.$procdff$1761 ($dff) from module mcu (D = $flatten\bus.\QSPI_master.$10\state_d[1:0], Q = \bus.QSPI_master.state_q, rval = 2'00).
+Adding EN signal on $auto$ff.cc:266:slice$1905 ($sdff) from module mcu (D = $flatten\bus.\QSPI_master.$3\state_d[1:0], Q = \bus.QSPI_master.state_q).
+Adding SRST signal on $flatten\bus.\QSPI_master.$procdff$1760 ($dff) from module mcu (D = $flatten\bus.\QSPI_master.$1\state_q_prv_nxt[0:0], Q = \bus.QSPI_master.state_q_prv, rval = 1'1).
+Adding EN signal on $auto$ff.cc:266:slice$1919 ($sdff) from module mcu (D = $flatten\bus.\QSPI_master.$logic_not$/openlane/designs/mcu/src/QSPI_master.v:135$128_Y, Q = \bus.QSPI_master.state_q_prv).
+Adding SRST signal on $flatten\bus.\QSPI_master.$procdff$1759 ($dff) from module mcu (D = $flatten\bus.\QSPI_master.$1\cs_nd[0:0], Q = \bus.QSPI_master.cs_no, rval = 1'1).
+Adding SRST signal on $flatten\bus.\QSPI_master.$procdff$1758 ($dff) from module mcu (D = $flatten\bus.\QSPI_master.$1\sclk_d[0:0], Q = \bus.QSPI_master.sclk_o, rval = 1'0).
+Adding EN signal on $flatten\bus.\GPIO.\gpio_mem.$procdff$1720 ($dff) from module mcu (D = 0, Q = \bus.GPIO.gpio_mem.mem[1]).
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 2 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 3 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 4 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 5 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 6 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 7 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 8 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 9 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 10 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 11 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 12 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 13 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 14 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 15 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 16 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 17 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 18 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 19 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 20 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 21 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 22 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 23 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 24 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 25 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 26 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 27 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 28 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 29 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 30 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 31 on $auto$ff.cc:266:slice$1923 ($dffe) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$1902 ($sdffce) from module mcu.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$1902 ($sdffce) from module mcu.
+Setting constant 0-bit at position 2 on $auto$ff.cc:266:slice$1902 ($sdffce) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 2 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 3 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 4 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 5 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 6 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 7 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 8 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 9 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 10 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 11 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 12 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 13 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 14 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 15 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 16 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 17 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 18 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 19 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 20 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 21 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 22 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 23 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 24 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 25 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 26 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 27 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 28 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 29 on $auto$ff.cc:266:slice$1839 ($dffe) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 2 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 3 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 4 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 5 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 6 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 7 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 8 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 9 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 10 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 11 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 12 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 13 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 14 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 15 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 16 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 17 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 18 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 19 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 20 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 21 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 22 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 23 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 24 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 25 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 26 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 27 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 28 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 29 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 30 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 31 on $auto$ff.cc:266:slice$1836 ($dffe) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 2 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 3 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 4 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 5 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 6 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 7 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 8 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 9 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 10 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 11 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 12 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 13 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 14 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 15 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 16 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 17 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 18 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 19 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 20 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 21 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 22 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 23 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 24 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 25 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 26 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 27 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 28 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 29 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 30 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 31 on $auto$ff.cc:266:slice$1835 ($dffe) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 2 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 3 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 4 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 5 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 6 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 7 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 8 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 9 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 10 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 11 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 12 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 13 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 14 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 15 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 16 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 17 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 18 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 19 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 20 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 21 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 22 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 23 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 24 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 25 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 26 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 27 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 28 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 29 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 30 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+Setting constant 0-bit at position 31 on $auto$ff.cc:266:slice$1834 ($dffe) from module mcu.
+
+39.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 49 unused cells and 48 unused wires.
+<suppressed ~75 debug messages>
+
+39.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~10 debug messages>
+
+39.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+39.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~21 debug messages>
+
+39.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1543: { $flatten\bus.\QSPI_master.$procmux$1396_CMP $flatten\bus.\QSPI_master.$procmux$1200_CMP }
+    New ctrl vector for $pmux cell $flatten\bus.\UART.\uart_core.$procmux$1038: $auto$opt_reduce.cc:134:opt_pmux$1925
+    New ctrl vector for $pmux cell $flatten\bus.\UART.\uart_core.$procmux$1056: { $flatten\bus.\UART.\uart_core.$procmux$1059_CMP $flatten\bus.\UART.\uart_core.$procmux$1049_CMP $flatten\bus.\UART.\uart_core.$eq$/openlane/designs/mcu/src/uart_core.v:55$279_Y }
+  Optimizing cells in module \mcu.
+Performed a total of 3 changes.
+
+39.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+39.13. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $auto$ff.cc:266:slice$1848 ($dff) from module mcu (D = $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:52$277_Y [14:0], Q = \bus.UART.uart_core.rx_clk_cntr [14:0], rval = 15'000000000000000).
+Adding SRST signal on $auto$ff.cc:266:slice$1842 ($sdff) from module mcu (D = $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:53$278_Y [0], Q = \bus.UART.uart_core.tx_clk_cntr [0], rval = 1'0).
+
+39.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 43 unused cells and 52 unused wires.
+<suppressed ~57 debug messages>
+
+39.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~2 debug messages>
+
+39.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+39.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~16 debug messages>
+
+39.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+    New input vector for $reduce_or cell $auto$opt_dff.cc:254:combine_resets$1931: { $flatten\bus.\UART.\uart_core.$eq$/openlane/designs/mcu/src/uart_core.v:55$279_Y $flatten\bus.\UART.\uart_core.$eq$/openlane/designs/mcu/src/uart_core.v:63$282_Y $flatten\bus.\UART.\uart_core.$eq$/openlane/designs/mcu/src/uart_core.v:72$284_Y }
+    New input vector for $reduce_and cell $auto$opt_dff.cc:220:make_patterns_logic$1864: { $auto$rtlil.cc:2476:Not$1862 $auto$opt_dff.cc:194:make_patterns_logic$1859 $auto$opt_dff.cc:194:make_patterns_logic$1857 $auto$opt_dff.cc:194:make_patterns_logic$1851 $auto$opt_dff.cc:194:make_patterns_logic$1853 }
+  Optimizing cells in module \mcu.
+Performed a total of 2 changes.
+
+39.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+39.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+39.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+39.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+39.23. Rerunning OPT passes. (Maybe there is more to do..)
+
+39.24. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~16 debug messages>
+
+39.25. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+Performed a total of 0 changes.
+
+39.26. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+39.27. Executing OPT_DFF pass (perform DFF optimizations).
+
+39.28. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+39.29. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+39.30. Finished OPT passes. (There is nothing left to do.)
+
+40. Executing WREDUCE pass (reducing word size of cells).
+Removed top 1 bits (of 2) from port B of cell mcu.$auto$opt_dff.cc:195:make_patterns_logic$1852 ($ne).
+Removed top 31 bits (of 32) from port B of cell mcu.$flatten\bus.\QSPI_master.$sub$/openlane/designs/mcu/src/QSPI_master.v:144$137 ($sub).
+Removed top 24 bits (of 32) from port Y of cell mcu.$flatten\bus.\QSPI_master.$sub$/openlane/designs/mcu/src/QSPI_master.v:144$137 ($sub).
+Removed top 31 bits (of 32) from port B of cell mcu.$flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:164$151 ($add).
+Removed top 26 bits (of 32) from port Y of cell mcu.$flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:164$151 ($add).
+Removed top 1 bits (of 2) from port B of cell mcu.$flatten\bus.\QSPI_master.$ne$/openlane/designs/mcu/src/QSPI_master.v:189$166 ($ne).
+Removed top 28 bits (of 32) from port A of cell mcu.$flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:226$174 ($add).
+Removed top 27 bits (of 32) from port B of cell mcu.$flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:226$174 ($add).
+Removed top 26 bits (of 32) from port Y of cell mcu.$flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:226$174 ($add).
+Removed top 1 bits (of 2) from port B of cell mcu.$flatten\bus.\QSPI_master.$procmux$1397_CMP0 ($eq).
+Removed top 3 bits (of 4) from mux cell mcu.$flatten\bus.\QSPI_master.$procmux$1413 ($mux).
+Removed top 3 bits (of 4) from mux cell mcu.$flatten\bus.\QSPI_master.$procmux$1539 ($mux).
+Removed top 26 bits (of 32) from mux cell mcu.$flatten\bus.\QSPI_master.$procmux$1548 ($pmux).
+Removed top 3 bits (of 4) from port B of cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$procmux$946_CMP0 ($eq).
+Removed top 2 bits (of 4) from port B of cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$procmux$945_CMP0 ($eq).
+Removed top 2 bits (of 4) from port B of cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$procmux$944_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$procmux$943_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$procmux$942_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$procmux$941_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$procmux$940_CMP0 ($eq).
+Converting cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$neg$/openlane/designs/mcu/src/perip_mem.v:0$379 ($neg) from signed to unsigned.
+Removed top 1 bits (of 31) from port A of cell mcu.$flatten\bus.\QSPI_master.\qspi_mem.$neg$/openlane/designs/mcu/src/perip_mem.v:0$379 ($neg).
+Removed top 1 bits (of 2) from port B of cell mcu.$flatten\bus.\UART.\uart_core.$procmux$1059_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell mcu.$flatten\bus.\UART.\uart_core.$procmux$1039_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell mcu.$flatten\bus.\UART.\uart_core.$procmux$1034_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell mcu.$flatten\bus.\UART.\uart_core.$procmux$1024_CMP0 ($eq).
+Removed top 31 bits (of 32) from port B of cell mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:122$303 ($add).
+Removed top 29 bits (of 32) from port Y of cell mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:122$303 ($add).
+Removed top 31 bits (of 32) from port B of cell mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:56$280 ($add).
+Removed top 17 bits (of 32) from port Y of cell mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:56$280 ($add).
+Removed top 31 bits (of 32) from port B of cell mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:53$278 ($add).
+Removed top 16 bits (of 32) from port Y of cell mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:53$278 ($add).
+Removed top 3 bits (of 4) from wire mcu.$flatten\bus.\QSPI_master.$2\io_en_d[3:0].
+Removed top 3 bits (of 4) from wire mcu.$flatten\bus.\QSPI_master.$3\io_d[3:0].
+Removed top 3 bits (of 4) from wire mcu.$flatten\bus.\QSPI_master.$3\io_en_d[3:0].
+Removed top 26 bits (of 32) from wire mcu.$flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:164$151_Y.
+Removed top 26 bits (of 32) from wire mcu.$flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:226$174_Y.
+Removed top 29 bits (of 32) from wire mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:122$303_Y.
+Removed top 16 bits (of 32) from wire mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:53$278_Y.
+Removed top 17 bits (of 32) from wire mcu.$flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:56$280_Y.
+
+41. Executing PEEPOPT pass (run peephole optimizers).
+
+42. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 0 unused cells and 9 unused wires.
+<suppressed ~1 debug messages>
+
+43. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module mcu:
+  creating $macc model for $flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:164$151 ($add).
+  creating $macc model for $flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:226$174 ($add).
+  creating $macc model for $flatten\bus.\QSPI_master.$sub$/openlane/designs/mcu/src/QSPI_master.v:144$137 ($sub).
+  creating $macc model for $flatten\bus.\QSPI_master.\qspi_mem.$neg$/openlane/designs/mcu/src/perip_mem.v:0$379 ($neg).
+  creating $macc model for $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:122$303 ($add).
+  creating $macc model for $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:53$278 ($add).
+  creating $macc model for $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:56$280 ($add).
+  creating $alu model for $macc $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:56$280.
+  creating $alu model for $macc $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:53$278.
+  creating $alu model for $macc $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:122$303.
+  creating $alu model for $macc $flatten\bus.\QSPI_master.\qspi_mem.$neg$/openlane/designs/mcu/src/perip_mem.v:0$379.
+  creating $alu model for $macc $flatten\bus.\QSPI_master.$sub$/openlane/designs/mcu/src/QSPI_master.v:144$137.
+  creating $alu model for $macc $flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:226$174.
+  creating $alu model for $macc $flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:164$151.
+  creating $alu cell for $flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:164$151: $auto$alumacc.cc:485:replace_alu$1941
+  creating $alu cell for $flatten\bus.\QSPI_master.$add$/openlane/designs/mcu/src/QSPI_master.v:226$174: $auto$alumacc.cc:485:replace_alu$1944
+  creating $alu cell for $flatten\bus.\QSPI_master.$sub$/openlane/designs/mcu/src/QSPI_master.v:144$137: $auto$alumacc.cc:485:replace_alu$1947
+  creating $alu cell for $flatten\bus.\QSPI_master.\qspi_mem.$neg$/openlane/designs/mcu/src/perip_mem.v:0$379: $auto$alumacc.cc:485:replace_alu$1950
+  creating $alu cell for $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:122$303: $auto$alumacc.cc:485:replace_alu$1953
+  creating $alu cell for $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:53$278: $auto$alumacc.cc:485:replace_alu$1956
+  creating $alu cell for $flatten\bus.\UART.\uart_core.$add$/openlane/designs/mcu/src/uart_core.v:56$280: $auto$alumacc.cc:485:replace_alu$1959
+  created 7 $alu and 0 $macc cells.
+
+44. Executing SHARE pass (SAT-based resource sharing).
+
+45. Executing OPT pass (performing simple optimizations).
+
+45.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+45.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+45.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~16 debug messages>
+
+45.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+Performed a total of 0 changes.
+
+45.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+45.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+45.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+45.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+45.9. Finished OPT passes. (There is nothing left to do.)
+
+46. Executing MEMORY pass.
+
+46.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+46.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+46.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+46.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+46.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+46.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+46.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+46.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+46.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+46.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+47. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+48. Executing OPT pass (performing simple optimizations).
+
+48.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~31 debug messages>
+
+48.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+48.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $auto$ff.cc:266:slice$1875 ($dffe) from module mcu (D = $auto$wreduce.cc:461:run$1938 [2:0], Q = \bus.UART.uart_core.tx_cntr, rval = 3'000).
+
+48.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 6 unused cells and 12 unused wires.
+<suppressed ~7 debug messages>
+
+48.5. Rerunning OPT passes. (Removed registers in this run.)
+
+48.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+48.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+48.8. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $flatten\bus.\QSPI_master.$procdff$1762 ($dff) from module mcu (D = $auto$wreduce.cc:461:run$1936 [5:0], Q = \bus.QSPI_master.cntr_sclk_q, rval = 6'000000).
+
+48.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 1 unused cells and 1 unused wires.
+<suppressed ~2 debug messages>
+
+48.10. Rerunning OPT passes. (Removed registers in this run.)
+
+48.11. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+48.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+48.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+48.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+48.15. Finished fast OPT passes.
+
+49. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+50. Executing OPT pass (performing simple optimizations).
+
+50.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+50.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+50.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~13 debug messages>
+
+50.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+    Consolidated identical input bits for $pmux cell $flatten\bus.\QSPI_master.$procmux$1485:
+      Old ports: A={ 3'000 $auto$wreduce.cc:461:run$1933 [0] }, B={ 7'0001000 $auto$wreduce.cc:461:run$1935 [0] }, Y=$flatten\bus.\QSPI_master.$1\io_en_d[3:0]
+      New ports: A=$auto$wreduce.cc:461:run$1933 [0], B={ 1'1 $auto$wreduce.cc:461:run$1935 [0] }, Y=$flatten\bus.\QSPI_master.$1\io_en_d[3:0] [0]
+      New connections: $flatten\bus.\QSPI_master.$1\io_en_d[3:0] [3:1] = 3'000
+    New ctrl vector for $pmux cell $flatten\bus.\QSPI_master.$procmux$1495: { $flatten\bus.\QSPI_master.$procmux$1397_CMP $auto$opt_reduce.cc:134:opt_pmux$1965 }
+    Consolidated identical input bits for $mux cell $flatten\bus.\QSPI_master.$procmux$1543:
+      Old ports: A=2'11, B=2'00, Y=$flatten\bus.\QSPI_master.$3\state_d[1:0]
+      New ports: A=1'1, B=1'0, Y=$flatten\bus.\QSPI_master.$3\state_d[1:0] [0]
+      New connections: $flatten\bus.\QSPI_master.$3\state_d[1:0] [1] = $flatten\bus.\QSPI_master.$3\state_d[1:0] [0]
+    Consolidated identical input bits for $pmux cell $flatten\bus.\QSPI_master.$procmux$1548:
+      Old ports: A=6'000000, B={ 6'000100 $auto$wreduce.cc:461:run$1937 [5:3] $auto$alumacc.cc:501:replace_alu$1945 [2] 2'00 }, Y=\bus.QSPI_master.qspi_mem.rdaddr_perip [5:0]
+      New ports: A=4'0000, B={ 4'0001 $auto$wreduce.cc:461:run$1937 [5:3] $auto$alumacc.cc:501:replace_alu$1945 [2] }, Y=\bus.QSPI_master.qspi_mem.rdaddr_perip [5:2]
+      New connections: \bus.QSPI_master.qspi_mem.rdaddr_perip [1:0] = 2'00
+    Consolidated identical input bits for $mux cell $flatten\bus.\QSPI_master.$procmux$1558:
+      Old ports: A=40, B={ 26'00000000000000000000000000 $auto$wreduce.cc:461:run$1937 [5:3] $auto$alumacc.cc:501:replace_alu$1945 [2] 2'00 }, Y=\bus.QSPI_master.qspi_mem.wraddr_perip
+      New ports: A=4'1010, B={ $auto$wreduce.cc:461:run$1937 [5:3] $auto$alumacc.cc:501:replace_alu$1945 [2] }, Y=\bus.QSPI_master.qspi_mem.wraddr_perip [5:2]
+      New connections: { \bus.QSPI_master.qspi_mem.wraddr_perip [31:6] \bus.QSPI_master.qspi_mem.wraddr_perip [1:0] } = 28'0000000000000000000000000000
+  Optimizing cells in module \mcu.
+Performed a total of 5 changes.
+
+50.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+50.6. Executing OPT_SHARE pass.
+
+50.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+50.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+50.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~1 debug messages>
+
+50.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+50.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~12 debug messages>
+
+50.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+Performed a total of 0 changes.
+
+50.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+50.14. Executing OPT_SHARE pass.
+
+50.15. Executing OPT_DFF pass (perform DFF optimizations).
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$1900 ($sdffe) from module mcu.
+Setting constant 0-bit at position 2 on $auto$ff.cc:266:slice$1900 ($sdffe) from module mcu.
+Setting constant 0-bit at position 3 on $auto$ff.cc:266:slice$1900 ($sdffe) from module mcu.
+
+50.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+50.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~3 debug messages>
+
+50.18. Rerunning OPT passes. (Maybe there is more to do..)
+
+50.19. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~12 debug messages>
+
+50.20. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+Performed a total of 0 changes.
+
+50.21. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+50.22. Executing OPT_SHARE pass.
+
+50.23. Executing OPT_DFF pass (perform DFF optimizations).
+
+50.24. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+50.25. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+50.26. Finished OPT passes. (There is nothing left to do.)
+
+51. Executing TECHMAP pass (map to technology primitives).
+
+51.1. Executing Verilog-2005 frontend: /nix/store/vn1kmwhr52wisnfkmn6fk9g15p3klzs0-yosys/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/nix/store/vn1kmwhr52wisnfkmn6fk9g15p3klzs0-yosys/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+51.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $reduce_and.
+Using extmapper simplemap for cells of type $ne.
+Using extmapper simplemap for cells of type $sdff.
+Using extmapper simplemap for cells of type $dffe.
+Using extmapper simplemap for cells of type $not.
+Using template $paramod$32efbfac1c4dc57230cf86180788fdfd12e3b511\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $tribuf.
+Using extmapper simplemap for cells of type $logic_not.
+Using extmapper simplemap for cells of type $mux.
+Using template $paramod$61a437e08b4a203bf2db456ddbc4ee45bbb7128e\_90_alu for cells of type $alu.
+Using template $paramod$b3c20b05d9b1fc2c940ef2f6c917486aead042e8\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using template $paramod$104d3d1e82b09b030a785dad8a5e608a6d4401f7\_90_pmux for cells of type $pmux.
+Using template $paramod$constmap:5b7af40434fefe8bfb221d50b7e0920d6aa76d39$paramod$e18d7940a60a8f20db112ec16ffc509d20484f81\_90_shift_shiftx for cells of type $shiftx.
+Using template $paramod$constmap:15477a804e77b9dce95bc5b77df24c228cefa728$paramod$e194a9e890de0a7be18db8bd15a1479dea055e42\_90_shift_shiftx for cells of type $shiftx.
+Using template $paramod$403a3c2fa431a154c52a6a5429d7a6260b5d144f\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $and.
+Using template $paramod$c5c783b17ab1d780abfad8cfe6563a0a7b47a3b0\_90_pmux for cells of type $pmux.
+Using template $paramod$fc16b9f758000d363d24f130038bd99b46b4fa1b\_90_pmux for cells of type $pmux.
+Using template $paramod$bf2533632d512eac76dd186c0da49367e29b8e98\_90_pmux for cells of type $pmux.
+Using template $paramod$8fabc56b80a569262acfc42757a02ca0b8e91278\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $sdffe.
+Using template $paramod$constmap:da6bc051f6f66740541d5ac6493ceb664acee124$paramod$a2e83d6086631ae6e679b49a7996c6e13df73416\_90_shift_shiftx for cells of type $shift.
+Using template $paramod$3ef7d3dd227da7627a99c5e5a6a4deb817573e39\_90_alu for cells of type $alu.
+Using template $paramod$constmap:64ca6b482d5872b63b313c41c2f8f350648b2a48$paramod$92adee9538f2381d8e5006822c900eb986d754e8\_90_shift_shiftx for cells of type $shiftx.
+Using template $paramod$521ce43182eecb9f60c72393a788160d2c356bf5\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $sdffce.
+Using extmapper simplemap for cells of type $logic_and.
+Using template $paramod$2af30114e9bd4ccb04dad757b3f0a8f6bf0615b0\_90_alu for cells of type $alu.
+Using template $paramod$3b7577489eb4433b1d5620cab7f3794743dee5ea\_90_alu for cells of type $alu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000011111 for cells of type $lcu.
+Using extmapper simplemap for cells of type $xor.
+Using extmapper simplemap for cells of type $pos.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000000011 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000000110 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000001000 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000001111 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000010000 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~2306 debug messages>
+
+52. Executing OPT pass (performing simple optimizations).
+
+52.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~1080 debug messages>
+
+52.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+<suppressed ~555 debug messages>
+Removed a total of 185 cells.
+
+52.3. Executing OPT_DFF pass (perform DFF optimizations).
+Handling always-active SRST on $auto$ff.cc:266:slice$2398 ($_SDFF_PP0_) from module mcu (changing to const D).
+Handling always-active SRST on $auto$ff.cc:266:slice$2393 ($_SDFF_PP0_) from module mcu (changing to const D).
+Handling always-active SRST on $auto$ff.cc:266:slice$2394 ($_SDFF_PP0_) from module mcu (changing to const D).
+Handling always-active SRST on $auto$ff.cc:266:slice$2395 ($_SDFF_PP0_) from module mcu (changing to const D).
+Handling always-active SRST on $auto$ff.cc:266:slice$2396 ($_SDFF_PP0_) from module mcu (changing to const D).
+Handling always-active SRST on $auto$ff.cc:266:slice$2397 ($_SDFF_PP0_) from module mcu (changing to const D).
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$2397 ($_DFF_P_) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$2396 ($_DFF_P_) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$2395 ($_DFF_P_) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$2394 ($_DFF_P_) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$2393 ($_DFF_P_) from module mcu.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$2398 ($_DFF_P_) from module mcu.
+
+52.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 515 unused cells and 985 unused wires.
+<suppressed ~516 debug messages>
+
+52.5. Rerunning OPT passes. (Removed registers in this run.)
+
+52.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~91 debug messages>
+
+52.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+<suppressed ~6 debug messages>
+Removed a total of 2 cells.
+
+52.8. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $auto$ff.cc:266:slice$3180 ($_DFFE_PN_) from module mcu (D = $flatten\bus.\QSPI_master.$procmux$1495.Y_B [7], Q = \bus.QSPI_master.cntr_state_q [7], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$3179 ($_DFFE_PN_) from module mcu (D = $flatten\bus.\QSPI_master.$procmux$1495.Y_B [6], Q = \bus.QSPI_master.cntr_state_q [6], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$3178 ($_DFFE_PN_) from module mcu (D = $flatten\bus.\QSPI_master.$procmux$1495.Y_B [5], Q = \bus.QSPI_master.cntr_state_q [5], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$3177 ($_DFFE_PN_) from module mcu (D = $flatten\bus.\QSPI_master.$procmux$1495.Y_B [4], Q = \bus.QSPI_master.cntr_state_q [4], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$3176 ($_DFFE_PN_) from module mcu (D = $flatten\bus.\QSPI_master.$procmux$1495.Y_B [3], Q = \bus.QSPI_master.cntr_state_q [3], rval = 1'0).
+Adding SRST signal on $auto$ff.cc:266:slice$3175 ($_DFFE_PN_) from module mcu (D = $flatten\bus.\QSPI_master.$procmux$1495.Y_B [2], Q = \bus.QSPI_master.cntr_state_q [2], rval = 1'1).
+Adding SRST signal on $auto$ff.cc:266:slice$3174 ($_DFFE_PN_) from module mcu (D = $flatten\bus.\QSPI_master.$procmux$1495.Y_B [1], Q = \bus.QSPI_master.cntr_state_q [1], rval = 1'1).
+Adding SRST signal on $auto$ff.cc:266:slice$3173 ($_DFFE_PN_) from module mcu (D = $flatten\bus.\QSPI_master.$procmux$1495.Y_B [0], Q = \bus.QSPI_master.cntr_state_q [0], rval = 1'0).
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$2522 ($_SDFFE_PP0N_) from module mcu.
+
+52.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 800 unused cells and 125 unused wires.
+<suppressed ~801 debug messages>
+
+52.10. Rerunning OPT passes. (Removed registers in this run.)
+
+52.11. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~1 debug messages>
+
+52.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+52.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+52.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 179 unused cells and 69 unused wires.
+<suppressed ~192 debug messages>
+
+52.15. Finished fast OPT passes.
+
+53. Executing ABC pass (technology mapping using ABC).
+
+53.1. Extracting gate netlist of module `\mcu' to `<abc-temp-dir>/input.blif'..
+Extracted 177 gates and 208 wires to a netlist network with 29 inputs and 36 outputs.
+
+53.1.1. Executing ABC.
+Running ABC command: "/nix/store/5bgsgwzww9f2z7wl7kga42xrf1vpmnql-yosys-abc/bin/abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+53.1.2. Re-integrating ABC results.
+ABC RESULTS:             ORNOT cells:        3
+ABC RESULTS:               AND cells:        2
+ABC RESULTS:                OR cells:       31
+ABC RESULTS:               MUX cells:       16
+ABC RESULTS:              NAND cells:       17
+ABC RESULTS:               NOT cells:        7
+ABC RESULTS:              XNOR cells:       11
+ABC RESULTS:               NOR cells:        4
+ABC RESULTS:               XOR cells:       24
+ABC RESULTS:            ANDNOT cells:       40
+ABC RESULTS:        internal signals:      143
+ABC RESULTS:           input signals:       29
+ABC RESULTS:          output signals:       36
+Removing temp directory.
+
+54. Executing OPT pass (performing simple optimizations).
+
+54.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+<suppressed ~14 debug messages>
+
+54.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+<suppressed ~6 debug messages>
+Removed a total of 2 cells.
+
+54.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+54.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 0 unused cells and 123 unused wires.
+<suppressed ~1 debug messages>
+
+54.5. Finished fast OPT passes.
+
+55. Executing HIERARCHY pass (managing design hierarchy).
+
+55.1. Analyzing design hierarchy..
+Top module:  \mcu
+
+55.2. Analyzing design hierarchy..
+Top module:  \mcu
+Removed 0 unused modules.
+
+56. Printing statistics.
+
+=== mcu ===
+
+   Number of wires:                344
+   Number of wire bits:           2459
+   Number of public wires:         196
+   Number of public wire bits:    2213
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                186
+     $_ANDNOT_                      39
+     $_AND_                          2
+     $_MUX_                         16
+     $_NAND_                        16
+     $_NOR_                          4
+     $_NOT_                          7
+     $_ORNOT_                        3
+     $_OR_                          31
+     $_SDFFCE_PN0N_                  4
+     $_SDFFCE_PN1N_                  2
+     $_SDFFE_PP0P_                   3
+     $_SDFFE_PP1N_                   1
+     $_SDFF_PN1_                     1
+     $_SDFF_PP0_                    17
+     $_SDFF_PP1_                     1
+     $_TBUF_                         4
+     $_XNOR_                        11
+     $_XOR_                         24
+
+57. Executing CHECK pass (checking for obvious problems).
+Checking module mcu...
+Found and reported 0 problems.
+
+58. Generating Graphviz representation of design.
+Writing dot description to `/openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/tmp/synthesis/post_techmap.dot'.
+Dumping module mcu to page 1.
+
+59. Executing SHARE pass (SAT-based resource sharing).
+
+60. Executing OPT pass (performing simple optimizations).
+
+60.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+60.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+60.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mcu..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+60.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mcu.
+Performed a total of 0 changes.
+
+60.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mcu'.
+Removed a total of 0 cells.
+
+60.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+60.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+
+60.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mcu.
+
+60.9. Finished OPT passes. (There is nothing left to do.)
+
+61. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 0 unused cells and 178 unused wires.
+<suppressed ~178 debug messages>
+
+62. Printing statistics.
+
+=== mcu ===
+
+   Number of wires:                166
+   Number of wire bits:            323
+   Number of public wires:          18
+   Number of public wire bits:      77
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                186
+     $_ANDNOT_                      39
+     $_AND_                          2
+     $_MUX_                         16
+     $_NAND_                        16
+     $_NOR_                          4
+     $_NOT_                          7
+     $_ORNOT_                        3
+     $_OR_                          31
+     $_SDFFCE_PN0N_                  4
+     $_SDFFCE_PN1N_                  2
+     $_SDFFE_PP0P_                   3
+     $_SDFFE_PP1N_                   1
+     $_SDFF_PN1_                     1
+     $_SDFF_PP0_                    17
+     $_SDFF_PP1_                     1
+     $_TBUF_                         4
+     $_XNOR_                        11
+     $_XOR_                         24
+
+mapping tbuf
+
+63. Executing TECHMAP pass (map to technology primitives).
+
+63.1. Executing Verilog-2005 frontend: /home/metin/.volare/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v
+Parsing Verilog input from `/home/metin/.volare/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v' to AST representation.
+Generating RTLIL representation for module `\$_TBUF_'.
+Successfully finished Verilog frontend.
+
+63.2. Continuing TECHMAP pass.
+Using template \$_TBUF_ for cells of type $_TBUF_.
+No more expansions possible.
+<suppressed ~7 debug messages>
+
+64. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+Mapping mcu.$techmap$auto$simplemap.cc:300:simplemap_tribuf$2121.$not$/home/metin/.volare/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v:5$6506 ($not).
+Mapping mcu.$techmap$auto$simplemap.cc:300:simplemap_tribuf$2124.$not$/home/metin/.volare/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v:5$6506 ($not).
+Mapping mcu.$techmap$auto$simplemap.cc:300:simplemap_tribuf$2123.$not$/home/metin/.volare/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v:5$6506 ($not).
+Mapping mcu.$techmap$auto$simplemap.cc:300:simplemap_tribuf$2122.$not$/home/metin/.volare/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v:5$6506 ($not).
+
+65. Executing TECHMAP pass (map to technology primitives).
+
+65.1. Executing Verilog-2005 frontend: /home/metin/.volare/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v
+Parsing Verilog input from `/home/metin/.volare/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v' to AST representation.
+Generating RTLIL representation for module `\$_DLATCH_P_'.
+Generating RTLIL representation for module `\$_DLATCH_N_'.
+Successfully finished Verilog frontend.
+
+65.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~4 debug messages>
+
+66. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+
+67. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+  cell sky130_fd_sc_hd__dfxtp_2 (noninv, pins=3, area=21.27) is a direct match for cell type $_DFF_P_.
+  cell sky130_fd_sc_hd__dfrtp_2 (noninv, pins=4, area=26.28) is a direct match for cell type $_DFF_PN0_.
+  cell sky130_fd_sc_hd__dfstp_2 (noninv, pins=4, area=26.28) is a direct match for cell type $_DFF_PN1_.
+  cell sky130_fd_sc_hd__dfbbn_2 (noninv, pins=6, area=35.03) is a direct match for cell type $_DFFSR_NNN_.
+  final dff cell mappings:
+    unmapped dff cell: $_DFF_N_
+    \sky130_fd_sc_hd__dfxtp_2 _DFF_P_ (.CLK( C), .D( D), .Q( Q));
+    unmapped dff cell: $_DFF_NN0_
+    unmapped dff cell: $_DFF_NN1_
+    unmapped dff cell: $_DFF_NP0_
+    unmapped dff cell: $_DFF_NP1_
+    \sky130_fd_sc_hd__dfrtp_2 _DFF_PN0_ (.CLK( C), .D( D), .Q( Q), .RESET_B( R));
+    \sky130_fd_sc_hd__dfstp_2 _DFF_PN1_ (.CLK( C), .D( D), .Q( Q), .SET_B( R));
+    unmapped dff cell: $_DFF_PP0_
+    unmapped dff cell: $_DFF_PP1_
+    \sky130_fd_sc_hd__dfbbn_2 _DFFSR_NNN_ (.CLK_N( C), .D( D), .Q( Q), .Q_N(~Q), .RESET_B( R), .SET_B( S));
+    unmapped dff cell: $_DFFSR_NNP_
+    unmapped dff cell: $_DFFSR_NPN_
+    unmapped dff cell: $_DFFSR_NPP_
+    unmapped dff cell: $_DFFSR_PNN_
+    unmapped dff cell: $_DFFSR_PNP_
+    unmapped dff cell: $_DFFSR_PPN_
+    unmapped dff cell: $_DFFSR_PPP_
+
+67.1. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+Mapping DFF cells in module `\mcu':
+  mapped 29 $_DFF_P_ cells to \sky130_fd_sc_hd__dfxtp_2 cells.
+
+68. Printing statistics.
+
+=== mcu ===
+
+   Number of wires:                221
+   Number of wire bits:            378
+   Number of public wires:          18
+   Number of public wire bits:      77
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                229
+     $_ANDNOT_                      39
+     $_AND_                          2
+     $_MUX_                         55
+     $_NAND_                        16
+     $_NOR_                          4
+     $_NOT_                         11
+     $_ORNOT_                        3
+     $_OR_                          31
+     $_XNOR_                        11
+     $_XOR_                         24
+     sky130_fd_sc_hd__dfxtp_2       29
+     sky130_fd_sc_hd__ebufn_2        4
+
+[INFO]: USING STRATEGY AREA 0
+
+69. Executing ABC pass (technology mapping using ABC).
+
+69.1. Extracting gate netlist of module `\mcu' to `/tmp/yosys-abc-l6pQhd/input.blif'..
+Extracted 196 gates and 228 wires to a netlist network with 30 inputs and 34 outputs.
+
+69.1.1. Executing ABC.
+Running ABC command: "/nix/store/5bgsgwzww9f2z7wl7kga42xrf1vpmnql-yosys-abc/bin/abc" -s -f /tmp/yosys-abc-l6pQhd/abc.script 2>&1
+ABC: ABC command line: "source /tmp/yosys-abc-l6pQhd/abc.script".
+ABC: 
+ABC: + read_blif /tmp/yosys-abc-l6pQhd/input.blif 
+ABC: + read_lib -w /openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/tmp/synthesis/trimmed.lib 
+ABC: Parsing finished successfully.  Parsing time =     0.06 sec
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfbbn_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrtp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrtp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfsbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfstp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfstp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxtp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxtp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtp_1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_8".
+ABC: Library "sky130A_merged" from "/openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/tmp/synthesis/trimmed.lib" has 175 cells (17 skipped: 14 seq; 3 tri-state; 0 no func; 0 dont_use).  Time =     0.09 sec
+ABC: Memory =    9.54 MB. Time =     0.09 sec
+ABC: Warning: Detected 2 multi-output gates (for example, "sky130_fd_sc_hd__fa_1").
+ABC: + read_constr -v /openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/tmp/synthesis/synthesis.sdc 
+ABC: Setting driving cell to be "sky130_fd_sc_hd__inv_2".
+ABC: Setting output load to be 33.442001.
+ABC: + read_constr /openlane/designs/mcu/runs/RUN_2024.07.18_16.24.01/tmp/synthesis/synthesis.sdc 
+ABC: + fx 
+ABC: + mfs 
+ABC: + strash 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + drf -l -z 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + retime -D -D 10000 -M 5 
+ABC: + scleanup 
+ABC: Error: The network is combinational.
+ABC: + fraig_store 
+ABC: + balance 
+ABC: + fraig_store 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + drf -l -z 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + fraig_store 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + drf -l -z 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + fraig_store 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drf -l 
+ABC: + balance 
+ABC: + drw -l 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + drf -l -z 
+ABC: + drw -l -z 
+ABC: + balance 
+ABC: + fraig_store 
+ABC: + fraig_restore 
+ABC: + amap -m -Q 0.1 -F 20 -A 20 -C 5000 
+ABC: + retime -D -D 10000 
+ABC: + &get -n 
+ABC: + &st 
+ABC: + &dch 
+ABC: + &nf 
+ABC: + &put 
+ABC: + buffer -N 10 -S 750.0 
+ABC: + upsize -D 10000 
+ABC: Current delay (1913.81 ps) does not exceed the target delay (10000.00 ps). Upsizing is not performed.
+ABC: + dnsize -D 10000 
+ABC: + stime -p 
+ABC: WireLoad = "none"  Gates =    107 ( 18.7 %)   Cap = 13.1 ff (  3.9 %)   Area =      780.75 ( 77.6 %)   Delay =  2328.35 ps  (  9.3 %)               
+ABC: Path  0 --       3 : 0    8 pi                      A =   0.00  Df =  99.8  -54.8 ps  S = 146.7 ps  Cin =  0.0 ff  Cout =  31.0 ff  Cmax =   0.0 ff  G =    0  
+ABC: Path  1 --      83 : 3    6 sky130_fd_sc_hd__a21o_2 A =   8.76  Df = 304.5   -3.0 ps  S = 110.7 ps  Cin =  2.4 ff  Cout =  20.1 ff  Cmax = 309.5 ff  G =  810  
+ABC: Path  2 --      92 : 4    6 sky130_fd_sc_hd__and4_2 A =  10.01  Df = 611.6  -25.7 ps  S = 133.2 ps  Cin =  1.5 ff  Cout =  20.0 ff  Cmax = 300.3 ff  G = 1256  
+ABC: Path  3 --     101 : 4    6 sky130_fd_sc_hd__and4_2 A =  10.01  Df = 923.2  -50.9 ps  S = 133.0 ps  Cin =  1.5 ff  Cout =  20.0 ff  Cmax = 300.3 ff  G = 1252  
+ABC: Path  4 --     110 : 4    6 sky130_fd_sc_hd__and4_2 A =  10.01  Df =1234.7  -76.1 ps  S = 133.0 ps  Cin =  1.5 ff  Cout =  20.0 ff  Cmax = 300.3 ff  G = 1252  
+ABC: Path  5 --     119 : 4    1 sky130_fd_sc_hd__and4_2 A =  10.01  Df =1458.1  -66.9 ps  S =  47.3 ps  Cin =  1.5 ff  Cout =   2.2 ff  Cmax = 300.3 ff  G =  138  
+ABC: Path  6 --     120 : 1    6 sky130_fd_sc_hd__buf_1  A =   3.75  Df =1691.1 -141.5 ps  S = 264.0 ps  Cin =  2.1 ff  Cout =  21.9 ff  Cmax = 130.0 ff  G =  989  
+ABC: Path  7 --     125 : 3    1 sky130_fd_sc_hd__a21o_2 A =   8.76  Df =1853.8  -79.4 ps  S =  30.0 ps  Cin =  2.4 ff  Cout =   1.5 ff  Cmax = 309.5 ff  G =   64  
+ABC: Path  8 --     127 : 3    1 sky130_fd_sc_hd__and3_2 A =   7.51  Df =2015.0  -10.8 ps  S =  46.6 ps  Cin =  1.5 ff  Cout =   2.2 ff  Cmax = 309.5 ff  G =  141  
+ABC: Path  9 --     128 : 1    1 sky130_fd_sc_hd__buf_1  A =   3.75  Df =2328.4  -98.9 ps  S = 396.9 ps  Cin =  2.1 ff  Cout =  33.4 ff  Cmax = 130.0 ff  G = 1590  
+ABC: Start-point = pi2 (\bus.UART.uart_core.tx_state [0]).  End-point = po20 ($auto$rtlil.cc:2684:MuxGate$6542).
+ABC: + print_stats -m 
+ABC: netlist                       : i/o =   30/   34  lat =    0  nd =   107  edge =    268  area =780.83  delay = 9.00  lev = 9
+ABC: + write_blif /tmp/yosys-abc-l6pQhd/output.blif 
+
+69.1.2. Re-integrating ABC results.
+ABC RESULTS:          _const1_ cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__or4_2 cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__and4_2 cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__nand3_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__or2b_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__and3b_2 cells:        5
+ABC RESULTS:   sky130_fd_sc_hd__a211o_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__or3_2 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__o211a_2 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__a41o_2 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__nand2_2 cells:        5
+ABC RESULTS:   sky130_fd_sc_hd__a31o_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__nor2_2 cells:        9
+ABC RESULTS:   sky130_fd_sc_hd__a21oi_2 cells:        8
+ABC RESULTS:   sky130_fd_sc_hd__o21ba_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__inv_2 cells:        8
+ABC RESULTS:   sky130_fd_sc_hd__o2bb2a_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__or2_2 cells:        3
+ABC RESULTS:   sky130_fd_sc_hd__o21a_2 cells:        3
+ABC RESULTS:   sky130_fd_sc_hd__and3_2 cells:        8
+ABC RESULTS:   sky130_fd_sc_hd__mux2_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__buf_1 cells:       12
+ABC RESULTS:   sky130_fd_sc_hd__o21bai_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__a21o_2 cells:        9
+ABC RESULTS:   sky130_fd_sc_hd__o21ai_2 cells:        8
+ABC RESULTS:   sky130_fd_sc_hd__nand3b_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__or3b_2 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__a21bo_2 cells:        1
+ABC RESULTS:        internal signals:      164
+ABC RESULTS:           input signals:       30
+ABC RESULTS:          output signals:       34
+Removing temp directory.
+
+70. Executing SETUNDEF pass (replace undef values with defined constants).
+
+71. Executing HILOMAP pass (mapping to constant drivers).
+
+72. Executing SPLITNETS pass (splitting up multi-bit signals).
+
+73. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mcu..
+Removed 39 unused cells and 398 unused wires.
+<suppressed ~46 debug messages>
+
+74. Executing INSBUF pass (insert buffer cells for connected wires).
+
+75. Executing CHECK pass (checking for obvious problems).
+Checking module mcu...
+Found and reported 0 problems.
+
+76. Printing statistics.
+
+=== mcu ===
+
+   Number of wires:                148
+   Number of wire bits:            181
+   Number of public wires:          38
+   Number of public wire bits:      71
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                161
+     sky130_fd_sc_hd__a211o_2        1
+     sky130_fd_sc_hd__a21bo_2        1
+     sky130_fd_sc_hd__a21o_2         9
+     sky130_fd_sc_hd__a21oi_2        8
+     sky130_fd_sc_hd__a31o_2         1
+     sky130_fd_sc_hd__a41o_2         2
+     sky130_fd_sc_hd__and3_2         8
+     sky130_fd_sc_hd__and3b_2        5
+     sky130_fd_sc_hd__and4_2         4
+     sky130_fd_sc_hd__buf_1         12
+     sky130_fd_sc_hd__conb_1        25
+     sky130_fd_sc_hd__dfxtp_2       29
+     sky130_fd_sc_hd__ebufn_2        4
+     sky130_fd_sc_hd__inv_2          8
+     sky130_fd_sc_hd__mux2_2         1
+     sky130_fd_sc_hd__nand2_2        5
+     sky130_fd_sc_hd__nand3_2        1
+     sky130_fd_sc_hd__nand3b_2       1
+     sky130_fd_sc_hd__nor2_2         9
+     sky130_fd_sc_hd__o211a_2        2
+     sky130_fd_sc_hd__o21a_2         3
+     sky130_fd_sc_hd__o21ai_2        8
+     sky130_fd_sc_hd__o21ba_2        1
+     sky130_fd_sc_hd__o21bai_2       1
+     sky130_fd_sc_hd__o2bb2a_2       1
+     sky130_fd_sc_hd__or2_2          3
+     sky130_fd_sc_hd__or2b_2         1
+     sky130_fd_sc_hd__or3_2          2
+     sky130_fd_sc_hd__or3b_2         1
+     sky130_fd_sc_hd__or4_2          4
+
+   Chip area for module '\mcu': 1536.473600
+
+77. Executing Verilog backend.
+Dumping module `\mcu'.
+
+78. Executing JSON backend.
+
+Warnings: 10 unique messages, 12 total
+End of script. Logfile hash: d813110e41, CPU: user 2.06s system 0.03s, MEM: 42.71 MB peak
+Yosys 0.38 (git sha1 543faed9c8c, clang++ 16.0.6 -fPIC -Os)
+Time spent: 19% 2x abc (0 sec), 15% 46x opt_expr (0 sec), ...
