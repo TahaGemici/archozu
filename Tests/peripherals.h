@@ -1,4 +1,4 @@
-#define CLK_FREQ 50
+#define CLK_FREQ 60
 #define CEIL_CLK(x) (CLK_FREQ/2/x)+((CLK_FREQ/2)%x!=0)
 
 volatile unsigned int* const _addr_instr_mem = (unsigned int*)0x04000;
