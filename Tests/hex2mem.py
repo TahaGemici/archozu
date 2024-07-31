@@ -1,7 +1,6 @@
 # .hex ----> .mem
 import sys
 f = open(sys.argv[1], "r")
-flash_mem = open("../RTL/bus/memories/s25fl128s.mem", "w")
 out = ""
 state=0
 for line in f.readlines():
@@ -15,4 +14,5 @@ for line in f.readlines():
         for i in lines[1:]:
             for j in range(0,len(i),2):
                 out+=i[j:(j+2)]+"\n"
+flash_mem = open("../RTL/bus/memories/s25fl128s.mem", "w")
 flash_mem.write(out)

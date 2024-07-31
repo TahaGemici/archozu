@@ -1,12 +1,12 @@
 #include "peripherals.h"
 
+char* text = "abcdefg123456789";
 int __attribute__((naked)) main(){
     uart_conf(9600, 0);
-    int abc = 123;
+    int abc;
     while(1){
-        uart_write(abc);
-        abc = uart_read() + 1;
-        gpio_write(abc);
+        for(abc=0;abc<15;abc++)
+            gpio_write(text[abc]);
     }
 }
 

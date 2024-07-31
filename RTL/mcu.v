@@ -30,8 +30,8 @@ module mcu(
         .clk_i(clk),
         .rst_ni(rstn),
 
-        .pulp_clock_en_i(0),  // PULP clock enable (only used if COREV_CLUSTER = 1)
-        .scan_cg_en_i(0),  // Enable all clock gates for testing
+        .pulp_clock_en_i(1'b0),  // PULP clock enable (only used if COREV_CLUSTER = 1)
+        .scan_cg_en_i(1'b0),  // Enable all clock gates for testing
 
         // Core ID, Cluster ID, debug mode halt address and boot address are considered more or less static
         .boot_addr_i(0),
@@ -63,13 +63,13 @@ module mcu(
         .irq_id_o(irq_id),
 
         // Debug Interface
-        .debug_req_i(0),
+        .debug_req_i(1'b0),
         .debug_havereset_o(debug_havereset),
         .debug_running_o(debug_running),
         .debug_halted_o(debug_halted),
 
         // CPU Control Signals
-        .fetch_enable_i(1),
+        .fetch_enable_i(1'b1),
         .core_sleep_o()
     );
 

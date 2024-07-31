@@ -10,7 +10,12 @@ MEMORY {
 }
 
 SECTIONS {
-    .data : {*(.data)} > DATA_MEM :data
+    .data :
+    {
+        *(.data)
+        *(.rodata*)
+        *(.srodata*)
+    } > DATA_MEM :data
     .bss : {*(.bss)} > DATA_MEM :data
     
     . = ORIGIN(INSTR_MEM);

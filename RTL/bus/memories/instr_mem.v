@@ -35,6 +35,19 @@ module instr_mem(
         end
     end
 
+`ifdef NO_FLASH
+   integer i;
+   reg[7:0] mem8[0:16383];
+   reg[31:0] mem32[0:2047];
+   initial begin
+      $readmemh("s25fl128s.mem",mem8,0);
+      for(i=2048;i<4096;i=i+1) begin
+         mem32[i-2048] = {mem8[i*4+3], mem8[i*4+2], mem8[i*4+1], mem8[i*4]};
+      end
+      $writememh({`PATH, "RTL/bus/memories/instr_mem_no_flash.mem"},mem32,0);
+   end
+`endif
+
 xpm_memory_sdpram #(
    .ADDR_WIDTH_A(11),               // DECIMAL
    .ADDR_WIDTH_B(11),               // DECIMAL
@@ -47,7 +60,7 @@ xpm_memory_sdpram #(
    .ECC_TYPE("none"),              // String
    .IGNORE_INIT_SYNTH(0),          // DECIMAL
 `ifdef NO_FLASH
-   .MEMORY_INIT_FILE("instr_mem_no_flash.mem"),      // String
+   .MEMORY_INIT_FILE({`PATH, "RTL/bus/memories/instr_mem_no_flash.mem"}),      // String
 `else
    .MEMORY_INIT_FILE("none"),      // String
 `endif
