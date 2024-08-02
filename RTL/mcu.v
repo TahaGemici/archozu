@@ -9,7 +9,10 @@ module mcu(
     output cs,
     inout[3:0] io,
     input[15:0] in,
-    output[15:0] out
+    output[15:0] out,
+	output usb_dp_pull,
+    inout usb_dp,
+    inout usb_dn
 );
     wire rstn = ~rst;
     wire instr_req, instr_gnt, instr_rvalid;
@@ -107,6 +110,9 @@ module mcu(
         irq_id,
 
         in,
-        out
+        out,
+        usb_dp_pull,
+        usb_dp,
+        usb_dn
     );
 endmodule

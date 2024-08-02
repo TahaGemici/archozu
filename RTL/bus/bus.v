@@ -34,9 +34,9 @@ module bus(
     input[15:0] in,
     output[15:0] out,
 
-	output usb_dp_pull_o,
-    inout usb_dp_o,
-    inout usb_dn_o
+	output usb_dp_pull,
+    inout usb_dp,
+    inout usb_dn
 );
     assign data_gnt_o = 1;
     always @(posedge clk_i) data_rvalid_o <= data_req_i;
@@ -150,9 +150,9 @@ module bus(
         data_addr_i[3:0],
         data_wdata_i,
         usb_out,
-        usb_dp_pull_o,
-        usb_dp_o,
-        usb_dn_o
+        usb_dp_pull,
+        usb_dp,
+        usb_dn
     );
 
     always @(posedge clk_i) data_rdata_o <= data_rdata_o_nxt;
