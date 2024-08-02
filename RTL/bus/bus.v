@@ -32,7 +32,11 @@ module bus(
     input[4:0] irq_id_i,
 
     input[15:0] in,
-    output[15:0] out
+    output[15:0] out,
+
+	output usb_dp_pull_o,
+    inout usb_dp_o,
+    inout usb_dn_o
 );
     assign data_gnt_o = 1;
     always @(posedge clk_i) data_rvalid_o <= data_req_i;
@@ -138,7 +142,18 @@ module bus(
     );
 
     wire[31:0] usb_out = 0;
-    //USB EKSİK
+    USB USB(
+        clk_i,
+        rst_i,
+        usb_en & we,
+        data_be_i,
+        data_addr_i[3:0],
+        data_wdata_i,
+        usb_out,
+        usb_dp_pull_o,
+        usb_dp_o,
+        usb_dn_o
+    );
 
     always @(posedge clk_i) data_rdata_o <= data_rdata_o_nxt;
 
