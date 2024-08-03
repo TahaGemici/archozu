@@ -32,9 +32,12 @@ module usb_camera_top #(
     input  wire        rstn,          // active-low reset, reset when rstn=0 (USB will unplug when reset), normally set to 1
     input  wire        clk,           // 60MHz is required
     // USB signals
-    output wire        usb_dp_pull,   // connect to USB D+ by an 1.5k resistor
-    inout              usb_dp,        // USB D+
-    inout              usb_dn,        // USB D-
+    output reg         usb_dp_pull,   // connect to USB D+ by an 1.5k resistor
+    output             usb_oe,        // USB TX enable
+    output             usb_dp_tx,     // USB D+
+    output             usb_dn_tx,     // USB D-
+    input              usb_dp_rx,     // USB D+
+    input              usb_dn_rx,     // USB D-
     // USB reset output
     output wire        usb_rstn,      // 1: connected , 0: disconnected (when USB cable unplug, or when system reset (rstn=0))
     // video frame fetch interface    //   start-of-frame |  frame data transmitting   | end-of-frame
@@ -222,8 +225,11 @@ usbfs_core_top  #(
     .rstn               ( rstn             ),
     .clk                ( clk              ),
     .usb_dp_pull        ( usb_dp_pull      ),
-    .usb_dp             ( usb_dp           ),
-    .usb_dn             ( usb_dn           ),
+    .usb_oe             ( usb_oe           ),
+    .usb_dp_tx          ( usb_dp_tx        ),
+    .usb_dn_tx          ( usb_dn_tx        ),
+    .usb_dp_rx          ( usb_dp_rx        ),
+    .usb_dn_rx          ( usb_dn_rx        ),
     .usb_rstn           ( usb_rstn         ),
     .sot                (                  ),
     .sof                ( sof              ),

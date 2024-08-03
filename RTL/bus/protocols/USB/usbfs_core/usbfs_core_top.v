@@ -34,8 +34,11 @@ module usbfs_core_top #(
     input  wire        clk,           // 60MHz is required
     // USB signals
     output reg         usb_dp_pull,   // connect to USB D+ by an 1.5k resistor
-    inout              usb_dp,        // USB D+
-    inout              usb_dn,        // USB D-
+    output             usb_oe,        // USB TX enable
+    output             usb_dp_tx,     // USB D+
+    output             usb_dn_tx,     // USB D-
+    input              usb_dp_rx,     // USB D+
+    input              usb_dn_rx,     // USB D-
     // USB reset output
     output reg         usb_rstn,      // 1: connected , 0: disconnected (when USB cable unplug, or when system reset (rstn=0))
     // 
@@ -84,12 +87,6 @@ module usbfs_core_top #(
 initial usb_dp_pull = 1'b0;
 initial usb_rstn    = 1'b0;
 
-//-------------------------------------------------------------------------------------------------------------------------------------
-// USB driving signals
-//-------------------------------------------------------------------------------------------------------------------------------------
-wire        usb_oe;
-wire        usb_dp_tx;
-wire        usb_dn_tx;
 
 //-------------------------------------------------------------------------------------------------------------------------------------
 // USB bit-level RX signals
@@ -145,7 +142,7 @@ always @ (posedge clk or negedge rstn)
             usb_dp_pull <= 1'b0;
             usb_rstn <= 1'b0;
             usb_rstn_cnt <= usb_rstn_cnt + 1;
-        end else if (usb_dp != usb_dn) begin
+        end else if (usb_dp_rx != usb_dn_rx) begin
             usb_dp_pull <= 1'b1;
             usb_rstn <= 1'b1;
             usb_rstn_cnt <= RESET_CYCLES + 300;
@@ -161,12 +158,6 @@ always @ (posedge clk or negedge rstn)
 
 
 
-//-------------------------------------------------------------------------------------------------------------------------------------
-// USB D+ and D- tri-state driver
-//-------------------------------------------------------------------------------------------------------------------------------------
-assign usb_dp = usb_oe ? usb_dp_tx : 1'bz;
-assign usb_dn = usb_oe ? usb_dn_tx : 1'bz;
-
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------
@@ -178,8 +169,8 @@ usbfs_bitlevel u_usbfs_bitlevel (
     .usb_oe             ( usb_oe             ),
     .usb_dp_tx          ( usb_dp_tx          ),
     .usb_dn_tx          ( usb_dn_tx          ),
-    .usb_dp_rx          ( usb_dp             ),
-    .usb_dn_rx          ( usb_dn             ),
+    .usb_dp_rx          ( usb_dp_rx          ),
+    .usb_dn_rx          ( usb_dn_rx          ),
     .rx_sta             ( rx_sta             ),
     .rx_ena             ( rx_ena             ),
     .rx_bit             ( rx_bit             ),

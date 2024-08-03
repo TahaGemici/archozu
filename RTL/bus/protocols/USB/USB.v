@@ -43,66 +43,80 @@ module USB(
         USB_CCR
     );
 
-    localparam RESET       = 0;
-    localparam AUDIO       = 1;
-    localparam CAMERA      = 2;
-    localparam DISK        = 3;
-    localparam KEYBOARD    = 4;
-    localparam SERIAL      = 5;
-    localparam SERIAL2     = 6;
-    localparam DISCONNECT  = 7;
-
-    wire[31:0] camera_o;
-    wire[31:0] disk_o;
-    wire[31:0] keyboard_o;
-    wire[31:0] serial_o;
-    wire[31:0] serial2_o;
-
-    wire[31:0] audio_o;
-    wire audio_connected;
-    wire audio_en;
-    reg[31:0] audio_i, audio_i_nxt;
-    wire usb_dp_pull_audio;
-    wire usb_dp_audio;
-    wire usb_dn_audio;
-
-    wire camera_connected;
-    wire disk_connected;
-    wire keyboard_connected;
-    wire serial_connected;
-    wire serial2_connected;
-
+    localparam RESET    = 0;
+    localparam AUDIO    = 1;
+    localparam CAMERA   = 2;
+    localparam DISK     = 3;
+    localparam KEYBOARD = 4;
+    localparam SERIAL   = 5;
+    localparam SERIAL2  = 6;
+    localparam RESET2   = 7;
 
     reg[2:0] state, state_nxt;
-    reg rstn, rstn_nxt;
+    reg rstn=1, rstn_nxt;
+    
+    wire[31:0] device_o[1:6];
+    assign device_o[KEYBOARD] = 0;
+    wire[6:1] device_connected;
+    wire[3:0] device_usb[0:7];
+    assign device_usb[0] = 4'b0100;
+    assign device_usb[7] = 4'b0100;
+
+    assign usb_dp_pull_o = device_usb[state][0];
+    assign usb_dp_io = device_usb[state][1] ? device_usb[state][2] : 1'bz;
+    assign usb_dn_io = device_usb[state][1] ? device_usb[state][3] : 1'bz;
+
+    wire audio_en;
+
+
+
+
+
+    reg key_request;
+    reg[1:0] addr_i_prv;
+
+
+
     always @(posedge clk_i) begin
-        rstn    <= rstn_nxt;
-        state   <= state_nxt;
-        audio_i <= audio_i_nxt;
+        rstn  <= rstn_nxt;
+        state <= state_nxt;
+        addr_i_prv <= addr_i;
     end
 
     always @* begin
         rdaddr_perip = USB_TDR;
-        write_perip = 0;
-    	data_i_perip = 0;
-    	wraddr_perip = USB_RDR;
-        
+        write_perip = 1;
+    	data_i_perip = {31'b0, device_connected[state]};
+    	wraddr_perip = USB_STA;
+        rstn_nxt = 1;
+
         case(state)
-            3'h0: begin
+            RESET,RESET2: begin
                 rstn_nxt = 0;
             end
-            3'h1: begin
-                if(audio_connected) begin
-                    if(audio_en) begin
-                        write_perip = 1;
-                        data_i_perip = audio_o;
-                        audio_i_nxt = data_o_perip;
-                    end
-                end else begin
-                    write_perip = 1;
-                    wraddr_perip = USB_STA;
-    	            data_i_perip = 0;
+            AUDIO: begin
+                if(audio_en) begin
+                    wraddr_perip = USB_RDR;
+                    data_i_perip = audio_o;
                 end
+            end
+            CAMERA: begin
+
+            end
+            DISK: begin
+
+            end
+            KEYBOARD: begin
+                key_request = 0;
+                if(addr_i_prv == 2) begin
+                    key_request = 1;
+                end
+            end
+            SERIAL: begin
+
+            end
+            SERIAL2: begin
+
             end
         endcase
 
@@ -110,22 +124,61 @@ module USB(
 
         if(rst_i) begin
             state_nxt = 0;
-            rstn_nxt  = 1;
         end
     end
 
     usb_audio_top usb_audio_top(
         rstn,
         clk_i,
-        usb_dp_pull_audio,
-        usb_dp_audio,
-        usb_dn_audio,
-        audio_connected,
+        device_usb[AUDIO][0],
+        device_usb[AUDIO][1],
+        device_usb[AUDIO][2],
+        device_usb[AUDIO][3],
+        usb_dp_io,
+        usb_dn_io,
+        device_connected[AUDIO],
         audio_en,
-        audio_o[31:16],
-        audio_o[15:0],
-        audio_i[31:16],
-        audio_i[15:0],
+        device_o[AUDIO][31:16],
+        device_o[AUDIO][15:0],
+        data_o_perip[31:16],
+        data_o_perip[15:0],
+        ,
+        ,
+
+    );
+    
+    usb_keyboard_top usb_keyboard_top(
+        rstn,
+        clk_i,
+        device_usb[KEYBOARD][0],
+        device_usb[KEYBOARD][1],
+        device_usb[KEYBOARD][2],
+        device_usb[KEYBOARD][3],
+        usb_dp_io,
+        usb_dn_io,
+        device_connected[KEYBOARD],
+        data_o_perip[15:0],
+        key_request,
+        ,
+        ,
+
+    );
+
+    usb_serial_top usb_serial_top(
+        rstn,
+        clk_i,
+        device_usb[SERIAL][0],
+        device_usb[SERIAL][1],
+        device_usb[SERIAL][2],
+        device_usb[SERIAL][3],
+        usb_dp_io,
+        usb_dn_io,
+        device_connected[SERIAL],
+        audio_en, //BURADA KALMIŞTIN
+        device_o[AUDIO][31:16],
+        device_o[AUDIO][15:0],
+        data_o_perip[31:16],
+        data_o_perip[15:0],
         ,
         ,
 
