@@ -55,7 +55,7 @@ module usb_mem(
         end
         
         always @* begin
-            mem_nxt[3] = {30'b0, USB_STA_i};
+            mem_nxt[3] = {30'b0, usb_sta_i};
             if(mem_wren_bus[3]) begin
                 mem_nxt[3][ 0+:8] = be_bus[0] ? data_i_bus[ 0+:8] : mem[3][ 0+:8];
                 mem_nxt[3][ 8+:8] = be_bus[1] ? data_i_bus[ 8+:8] : mem[3][ 8+:8];

@@ -188,7 +188,7 @@ module USB(
     wire[40:0] mem_addr;
     wire mem_wen;
     wire[7:0] mem_wdata;
-    reg[7:0] mem_rdata;
+    wire[7:0] mem_rdata;
     usb_disk_top #(64, "FALSE") usb_disk_top(
         rstn[DISK],
         clk_i,
@@ -319,9 +319,12 @@ xpm_memory_spram_inst (
 
     reg[7:0] mem[0:(64*512-1)];
 
+    reg[7:0] mem_rdata_reg;
+    assign mem_rdata = mem_rdata_reg;
+
     always @(posedge clk_i) begin
         mem[mem_addr] <= mem_wen ? mem_wdata : mem[mem_addr];
-        mem_rdata <= mem[mem_addr];
+        mem_rdata_reg <= mem[mem_addr];
     end
 
     integer i;

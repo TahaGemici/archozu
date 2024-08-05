@@ -14,7 +14,7 @@ module usb_audio_top #(
     input  wire        rstn,          // active-low reset, reset when rstn=0 (USB will unplug when reset), normally set to 1
     input  wire        clk,           // 60MHz is required
     // USB signals
-    output reg         usb_dp_pull,   // connect to USB D+ by an 1.5k resistor
+    output             usb_dp_pull,   // connect to USB D+ by an 1.5k resistor
     output             usb_oe,        // USB TX enable
     output             usb_dp_tx,     // USB D+
     output             usb_dn_tx,     // USB D-
