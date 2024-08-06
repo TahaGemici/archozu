@@ -167,7 +167,7 @@ module USB(
 
     );
     
-    usb_camera_top #("MONO", 14'd1920, 14'd1080, "FALSE") usb_camera_top(
+    usb_camera_top #("MONO", 14'd320, 14'd180, "FALSE") usb_camera_top(
         rstn[CAMERA],
         clk_i,
         device_usb[CAMERA][0],
