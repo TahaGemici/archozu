@@ -5,48 +5,19 @@ a.out:     file format elf32-littleriscv
 Disassembly of section .text:
 
 00002000 <main>:
-    2000:	6b41                	lui	s6,0x10
-    2002:	6a39                	lui	s4,0xe
-    2004:	6ac1                	lui	s5,0x10
-    2006:	4781                	li	a5,0
-    2008:	4901                	li	s2,0
-    200a:	fffb0b93          	addi	s7,s6,-1 # ffff <__GNU_EH_FRAME_HDR+0xd5a3>
-    200e:	4c19                	li	s8,6
-    2010:	0a31                	addi	s4,s4,12 # e00c <__GNU_EH_FRAME_HDR+0xb5b0>
-    2012:	0a91                	addi	s5,s5,4 # 10004 <__GNU_EH_FRAME_HDR+0xd5a8>
-    2014:	4c85                	li	s9,1
-    2016:	4d09                	li	s10,2
-    2018:	000b2403          	lw	s0,0(s6)
-    201c:	01747433          	and	s0,s0,s7
-    2020:	008c7363          	bgeu	s8,s0,2026 <main+0x26>
-    2024:	4401                	li	s0,0
-    2026:	00f40463          	beq	s0,a5,202e <main+0x2e>
-    202a:	8522                	mv	a0,s0
-    202c:	2355                	jal	25d0 <usb_conf>
-    202e:	000a2783          	lw	a5,0(s4)
-    2032:	8b85                	andi	a5,a5,1
-    2034:	00faa023          	sw	a5,0(s5)
-    2038:	01940663          	beq	s0,s9,2044 <main+0x44>
-    203c:	01a40863          	beq	s0,s10,204c <main+0x4c>
-    2040:	87a2                	mv	a5,s0
-    2042:	bfd9                	j	2018 <main+0x18>
-    2044:	854a                	mv	a0,s2
-    2046:	2b69                	jal	25e0 <usb_rw>
-    2048:	892a                	mv	s2,a0
-    204a:	bfdd                	j	2040 <main+0x40>
-    204c:	4501                	li	a0,0
-    204e:	2b49                	jal	25e0 <usb_rw>
-    2050:	4981                	li	s3,0
-    2052:	14000d93          	li	s11,320
-    2056:	4481                	li	s1,0
-    2058:	01348533          	add	a0,s1,s3
-    205c:	2351                	jal	25e0 <usb_rw>
-    205e:	0485                	addi	s1,s1,1
-    2060:	0b400793          	li	a5,180
-    2064:	ffb49ae3          	bne	s1,s11,2058 <main+0x58>
-    2068:	0985                	addi	s3,s3,1
-    206a:	fef996e3          	bne	s3,a5,2056 <main+0x56>
-    206e:	bfc9                	j	2040 <main+0x40>
+    2000:	66b9                	lui	a3,0xe
+    2002:	67c1                	lui	a5,0x10
+    2004:	6641                	lui	a2,0x10
+    2006:	06b1                	addi	a3,a3,12 # e00c <__GNU_EH_FRAME_HDR+0xb5b0>
+    2008:	0791                	addi	a5,a5,4 # 10004 <__GNU_EH_FRAME_HDR+0xd5a8>
+    200a:	4218                	lw	a4,0(a2)
+    200c:	0ff77713          	zext.b	a4,a4
+    2010:	c311                	beqz	a4,2014 <main+0x14>
+    2012:	a001                	j	2012 <main+0x12>
+    2014:	4298                	lw	a4,0(a3)
+    2016:	8b05                	andi	a4,a4,1
+    2018:	c398                	sw	a4,0(a5)
+    201a:	bfc5                	j	200a <main+0xa>
 	...
 
 00002200 <interrupt>:
@@ -341,7 +312,7 @@ Disassembly of section .text.s25fl128s_wrr:
 Disassembly of section .text.s25fl128s_read:
 
 000023fe <s25fl128s_read>:
-    23fe:	fff60793          	addi	a5,a2,-1
+    23fe:	fff60793          	addi	a5,a2,-1 # ffff <__GNU_EH_FRAME_HDR+0xd5a3>
     2402:	80002737          	lui	a4,0x80002
     2406:	1141                	addi	sp,sp,-16
     2408:	90370713          	addi	a4,a4,-1789 # 80001903 <__GNU_EH_FRAME_HDR+0x7fffeea7>
