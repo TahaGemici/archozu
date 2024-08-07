@@ -312,6 +312,7 @@ void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int m
         //"csrrw zero, mtvec, a1\n\t" //locate interrupt()
         "csrrsi zero, mstatus, 8\n\t" //enable machine interrupt
         "csrrs zero, mie, a2\n\t"); //enable timer interrupt
+    timer_clear();
     timer_enabled(1);
 }
 

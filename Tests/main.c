@@ -1,8 +1,10 @@
 #include "peripherals.h"
 
+unsigned int tmp=0;
+unsigned int state=0, old_state=0;
+
 int __attribute__((naked)) main(){
-    unsigned int tmp=0;
-    unsigned int state=0, old_state=0;
+    timer_conf(-1,0,1);
     while(1){
         tmp = gpio_read() & 255;
         state=0;
@@ -27,7 +29,6 @@ int __attribute__((naked)) main(){
                 break;
             case USB_KEYBOARD:
                 tmp = gpio_read() >> 8;
-                usb_rw(tmp);
                 break;
             case USB_SERIAL:
                 tmp = usb_rw(tmp);
@@ -37,4 +38,5 @@ int __attribute__((naked)) main(){
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
+    if(state==USB_KEYBOARD) usb_rw(tmp);
 }
