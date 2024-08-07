@@ -11,56 +11,61 @@ Disassembly of section .text:
     2006:	6939                	lui	s2,0xe
     2008:	69c1                	lui	s3,0x10
     200a:	2591                	jal	264e <timer_conf>
-    200c:	6a41                	lui	s4,0x10
+    200c:	6ac1                	lui	s5,0x10
     200e:	0931                	addi	s2,s2,12 # e00c <__GNU_EH_FRAME_HDR+0xb464>
     2010:	0991                	addi	s3,s3,4 # 10004 <__GNU_EH_FRAME_HDR+0xd45c>
-    2012:	4b11                	li	s6,4
-    2014:	4b95                	li	s7,5
-    2016:	000a2783          	lw	a5,0(s4) # 10000 <__GNU_EH_FRAME_HDR+0xd458>
-    201a:	0c002a23          	sw	zero,212(zero) # d4 <state>
-    201e:	0ff7f793          	zext.b	a5,a5
-    2022:	0cf02c23          	sw	a5,216(zero) # d8 <tmp>
-    2026:	e381                	bnez	a5,2026 <main+0x26>
-    2028:	0d002783          	lw	a5,208(zero) # d0 <old_state>
-    202c:	c399                	beqz	a5,2032 <main+0x32>
-    202e:	4501                	li	a0,0
-    2030:	25b9                	jal	267e <usb_conf>
-    2032:	0d402783          	lw	a5,212(zero) # d4 <state>
-    2036:	0cf02823          	sw	a5,208(zero) # d0 <old_state>
-    203a:	00092783          	lw	a5,0(s2)
-    203e:	8b85                	andi	a5,a5,1
-    2040:	00f9a023          	sw	a5,0(s3)
-    2044:	0d402783          	lw	a5,212(zero) # d4 <state>
-    2048:	05678463          	beq	a5,s6,2090 <main+0x90>
-    204c:	02fb6a63          	bltu	s6,a5,2080 <main+0x80>
-    2050:	4705                	li	a4,1
-    2052:	02e78963          	beq	a5,a4,2084 <main+0x84>
-    2056:	4709                	li	a4,2
-    2058:	fae79fe3          	bne	a5,a4,2016 <main+0x16>
-    205c:	4501                	li	a0,0
-    205e:	2d05                	jal	268e <usb_rw>
-    2060:	4c81                	li	s9,0
-    2062:	14000d13          	li	s10,320
-    2066:	0b400d93          	li	s11,180
-    206a:	4c01                	li	s8,0
-    206c:	019c0533          	add	a0,s8,s9
-    2070:	0c05                	addi	s8,s8,1
-    2072:	2d31                	jal	268e <usb_rw>
-    2074:	ffac1ce3          	bne	s8,s10,206c <main+0x6c>
-    2078:	0c85                	addi	s9,s9,1
-    207a:	ffbc98e3          	bne	s9,s11,206a <main+0x6a>
-    207e:	bf61                	j	2016 <main+0x16>
-    2080:	f9779be3          	bne	a5,s7,2016 <main+0x16>
-    2084:	0d802503          	lw	a0,216(zero) # d8 <tmp>
-    2088:	2519                	jal	268e <usb_rw>
-    208a:	0ca02c23          	sw	a0,216(zero) # d8 <tmp>
-    208e:	b761                	j	2016 <main+0x16>
-    2090:	000a2783          	lw	a5,0(s4)
-    2094:	07c2                	slli	a5,a5,0x10
-    2096:	83c1                	srli	a5,a5,0x10
-    2098:	83a1                	srli	a5,a5,0x8
-    209a:	0cf02c23          	sw	a5,216(zero) # d8 <tmp>
-    209e:	bfa5                	j	2016 <main+0x16>
+    2012:	4b91                	li	s7,4
+    2014:	000aa783          	lw	a5,0(s5) # 10000 <__GNU_EH_FRAME_HDR+0xd458>
+    2018:	0c002a23          	sw	zero,212(zero) # d4 <state>
+    201c:	0ff7f793          	zext.b	a5,a5
+    2020:	0cf02e23          	sw	a5,220(zero) # dc <tmp>
+    2024:	e381                	bnez	a5,2024 <main+0x24>
+    2026:	0d002783          	lw	a5,208(zero) # d0 <old_state>
+    202a:	c399                	beqz	a5,2030 <main+0x30>
+    202c:	4501                	li	a0,0
+    202e:	2d81                	jal	267e <usb_conf>
+    2030:	0d402783          	lw	a5,212(zero) # d4 <state>
+    2034:	0cf02823          	sw	a5,208(zero) # d0 <old_state>
+    2038:	00092783          	lw	a5,0(s2)
+    203c:	8b85                	andi	a5,a5,1
+    203e:	00f9a023          	sw	a5,0(s3)
+    2042:	0d402783          	lw	a5,212(zero) # d4 <state>
+    2046:	05778c63          	beq	a5,s7,209e <main+0x9e>
+    204a:	04fbe163          	bltu	s7,a5,208c <main+0x8c>
+    204e:	4705                	li	a4,1
+    2050:	04e78163          	beq	a5,a4,2092 <main+0x92>
+    2054:	4709                	li	a4,2
+    2056:	fae79fe3          	bne	a5,a4,2014 <main+0x14>
+    205a:	4501                	li	a0,0
+    205c:	2d0d                	jal	268e <usb_rw>
+    205e:	4c81                	li	s9,0
+    2060:	14000d13          	li	s10,320
+    2064:	0b400d93          	li	s11,180
+    2068:	4c01                	li	s8,0
+    206a:	0d802503          	lw	a0,216(zero) # d8 <tmp2>
+    206e:	9566                	add	a0,a0,s9
+    2070:	9562                	add	a0,a0,s8
+    2072:	0c05                	addi	s8,s8,1
+    2074:	2d29                	jal	268e <usb_rw>
+    2076:	ffac1ae3          	bne	s8,s10,206a <main+0x6a>
+    207a:	0c85                	addi	s9,s9,1
+    207c:	ffbc96e3          	bne	s9,s11,2068 <main+0x68>
+    2080:	0d802783          	lw	a5,216(zero) # d8 <tmp2>
+    2084:	0785                	addi	a5,a5,1
+    2086:	0cf02c23          	sw	a5,216(zero) # d8 <tmp2>
+    208a:	b769                	j	2014 <main+0x14>
+    208c:	4715                	li	a4,5
+    208e:	f8e793e3          	bne	a5,a4,2014 <main+0x14>
+    2092:	0dc02503          	lw	a0,220(zero) # dc <tmp>
+    2096:	2be5                	jal	268e <usb_rw>
+    2098:	0ca02e23          	sw	a0,220(zero) # dc <tmp>
+    209c:	bfa5                	j	2014 <main+0x14>
+    209e:	000aa783          	lw	a5,0(s5)
+    20a2:	07c2                	slli	a5,a5,0x10
+    20a4:	83c1                	srli	a5,a5,0x10
+    20a6:	83a1                	srli	a5,a5,0x8
+    20a8:	0cf02e23          	sw	a5,220(zero) # dc <tmp>
+    20ac:	b7a5                	j	2014 <main+0x14>
 	...
 
 00002200 <interrupt>:
@@ -104,7 +109,7 @@ Disassembly of section .text:
     224c:	a07e                	fsd	ft11,0(sp)
     224e:	4791                	li	a5,4
     2250:	00f71563          	bne	a4,a5,225a <interrupt+0x5a>
-    2254:	0d802503          	lw	a0,216(zero) # d8 <tmp>
+    2254:	0dc02503          	lw	a0,220(zero) # dc <tmp>
     2258:	291d                	jal	268e <usb_rw>
     225a:	40fe                	lw	ra,220(sp)
     225c:	42ee                	lw	t0,216(sp)
