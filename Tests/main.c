@@ -1,6 +1,6 @@
 #include "peripherals.h"
 
-unsigned int tmp=0;
+unsigned int tmp=0, tmp2=0;
 unsigned int state=0, old_state=0;
 
 int __attribute__((naked)) main(){
@@ -23,9 +23,10 @@ int __attribute__((naked)) main(){
                 usb_rw(0);
                 for(int i=0;i<180;i=i+1){
                     for(int j=0;j<320;j=j+1){
-                        usb_rw(i+j);
+                        usb_rw(tmp2+i+j);
                     }
                 }
+                tmp2++;
                 break;
             case USB_KEYBOARD:
                 tmp = gpio_read() >> 8;
