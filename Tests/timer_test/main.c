@@ -9,5 +9,5 @@ int __attribute__((naked)) main(){
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
-    abc += gpio_read();
+    abc += 1;
 }

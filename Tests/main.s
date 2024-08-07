@@ -26,46 +26,50 @@ Disassembly of section .text:
     202e:	2d81                	jal	267e <usb_conf>
     2030:	0d402783          	lw	a5,212(zero) # d4 <state>
     2034:	0cf02823          	sw	a5,208(zero) # d0 <old_state>
-    2038:	00092783          	lw	a5,0(s2)
-    203c:	8b85                	andi	a5,a5,1
-    203e:	00f9a023          	sw	a5,0(s3)
-    2042:	0d402783          	lw	a5,212(zero) # d4 <state>
-    2046:	05778c63          	beq	a5,s7,209e <main+0x9e>
-    204a:	04fbe163          	bltu	s7,a5,208c <main+0x8c>
-    204e:	4705                	li	a4,1
-    2050:	04e78163          	beq	a5,a4,2092 <main+0x92>
-    2054:	4709                	li	a4,2
-    2056:	fae79fe3          	bne	a5,a4,2014 <main+0x14>
-    205a:	4501                	li	a0,0
-    205c:	2d0d                	jal	268e <usb_rw>
-    205e:	4c81                	li	s9,0
-    2060:	14000d13          	li	s10,320
-    2064:	0b400d93          	li	s11,180
-    2068:	4c01                	li	s8,0
-    206a:	0d802503          	lw	a0,216(zero) # d8 <tmp2>
-    206e:	9566                	add	a0,a0,s9
-    2070:	9562                	add	a0,a0,s8
-    2072:	0c05                	addi	s8,s8,1
-    2074:	2d29                	jal	268e <usb_rw>
-    2076:	ffac1ae3          	bne	s8,s10,206a <main+0x6a>
-    207a:	0c85                	addi	s9,s9,1
-    207c:	ffbc96e3          	bne	s9,s11,2068 <main+0x68>
-    2080:	0d802783          	lw	a5,216(zero) # d8 <tmp2>
-    2084:	0785                	addi	a5,a5,1
-    2086:	0cf02c23          	sw	a5,216(zero) # d8 <tmp2>
-    208a:	b769                	j	2014 <main+0x14>
-    208c:	4715                	li	a4,5
-    208e:	f8e793e3          	bne	a5,a4,2014 <main+0x14>
-    2092:	0dc02503          	lw	a0,220(zero) # dc <tmp>
-    2096:	2be5                	jal	268e <usb_rw>
-    2098:	0ca02e23          	sw	a0,220(zero) # dc <tmp>
-    209c:	bfa5                	j	2014 <main+0x14>
-    209e:	000aa783          	lw	a5,0(s5)
-    20a2:	07c2                	slli	a5,a5,0x10
-    20a4:	83c1                	srli	a5,a5,0x10
-    20a6:	83a1                	srli	a5,a5,0x8
-    20a8:	0cf02e23          	sw	a5,220(zero) # dc <tmp>
-    20ac:	b7a5                	j	2014 <main+0x14>
+    2038:	00092703          	lw	a4,0(s2)
+    203c:	07a2                	slli	a5,a5,0x8
+    203e:	8b05                	andi	a4,a4,1
+    2040:	97ba                	add	a5,a5,a4
+    2042:	07c2                	slli	a5,a5,0x10
+    2044:	83c1                	srli	a5,a5,0x10
+    2046:	00f9a023          	sw	a5,0(s3)
+    204a:	0d402783          	lw	a5,212(zero) # d4 <state>
+    204e:	05778c63          	beq	a5,s7,20a6 <main+0xa6>
+    2052:	04fbe163          	bltu	s7,a5,2094 <main+0x94>
+    2056:	4705                	li	a4,1
+    2058:	04e78163          	beq	a5,a4,209a <main+0x9a>
+    205c:	4709                	li	a4,2
+    205e:	fae79be3          	bne	a5,a4,2014 <main+0x14>
+    2062:	4501                	li	a0,0
+    2064:	252d                	jal	268e <usb_rw>
+    2066:	4c81                	li	s9,0
+    2068:	14000d13          	li	s10,320
+    206c:	0b400d93          	li	s11,180
+    2070:	4c01                	li	s8,0
+    2072:	0d802503          	lw	a0,216(zero) # d8 <tmp2>
+    2076:	9566                	add	a0,a0,s9
+    2078:	9562                	add	a0,a0,s8
+    207a:	0c05                	addi	s8,s8,1
+    207c:	2d09                	jal	268e <usb_rw>
+    207e:	ffac1ae3          	bne	s8,s10,2072 <main+0x72>
+    2082:	0c85                	addi	s9,s9,1
+    2084:	ffbc96e3          	bne	s9,s11,2070 <main+0x70>
+    2088:	0d802783          	lw	a5,216(zero) # d8 <tmp2>
+    208c:	0785                	addi	a5,a5,1
+    208e:	0cf02c23          	sw	a5,216(zero) # d8 <tmp2>
+    2092:	b749                	j	2014 <main+0x14>
+    2094:	4715                	li	a4,5
+    2096:	f6e79fe3          	bne	a5,a4,2014 <main+0x14>
+    209a:	0dc02503          	lw	a0,220(zero) # dc <tmp>
+    209e:	2bc5                	jal	268e <usb_rw>
+    20a0:	0ca02e23          	sw	a0,220(zero) # dc <tmp>
+    20a4:	bf85                	j	2014 <main+0x14>
+    20a6:	000aa783          	lw	a5,0(s5)
+    20aa:	07c2                	slli	a5,a5,0x10
+    20ac:	83c1                	srli	a5,a5,0x10
+    20ae:	83a1                	srli	a5,a5,0x8
+    20b0:	0cf02e23          	sw	a5,220(zero) # dc <tmp>
+    20b4:	b785                	j	2014 <main+0x14>
 	...
 
 00002200 <interrupt>:

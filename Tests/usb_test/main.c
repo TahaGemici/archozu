@@ -14,7 +14,7 @@ int __attribute__((naked)) main(){
         }
         if(state!=old_state) usb_conf(state);
         old_state = state;
-        gpio_write(usb_connected());
+        gpio_write( (state<<8) + usb_connected());
         switch(state){
             case USB_AUDIO:
                 tmp = usb_rw(tmp);

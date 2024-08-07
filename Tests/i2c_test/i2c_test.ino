@@ -3,8 +3,6 @@
 char arr;
 void setup()
 {
-  pinMode(13, OUTPUT); 
-  pinMode(12, OUTPUT); 
   Wire.begin(123);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
@@ -13,14 +11,22 @@ void setup()
 
 void loop()
 {
-  digitalWrite(13,HIGH);
-  digitalWrite(12,LOW);
   delay(100);
+}
+
+char flipByte(char in){
+  char tmp=0;
+  for(int i = 0; i < 8; i++){
+    tmp <<= 1;
+    tmp |= in & 1;
+    in >>= 1;
+  }
+  return tmp;
 }
 
 void receiveEvent(int howMany)
 {
-  arr = Wire.read();
+  arr = flipByte(Wire.read());
 }
 void requestEvent()
 {
