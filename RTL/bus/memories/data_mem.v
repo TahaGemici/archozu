@@ -18,7 +18,7 @@ module data_mem(
       for(i=0;i<2048;i=i+1) begin
          mem32[i] = {mem8[i*4+3], mem8[i*4+2], mem8[i*4+1], mem8[i*4]};
       end
-      $writememh({`PATH, "RTL/bus/memories/data_mem_no_flash.mem"},mem32,0);
+      $writememh("data_mem_no_flash.mem",mem32,0);
    end
 `endif
 
@@ -32,7 +32,11 @@ xpm_memory_spram #(
    .ECC_TYPE("none"),             // String
    .IGNORE_INIT_SYNTH(1),         // DECIMAL
 `ifdef NO_FLASH
+`ifdef LINUX
    .MEMORY_INIT_FILE({`PATH, "RTL/bus/memories/data_mem_no_flash.mem"}),      // String
+`else
+   .MEMORY_INIT_FILE("data_mem_no_flash.mem"),      // String
+`endif
 `else
    .MEMORY_INIT_FILE("none"),      // String
 `endif

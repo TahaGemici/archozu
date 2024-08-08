@@ -1,7 +1,6 @@
 // ASIC İSE İKİSİNİ DE KAPA
 `define FPGA
 `define NO_FLASH
-`define PATH "/home/tgemici/GitHub/archozu/"
 
 `define CLK_PERIOD 16.67
 `define CLK_FREQ (1_000_000_000.0/`CLK_PERIOD)

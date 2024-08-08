@@ -44,7 +44,7 @@ module instr_mem(
       for(i=2048;i<4096;i=i+1) begin
          mem32[i-2048] = {mem8[i*4+3], mem8[i*4+2], mem8[i*4+1], mem8[i*4]};
       end
-      $writememh({`PATH, "RTL/bus/memories/instr_mem_no_flash.mem"},mem32,0);
+      $writememh("instr_mem_no_flash.mem",mem32,0);
    end
 `endif
 
@@ -60,7 +60,11 @@ xpm_memory_sdpram #(
    .ECC_TYPE("none"),              // String
    .IGNORE_INIT_SYNTH(0),          // DECIMAL
 `ifdef NO_FLASH
+      `ifdef LINUX
    .MEMORY_INIT_FILE({`PATH, "RTL/bus/memories/instr_mem_no_flash.mem"}),      // String
+      `else
+   .MEMORY_INIT_FILE("instr_mem_no_flash.mem"),      // String
+      `endif
 `else
    .MEMORY_INIT_FILE("none"),      // String
 `endif
