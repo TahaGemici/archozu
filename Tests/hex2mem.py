@@ -16,3 +16,21 @@ for line in f.readlines():
                 out+=i[j:(j+2)]+"\n"
 flash_mem = open("../RTL/bus/memories/s25fl128s.mem", "w")
 flash_mem.write(out)
+
+mem = "00000000"
+address = 0
+instr_mem = open("../RTL/bus/memories/instr_mem_no_flash.mem", "w")
+data_mem  = open("../RTL/bus/memories/data_mem_no_flash.mem", "w")
+for i in range(1024*4-1):
+    mem+="00000000"
+for line in out.split():
+    if(line.startswith("@")):
+        address = int(line[1:],16)
+    else:
+        mem = mem[:address*2] + line + mem[address*2+2:]
+        address += 1
+
+for i in range(0,1024*16,8):
+    ii = i+1024*16
+    data_mem.write(mem[i+6:i+8]+mem[i+4:i+6]+mem[i+2:i+4]+mem[i:i+2]+"\n")
+    instr_mem.write(mem[ii+6:ii+8]+mem[ii+4:ii+6]+mem[ii+2:ii+4]+mem[ii:ii+2]+"\n")

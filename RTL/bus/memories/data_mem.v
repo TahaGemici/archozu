@@ -9,19 +9,6 @@ module data_mem(
 
 `ifdef FPGA
 
-`ifdef NO_FLASH
-   integer i;
-   reg[7:0] mem8[0:8191];
-   reg[31:0] mem32[0:2047];
-   initial begin
-      $readmemh("s25fl128s.mem",mem8,0);
-      for(i=0;i<2048;i=i+1) begin
-         mem32[i] = {mem8[i*4+3], mem8[i*4+2], mem8[i*4+1], mem8[i*4]};
-      end
-      $writememh("data_mem_no_flash.mem",mem32,0);
-   end
-`endif
-
 xpm_memory_spram #(
    .ADDR_WIDTH_A(11),             // DECIMAL
    .AUTO_SLEEP_TIME(0),           // DECIMAL
@@ -32,11 +19,7 @@ xpm_memory_spram #(
    .ECC_TYPE("none"),             // String
    .IGNORE_INIT_SYNTH(1),         // DECIMAL
 `ifdef NO_FLASH
-`ifdef LINUX
-   .MEMORY_INIT_FILE({`PATH, "RTL/bus/memories/data_mem_no_flash.mem"}),      // String
-`else
-   .MEMORY_INIT_FILE("data_mem_no_flash.mem"),      // String
-`endif
+   .MEMORY_INIT_FILE("data_mem_no_flash.mem"),
 `else
    .MEMORY_INIT_FILE("none"),      // String
 `endif

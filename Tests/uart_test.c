@@ -1,6 +1,4 @@
-#include "peripherals.h"
-
-int __attribute__((naked)) main(){
+int uart_main(){
     uart_conf(9600, 0);
     int tmp;
     while(1){
@@ -10,5 +8,5 @@ int __attribute__((naked)) main(){
     }
 }
 
-void __attribute__((interrupt("machine"))) interrupt(){
+void uart_interrupt(){
 }
