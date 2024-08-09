@@ -1,6 +1,6 @@
 #include <Wire.h>
 
-char arr;
+short arr;
 void setup()
 {
   Wire.begin(123);
@@ -14,9 +14,9 @@ void loop()
   delay(100);
 }
 
-char flipByte(char in){
-  char tmp=0;
-  for(int i = 0; i < 8; i++){
+short flipShort(short in){
+  short tmp=0;
+  for(int i = 0; i < 16; i++){
     tmp <<= 1;
     tmp |= in & 1;
     in >>= 1;
@@ -26,7 +26,7 @@ char flipByte(char in){
 
 void receiveEvent(int howMany)
 {
-  arr = flipByte(Wire.read());
+  arr = flipShort(Wire.read());
 }
 void requestEvent()
 {

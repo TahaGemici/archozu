@@ -87,7 +87,7 @@ xpm_memory_spram_inst (
 
    reg[7:0] mem[0:8191];
    `ifdef NO_FLASH
-       $readmemh("s25fl128s.mem",mem,0);
+      initial $readmemh("s25fl128s.mem",mem,0);
    `endif
 
    assign data_o[ 0+:8] = mem[{addr_i[12:2], 2'b00}];

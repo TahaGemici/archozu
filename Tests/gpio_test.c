@@ -1,8 +1,8 @@
 int gpio_main(){
-    int abc;
+    int gpio_abc;
     while(1){
-        abc = gpio_read();
-        gpio_write(abc);
+        gpio_abc = gpio_read();
+        gpio_write(gpio_abc);
     }
 }
 

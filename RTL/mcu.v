@@ -23,6 +23,8 @@ module mcu(
     wire[31:0] data_addr, data_wdata, data_rdata;
 
     wire[31:0] irq;
+    assign irq[31:8] = 0;
+    assign irq[6:0] = 0;
     wire irq_ack;
     wire[4:0] irq_id;
     

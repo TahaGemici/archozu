@@ -125,7 +125,7 @@ xpm_memory_sdpram_inst (
 
     reg[7:0] mem[0:8191];
     `ifdef NO_FLASH
-        $readmemh("s25fl128s.mem",mem,8192);
+        initial $readmemh("s25fl128s.mem",mem,8192);
     `endif
 
     always @(posedge clk_i) begin

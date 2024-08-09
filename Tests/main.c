@@ -7,6 +7,8 @@
 #include "gpio_test.c"
 #include "usb_test.c"
 
+// ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
+
 short main_state = 0;
 short main_gpio_val = 0x5555;
 
@@ -21,10 +23,10 @@ int __attribute__((naked)) main(){
         switch(main_state){
             case 1: uart_main();
             case 2: i2c_main();
-            case 3: qspi_main();
-            case 4: timer_main();
-            case 5: gpio_main();
-            case 6: usb_main();
+            case 4: qspi_main();
+            case 8: timer_main();
+            case 16: gpio_main();
+            case 32: usb_main();
         }
     }
 }
@@ -37,9 +39,9 @@ void __attribute__((interrupt("machine"))) interrupt(){
             break;
         case 1: uart_interrupt(); break;
         case 2: i2c_interrupt(); break;
-        case 3: qspi_interrupt(); break;
-        case 4: timer_interrupt(); break;
-        case 5: gpio_interrupt(); break;
-        case 6: usb_interrupt(); break;
+        case 4: qspi_interrupt(); break;
+        case 8: timer_interrupt(); break;
+        case 16: gpio_interrupt(); break;
+        case 32: usb_interrupt(); break;
     }
 }
