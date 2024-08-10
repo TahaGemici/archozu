@@ -6,6 +6,7 @@
 #include "timer_test.c"
 #include "gpio_test.c"
 #include "usb_test.c"
+#include "debug.c"
 
 // ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
 
@@ -27,6 +28,7 @@ int __attribute__((naked)) main(){
             case 8: timer_main();
             case 16: gpio_main();
             case 32: usb_main();
+            case 64: data_mem_main(); // for debug purposes only
         }
     }
 }
