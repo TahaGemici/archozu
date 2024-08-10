@@ -13,6 +13,7 @@ module mcu_tb();
         #100000000;
         $finish;
     end
+    
     reg[15:0] in;
     initial begin
         forever in = #500 $random;

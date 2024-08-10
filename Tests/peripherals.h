@@ -28,8 +28,8 @@ unsigned char uart_read(){
 void uart_write(unsigned char data){
     _addr_uart[3] = data;
     _addr_uart[4] = 1;
-    while(_addr_uart[4]!=5){}
-    _addr_uart[4] = 0;
+    while(!(_addr_uart[4] & 4)){}
+    _addr_uart[4] &= 2;
 }
 
   ///////////
@@ -308,8 +308,8 @@ void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int m
     _addr_timer[1] = auto_reload;
     _addr_timer[4] = mode;
     asm("li a2, 128\n\t"
-        //"li a1, 0x2200\n\t"
-        //"csrrw zero, mtvec, a1\n\t" //locate interrupt()
+        "li a1, 0x2200\n\t"
+        "csrrw zero, mtvec, a1\n\t" //locate interrupt()
         "csrrsi zero, mstatus, 8\n\t" //enable machine interrupt
         "csrrs zero, mie, a2\n\t"); //enable timer interrupt
     timer_clear();

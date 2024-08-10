@@ -1,5 +1,6 @@
 int data_mem_main(){
     while(1){
-        gpio_write(*gpio_read());
+        unsigned short* data_mem_addr = 0;
+        gpio_write(data_mem_addr[gpio_read()]);
     }
 }
