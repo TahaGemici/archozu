@@ -716,11 +716,11 @@ Disassembly of section .text.uart_main:
 
 000026a4 <.text.uart_main>:
     26a4:	1141                	addi	sp,sp,-16
-    26a6:	6789                	lui	a5,0x2
+    26a6:	6785                	lui	a5,0x1
     26a8:	c422                	sw	s0,8(sp)
     26aa:	c226                	sw	s1,4(sp)
     26ac:	c606                	sw	ra,12(sp)
-    26ae:	86978793          	addi	a5,a5,-1943 # 0x1869
+    26ae:	45778793          	addi	a5,a5,1111 # 0x1457
     26b2:	6719                	lui	a4,0x6
     26b4:	c31c                	sw	a5,0(a4)
     26b6:	6441                	lui	s0,0x10

@@ -185,7 +185,7 @@ Contents of section .text.gpio_read:
 Contents of section .text.instr_mem_write:
  269a 0a059167 aa978cc3 8280               ...g......      
 Contents of section .text.uart_main:
- 26a4 41118967 22c426c2 06c69387 97861967  A..g".&........g
+ 26a4 41118567 22c426c2 06c69387 77451967  A..g".&.....wE.g
  26b4 1cc34164 996723a2 0700c164 1104e13e  ..Ad.g#....d...>
  26c4 08c08840 1375f50f e536d5bf           ...@.u...6..    
 Contents of section .text.uart_interrupt:
