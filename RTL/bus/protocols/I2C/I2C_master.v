@@ -1,3 +1,5 @@
+//#define I2C_PULL
+
 module I2C_master(
     input clk_i,
     input rst_i,
@@ -7,7 +9,11 @@ module I2C_master(
     input [31:0] wdata_i,
     output [31:0] rdata_o,
 
+	`ifdef I2C_PULL
 	tri1 sda_io,
+	`else
+	inout sda_io,
+	`endif
 	output scl_io
 );
 

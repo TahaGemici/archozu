@@ -44,15 +44,15 @@ void i2c_write(unsigned int data, unsigned char byte_size){
     _addr_i2c[0] = byte_size;
     _addr_i2c[3] = data;
     _addr_i2c[4] = 1;
-    while(_addr_i2c[4]!=3){}
-    _addr_i2c[4] = 0;
+    while(!(_addr_i2c[4] & 2)){}
+    _addr_i2c[4] &= 12;
 }
 
 unsigned int i2c_read(unsigned char byte_size){
     _addr_i2c[0] = byte_size;
     _addr_i2c[4] = 4;
-    while(_addr_i2c[4]!=12){}
-    _addr_i2c[4] = 0;
+    while(!(_addr_i2c[4] & 8)){}
+    _addr_i2c[4] &= 3;
     return _addr_i2c[2];
 }
 

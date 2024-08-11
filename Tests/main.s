@@ -163,13 +163,15 @@ Disassembly of section .text.i2c_write:
     22d6:	c38c                	sw	a1,0(a5)
     22d8:	c7c8                	sw	a0,12(a5)
     22da:	67a1                	lui	a5,0x8
-    22dc:	4705                	li	a4,1
-    22de:	07c1                	addi	a5,a5,16 # 0x8010
+    22dc:	07c1                	addi	a5,a5,16 # 0x8010
+    22de:	4705                	li	a4,1
     22e0:	c398                	sw	a4,0(a5)
-    22e2:	470d                	li	a4,3
-    22e4:	4394                	lw	a3,0(a5)
-    22e6:	fee69fe3          	bne	a3,a4,0x22e4
-    22ea:	0007a023          	sw	zero,0(a5)
+    22e2:	4398                	lw	a4,0(a5)
+    22e4:	8b09                	andi	a4,a4,2
+    22e6:	df75                	beqz	a4,0x22e2
+    22e8:	4398                	lw	a4,0(a5)
+    22ea:	8b31                	andi	a4,a4,12
+    22ec:	c398                	sw	a4,0(a5)
     22ee:	8082                	ret
 
 Disassembly of section .text.i2c_read:
@@ -180,10 +182,12 @@ Disassembly of section .text.i2c_read:
     22f4:	4711                	li	a4,4
     22f6:	07c1                	addi	a5,a5,16 # 0x8010
     22f8:	c398                	sw	a4,0(a5)
-    22fa:	4731                	li	a4,12
-    22fc:	4394                	lw	a3,0(a5)
-    22fe:	fee69fe3          	bne	a3,a4,0x22fc
-    2302:	0007a023          	sw	zero,0(a5)
+    22fa:	4398                	lw	a4,0(a5)
+    22fc:	8b21                	andi	a4,a4,8
+    22fe:	df75                	beqz	a4,0x22fa
+    2300:	4398                	lw	a4,0(a5)
+    2302:	8b0d                	andi	a4,a4,3
+    2304:	c398                	sw	a4,0(a5)
     2306:	67a1                	lui	a5,0x8
     2308:	4788                	lw	a0,8(a5)
     230a:	8082                	ret
@@ -789,7 +793,7 @@ Disassembly of section .text.timer_main:
     270e:	c84a                	sw	s2,16(sp)
     2710:	4605                	li	a2,1
     2712:	4581                	li	a1,0
-    2714:	a6050513          	addi	a0,a0,-1440 # 0xea60
+    2714:	a5f50513          	addi	a0,a0,-1441 # 0xea5f
     2718:	6441                	lui	s0,0x10
     271a:	6931                	lui	s2,0xc
     271c:	ca26                	sw	s1,20(sp)

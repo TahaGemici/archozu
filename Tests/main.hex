@@ -75,11 +75,11 @@ Contents of section .text.uart_write:
 Contents of section .text.i2c_conf:
  22ce a167c8c3 8280                        .g....          
 Contents of section .text.i2c_write:
- 22d4 a1678cc3 c8c7a167 0547c107 98c30d47  .g.....g.G.....G
- 22e4 9443e39f e6fe23a0 07008280           .C....#.....    
+ 22d4 a1678cc3 c8c7a167 c1070547 98c39843  .g.....g...G...C
+ 22e4 098b75df 9843318b 98c38280           ..u..C1.....    
 Contents of section .text.i2c_read:
- 22f0 a16788c3 1147c107 98c33147 9443e39f  .g...G....1G.C..
- 2300 e6fe23a0 0700a167 88478280           ..#....g.G..    
+ 22f0 a16788c3 1147c107 98c39843 218b75df  .g...G.....C!.u.
+ 2300 98430d8b 98c3a167 88478280           .C.....g.G..    
 Contents of section .text.qspi_wait:
  230c a9679387 87020547 9443e39f e6fea967  .g.....G.C.....g
  231c 93878702 05479443 e39fe6fe 8280      .....G.C......  
@@ -201,7 +201,7 @@ Contents of section .text.qspi_main:
 Contents of section .text.qspi_interrupt:
  2706 8280                                 ..              
 Contents of section .text.timer_main:
- 2708 01113d65 22cc4ac8 05468145 130505a6  ..=e".J..F.E....
+ 2708 01113d65 22cc4ac8 05468145 1305f5a5  ..=e".J..F.E....
  2718 41643169 26ca4ec6 06ce1937 9304f4ff  Ad1i&.N....7....
  2728 11090327 80041c40 e58fe38e e7fe1c40  ...'...@.......@
  2738 e58f2320 f900e13d 1c40e58f 2324f004  ..# ...=.@..#$..
