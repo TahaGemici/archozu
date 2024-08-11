@@ -19,6 +19,7 @@ int __attribute__((naked)) main(){
     while(1){
         main_state = gpio_read();
         if(main_state){
+            gpio_write(0);
             timer_enabled(0);
         }
         switch(main_state){
