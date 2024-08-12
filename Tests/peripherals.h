@@ -68,6 +68,7 @@ unsigned int const qspi_mode_x1 = 1 << 8;
 unsigned int const qspi_mode_x2 = 2 << 8;
 unsigned int const qspi_mode_x4 = 3 << 8;
 unsigned int const qspi_write   = 1 << 10;
+unsigned int const qspi_dummy_1 = 1 << 11;
 unsigned int const qspi_dummy_3 = 3 << 11;
 unsigned int const qspi_dummy_4 = 4 << 11;
 
@@ -280,6 +281,140 @@ void qspi_custom_read(unsigned int addr, unsigned int* array, unsigned int instr
     _addr_qspi[0] = cmd;
     qspi_wait();
     qspi_read_array(array, byte_size);
+}
+
+void mt25ql256aba_read(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int cmd = 0x03;
+    cmd += qspi_mode_x1;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_50;
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
+}
+
+void mt25ql256aba_dual_output_fast_read(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int cmd = 0x3B;
+    cmd += qspi_mode_x2;
+    cmd += qspi_dummy_1;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_104;
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
+}
+ 
+void mt25ql256aba_quad_output_fast_read(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int cmd = 0x6B;
+    cmd += qspi_mode_x4;
+    cmd += qspi_dummy_1;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_104;
+    _addr_qspi[1] = addr;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
+}
+
+void mt25ql256aba_page_program(unsigned int addr, unsigned int* array, unsigned int byte_size){
+    unsigned int cmd = 0x02;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_133;
+    _addr_qspi[1] = addr;
+    qspi_write_array(array, byte_size);
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+}
+
+void mt25ql256aba_sector_erase(unsigned int data, unsigned int byte_size){
+    unsigned int cmd = 0xD8;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_133;
+    _addr_qspi[2] = data;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+}
+
+void mt25ql256aba_read_id(unsigned int* array, unsigned int byte_size){
+    unsigned int cmd = 0x9F;
+    cmd += qspi_mode_x1;
+    cmd += (byte_size-1) << 16;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    qspi_read_array(array, byte_size);
+}
+
+unsigned char mt25ql256aba_read_status_register(){
+    unsigned int cmd = 0x05;
+    cmd += qspi_mode_x1;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    return _addr_qspi[2];
+}
+
+unsigned char mt25ql256aba_read_flag_status_register(){
+    unsigned int cmd = 0x70;
+    cmd += qspi_mode_x1;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    return _addr_qspi[2];
+}
+
+unsigned char mt25ql256aba_read_nonvolatile_configuration_register(){
+    unsigned int cmd = 0xB5;
+    cmd += qspi_mode_x1;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    return _addr_qspi[2];
+}
+
+unsigned char mt25ql256aba_read_volatile_configuration_register(){
+    unsigned int cmd = 0x85;
+    cmd += qspi_mode_x1;
+    cmd += qspi_clk_133;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+    return _addr_qspi[2];
+}
+
+void mt25ql256aba_write_status_register(unsigned short data){
+    unsigned int cmd = 0x01;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += qspi_clk_133;
+    _addr_qspi[2] = data;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+}
+
+void mt25ql256aba_wrdi(){
+    _addr_qspi[0] = qspi_clk_133 + 0x04;
+    qspi_wait();
+}
+
+void mt25ql256aba_wren(){
+    _addr_qspi[0] = qspi_clk_133 + 0x06;
+    qspi_wait();
+}
+
+void mt25ql256aba_reset_enable(){
+    _addr_qspi[0] = qspi_clk_133 + 0x66;
+    qspi_wait();
+}
+
+void mt25ql256aba_reset_memory(){
+    _addr_qspi[0] = qspi_clk_133 + 0x99;
+    qspi_wait();
 }
 
   /////////////

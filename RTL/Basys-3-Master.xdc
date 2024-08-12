@@ -83,14 +83,14 @@ set_property -dict {PACKAGE_PIN H1 IOSTANDARD LVCMOS33} [get_ports usb_dn]
 #set_property -dict { PACKAGE_PIN G3   IOSTANDARD LVCMOS33 } [get_ports {JA[7]}];#Sch name = JA10
 
 ##Pmod Header JB
-set_property -dict {PACKAGE_PIN A14 IOSTANDARD LVCMOS33} [get_ports sclk]
-set_property -dict {PACKAGE_PIN A16 IOSTANDARD LVCMOS33} [get_ports cs]
-set_property -dict {PACKAGE_PIN B15 IOSTANDARD LVCMOS33} [get_ports {io[0]}]
-set_property -dict {PACKAGE_PIN B16 IOSTANDARD LVCMOS33} [get_ports {io[1]}]
-set_property -dict {PACKAGE_PIN A15 IOSTANDARD LVCMOS33} [get_ports {io[2]}]
-set_property -dict {PACKAGE_PIN A17 IOSTANDARD LVCMOS33} [get_ports {io[3]}]
-#set_property -dict { PACKAGE_PIN C15   IOSTANDARD LVCMOS33 } [get_ports {JB[6]}];#Sch name = JB9
-#set_property -dict { PACKAGE_PIN C16   IOSTANDARD LVCMOS33 } [get_ports {JB[7]}];#Sch name = JB10
+set_property -dict {PACKAGE_PIN A14 IOSTANDARD LVCMOS33} [get_ports cs]
+set_property -dict {PACKAGE_PIN A16 IOSTANDARD LVCMOS33} [get_ports {io[0]}]
+set_property -dict {PACKAGE_PIN B15 IOSTANDARD LVCMOS33} [get_ports {io[1]}]
+set_property -dict {PACKAGE_PIN B16 IOSTANDARD LVCMOS33} [get_ports sclk]
+#set_property -dict {PACKAGE_PIN A15 IOSTANDARD LVCMOS33} [get_ports ]
+#set_property -dict {PACKAGE_PIN A17 IOSTANDARD LVCMOS33} [get_ports ]
+set_property -dict {PACKAGE_PIN C15 IOSTANDARD LVCMOS33} [get_ports {io[2]}]
+set_property -dict {PACKAGE_PIN C16 IOSTANDARD LVCMOS33} [get_ports {io[3]}]
 
 ##Pmod Header JC
 set_property -dict {PACKAGE_PIN K17 IOSTANDARD LVCMOS33} [get_ports rx]
