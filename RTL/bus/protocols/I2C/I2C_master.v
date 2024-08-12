@@ -152,15 +152,15 @@ module I2C_master(
 			end
 			ACK0: begin
 				counter_nxt = 3'h7;
-				if(sda_io) begin
-					state_nxt = STOP;
-					scln_nxt = 1;
-				end else begin
+				//if(sda_io) begin
+				//	state_nxt = STOP;
+				//	scln_nxt = 1;
+				//end else begin
 					if(read) begin
 						write_perip = 1;
 						state_nxt = RDATA;
 					end else state_nxt = WDATA;
-				end
+				//end
 			end
 			WDATA: begin
     			rdaddr_perip = I2C_TDR;
@@ -182,7 +182,8 @@ module I2C_master(
 				counter_nxt = 3'h7;
 				state_nxt = {2'b10, read};
 
-				nby_counter_nxt = nby_counter - (read || (!sda_io));
+				//nby_counter_nxt = nby_counter - (read || (!sda_io));
+				nby_counter_nxt = nby_counter - 1;
 				if(nby_counter_nxt==3'b111) state_nxt = STOP;
 			end
 			STOP: begin

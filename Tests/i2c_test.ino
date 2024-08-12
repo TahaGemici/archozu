@@ -1,8 +1,9 @@
 #include <Wire.h>
 
-short arr;
+char tmp1, tmp2;
 void setup()
 {
+  Serial.begin(9600);
   Wire.begin(123);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
@@ -11,7 +12,11 @@ void setup()
 
 void loop()
 {
-  delay(100);
+    delay(100);
+    if(Serial.available()>1){
+      tmp1 = Serial.read();
+      tmp2 = Serial.read();
+    }
 }
 
 short flipShort(short in){
@@ -26,9 +31,16 @@ short flipShort(short in){
 
 void receiveEvent(int howMany)
 {
-  arr = flipShort(Wire.read());
+  //arr = flipShort(Wire.read());
+  while(Wire.available()) {
+    Serial.println("Got data!");
+    tmp1 = Wire.read();
+    Serial.println(tmp1);
+  }
 }
+
 void requestEvent()
 {
-  Wire.write(arr);
+  Wire.write(tmp1);
+  Wire.write(tmp2);
 }
