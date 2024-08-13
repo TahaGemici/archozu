@@ -470,7 +470,7 @@ unsigned int usb_connected(){
 
 void usb_conf(unsigned int usb_mode){
     _addr_usb[0] = usb_mode;
-    //while(!usb_connected()){}
+    while(!usb_connected()){}
 }
 
 unsigned int usb_rw(unsigned int in){

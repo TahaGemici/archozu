@@ -28,8 +28,8 @@ int __attribute__((naked)) main(){
             case 4: qspi_main();
             case 8: timer_main();
             case 16: gpio_main();
-            case 32: usb_main();
             case 64: data_mem_main(); // for debug purposes only
+            case 128: usb_main();
         }
     }
 }

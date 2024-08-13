@@ -69,8 +69,8 @@ module USB(
     assign device_o[RESET2] = 0;
 
     wire[7:0] device_connected;
-    assign device_connected[RESET] = 0;
-    assign device_connected[RESET2] = 0;
+    assign device_connected[RESET] = 1;
+    assign device_connected[RESET2] = 1;
     
     wire[3:0] device_usb[0:7];
     assign device_usb[RESET] = 4'b0100;
