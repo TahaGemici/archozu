@@ -7,7 +7,7 @@ int usb_main(){
         usb_tmp = gpio_read() & 255;
         usb_state=0;
         while(usb_tmp){
-            usb_tmp>>1;
+            usb_tmp>>=1;
             usb_state++;
         }
         if(usb_state!=usb_old_state) usb_conf(usb_state);

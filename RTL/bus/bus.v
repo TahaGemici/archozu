@@ -141,7 +141,7 @@ module bus(
         data_wdata_i
     );
 
-    wire[31:0] usb_out = 0;
+    wire[31:0] usb_out;
     USB USB(
         clk_i,
         rst_i,

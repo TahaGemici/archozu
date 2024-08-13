@@ -58,7 +58,7 @@ module USB(
     localparam RESET2   = 7;
 
     reg[2:0] state, state_nxt;
-    reg[7:0] rstn=8'hff, rstn_nxt;
+    reg[7:0] rstn, rstn_nxt;
     
     wire[31:0] device_o[0:7];
     assign device_o[RESET] = 0;

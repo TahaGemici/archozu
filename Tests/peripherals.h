@@ -475,8 +475,8 @@ void usb_conf(unsigned int usb_mode){
 
 unsigned int usb_rw(unsigned int in){
     _addr_usb[2] = in;
-    while(_addr_usb[3]==2){}
-    _addr_usb[3] = 2;
+    while(_addr_usb[3] & 2){}
+    _addr_usb[3] = 1;
     return _addr_usb[1];
 }
 
