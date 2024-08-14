@@ -369,9 +369,10 @@ unsigned char mt25ql256aba_read_flag_status_register(){
     return _addr_qspi[2];
 }
 
-unsigned char mt25ql256aba_read_nonvolatile_configuration_register(){
+unsigned short mt25ql256aba_read_nonvolatile_configuration_register(){
     unsigned int cmd = 0xB5;
     cmd += qspi_mode_x1;
+    cmd += 1 << 16;
     cmd += qspi_clk_133;
     _addr_qspi[0] = cmd;
     qspi_wait();
@@ -387,7 +388,7 @@ unsigned char mt25ql256aba_read_volatile_configuration_register(){
     return _addr_qspi[2];
 }
 
-void mt25ql256aba_write_status_register(unsigned short data){
+void mt25ql256aba_write_status_register(unsigned char data){
     unsigned int cmd = 0x01;
     cmd += qspi_mode_x1;
     cmd += qspi_write;
@@ -397,12 +398,43 @@ void mt25ql256aba_write_status_register(unsigned short data){
     qspi_wait();
 }
 
-void mt25ql256aba_wrdi(){
+void mt25ql256aba_write_nonvolatile_configuration_register(unsigned short data){
+    unsigned int cmd = 0xB1;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += 1 << 16;
+    cmd += qspi_clk_133;
+    _addr_qspi[2] = data;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+}
+
+void mt25ql256aba_write_volatile_configuration_register(unsigned char data){
+    unsigned int cmd = 0x81;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += qspi_clk_133;
+    _addr_qspi[2] = data;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+}
+
+void mt25ql256aba_write_enhanced_volatile_configuration_register(unsigned char data){
+    unsigned int cmd = 0x61;
+    cmd += qspi_mode_x1;
+    cmd += qspi_write;
+    cmd += qspi_clk_133;
+    _addr_qspi[2] = data;
+    _addr_qspi[0] = cmd;
+    qspi_wait();
+}
+
+void mt25ql256aba_write_disable(){
     _addr_qspi[0] = qspi_clk_133 + 0x04;
     qspi_wait();
 }
 
-void mt25ql256aba_wren(){
+void mt25ql256aba_write_enable(){
     _addr_qspi[0] = qspi_clk_133 + 0x06;
     qspi_wait();
 }
@@ -470,6 +502,8 @@ unsigned int usb_connected(){
 
 void usb_conf(unsigned int usb_mode){
     _addr_usb[0] = usb_mode;
+    if(usb_mode >= 6) return;
+    if(usb_mode == 0) return;
     while(!usb_connected()){}
 }
 

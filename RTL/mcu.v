@@ -1,6 +1,6 @@
 module mcu(
-    input rst,
-    input clk,
+    input sys_rst,
+    input sys_clk,
     input rx,
     output tx,
     inout sda_io,
@@ -14,6 +14,7 @@ module mcu(
     inout usb_dp,
     inout usb_dn
 );
+    wire clk, rst;
     wire rstn = ~rst;
     wire instr_req, instr_gnt, instr_rvalid;
     wire[31:0] instr_addr, instr_rdata;
@@ -116,5 +117,12 @@ module mcu(
         usb_dp_pull,
         usb_dp,
         usb_dn
+    );
+
+    clk_gen clk_gen(
+        sys_clk,
+        sys_rst,
+        clk,
+        rst
     );
 endmodule

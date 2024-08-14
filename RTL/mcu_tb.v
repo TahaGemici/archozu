@@ -1,15 +1,15 @@
 module mcu_tb();
-    reg clk, rst;
+    reg sys_clk, sys_rst;
     initial begin
-        clk = 0;
+        sys_clk = 0;
         forever begin
-            clk = #(`CLK_PERIOD/2.0) ~clk;
+            sys_clk = #(`CLK_PERIOD/2.0) ~sys_clk;
         end
     end
     initial begin
-        rst = 1;
+        sys_rst = 1;
         #500000; //flash_mem için bu kadar uzun
-        rst = 0;
+        sys_rst = 0;
         #100000000;
         $finish;
     end
@@ -30,7 +30,7 @@ module mcu_tb();
 
     initial begin
         tx_en = 0;
-        wait(rst==0);
+        wait(sys_rst==0);
         #8000000;
         forever begin
             tx_data = rx_data;
@@ -42,7 +42,7 @@ module mcu_tb();
     end
 
     uart_test #(5207) uart_test( //BAUDRATE=9600
-        clk,
+        sys_clk,
 
         tx,
         rx_data,
@@ -56,22 +56,22 @@ module mcu_tb();
     i2c_slave_controller #(121) I2C_slave0(
         scl_io,
         sda_io,
-        rst
+        sys_rst
     );
     i2c_slave_controller #(74) I2C_slave1(
         scl_io,
         sda_io,
-        rst
+        sys_rst
     );
     i2c_slave_controller #(12) I2C_slave2(
         scl_io,
         sda_io,
-        rst
+        sys_rst
     );
     i2c_slave_controller #(31) I2C_slave3(
         scl_io,
         sda_io,
-        rst
+        sys_rst
     );
 
 `ifndef NO_FLASH
@@ -80,7 +80,7 @@ module mcu_tb();
         io[1],
         sclk,
         cs,
-        ~rst,
+        ~sys_rst,
         io[2],
         io[3]
     );
@@ -88,8 +88,8 @@ module mcu_tb();
 `endif
 
     mcu mcu(
-        rst,
-        clk,
+        sys_rst,
+        sys_clk,
         rx,
         tx,
         sda_io,
