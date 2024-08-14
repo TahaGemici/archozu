@@ -92,7 +92,7 @@ module I2C_master(
     always @* begin
         clk_counter_nxt = clk_counter + 1;
         clk_i2c_nxt = clk_i2c;
-        if(clk_counter==124) begin
+        if(clk_counter==74) begin
             clk_counter_nxt = 0;
             clk_i2c_nxt = ~clk_i2c;
         end
