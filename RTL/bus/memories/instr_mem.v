@@ -14,7 +14,7 @@ module instr_mem(
 
     wire[31:0] rom_out;
     rom rom(
-        addr_i[8:2],
+        addr_i[7:2],
         rom_out
     );
     

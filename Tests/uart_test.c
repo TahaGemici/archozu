@@ -9,9 +9,9 @@ int uart_main(){
         } else {
             uart_write(gpio_read()>>8);
             uart_leds = (uart_leds & 0x00ff) + ((unsigned int)uart_read() << 8);
-
         }
         uart_tmp ^= 1;
+        gpio_write(uart_leds);
     }
 }
 
