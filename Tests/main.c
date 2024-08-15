@@ -1,7 +1,7 @@
 #include "peripherals.h"
 
 
-
+/*
 int __attribute__((naked)) main(){
 	asm("li x2, 0x1F00");
 
@@ -27,10 +27,10 @@ int __attribute__((naked)) main(){
             "jalr x0, x2, 0");
 	}
 }
+*/
 
 
 
-/*
 #include "uart_test.c"
 #include "i2c_test.c"
 #include "qspi_test.c"
@@ -80,4 +80,3 @@ void __attribute__((interrupt("machine"))) interrupt(){
     }
 }
 
-*/

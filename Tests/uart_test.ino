@@ -1,5 +1,5 @@
 void setup() {
-  Serial.begin(19200);    // Initialize the Serial monitor for debugging
+  Serial.begin(300000);    // Initialize the Serial monitor for debugging
 }
 
 void loop() {    
