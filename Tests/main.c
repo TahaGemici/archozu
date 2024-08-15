@@ -1,3 +1,4 @@
+#include "peripherals.h"
 #include "uart_test.c"
 #include "i2c_test.c"
 #include "qspi_test.c"
