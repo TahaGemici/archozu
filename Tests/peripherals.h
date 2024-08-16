@@ -487,31 +487,37 @@ void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int m
  //  USB  //
 ///////////
 
-#define USB_RESET 0
 #define USB_AUDIO 1
 #define USB_CAMERA 2
 #define USB_DISK 3
 #define USB_KEYBOARD 4
 #define USB_SERIAL 5
-#define USB_SERIAL2 6
-#define USB_RESET2 7
 
-unsigned int usb_connected(){
-    return _addr_usb[3] & 1;
-}
-
-void usb_conf(unsigned int usb_mode){
+void usb_conf(unsigned char usb_mode){
     _addr_usb[0] = usb_mode;
     if(usb_mode >= 6) return;
     if(usb_mode == 0) return;
-    while(!usb_connected()){}
 }
 
-unsigned int usb_rw(unsigned int in){
+unsigned char usb_rw(unsigned char in){
     _addr_usb[2] = in;
-    while(_addr_usb[3] & 2){}
     _addr_usb[3] = 1;
+    while(_addr_usb[3]){}
+    _addr_usb[3] = 0;
     return _addr_usb[1];
+}
+
+unsigned char usb_read(){
+    while(!_addr_usb[3]){}
+    _addr_usb[3] = 0;
+    return _addr_usb[1];
+}
+
+void usb_write(unsigned char in){
+    _addr_usb[2] = in;
+    _addr_usb[3] = 1;
+    while(_addr_usb[3]){}
+    _addr_usb[3] = 0;
 }
 
   ////////////

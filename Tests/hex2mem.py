@@ -21,6 +21,7 @@ mem = "00000000"
 address = 0
 instr_mem = open("../RTL/bus/memories/instr_mem_no_flash.mem", "w")
 data_mem  = open("../RTL/bus/memories/data_mem_no_flash.mem", "w")
+flash_txt = open("../RTL/bus/memories/flash.txt", "w")
 for i in range(1024*4-1):
     mem+="00000000"
 for line in out.split():
@@ -29,6 +30,9 @@ for line in out.split():
     else:
         mem = mem[:address*2] + line + mem[address*2+2:]
         address += 1
+
+for i in range(0,1024*32,8):
+    flash_txt.write(mem[i+6:i+8]+mem[i+4:i+6]+mem[i+2:i+4]+mem[i:i+2])
 
 for i in range(0,1024*16,8):
     ii = i+1024*16

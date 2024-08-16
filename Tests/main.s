@@ -37,19 +37,19 @@ Disassembly of section .text:
     2050:	02c78663          	beq	a5,a2,0x207c
     2054:	4605                	li	a2,1
     2056:	fcc792e3          	bne	a5,a2,0x201a
-    205a:	019000ef          	jal	0x2872
+    205a:	031000ef          	jal	0x288a
     205e:	02000613          	li	a2,32
     2062:	02c78163          	beq	a5,a2,0x2084
     2066:	04000613          	li	a2,64
     206a:	00c78f63          	beq	a5,a2,0x2088
     206e:	4641                	li	a2,16
     2070:	fac795e3          	bne	a5,a2,0x201a
-    2074:	185000ef          	jal	0x29f8
-    2078:	05f000ef          	jal	0x28d6
-    207c:	099000ef          	jal	0x2914
-    2080:	123000ef          	jal	0x29a2
-    2084:	189000ef          	jal	0x2a0c
-    2088:	281000ef          	jal	0x2b08
+    2074:	193000ef          	jal	0x2a06
+    2078:	077000ef          	jal	0x28ee
+    207c:	0b1000ef          	jal	0x292c
+    2080:	131000ef          	jal	0x29b0
+    2084:	197000ef          	jal	0x2a1a
+    2088:	283000ef          	jal	0x2b0a
 	...
     2200:	7139                	addi	sp,sp,-64
     2202:	cc3e                	sw	a5,24(sp)
@@ -97,7 +97,7 @@ Disassembly of section .text:
     2260:	30200073          	mret
     2264:	02000713          	li	a4,32
     2268:	fce79be3          	bne	a5,a4,0x223e
-    226c:	08b000ef          	jal	0x2af6
+    226c:	08d000ef          	jal	0x2af8
     2270:	b7f9                	j	0x223e
     2272:	04802703          	lw	a4,72(zero) # 0x48
     2276:	fff74713          	not	a4,a4
@@ -111,7 +111,7 @@ Disassembly of section .text:
     228c:	4705                	li	a4,1
     228e:	04e02823          	sw	a4,80(zero) # 0x50
     2292:	b775                	j	0x223e
-    2294:	750000ef          	jal	0x29e4
+    2294:	75e000ef          	jal	0x29f2
     2298:	b75d                	j	0x223e
 
 Disassembly of section .text.uart_conf:
@@ -918,393 +918,394 @@ Disassembly of section .text.timer_conf:
     281c:	0141                	addi	sp,sp,16
     281e:	8082                	ret
 
-Disassembly of section .text.usb_connected:
-
-00002820 <.text.usb_connected>:
-    2820:	67b9                	lui	a5,0xe
-    2822:	47c8                	lw	a0,12(a5)
-    2824:	8905                	andi	a0,a0,1
-    2826:	8082                	ret
-
 Disassembly of section .text.usb_conf:
 
-00002828 <.text.usb_conf>:
-    2828:	67b9                	lui	a5,0xe
-    282a:	c388                	sw	a0,0(a5)
-    282c:	157d                	addi	a0,a0,-1
-    282e:	4791                	li	a5,4
-    2830:	00a7e763          	bltu	a5,a0,0x283e
-    2834:	6739                	lui	a4,0xe
-    2836:	0731                	addi	a4,a4,12 # 0xe00c
-    2838:	431c                	lw	a5,0(a4)
-    283a:	8b85                	andi	a5,a5,1
-    283c:	dff5                	beqz	a5,0x2838
-    283e:	8082                	ret
+00002820 <.text.usb_conf>:
+    2820:	67b9                	lui	a5,0xe
+    2822:	c388                	sw	a0,0(a5)
+    2824:	8082                	ret
 
 Disassembly of section .text.usb_rw:
 
-00002840 <.text.usb_rw>:
-    2840:	67b9                	lui	a5,0xe
-    2842:	c788                	sw	a0,8(a5)
+00002826 <.text.usb_rw>:
+    2826:	67b9                	lui	a5,0xe
+    2828:	c788                	sw	a0,8(a5)
+    282a:	67b9                	lui	a5,0xe
+    282c:	07b1                	addi	a5,a5,12 # 0xe00c
+    282e:	4705                	li	a4,1
+    2830:	c398                	sw	a4,0(a5)
+    2832:	4398                	lw	a4,0(a5)
+    2834:	ff7d                	bnez	a4,0x2832
+    2836:	0007a023          	sw	zero,0(a5)
+    283a:	67b9                	lui	a5,0xe
+    283c:	43c8                	lw	a0,4(a5)
+    283e:	0ff57513          	zext.b	a0,a0
+    2842:	8082                	ret
+
+Disassembly of section .text.usb_read:
+
+00002844 <.text.usb_read>:
     2844:	67b9                	lui	a5,0xe
     2846:	07b1                	addi	a5,a5,12 # 0xe00c
     2848:	4398                	lw	a4,0(a5)
-    284a:	8b09                	andi	a4,a4,2
-    284c:	ff75                	bnez	a4,0x2848
-    284e:	4705                	li	a4,1
-    2850:	c398                	sw	a4,0(a5)
-    2852:	67b9                	lui	a5,0xe
-    2854:	43c8                	lw	a0,4(a5)
-    2856:	8082                	ret
+    284a:	df7d                	beqz	a4,0x2848
+    284c:	0007a023          	sw	zero,0(a5)
+    2850:	67b9                	lui	a5,0xe
+    2852:	43c8                	lw	a0,4(a5)
+    2854:	0ff57513          	zext.b	a0,a0
+    2858:	8082                	ret
+
+Disassembly of section .text.usb_write:
+
+0000285a <.text.usb_write>:
+    285a:	67b9                	lui	a5,0xe
+    285c:	c788                	sw	a0,8(a5)
+    285e:	67b9                	lui	a5,0xe
+    2860:	07b1                	addi	a5,a5,12 # 0xe00c
+    2862:	4705                	li	a4,1
+    2864:	c398                	sw	a4,0(a5)
+    2866:	4398                	lw	a4,0(a5)
+    2868:	ff7d                	bnez	a4,0x2866
+    286a:	0007a023          	sw	zero,0(a5)
+    286e:	8082                	ret
 
 Disassembly of section .text.gpio_write:
 
-00002858 <.text.gpio_write>:
-    2858:	67c1                	lui	a5,0x10
-    285a:	c3c8                	sw	a0,4(a5)
-    285c:	8082                	ret
+00002870 <.text.gpio_write>:
+    2870:	67c1                	lui	a5,0x10
+    2872:	c3c8                	sw	a0,4(a5)
+    2874:	8082                	ret
 
 Disassembly of section .text.gpio_read:
 
-0000285e <.text.gpio_read>:
-    285e:	67c1                	lui	a5,0x10
-    2860:	4388                	lw	a0,0(a5)
-    2862:	0542                	slli	a0,a0,0x10
-    2864:	8141                	srli	a0,a0,0x10
-    2866:	8082                	ret
+00002876 <.text.gpio_read>:
+    2876:	67c1                	lui	a5,0x10
+    2878:	4388                	lw	a0,0(a5)
+    287a:	0542                	slli	a0,a0,0x10
+    287c:	8141                	srli	a0,a0,0x10
+    287e:	8082                	ret
 
 Disassembly of section .text.instr_mem_write:
 
-00002868 <.text.instr_mem_write>:
-    2868:	050a                	slli	a0,a0,0x2
-    286a:	6791                	lui	a5,0x4
-    286c:	97aa                	add	a5,a5,a0
-    286e:	c38c                	sw	a1,0(a5)
-    2870:	8082                	ret
+00002880 <.text.instr_mem_write>:
+    2880:	050a                	slli	a0,a0,0x2
+    2882:	6791                	lui	a5,0x4
+    2884:	97aa                	add	a5,a5,a0
+    2886:	c38c                	sw	a1,0(a5)
+    2888:	8082                	ret
 
 Disassembly of section .text.uart_main:
 
-00002872 <.text.uart_main>:
-    2872:	1101                	addi	sp,sp,-32
-    2874:	cc22                	sw	s0,24(sp)
-    2876:	ca26                	sw	s1,20(sp)
-    2878:	c84a                	sw	s2,16(sp)
-    287a:	c64e                	sw	s3,12(sp)
-    287c:	ce06                	sw	ra,28(sp)
-    287e:	6799                	lui	a5,0x6
-    2880:	0c700713          	li	a4,199
-    2884:	c398                	sw	a4,0(a5)
-    2886:	64c1                	lui	s1,0x10
-    2888:	0007a223          	sw	zero,4(a5) # 0x6004
-    288c:	4401                	li	s0,0
-    288e:	4901                	li	s2,0
-    2890:	69c1                	lui	s3,0x10
-    2892:	0491                	addi	s1,s1,4 # 0x10004
-    2894:	0009a503          	lw	a0,0(s3) # 0x10000
-    2898:	02090363          	beqz	s2,0x28be
-    289c:	0ff57513          	zext.b	a0,a0
-    28a0:	3435                	jal	0x22cc
-    28a2:	f0047413          	andi	s0,s0,-256
-    28a6:	3431                	jal	0x22b2
-    28a8:	9522                	add	a0,a0,s0
-    28aa:	01051413          	slli	s0,a0,0x10
-    28ae:	8441                	srai	s0,s0,0x10
-    28b0:	01041793          	slli	a5,s0,0x10
-    28b4:	83c1                	srli	a5,a5,0x10
-    28b6:	00194913          	xori	s2,s2,1
-    28ba:	c09c                	sw	a5,0(s1)
-    28bc:	bfe1                	j	0x2894
-    28be:	0542                	slli	a0,a0,0x10
-    28c0:	8141                	srli	a0,a0,0x10
-    28c2:	8121                	srli	a0,a0,0x8
-    28c4:	3421                	jal	0x22cc
-    28c6:	32f5                	jal	0x22b2
-    28c8:	0ff47413          	zext.b	s0,s0
-    28cc:	0522                	slli	a0,a0,0x8
-    28ce:	942a                	add	s0,s0,a0
-    28d0:	0442                	slli	s0,s0,0x10
-    28d2:	bff1                	j	0x28ae
+0000288a <.text.uart_main>:
+    288a:	1101                	addi	sp,sp,-32
+    288c:	cc22                	sw	s0,24(sp)
+    288e:	ca26                	sw	s1,20(sp)
+    2890:	c84a                	sw	s2,16(sp)
+    2892:	c64e                	sw	s3,12(sp)
+    2894:	ce06                	sw	ra,28(sp)
+    2896:	6799                	lui	a5,0x6
+    2898:	0c700713          	li	a4,199
+    289c:	c398                	sw	a4,0(a5)
+    289e:	64c1                	lui	s1,0x10
+    28a0:	0007a223          	sw	zero,4(a5) # 0x6004
+    28a4:	4401                	li	s0,0
+    28a6:	4901                	li	s2,0
+    28a8:	69c1                	lui	s3,0x10
+    28aa:	0491                	addi	s1,s1,4 # 0x10004
+    28ac:	0009a503          	lw	a0,0(s3) # 0x10000
+    28b0:	02090363          	beqz	s2,0x28d6
+    28b4:	0ff57513          	zext.b	a0,a0
+    28b8:	3c11                	jal	0x22cc
+    28ba:	f0047413          	andi	s0,s0,-256
+    28be:	3ad5                	jal	0x22b2
+    28c0:	9522                	add	a0,a0,s0
+    28c2:	01051413          	slli	s0,a0,0x10
+    28c6:	8441                	srai	s0,s0,0x10
+    28c8:	01041793          	slli	a5,s0,0x10
+    28cc:	83c1                	srli	a5,a5,0x10
+    28ce:	00194913          	xori	s2,s2,1
+    28d2:	c09c                	sw	a5,0(s1)
+    28d4:	bfe1                	j	0x28ac
+    28d6:	0542                	slli	a0,a0,0x10
+    28d8:	8141                	srli	a0,a0,0x10
+    28da:	8121                	srli	a0,a0,0x8
+    28dc:	3ac5                	jal	0x22cc
+    28de:	3ad1                	jal	0x22b2
+    28e0:	0ff47413          	zext.b	s0,s0
+    28e4:	0522                	slli	a0,a0,0x8
+    28e6:	942a                	add	s0,s0,a0
+    28e8:	0442                	slli	s0,s0,0x10
+    28ea:	bff1                	j	0x28c6
 
 Disassembly of section .text.uart_interrupt:
 
-000028d4 <.text.uart_interrupt>:
-    28d4:	8082                	ret
+000028ec <.text.uart_interrupt>:
+    28ec:	8082                	ret
 
 Disassembly of section .text.i2c_main:
 
-000028d6 <.text.i2c_main>:
-    28d6:	1141                	addi	sp,sp,-16
-    28d8:	c422                	sw	s0,8(sp)
-    28da:	c226                	sw	s1,4(sp)
-    28dc:	c04a                	sw	s2,0(sp)
-    28de:	c606                	sw	ra,12(sp)
-    28e0:	67a1                	lui	a5,0x8
-    28e2:	07b00713          	li	a4,123
-    28e6:	c3d8                	sw	a4,4(a5)
-    28e8:	4605                	li	a2,1
-    28ea:	4581                	li	a1,0
-    28ec:	557d                	li	a0,-1
-    28ee:	64c1                	lui	s1,0x10
-    28f0:	6441                	lui	s0,0x10
-    28f2:	3df5                	jal	0x27ee
-    28f4:	14fd                	addi	s1,s1,-1 # 0xffff
-    28f6:	0411                	addi	s0,s0,4 # 0x10004
-    28f8:	05002783          	lw	a5,80(zero) # 0x50
-    28fc:	dff5                	beqz	a5,0x28f8
-    28fe:	4509                	li	a0,2
-    2900:	3421                	jal	0x2308
-    2902:	8d65                	and	a0,a0,s1
-    2904:	c008                	sw	a0,0(s0)
-    2906:	04002823          	sw	zero,80(zero) # 0x50
-    290a:	b7fd                	j	0x28f8
+000028ee <.text.i2c_main>:
+    28ee:	1141                	addi	sp,sp,-16
+    28f0:	c422                	sw	s0,8(sp)
+    28f2:	c226                	sw	s1,4(sp)
+    28f4:	c04a                	sw	s2,0(sp)
+    28f6:	c606                	sw	ra,12(sp)
+    28f8:	67a1                	lui	a5,0x8
+    28fa:	07b00713          	li	a4,123
+    28fe:	c3d8                	sw	a4,4(a5)
+    2900:	4605                	li	a2,1
+    2902:	4581                	li	a1,0
+    2904:	557d                	li	a0,-1
+    2906:	64c1                	lui	s1,0x10
+    2908:	6441                	lui	s0,0x10
+    290a:	35d5                	jal	0x27ee
+    290c:	14fd                	addi	s1,s1,-1 # 0xffff
+    290e:	0411                	addi	s0,s0,4 # 0x10004
+    2910:	05002783          	lw	a5,80(zero) # 0x50
+    2914:	dff5                	beqz	a5,0x2910
+    2916:	4509                	li	a0,2
+    2918:	3ac5                	jal	0x2308
+    291a:	8d65                	and	a0,a0,s1
+    291c:	c008                	sw	a0,0(s0)
+    291e:	04002823          	sw	zero,80(zero) # 0x50
+    2922:	b7fd                	j	0x2910
 
 Disassembly of section .text.i2c_interrupt:
 
-0000290c <.text.i2c_interrupt>:
-    290c:	4705                	li	a4,1
-    290e:	04e02823          	sw	a4,80(zero) # 0x50
-    2912:	8082                	ret
+00002924 <.text.i2c_interrupt>:
+    2924:	4705                	li	a4,1
+    2926:	04e02823          	sw	a4,80(zero) # 0x50
+    292a:	8082                	ret
 
 Disassembly of section .text.qspi_main:
 
-00002914 <.text.qspi_main>:
-    2914:	4715                	li	a4,5
-    2916:	67b9                	lui	a5,0xe
-    2918:	c398                	sw	a4,0(a5)
-    291a:	6739                	lui	a4,0xe
-    291c:	0731                	addi	a4,a4,12 # 0xe00c
-    291e:	431c                	lw	a5,0(a4)
-    2920:	8b85                	andi	a5,a5,1
-    2922:	dff5                	beqz	a5,0x291e
-    2924:	6741                	lui	a4,0x10
-    2926:	431c                	lw	a5,0(a4)
-    2928:	8b89                	andi	a5,a5,2
-    292a:	c7bd                	beqz	a5,0x2998
-    292c:	1101                	addi	sp,sp,-32
-    292e:	ce06                	sw	ra,28(sp)
-    2930:	ca26                	sw	s1,20(sp)
-    2932:	c64e                	sw	s3,12(sp)
-    2934:	c256                	sw	s5,4(sp)
-    2936:	cc22                	sw	s0,24(sp)
-    2938:	c84a                	sw	s2,16(sp)
-    293a:	c452                	sw	s4,8(sp)
-    293c:	3499                	jal	0x2382
-    293e:	07f00513          	li	a0,127
-    2942:	3db1                	jal	0x279e
-    2944:	4481                	li	s1,0
-    2946:	6a91                	lui	s5,0x4
-    2948:	0e000413          	li	s0,224
-    294c:	02040a13          	addi	s4,s0,32
-    2950:	a831                	j	0x296c
-    2952:	401c                	lw	a5,0(s0)
-    2954:	197d                	addi	s2,s2,-1
-    2956:	07a2                	slli	a5,a5,0x8
-    2958:	c01c                	sw	a5,0(s0)
-    295a:	3aa1                	jal	0x22b2
-    295c:	401c                	lw	a5,0(s0)
-    295e:	97aa                	add	a5,a5,a0
-    2960:	c01c                	sw	a5,0(s0)
-    2962:	fe0918e3          	bnez	s2,0x2952
-    2966:	0411                	addi	s0,s0,4
-    2968:	01440463          	beq	s0,s4,0x2970
-    296c:	4911                	li	s2,4
-    296e:	b7d5                	j	0x2952
-    2970:	8526                	mv	a0,s1
-    2972:	02000613          	li	a2,32
-    2976:	0e000593          	li	a1,224
-    297a:	02048493          	addi	s1,s1,32
-    297e:	3381                	jal	0x26be
-    2980:	fd5494e3          	bne	s1,s5,0x2948
-    2984:	40f2                	lw	ra,28(sp)
-    2986:	4462                	lw	s0,24(sp)
-    2988:	44d2                	lw	s1,20(sp)
-    298a:	4942                	lw	s2,16(sp)
-    298c:	49b2                	lw	s3,12(sp)
-    298e:	4a22                	lw	s4,8(sp)
-    2990:	4a92                	lw	s5,4(sp)
-    2992:	4501                	li	a0,0
-    2994:	6105                	addi	sp,sp,32
-    2996:	8082                	ret
-    2998:	431c                	lw	a5,0(a4)
-    299a:	8b85                	andi	a5,a5,1
-    299c:	d7c9                	beqz	a5,0x2926
-    299e:	a001                	j	0x299e
+0000292c <.text.qspi_main>:
+    292c:	4715                	li	a4,5
+    292e:	67b9                	lui	a5,0xe
+    2930:	c398                	sw	a4,0(a5)
+    2932:	6741                	lui	a4,0x10
+    2934:	431c                	lw	a5,0(a4)
+    2936:	8b89                	andi	a5,a5,2
+    2938:	c7bd                	beqz	a5,0x29a6
+    293a:	1101                	addi	sp,sp,-32
+    293c:	ce06                	sw	ra,28(sp)
+    293e:	ca26                	sw	s1,20(sp)
+    2940:	c64e                	sw	s3,12(sp)
+    2942:	c256                	sw	s5,4(sp)
+    2944:	cc22                	sw	s0,24(sp)
+    2946:	c84a                	sw	s2,16(sp)
+    2948:	c452                	sw	s4,8(sp)
+    294a:	3c25                	jal	0x2382
+    294c:	07f00513          	li	a0,127
+    2950:	35b9                	jal	0x279e
+    2952:	4481                	li	s1,0
+    2954:	6a91                	lui	s5,0x4
+    2956:	0e000413          	li	s0,224
+    295a:	02040a13          	addi	s4,s0,32
+    295e:	a831                	j	0x297a
+    2960:	401c                	lw	a5,0(s0)
+    2962:	197d                	addi	s2,s2,-1
+    2964:	07a2                	slli	a5,a5,0x8
+    2966:	c01c                	sw	a5,0(s0)
+    2968:	32a9                	jal	0x22b2
+    296a:	401c                	lw	a5,0(s0)
+    296c:	97aa                	add	a5,a5,a0
+    296e:	c01c                	sw	a5,0(s0)
+    2970:	fe0918e3          	bnez	s2,0x2960
+    2974:	0411                	addi	s0,s0,4
+    2976:	01440463          	beq	s0,s4,0x297e
+    297a:	4911                	li	s2,4
+    297c:	b7d5                	j	0x2960
+    297e:	8526                	mv	a0,s1
+    2980:	02000613          	li	a2,32
+    2984:	0e000593          	li	a1,224
+    2988:	02048493          	addi	s1,s1,32
+    298c:	3b0d                	jal	0x26be
+    298e:	fd5494e3          	bne	s1,s5,0x2956
+    2992:	40f2                	lw	ra,28(sp)
+    2994:	4462                	lw	s0,24(sp)
+    2996:	44d2                	lw	s1,20(sp)
+    2998:	4942                	lw	s2,16(sp)
+    299a:	49b2                	lw	s3,12(sp)
+    299c:	4a22                	lw	s4,8(sp)
+    299e:	4a92                	lw	s5,4(sp)
+    29a0:	4501                	li	a0,0
+    29a2:	6105                	addi	sp,sp,32
+    29a4:	8082                	ret
+    29a6:	431c                	lw	a5,0(a4)
+    29a8:	8b85                	andi	a5,a5,1
+    29aa:	d7c9                	beqz	a5,0x2934
+    29ac:	a001                	j	0x29ac
 
 Disassembly of section .text.qspi_interrupt:
 
-000029a0 <.text.qspi_interrupt>:
-    29a0:	8082                	ret
+000029ae <.text.qspi_interrupt>:
+    29ae:	8082                	ret
 
 Disassembly of section .text.timer_main:
 
-000029a2 <.text.timer_main>:
-    29a2:	1101                	addi	sp,sp,-32
-    29a4:	653d                	lui	a0,0xf
-    29a6:	cc22                	sw	s0,24(sp)
-    29a8:	c84a                	sw	s2,16(sp)
-    29aa:	4605                	li	a2,1
-    29ac:	4581                	li	a1,0
-    29ae:	a5f50513          	addi	a0,a0,-1441 # 0xea5f
-    29b2:	6441                	lui	s0,0x10
-    29b4:	6931                	lui	s2,0xc
-    29b6:	ca26                	sw	s1,20(sp)
-    29b8:	c64e                	sw	s3,12(sp)
-    29ba:	ce06                	sw	ra,28(sp)
-    29bc:	3d0d                	jal	0x27ee
-    29be:	fff40493          	addi	s1,s0,-1 # 0xffff
-    29c2:	0911                	addi	s2,s2,4 # 0xc004
-    29c4:	04c02703          	lw	a4,76(zero) # 0x4c
-    29c8:	401c                	lw	a5,0(s0)
-    29ca:	8fe5                	and	a5,a5,s1
-    29cc:	fee78ee3          	beq	a5,a4,0x29c8
-    29d0:	401c                	lw	a5,0(s0)
-    29d2:	8fe5                	and	a5,a5,s1
-    29d4:	00f92023          	sw	a5,0(s2)
-    29d8:	3511                	jal	0x27dc
-    29da:	401c                	lw	a5,0(s0)
-    29dc:	8fe5                	and	a5,a5,s1
-    29de:	04f02623          	sw	a5,76(zero) # 0x4c
-    29e2:	b7cd                	j	0x29c4
+000029b0 <.text.timer_main>:
+    29b0:	1101                	addi	sp,sp,-32
+    29b2:	653d                	lui	a0,0xf
+    29b4:	cc22                	sw	s0,24(sp)
+    29b6:	c84a                	sw	s2,16(sp)
+    29b8:	4605                	li	a2,1
+    29ba:	4581                	li	a1,0
+    29bc:	a5f50513          	addi	a0,a0,-1441 # 0xea5f
+    29c0:	6441                	lui	s0,0x10
+    29c2:	6931                	lui	s2,0xc
+    29c4:	ca26                	sw	s1,20(sp)
+    29c6:	c64e                	sw	s3,12(sp)
+    29c8:	ce06                	sw	ra,28(sp)
+    29ca:	3515                	jal	0x27ee
+    29cc:	fff40493          	addi	s1,s0,-1 # 0xffff
+    29d0:	0911                	addi	s2,s2,4 # 0xc004
+    29d2:	04c02703          	lw	a4,76(zero) # 0x4c
+    29d6:	401c                	lw	a5,0(s0)
+    29d8:	8fe5                	and	a5,a5,s1
+    29da:	fee78ee3          	beq	a5,a4,0x29d6
+    29de:	401c                	lw	a5,0(s0)
+    29e0:	8fe5                	and	a5,a5,s1
+    29e2:	00f92023          	sw	a5,0(s2)
+    29e6:	3bdd                	jal	0x27dc
+    29e8:	401c                	lw	a5,0(s0)
+    29ea:	8fe5                	and	a5,a5,s1
+    29ec:	04f02623          	sw	a5,76(zero) # 0x4c
+    29f0:	b7cd                	j	0x29d2
 
 Disassembly of section .text.timer_interrupt:
 
-000029e4 <.text.timer_interrupt>:
-    29e4:	11405683          	lhu	a3,276(zero) # 0x114
-    29e8:	6741                	lui	a4,0x10
-    29ea:	c354                	sw	a3,4(a4)
-    29ec:	11402703          	lw	a4,276(zero) # 0x114
-    29f0:	0705                	addi	a4,a4,1 # 0x10001
-    29f2:	10e02a23          	sw	a4,276(zero) # 0x114
-    29f6:	8082                	ret
+000029f2 <.text.timer_interrupt>:
+    29f2:	11405683          	lhu	a3,276(zero) # 0x114
+    29f6:	6741                	lui	a4,0x10
+    29f8:	c354                	sw	a3,4(a4)
+    29fa:	11402703          	lw	a4,276(zero) # 0x114
+    29fe:	0705                	addi	a4,a4,1 # 0x10001
+    2a00:	10e02a23          	sw	a4,276(zero) # 0x114
+    2a04:	8082                	ret
 
 Disassembly of section .text.gpio_main:
 
-000029f8 <.text.gpio_main>:
-    29f8:	66c1                	lui	a3,0x10
-    29fa:	67c1                	lui	a5,0x10
-    29fc:	fff68613          	addi	a2,a3,-1 # 0xffff
-    2a00:	0791                	addi	a5,a5,4 # 0x10004
-    2a02:	4298                	lw	a4,0(a3)
-    2a04:	8f71                	and	a4,a4,a2
-    2a06:	c398                	sw	a4,0(a5)
-    2a08:	bfed                	j	0x2a02
+00002a06 <.text.gpio_main>:
+    2a06:	66c1                	lui	a3,0x10
+    2a08:	67c1                	lui	a5,0x10
+    2a0a:	fff68613          	addi	a2,a3,-1 # 0xffff
+    2a0e:	0791                	addi	a5,a5,4 # 0x10004
+    2a10:	4298                	lw	a4,0(a3)
+    2a12:	8f71                	and	a4,a4,a2
+    2a14:	c398                	sw	a4,0(a5)
+    2a16:	bfed                	j	0x2a10
 
 Disassembly of section .text.gpio_interrupt:
 
-00002a0a <.text.gpio_interrupt>:
-    2a0a:	8082                	ret
+00002a18 <.text.gpio_interrupt>:
+    2a18:	8082                	ret
 
 Disassembly of section .text.usb_main:
 
-00002a0c <.text.usb_main>:
-    2a0c:	7179                	addi	sp,sp,-48
-    2a0e:	d04a                	sw	s2,32(sp)
-    2a10:	4605                	li	a2,1
-    2a12:	4581                	li	a1,0
-    2a14:	557d                	li	a0,-1
-    2a16:	6939                	lui	s2,0xe
-    2a18:	d422                	sw	s0,40(sp)
-    2a1a:	d226                	sw	s1,36(sp)
-    2a1c:	ce4e                	sw	s3,28(sp)
-    2a1e:	cc52                	sw	s4,24(sp)
-    2a20:	ca56                	sw	s5,20(sp)
-    2a22:	d606                	sw	ra,44(sp)
-    2a24:	c85a                	sw	s6,16(sp)
-    2a26:	c65e                	sw	s7,12(sp)
-    2a28:	c462                	sw	s8,8(sp)
-    2a2a:	c266                	sw	s9,4(sp)
-    2a2c:	33c9                	jal	0x27ee
-    2a2e:	4a85                	li	s5,1
-    2a30:	0931                	addi	s2,s2,12 # 0xe00c
-    2a32:	6b41                	lui	s6,0x10
-    2a34:	000b2783          	lw	a5,0(s6) # 0x10000
-    2a38:	4701                	li	a4,0
-    2a3a:	4681                	li	a3,0
-    2a3c:	0ff7f793          	zext.b	a5,a5
-    2a40:	10f02823          	sw	a5,272(zero) # 0x110
-    2a44:	00170613          	addi	a2,a4,1
-    2a48:	efad                	bnez	a5,0x2ac2
-    2a4a:	e2c1                	bnez	a3,0x2aca
-    2a4c:	10002423          	sw	zero,264(zero) # 0x108
-    2a50:	10802503          	lw	a0,264(zero) # 0x108
-    2a54:	10402783          	lw	a5,260(zero) # 0x104
-    2a58:	00f50363          	beq	a0,a5,0x2a5e
-    2a5c:	33f1                	jal	0x2828
-    2a5e:	10802783          	lw	a5,264(zero) # 0x108
-    2a62:	10f02223          	sw	a5,260(zero) # 0x104
-    2a66:	00092703          	lw	a4,0(s2)
-    2a6a:	07a2                	slli	a5,a5,0x8
-    2a6c:	8b05                	andi	a4,a4,1
-    2a6e:	97ba                	add	a5,a5,a4
-    2a70:	07c2                	slli	a5,a5,0x10
-    2a72:	83c1                	srli	a5,a5,0x10
-    2a74:	6741                	lui	a4,0x10
-    2a76:	c35c                	sw	a5,4(a4)
-    2a78:	10802783          	lw	a5,264(zero) # 0x108
-    2a7c:	4711                	li	a4,4
-    2a7e:	06e78463          	beq	a5,a4,0x2ae6
-    2a82:	04f76963          	bltu	a4,a5,0x2ad4
-    2a86:	05578a63          	beq	a5,s5,0x2ada
-    2a8a:	4709                	li	a4,2
-    2a8c:	fae794e3          	bne	a5,a4,0x2a34
-    2a90:	4501                	li	a0,0
-    2a92:	337d                	jal	0x2840
-    2a94:	4b81                	li	s7,0
-    2a96:	14000c13          	li	s8,320
-    2a9a:	0b400c93          	li	s9,180
-    2a9e:	4b01                	li	s6,0
-    2aa0:	10c02503          	lw	a0,268(zero) # 0x10c
-    2aa4:	955e                	add	a0,a0,s7
-    2aa6:	955a                	add	a0,a0,s6
-    2aa8:	0b05                	addi	s6,s6,1
-    2aaa:	3b59                	jal	0x2840
-    2aac:	ff8b1ae3          	bne	s6,s8,0x2aa0
-    2ab0:	0b85                	addi	s7,s7,1
-    2ab2:	ff9b96e3          	bne	s7,s9,0x2a9e
-    2ab6:	10c02783          	lw	a5,268(zero) # 0x10c
-    2aba:	0785                	addi	a5,a5,1
-    2abc:	10f02623          	sw	a5,268(zero) # 0x10c
-    2ac0:	bf8d                	j	0x2a32
-    2ac2:	8385                	srli	a5,a5,0x1
-    2ac4:	8732                	mv	a4,a2
-    2ac6:	4685                	li	a3,1
-    2ac8:	bfb5                	j	0x2a44
-    2aca:	10e02423          	sw	a4,264(zero) # 0x108
-    2ace:	10002823          	sw	zero,272(zero) # 0x110
-    2ad2:	bfbd                	j	0x2a50
-    2ad4:	4715                	li	a4,5
-    2ad6:	f4e79fe3          	bne	a5,a4,0x2a34
-    2ada:	11002503          	lw	a0,272(zero) # 0x110
-    2ade:	338d                	jal	0x2840
-    2ae0:	10a02823          	sw	a0,272(zero) # 0x110
-    2ae4:	b7b9                	j	0x2a32
-    2ae6:	000b2783          	lw	a5,0(s6)
-    2aea:	07c2                	slli	a5,a5,0x10
-    2aec:	83c1                	srli	a5,a5,0x10
-    2aee:	83a1                	srli	a5,a5,0x8
-    2af0:	10f02823          	sw	a5,272(zero) # 0x110
-    2af4:	bf3d                	j	0x2a32
+00002a1a <.text.usb_main>:
+    2a1a:	7179                	addi	sp,sp,-48
+    2a1c:	4605                	li	a2,1
+    2a1e:	4581                	li	a1,0
+    2a20:	557d                	li	a0,-1
+    2a22:	d422                	sw	s0,40(sp)
+    2a24:	d226                	sw	s1,36(sp)
+    2a26:	d04a                	sw	s2,32(sp)
+    2a28:	ce4e                	sw	s3,28(sp)
+    2a2a:	cc52                	sw	s4,24(sp)
+    2a2c:	ca56                	sw	s5,20(sp)
+    2a2e:	d606                	sw	ra,44(sp)
+    2a30:	c85a                	sw	s6,16(sp)
+    2a32:	c65e                	sw	s7,12(sp)
+    2a34:	c462                	sw	s8,8(sp)
+    2a36:	c266                	sw	s9,4(sp)
+    2a38:	69c1                	lui	s3,0x10
+    2a3a:	3b55                	jal	0x27ee
+    2a3c:	4a85                	li	s5,1
+    2a3e:	4691                	li	a3,4
+    2a40:	0009a783          	lw	a5,0(s3) # 0x10000
+    2a44:	4701                	li	a4,0
+    2a46:	4601                	li	a2,0
+    2a48:	0ff7f793          	zext.b	a5,a5
+    2a4c:	10f02823          	sw	a5,272(zero) # 0x110
+    2a50:	00170593          	addi	a1,a4,1
+    2a54:	e7b5                	bnez	a5,0x2ac0
+    2a56:	ea2d                	bnez	a2,0x2ac8
+    2a58:	10002423          	sw	zero,264(zero) # 0x108
+    2a5c:	10802783          	lw	a5,264(zero) # 0x108
+    2a60:	10402703          	lw	a4,260(zero) # 0x104
+    2a64:	00e78663          	beq	a5,a4,0x2a70
+    2a68:	0ff7f793          	zext.b	a5,a5
+    2a6c:	6739                	lui	a4,0xe
+    2a6e:	c31c                	sw	a5,0(a4)
+    2a70:	10802783          	lw	a5,264(zero) # 0x108
+    2a74:	10f02223          	sw	a5,260(zero) # 0x104
+    2a78:	06d78863          	beq	a5,a3,0x2ae8
+    2a7c:	04f6eb63          	bltu	a3,a5,0x2ad2
+    2a80:	05578e63          	beq	a5,s5,0x2adc
+    2a84:	4709                	li	a4,2
+    2a86:	fae79de3          	bne	a5,a4,0x2a40
+    2a8a:	4501                	li	a0,0
+    2a8c:	33f9                	jal	0x285a
+    2a8e:	4b81                	li	s7,0
+    2a90:	14000c13          	li	s8,320
+    2a94:	0b400c93          	li	s9,180
+    2a98:	4b01                	li	s6,0
+    2a9a:	10c02503          	lw	a0,268(zero) # 0x10c
+    2a9e:	955e                	add	a0,a0,s7
+    2aa0:	955a                	add	a0,a0,s6
+    2aa2:	0ff57513          	zext.b	a0,a0
+    2aa6:	0b05                	addi	s6,s6,1
+    2aa8:	3b4d                	jal	0x285a
+    2aaa:	ff8b18e3          	bne	s6,s8,0x2a9a
+    2aae:	0b85                	addi	s7,s7,1
+    2ab0:	ff9b94e3          	bne	s7,s9,0x2a98
+    2ab4:	10c02783          	lw	a5,268(zero) # 0x10c
+    2ab8:	0785                	addi	a5,a5,1
+    2aba:	10f02623          	sw	a5,268(zero) # 0x10c
+    2abe:	b741                	j	0x2a3e
+    2ac0:	8385                	srli	a5,a5,0x1
+    2ac2:	872e                	mv	a4,a1
+    2ac4:	4605                	li	a2,1
+    2ac6:	b769                	j	0x2a50
+    2ac8:	10e02423          	sw	a4,264(zero) # 0x108
+    2acc:	10002823          	sw	zero,272(zero) # 0x110
+    2ad0:	b771                	j	0x2a5c
+    2ad2:	4715                	li	a4,5
+    2ad4:	f6e796e3          	bne	a5,a4,0x2a40
+    2ad8:	33b5                	jal	0x2844
+    2ada:	a021                	j	0x2ae2
+    2adc:	11004503          	lbu	a0,272(zero) # 0x110
+    2ae0:	3399                	jal	0x2826
+    2ae2:	10a02823          	sw	a0,272(zero) # 0x110
+    2ae6:	bfa1                	j	0x2a3e
+    2ae8:	0009a783          	lw	a5,0(s3)
+    2aec:	07c2                	slli	a5,a5,0x10
+    2aee:	83c1                	srli	a5,a5,0x10
+    2af0:	83a1                	srli	a5,a5,0x8
+    2af2:	10f02823          	sw	a5,272(zero) # 0x110
+    2af6:	b7a1                	j	0x2a3e
 
 Disassembly of section .text.usb_interrupt:
 
-00002af6 <.text.usb_interrupt>:
-    2af6:	10802703          	lw	a4,264(zero) # 0x108
-    2afa:	4791                	li	a5,4
-    2afc:	00f71563          	bne	a4,a5,0x2b06
-    2b00:	11002503          	lw	a0,272(zero) # 0x110
-    2b04:	bb35                	j	0x2840
-    2b06:	8082                	ret
+00002af8 <.text.usb_interrupt>:
+    2af8:	10802703          	lw	a4,264(zero) # 0x108
+    2afc:	4791                	li	a5,4
+    2afe:	00f71563          	bne	a4,a5,0x2b08
+    2b02:	11004503          	lbu	a0,272(zero) # 0x110
+    2b06:	bb91                	j	0x285a
+    2b08:	8082                	ret
 
 Disassembly of section .text.debug_main:
 
-00002b08 <.text.debug_main>:
-    2b08:	66c1                	lui	a3,0x10
-    2b0a:	6741                	lui	a4,0x10
-    2b0c:	fff68613          	addi	a2,a3,-1 # 0xffff
-    2b10:	0711                	addi	a4,a4,4 # 0x10004
-    2b12:	429c                	lw	a5,0(a3)
-    2b14:	8ff1                	and	a5,a5,a2
-    2b16:	0786                	slli	a5,a5,0x1
-    2b18:	0007d783          	lhu	a5,0(a5)
-    2b1c:	c31c                	sw	a5,0(a4)
-    2b1e:	bfd5                	j	0x2b12
+00002b0a <.text.debug_main>:
+    2b0a:	66c1                	lui	a3,0x10
+    2b0c:	6741                	lui	a4,0x10
+    2b0e:	fff68613          	addi	a2,a3,-1 # 0xffff
+    2b12:	0711                	addi	a4,a4,4 # 0x10004
+    2b14:	429c                	lw	a5,0(a3)
+    2b16:	8ff1                	and	a5,a5,a2
+    2b18:	0786                	slli	a5,a5,0x1
+    2b1a:	0007d783          	lhu	a5,0(a5)
+    2b1e:	c31c                	sw	a5,0(a4)
+    2b20:	bfd5                	j	0x2b14
