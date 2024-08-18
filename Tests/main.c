@@ -10,7 +10,7 @@
 // ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
 
 volatile unsigned short main_state = 0;
-volatile unsigned int main_gpio_val = 0x5555;
+volatile unsigned short main_gpio_val = 0x5555;
 
 int __attribute__((naked)) main(){
     gpio_write(main_gpio_val);

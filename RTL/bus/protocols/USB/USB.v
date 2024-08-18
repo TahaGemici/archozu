@@ -197,6 +197,7 @@ module USB(
         wraddr_perip = USB_RDR;
         rdaddr_perip = USB_TDR;
         keyboard_req = 1'b0;
+        serial_send_valid = 1'b0;
 
         case(state)
             AUDIO: begin
@@ -235,7 +236,7 @@ module USB(
                 end
                 
                 if(serial_recv_valid_prv) begin
-                    data_i_perip = 1;
+                    data_i_perip = 2;
                     wraddr_perip = USB_STA;
                     write_perip = 1'b1;
                 end
