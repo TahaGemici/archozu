@@ -1,5 +1,5 @@
-unsigned int usb_tmp=0, usb_tmp2=0;
-unsigned int usb_state=0, usb_old_state=0;
+volatile unsigned int usb_tmp=0, usb_tmp2=0;
+volatile unsigned int usb_state=0, usb_old_state=0;
 
 int usb_main(){
     timer_conf(-1,0,1);
@@ -14,7 +14,7 @@ int usb_main(){
         usb_old_state = usb_state;
         switch(usb_state){
             case USB_AUDIO:
-                usb_tmp = usb_rw(usb_tmp);
+                usb_tmp2 = usb_audio(usb_tmp2);
                 break;
             case USB_CAMERA:
                 usb_write(0);
@@ -26,15 +26,16 @@ int usb_main(){
                 usb_tmp2++;
                 break;
             case USB_KEYBOARD:
-                usb_tmp = gpio_read() >> 8;
+                usb_tmp2 = gpio_read() >> 8;
                 break;
             case USB_SERIAL:
-                usb_tmp = usb_read();
+                usb_tmp2 = usb_serial_read();
+                usb_write(usb_tmp2);
                 break;
         }
     }
 }
 
 void usb_interrupt(){
-    if(usb_state==USB_KEYBOARD) usb_write(usb_tmp);
+    if(usb_state==USB_KEYBOARD) usb_write(usb_tmp2);
 }

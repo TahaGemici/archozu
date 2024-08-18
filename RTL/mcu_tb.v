@@ -87,6 +87,7 @@ module mcu_tb();
 
 `endif
 
+    wire usb_dp_pull, usb_dp, usb_dn;
     mcu mcu(
         sys_rst,
         sys_clk,
@@ -98,6 +99,9 @@ module mcu_tb();
         cs,
         io,
         in,
-        out
+        out,
+        usb_dp_pull,
+        usb_dp,
+        usb_dn
     );
 endmodule

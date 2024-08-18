@@ -20,15 +20,16 @@ int __attribute__((naked)) main(){
         if(main_state){
             gpio_write(0);
             timer_enabled(0);
-        }
-        switch(main_state){
-            case 1: uart_main();
-            case 2: i2c_main();
-            case 4: qspi_main();
-            case 8: timer_main();
-            case 16: gpio_main();
-            case 32: usb_main();
-            case 64: debug_main(); // for debug purposes only
+            while(gpio_read()){}
+            switch(main_state){
+                case 1: uart_main();
+                case 2: i2c_main();
+                case 4: qspi_main();
+                case 8: timer_main();
+                case 16: gpio_main();
+                case 32: usb_main();
+                default: debug_main(); // for debug purposes only
+            }
         }
     }
 }

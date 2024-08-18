@@ -7,18 +7,19 @@ module USB(
     input [31:0] wdata_i,
     output [31:0] rdata_o,
 
-	output reg usb_dp_pull_o,
+	output usb_dp_pull_o,
     inout usb_dp_io,
     inout usb_dn_io
 );
-
-	wire[2:0] USB_CCR_nxt;
+	
+    wire[2:0] USB_CCR_nxt;
     //localparam USB_CCR = 0;
 
 	localparam USB_RDR = 4;
 	localparam USB_TDR = 8;
 	localparam USB_STA = 12;
 
+    
     reg write_perip;
     reg[31:0] wraddr_perip;
     reg[31:0] data_i_perip;
@@ -52,27 +53,37 @@ module USB(
     localparam SERIAL   = 5;
 
     reg[2:0] state, state_nxt;
-    reg[7:0] rstn;
+    wire[3:0] usb_ports[0:5];
+    assign usb_ports[0][0] = 0;
+    assign usb_ports[0][1] = 0;
+    assign usb_ports[0][2] = 0;
+    assign usb_ports[0][3] = 0;
+    wire[5:1] rstn;
+    assign rstn[1] = (~rst_i) & (state==1);
+    assign rstn[2] = (~rst_i) & (state==2);
+    assign rstn[3] = (~rst_i) & (state==3);
+    assign rstn[4] = (~rst_i) & (state==4);
+    assign rstn[5] = (~rst_i) & (state==5);
 
-    reg usb_dp_o, usb_dn_o;
-    assign usb_dp_io = usb_dp_o;
-    assign usb_dn_io = usb_dn_o;
+    assign usb_dp_pull_o = usb_ports[state][0];
+    assign usb_dp_io = usb_ports[state][1] ? usb_ports[state][2] : 1'bz;
+    assign usb_dn_io = usb_ports[state][1] ? usb_ports[state][3] : 1'bz;
 
     always @(posedge clk_i) begin
         state <= state_nxt;
     end
     
-    wire audio_dp, audio_dn, audio_pull, audio_oe, audio_en;
+    wire audio_en;
     wire[31:0] audio_out;
     reg audio_en_prv;
     always @(posedge clk_i) audio_en_prv <= audio_en;
     usb_audio_top usb_audio_top(
-        rstn[AUDIO],
+        rstn[1],
         clk_i,
-        audio_pull,
-        audio_oe,
-        audio_dp,
-        audio_dn,
+        usb_ports[1][0],
+        usb_ports[1][1],
+        usb_ports[1][2],
+        usb_ports[1][3],
         usb_dp_io,
         usb_dn_io,
         ,
@@ -86,15 +97,14 @@ module USB(
 
     );
 
-    wire camera_dp, camera_dn, camera_pull, camera_oe;
     wire camera_vf_sof, camera_vf_req;
     usb_camera_top #("MONO", 14'd320, 14'd180, "FALSE") usb_camera_top(
-        rstn[CAMERA],
+        rstn[2],
         clk_i,
-        camera_pull,
-        camera_oe,
-        camera_dp,
-        camera_dn,
+        usb_ports[2][0],
+        usb_ports[2][1],
+        usb_ports[2][2],
+        usb_ports[2][3],
         usb_dp_io,
         usb_dn_io,
         ,
@@ -106,18 +116,17 @@ module USB(
 
     );
     
-    wire disk_dp, disk_dn, disk_pull, disk_oe;
     wire[40:0] mem_addr;
     wire mem_wen;
     wire[7:0] mem_wdata;
     wire[7:0] mem_rdata;
     usb_disk_top #(64, "FALSE") usb_disk_top(
-        rstn[DISK],
+        rstn[3],
         clk_i,
-        disk_pull,
-        disk_oe,
-        disk_dp,
-        disk_dn,
+        usb_ports[3][0],
+        usb_ports[3][1],
+        usb_ports[3][2],
+        usb_ports[3][3],
         usb_dp_io,
         usb_dn_io,
         ,
@@ -130,15 +139,14 @@ module USB(
 
     );
     
-    wire keyboard_dp, keyboard_dn, keyboard_pull, keyboard_oe;
     reg keyboard_req;
     usb_keyboard_top usb_keyboard_top(
-        rstn[KEYBOARD],
+        rstn[4],
         clk_i,
-        keyboard_pull,
-        keyboard_oe,
-        keyboard_dp,
-        keyboard_dn,
+        usb_ports[4][0],
+        usb_ports[4][1],
+        usb_ports[4][2],
+        usb_ports[4][3],
         usb_dp_io,
         usb_dn_io,
         ,
@@ -149,19 +157,18 @@ module USB(
 
     );
 
-    wire serial_dp, serial_dn, serial_pull, serial_oe;
     wire[7:0] serial_out;
     wire serial_recv_valid, serial_send_ready;
     reg serial_send_valid;
     reg serial_recv_valid_prv;
     always @(posedge clk_i) serial_recv_valid_prv <= serial_recv_valid;
     usb_serial_top usb_serial_top(
-        rstn[SERIAL],
+        rstn[5],
         clk_i,
-        serial_pull,
-        serial_oe,
-        serial_dp,
-        serial_dn,
+        usb_ports[5][0],
+        usb_ports[5][1],
+        usb_ports[5][2],
+        usb_ports[5][3],
         usb_dp_io,
         usb_dn_io,
         ,
@@ -176,27 +183,23 @@ module USB(
     );
     
     always @* begin
-        state_nxt = USB_CCR_nxt;
+        case(USB_CCR_nxt)
+            3'd0: state_nxt = 0;
+            3'd1: state_nxt = 1;
+            3'd2: state_nxt = 2;
+            3'd3: state_nxt = 3;
+            3'd4: state_nxt = 4;
+            default: state_nxt = 5;
+        endcase
+        
         write_perip = 1'b0;
         data_i_perip = 0;
         wraddr_perip = USB_RDR;
         rdaddr_perip = USB_TDR;
-        rstn = 0;
-        rstn[state] = 1;
         keyboard_req = 1'b0;
 
         case(state)
-            default: begin
-                usb_dp_pull_o = 1'b0;
-                usb_dp_o = 1'b0;
-                usb_dn_o = 1'b0;
-            end
-
             AUDIO: begin
-                usb_dp_pull_o = audio_pull;
-                usb_dp_o = audio_oe ? audio_dp : 1'bz;
-                usb_dn_o = audio_oe ? audio_dn : 1'bz;
-
                 if(audio_en) begin
                     data_i_perip = audio_out;
                     write_perip = 1'b1;
@@ -209,10 +212,6 @@ module USB(
             end
 
             CAMERA: begin
-                usb_dp_pull_o = camera_pull;
-                usb_dp_o = camera_oe ? camera_dp : 1'bz;
-                usb_dn_o = camera_oe ? camera_dn : 1'bz;
-
                 if(camera_vf_sof | camera_vf_req) begin
                     wraddr_perip = USB_STA;
                     write_perip = 1'b1;
@@ -220,16 +219,9 @@ module USB(
             end
 
             DISK: begin
-                usb_dp_pull_o = disk_pull;
-                usb_dp_o = disk_oe ? disk_dp : 1'bz;
-                usb_dn_o = disk_oe ? disk_dn : 1'bz;
             end
 
             KEYBOARD: begin
-                usb_dp_pull_o = keyboard_pull;
-                usb_dp_o = keyboard_oe ? keyboard_dp : 1'bz;
-                usb_dn_o = keyboard_oe ? keyboard_dn : 1'bz;
-
                 if(USB_STA_o) begin
                     keyboard_req = 1'b1;
                     write_perip = 1'b1;
@@ -237,17 +229,13 @@ module USB(
                 end
             end
             SERIAL: begin
-                usb_dp_pull_o = serial_pull;
-                usb_dp_o = serial_oe ? serial_dp : 1'bz;
-                usb_dn_o = serial_oe ? serial_dn : 1'bz;
-
                 if(serial_recv_valid) begin
                     data_i_perip = {24'b0, serial_out};
                     write_perip = 1'b1;
                 end
                 
                 if(serial_recv_valid_prv) begin
-                    data_i_perip = 2;
+                    data_i_perip = 1;
                     wraddr_perip = USB_STA;
                     write_perip = 1'b1;
                 end
@@ -260,6 +248,12 @@ module USB(
                 end
             end
         endcase
+
+        if(rst_i) begin
+            data_i_perip = 0;
+            wraddr_perip = USB_STA;
+            write_perip = 1'b1;
+        end
     end
 
 
@@ -355,3 +349,208 @@ xpm_memory_spram_inst (
 `endif
 
 endmodule
+
+
+/*
+module USB(
+    input clk60mhz,
+    input button,
+    input write_i,
+    input [3:0] data_be_i,
+    input [3:0] addr_i,
+    input [31:0] wdata_i,
+    output [31:0] rdata_o,
+
+	output usb_dp_pull,
+    inout usb_dp,
+    inout usb_dn
+);
+
+    assign rdata_o = 0;
+    wire[1:0] in = 0;
+
+
+
+reg[1:0] state, state_nxt;
+wire[3:0] usb_ports[0:3];
+
+assign usb_dp_pull = usb_ports[state][0];
+assign usb_dp = usb_ports[state][1] ? usb_ports[state][2] : 1'bz;
+assign usb_dn = usb_ports[state][1] ? usb_ports[state][3] : 1'bz;
+
+always @(posedge clk60mhz) begin
+    state <= state_nxt;
+end
+
+always @* begin
+    state_nxt = in;
+end
+
+
+
+
+
+
+
+
+
+
+// here we simply make a loopback connection for testing, but convert lowercase letters to uppercase.
+// When using minicom/hyperterminal/serial-assistant to send data from the host to the device, the send data will be returned.
+wire [ 7:0] recv_data;
+wire        recv_valid;
+wire [ 7:0] send_data = (recv_data >= 8'h61 && recv_data <= 8'h7A) ? (recv_data - 8'h20) : recv_data;   // lowercase -> uppercase
+
+usb_serial_top #(
+    .DEBUG           ( "FALSE"             )    // If you want to see the debug info of USB device core, set this parameter to "TRUE"
+) u_usb_serial (
+    .rstn            ( (~button) ),
+    .clk             ( clk60mhz            ),
+    // USB signals
+    .usb_dp_pull     ( usb_ports[0][0]         ),
+     .usb_oe          ( usb_ports[0][1]             ),
+    .usb_dp_tx          ( usb_ports[0][2]             ),
+    .usb_dn_tx          ( usb_ports[0][3]              ),
+    .usb_dp         ( usb_dp            ),
+    .usb_dn         ( usb_dn              ),
+    // USB reset output
+    .usb_rstn        (                  ),   // 1: connected , 0: disconnected (when USB cable unplug, or when system reset (rstn=0))
+    // CDC receive data (host-to-device)
+    .recv_data       ( recv_data           ),   // received data byte
+    .recv_valid      ( recv_valid          ),   // when recv_valid=1 pulses, a data byte is received on recv_data
+    // CDC send data (device-to-host)
+    .send_data       ( send_data           ),   // 
+    .send_valid      ( recv_valid          ),   // loopback connect recv_valid to send_valid
+    .send_ready      (                     ),   // ignore send_ready, ignore the situation that the send buffer is full (send_ready=0). So here it will lose data when you send a large amount of data
+    // debug output info, only for USB developers, can be ignored for normally use
+    .debug_en        (                     ),
+    .debug_data      (                     ),
+    .debug_uart_tx   (            )
+);
+
+wire [15:0] audio_l, audio_r;
+
+usb_audio_top #(
+    .DEBUG           ( "FALSE"             )    // If you want to see the debug info of USB device core, set this parameter to "TRUE"
+) u_usb_audio (
+    .rstn            (  (~button)  ),
+    .clk             ( clk60mhz            ),
+    // USB signals
+    .usb_dp_pull     ( usb_ports[1][0]         ),
+     .usb_oe          ( usb_ports[1][1]             ),
+    .usb_dp_tx          ( usb_ports[1][2]             ),
+    .usb_dn_tx          ( usb_ports[1][3]              ),
+    .usb_dp         ( usb_dp            ),
+    .usb_dn         ( usb_dn              ),
+    // USB reset output
+    .usb_rstn        (                  ),   // 1: connected , 0: disconnected (when USB cable unplug, or when system reset (rstn=0))
+    // user data : audio output (host-to-device, such as a speaker), and audio input (device-to-host, such as a microphone).
+    .audio_en        (                     ),
+    .audio_lo        ( audio_l             ),   // left-channel output : 16-bit signed integer, which will be valid when audio_en=1
+    .audio_ro        ( audio_r             ),   // right-channel output: 16-bit signed integer, which will be valid when audio_en=1
+    .audio_li        ( audio_l             ),   // left-channel input  : 16-bit signed integer, which will be sampled when audio_en=1
+    .audio_ri        ( audio_r             ),   // right-channel input : 16-bit signed integer, which will be sampled when audio_en=1
+    // debug output info, only for USB developers, can be ignored for normally use
+    .debug_en        (                     ),
+    .debug_data      (                     ),
+    .debug_uart_tx   (          )
+);
+
+
+wire        vf_sof;
+wire        vf_req;
+reg  [ 7:0] vf_byte;
+
+usb_camera_top #(
+    .FRAME_TYPE      ( "MONO"              ),   // "MONO" or "YUY2"
+    .FRAME_W         ( 14'd252             ),   // video-frame width  in pixels, must be a even number
+    .FRAME_H         ( 14'd120             ),   // video-frame height in pixels, must be a even number
+    .DEBUG           ( "FALSE"             )    // If you want to see the debug info of USB device core, set this parameter to "TRUE"
+) u_usb_camera (
+    .rstn            ( (~button) ),
+    .clk             ( clk60mhz            ),
+    .usb_dp_pull     ( usb_ports[2][0]         ),
+     .usb_oe          ( usb_ports[2][1]             ),
+    .usb_dp_tx          ( usb_ports[2][2]             ),
+    .usb_dn_tx          ( usb_ports[2][3]              ),
+    .usb_dp         ( usb_dp            ),
+    .usb_dn         ( usb_dn              ),
+    // USB reset output
+    .usb_rstn        (                  ),   // 1: connected , 0: disconnected (when USB cable unplug, or when system reset (rstn=0))
+    // video frame fetch interface
+    .vf_sof          ( vf_sof              ),
+    .vf_req          ( vf_req              ),
+    .vf_byte         ( vf_byte             ),
+    // debug output info, only for USB developers, can be ignored for normally use
+    .debug_en        (                     ),
+    .debug_data      (                     ),
+    .debug_uart_tx   (             )
+);
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+// generate pixels
+//-------------------------------------------------------------------------------------------------------------------------------------
+reg  [7:0] init_pixel = 8'h00;
+
+always @ (posedge clk60mhz)
+    if (vf_sof) begin                          // at start of frame
+        init_pixel <= init_pixel + 8'h1;
+        vf_byte <= init_pixel;
+    end else if (vf_req) begin                 // request a pixel
+        vf_byte <= vf_byte + 8'h1;
+    end
+
+
+
+reg        key_request = 1'b0;
+reg [15:0] key_value   = 16'h0004;
+
+usb_keyboard_top #(
+    .DEBUG           ( "FALSE"             )    // If you want to see the debug info of USB device core, set this parameter to "TRUE"
+) usb_keyboard_i (
+    .rstn            ( (~button) ),
+    .clk             ( clk60mhz            ),
+    // USB signals
+    .usb_dp_pull     ( usb_ports[3][0]         ),
+     .usb_oe          ( usb_ports[3][1]             ),
+    .usb_dp_tx          ( usb_ports[3][2]             ),
+    .usb_dn_tx          ( usb_ports[3][3]              ),
+    .usb_dp         ( usb_dp            ),
+    .usb_dn         ( usb_dn              ),
+    // USB reset output
+    .usb_rstn        (                  ),   // 1: connected , 0: disconnected (when USB cable unplug, or when system reset (rstn=0))
+    // HID keyboard press signal
+    .key_value       ( key_value           ),   // key_value runs from 16'h0004 (a) to 16'h0027 (9). The keyboard will type a~z and 0~9 cyclically.
+    .key_request     ( key_request         ),   // key_request=1 pulse every 2 seconds. The keyboard will press a key every 2 seconds.
+    // debug output info, only for USB developers, can be ignored for normally use
+    .debug_en        (                     ),
+    .debug_data      (                     ),
+    .debug_uart_tx   (              )
+);
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+// press a key every 2 seconds
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+reg [31:0] count = 0;             // count is a clock counter that runs from 0 to 120000000, each period takes 2 seconds
+
+always @ (posedge clk60mhz)
+    if(count < 120000000) begin
+        count <= count + 1;
+        key_request <= 1'b0;
+    end else begin               
+        count <= 0;
+        key_request <= 1'b1;      // press a key per 2 seconds
+        key_value <= (key_value < 16'h0027) ? key_value + 16'h1 : 16'h0004;
+    end
+
+
+
+endmodule
+*/

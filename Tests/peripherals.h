@@ -494,12 +494,11 @@ void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int m
 #define USB_SERIAL 5
 
 void usb_conf(unsigned char usb_mode){
-    _addr_usb[0] = usb_mode;
-    if(usb_mode >= 6) return;
-    if(usb_mode == 0) return;
+    if(usb_mode >= 6) _addr_usb[0] = 5;
+    else _addr_usb[0] = usb_mode;
 }
 
-unsigned char usb_rw(unsigned char in){
+unsigned char usb_audio(unsigned char in){ // audio
     _addr_usb[2] = in;
     _addr_usb[3] = 1;
     while(_addr_usb[3]){}
@@ -507,13 +506,13 @@ unsigned char usb_rw(unsigned char in){
     return _addr_usb[1];
 }
 
-unsigned char usb_read(){
+unsigned char usb_serial_read(){ // serial
     while(!_addr_usb[3]){}
     _addr_usb[3] = 0;
     return _addr_usb[1];
 }
 
-void usb_write(unsigned char in){
+void usb_write(unsigned char in){ // camera disk keyboard serial
     _addr_usb[2] = in;
     _addr_usb[3] = 1;
     while(_addr_usb[3]){}
