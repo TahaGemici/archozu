@@ -50,7 +50,6 @@ int debug_main(){
                         usb_write(0x0D); // \r
                         usb_write(0x0A); // \n
                     }
-                    usb_write(0x1A); // EOF
             }
         }
     }

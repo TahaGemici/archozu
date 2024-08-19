@@ -17,7 +17,7 @@ xpm_memory_spram #(
    .ECC_BIT_RANGE("7:0"),         // String
    .ECC_MODE("no_ecc"),           // String
    .ECC_TYPE("none"),             // String
-   .IGNORE_INIT_SYNTH(1),         // DECIMAL
+   .IGNORE_INIT_SYNTH(0),         // DECIMAL
 `ifdef NO_FLASH
    .MEMORY_INIT_FILE("data_mem_no_flash.mem"),
 `else
@@ -67,7 +67,7 @@ xpm_memory_spram_inst (
    .regcea(),                 // 1-bit input: Clock Enable for the last register stage on the output
                                     // data path.
 
-   .rsta(),                     // 1-bit input: Reset signal for the final port A output register stage.
+   .rsta(1'b0),                     // 1-bit input: Reset signal for the final port A output register stage.
                                     // Synchronously resets output port douta to the value specified by
                                     // parameter READ_RESET_VALUE_A.
 
