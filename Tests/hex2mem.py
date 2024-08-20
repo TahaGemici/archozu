@@ -32,7 +32,10 @@ for line in out.split():
         address += 1
 
 for i in range(0,1024*32,8):
-    flash_txt.write(mem[i+6:i+8]+mem[i+4:i+6]+mem[i+2:i+4]+mem[i:i+2])
+    if(i%64==56):
+        flash_txt.write(mem[i+6:i+8]+mem[i+4:i+6]+mem[i+2:i+4]+mem[i:i+2]+"\n")
+    else:
+        flash_txt.write(mem[i+6:i+8]+mem[i+4:i+6]+mem[i+2:i+4]+mem[i:i+2])
 
 for i in range(0,1024*16,8):
     ii = i+1024*16

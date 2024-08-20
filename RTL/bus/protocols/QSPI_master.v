@@ -93,7 +93,7 @@ module QSPI_master(
     
     reg QSPI_WRITE, QSPI_WRITE_nxt;
     reg[1:0] QSPI_DATA_MODE, QSPI_DATA_MODE_nxt;
-    reg[7:0] QSPI_DUMMY, QSPI_DUMMY_nxt;
+    reg[5:0] QSPI_DUMMY, QSPI_DUMMY_nxt;
     reg[4:0] QSPI_SIZE, QSPI_SIZE_nxt;
     reg[5:0] QSPI_PRESCALER, QSPI_PRESCALER_nxt;
 
@@ -142,13 +142,12 @@ module QSPI_master(
         cntr_sclk_d        = QSPI_PRESCALER-1;
         state_d = state_q;
         cntr_state_d = cntr_state_q - 1;
-        io_en_d = 4'b0001;
-        io_d[3:1] = 3'b000;
-        io_d[0] = data_o_perip[7];
+        io_en_d = 4'b1101;
+        io_d = {3'b110, data_o_perip[7]};
         if(write_i & (~|addr_i[5:2])) begin
             QSPI_PRESCALER_nxt = data_be_i[3] ? wdata_i[30:25] : QSPI_PRESCALER;
             QSPI_DATA_MODE_nxt = data_be_i[1] ? wdata_i[9:8] : QSPI_DATA_MODE;
-            QSPI_DUMMY_nxt     = data_be_i[1] ? {(~wdata_i[15:11])+wdata_i[10], {3{~wdata_i[10]}}} : QSPI_DUMMY;
+            QSPI_DUMMY_nxt     = data_be_i[1] ? {(~wdata_i[15:11])+wdata_i[10], ~wdata_i[10]} : QSPI_DUMMY;
             QSPI_WRITE_nxt     = data_be_i[1] ? wdata_i[10]    : QSPI_WRITE;
             QSPI_SIZE_nxt      = data_be_i[2] ? wdata_i[20:16] : QSPI_SIZE;
             if(data_be_i[0]) io_d[0] = wdata_i[7];
@@ -186,7 +185,7 @@ module QSPI_master(
             STATE_IDLE: begin
                 cntr_state_d = 6;
                 write_perip = 1;
-                if(state_d!=STATE_CMD) io_en_d = 4'b0000;
+                if(state_d!=STATE_CMD) io_en_d[0] = 1'b0;
             end
             
             STATE_CMD: begin
@@ -198,7 +197,7 @@ module QSPI_master(
                     if(QSPI_DATA_MODE) begin
                         state_d = STATE_EXECUTE;
                         if(QSPI_WRITE) begin
-                            if(QSPI_DUMMY[7:3]) state_d = STATE_DUMMY;
+                            if(QSPI_DUMMY[5:1]) state_d = STATE_DUMMY;
                         end else begin
                             state_d = STATE_DUMMY;
                         end
@@ -211,8 +210,8 @@ module QSPI_master(
             STATE_DUMMY: begin
                 rdaddr_perip = QSPI_ADR;
                 io_d[0] = addr32[cntr_state_q[4:0]];
-                if(cntr_state_q==QSPI_DUMMY) begin
-                    io_en_d = 4'b0000;
+                if(cntr_state_q[5:0]==QSPI_DUMMY) begin
+                    io_en_d[0] = QSPI_WRITE; // io_en_d[0] = 1'b0;
                     state_d = STATE_EXECUTE;
                     case(QSPI_DATA_MODE)
                         default: cntr_state_d = 8'b1111_1111;
@@ -226,21 +225,19 @@ module QSPI_master(
                 rdaddr_perip = QSPI_DR + {~cntr_state_q[7:5], 2'b0};
                 wraddr_perip = QSPI_DR + {~cntr_state_q[7:5], 2'b0};
                 data_i_perip = (&cntr_state_q[4:0]) ? 0 : data_o_perip; // bu satır çokomelli
-                io_en_d = 4'b0000;
                 if(QSPI_WRITE) begin
+                    io_en_d = 4'b1111;
                     case(QSPI_DATA_MODE)
                         2'b01: begin
-                            io_en_d = 4'b0001;
+                            io_en_d = 4'b1101;
                             io_d[0] = data_o_perip[{~cntr_state_q[4:3], cntr_state_q[2:0]}];
                         end
                         2'b10: begin
-                            io_en_d = 4'b0011;
                             io_d[0] = data_o_perip[{~cntr_state_q[4:3], cntr_state_q[2:1], 1'b0}];
                             io_d[1] = data_o_perip[{~cntr_state_q[4:3], cntr_state_q[2:1], 1'b1}];
                             cntr_state_d = cntr_state_q - 2;
                         end
                         2'b11: begin
-                            io_en_d = 4'b1111;
                             io_d[0] = data_o_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b00}];
                             io_d[1] = data_o_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b01}];
                             io_d[2] = data_o_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b10}];
@@ -249,6 +246,7 @@ module QSPI_master(
                         end
                     endcase
                 end else begin
+                    io_en_d = 4'b1100;
                     write_perip = 1;
                     case(QSPI_DATA_MODE)
                         2'b01: begin
@@ -260,6 +258,7 @@ module QSPI_master(
                             cntr_state_d = cntr_state_q - 2;
                         end
                         2'b11: begin
+                            io_en_d = 4'b0000;
                             data_i_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b00}] = io[0];
                             data_i_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b01}] = io[1];
                             data_i_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b10}] = io[2];

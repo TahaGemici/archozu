@@ -14,7 +14,8 @@ volatile unsigned short main_gpio_val = 0x5555;
 
 int __attribute__((naked)) main(){
     gpio_write(main_gpio_val);
-    timer_conf(-1,0,1);
+    timer_conf(30000000,0,1);
+    usb_conf(USB_SERIAL);
     while(1){
         main_state = gpio_read();
         if(main_state){
