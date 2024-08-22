@@ -211,7 +211,7 @@ module QSPI_master(
                 rdaddr_perip = QSPI_ADR;
                 io_d[0] = addr32[cntr_state_q[4:0]];
                 if(cntr_state_q[5:0]==QSPI_DUMMY) begin
-                    io_en_d[0] = QSPI_WRITE; // io_en_d[0] = 1'b0;
+                    io_en_d[0] = 1'b0;
                     state_d = STATE_EXECUTE;
                     case(QSPI_DATA_MODE)
                         default: cntr_state_d = 8'b1111_1111;

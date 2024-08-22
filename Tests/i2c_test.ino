@@ -12,11 +12,11 @@ void setup()
 
 void loop()
 {
-    delay(100);
-    if(Serial.available()>1){
-      tmp1 = Serial.read();
-      tmp2 = Serial.read();
-    }
+  delay(100);
+  if(Serial.available()>1){
+    tmp1 = Serial.read();
+    tmp2 = Serial.read();
+  }
 }
 
 short flipShort(short in){

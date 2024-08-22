@@ -1,3 +1,5 @@
+void delay_ms(unsigned int ms);
+
 #include "peripherals.h"
 #include "uart_test.c"
 #include "i2c_test.c"
@@ -35,17 +37,31 @@ int __attribute__((naked)) main(){
     }
 }
 
+volatile unsigned int delay_enable = 0;
+void delay_ms(unsigned int ms){
+    timer_conf(59999, ms-1, 1);
+    delay_enable = 1;
+    while(delay_enable){}
+    timer_enabled(0);
+}
+
 void __attribute__((interrupt("machine"))) interrupt(){
-    switch(main_state){
-        case 0:
-            main_gpio_val ^= -1;
-            gpio_write(main_gpio_val);
-            break;
-        case 1: uart_interrupt(); break;
-        case 2: i2c_interrupt(); break;
-        case 4: qspi_interrupt(); break;
-        case 8: timer_interrupt(); break;
-        case 16: gpio_interrupt(); break;
-        case 32: usb_interrupt(); break;
+    if(delay_enable){
+        delay_enable = 0;
+        return;
+    } else {
+        switch(main_state){
+            case 0:
+                main_gpio_val ^= -1;
+                gpio_write(main_gpio_val);
+                break;
+            case 1: uart_interrupt(); break;
+            case 2: i2c_interrupt(); break;
+            case 4: qspi_interrupt(); break;
+            case 8: timer_interrupt(); break;
+            case 16: gpio_interrupt(); break;
+            case 32: usb_interrupt(); break;
+            default: debug_interrupt();
+        }
     }
 }
