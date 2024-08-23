@@ -1,42 +1,17 @@
+440164a9
+69090491
+85226991
+2839c080
+012407b3
+01340533
+0413c09c
+20390204
+ff2415e3
 00002137
-69097111
-69894401
-09136a11
-0613e009
-100c0200
-20458522
-02000613
-0533858a
-28510134
-ffc47713
-97524781
-02000693
-95be100c
-8633418c
-c20c0087
-00f10633
-0633420c
-079100f7
-93e3c20c
-6489fed7
-e0048493
-02000613
-8533858a
-28a10134
-ffc4f713
-97524781
-02000693
-00f10633
-0633420c
-079100f7
-99e3c20c
-8493fed7
-99e30204
-2137fd34
-00670000
-04130001
-1ee30204
-4501f724
+45018102
+801f87b7
+36b78793
+c31c6729
 879367a9
 47050287
 9fe34394
@@ -44,21 +19,14 @@ ffc4f713
 02878793
 43944705
 fee69fe3
-07938082
-1737fff6
-11418000
-b6b70713
-c42207c2
-c606c226
-672997ba
-6729c348
-84aec31c
-3f7d8432
-442285a2
-852640b2
-01414492
-0000aa79
-00000000
+672967a9
+75d907a1
+02870713
+86b34390
+96ae00a7
+fec6ac23
+99e30791
+8082fee7
 00000000
 00000000
 00000000
@@ -66,25 +34,26 @@ c606c226
 /*
 #include "peripherals.h"
 
+void bootloader_read(unsigned int i){
+    // mt25ql256aba_quad_output_fast_read
+    _addr_qspi[0] = 0x6B + (3<<8) + (16<<11) + (31<<16) + (1<<31);
+    while(_addr_qspi[10]!=1){}
+    while(_addr_qspi[10]!=1){}
+    for(int j=0; j<8; j++){ *(int*)(i+j*4) = _addr_qspi[2+j]; }
+}
+
 int __attribute__((naked)) main(){
-	asm("li x2, 0x1F00");
     
-    int instr_arr[8], data_arr[8];
-	for(int i=0x0000;i<0x1E00; i+=32){
-		mt25ql256aba_quad_output_fast_read(i, data_arr, 32);
-		mt25ql256aba_quad_output_fast_read(i+0x2000, instr_arr, 32);
-		for(int j=0;j<8;j++){
-			*(int*)(i+j*4) = data_arr[j];
-			instr_mem_write(i/4+j, instr_arr[j]);
-		}
-	    for(int i=0x1E00;i<0x2000; i+=32){
-	    	mt25ql256aba_quad_output_fast_read(i+0x2000, instr_arr, 32);
-	    	for(int j=0;j<8;j++){
-	    		instr_mem_write(i/4+j, instr_arr[j]);
-	    	}
-	    }
-	    asm("li x2, 0x2000\n\t"
-            "jalr x0, x2, 0");
-	}
+    for(int i=0x0000;i<0x2000; i+=32){
+        // data memory
+        _addr_qspi[1] = i;
+        bootloader_read(i);
+
+        // instruction memory    
+        _addr_qspi[1] = i+0x2000;
+        bootloader_read(i+0x4000);
+    }
+	asm("li sp, 0x2000\n\t"
+        "jr sp");
 }
 */

@@ -1,5 +1,4 @@
-volatile unsigned int delay_enable = 0;
-void delay_ms(unsigned int ms);
+//void delay_ms(unsigned int ms);
 
 #include "peripherals.h"
 #include "uart_test.c"

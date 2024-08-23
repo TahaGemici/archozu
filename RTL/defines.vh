@@ -1,6 +1,6 @@
 // ASIC İSE İKİSİNİ DE KAPA
 `define FPGA
-`define NO_FLASH
+//`define NO_FLASH
 
 `define CLK_PERIOD 16.667
 `define CLK_FREQ 60_000_000

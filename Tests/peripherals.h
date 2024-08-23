@@ -65,20 +65,6 @@ void qspi_wait(){
     while(_addr_qspi[10]!=1){}
 }
 
-void qspi_read_array(unsigned int* array, unsigned int byte_size){
-    byte_size = (byte_size+3) >> 2;
-    for(int i=0; i<byte_size; i++){
-        array[i] = _addr_qspi[2+i];
-    }
-}
-
-void qspi_write_array(unsigned int* array, unsigned int byte_size){
-    byte_size = (byte_size+3) >> 2;
-    for(int i=0; i<byte_size; i++){
-        _addr_qspi[2+i] = array[i];
-    }
-}
-
 void qspi_custom_x0(unsigned int instr, unsigned int freq){
     unsigned int cmd = instr;
     cmd += (CEIL_CLK(freq)-1) << 25;
@@ -97,7 +83,10 @@ void qspi_custom_write(unsigned int* array, unsigned int addr, unsigned int inst
     cmd += (CEIL_CLK(freq)-1) << 25;
     cmd += 1 << 31;
     _addr_qspi[1] = addr;
-    qspi_write_array(array, byte_size);
+    byte_size = (byte_size+3) >> 2;
+    for(int i=0; i<byte_size; i++){
+        _addr_qspi[2+i] = array[i];
+    }
     _addr_qspi[0] = cmd;
     qspi_wait();
 }
@@ -114,7 +103,10 @@ void qspi_custom_read(unsigned int* array, unsigned int addr, unsigned int instr
     _addr_qspi[1] = addr;
     _addr_qspi[0] = cmd;
     qspi_wait();
-    qspi_read_array(array, byte_size);
+    byte_size = (byte_size+3) >> 2;
+    for(int i=0; i<byte_size; i++){
+        array[i] = _addr_qspi[2+i];
+    }
 }
 
 void s25fl128s_wren(){ qspi_custom_x0(0x06, 133); }
@@ -145,7 +137,9 @@ void mt25ql256aba_reset_memory(){ qspi_custom_x0(0x99, 133); }
 
 void mt25ql256aba_read(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_read(array, addr, 0x03, 1, 24, byte_size, 133); }
 void mt25ql256aba_page_program(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_write(array, addr, 0x02, 1, 24, byte_size, 133); }
-void mt25ql256aba_sector_erase(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_write(array, addr, 0xD8, 1, 24, byte_size, 133); }
+void mt25ql256aba_4KiB_sector_erase(unsigned int* array){ qspi_custom_write(array, 0, 0x20, 1, 0, 3, 133); }
+void mt25ql256aba_32KiB_sector_erase(unsigned int* array){ qspi_custom_write(array, 0, 0x52, 1, 0, 3, 133); }
+void mt25ql256aba_sector_erase(unsigned int* array){ qspi_custom_write(array, 0, 0xD8, 1, 0, 3, 133); }
 void mt25ql256aba_read_id(unsigned int* array, unsigned int byte_size){ qspi_custom_read(array, 0, 0x9F, 1, 0, byte_size, 133); }
 void mt25ql256aba_read_status_register(unsigned int* array){ qspi_custom_read(array, 0, 0x05, 1, 0, 1, 133); }
 void mt25ql256aba_read_flag_status_register(unsigned int* array){ qspi_custom_read(array, 0, 0x70, 1, 0, 1, 133); }
@@ -194,6 +188,7 @@ void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int m
     timer_enabled(1);
 }
 
+volatile unsigned int delay_enable = 0;
 void delay_us(unsigned int us){
     unsigned int delay_us_arr[7];
     for(int i=0;i<7;i++) delay_us_arr[i] = _addr_timer[i];

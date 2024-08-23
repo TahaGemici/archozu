@@ -22,8 +22,7 @@ SECTIONS {
     .text : 
     {
         *(.text.startup.main)
-        /* *(.text.qspi_wait) */
-        /* *(.text.mt25ql256aba_quad_output_fast_read) */
+        /* *(.text.bootloader_read) */
         . = 0x0200;
         *(.text.interrupt)
         *(.text)
