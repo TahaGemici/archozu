@@ -1413,17 +1413,20 @@ Disassembly of section .text.debug_interrupt:
 Disassembly of section .text.main_interrupt:
 
 00002c26 <.text.main_interrupt>:
-    2c26:	01c05783          	lhu	a5,28(zero) # 0x1c
-    2c2a:	fff7c793          	not	a5,a5
-    2c2e:	07c2                	slli	a5,a5,0x10
-    2c30:	83c1                	srli	a5,a5,0x10
-    2c32:	00f01e23          	sh	a5,28(zero) # 0x1c
-    2c36:	01c05703          	lhu	a4,28(zero) # 0x1c
-    2c3a:	67c1                	lui	a5,0x10
-    2c3c:	0742                	slli	a4,a4,0x10
-    2c3e:	8341                	srli	a4,a4,0x10
-    2c40:	c3d8                	sw	a4,4(a5)
-    2c42:	8082                	ret
+    2c26:	01c05683          	lhu	a3,28(zero) # 0x1c
+    2c2a:	01c05783          	lhu	a5,28(zero) # 0x1c
+    2c2e:	0686                	slli	a3,a3,0x1
+    2c30:	83bd                	srli	a5,a5,0xf
+    2c32:	8fd5                	or	a5,a5,a3
+    2c34:	07c2                	slli	a5,a5,0x10
+    2c36:	83c1                	srli	a5,a5,0x10
+    2c38:	00f01e23          	sh	a5,28(zero) # 0x1c
+    2c3c:	01c05703          	lhu	a4,28(zero) # 0x1c
+    2c40:	67c1                	lui	a5,0x10
+    2c42:	0742                	slli	a4,a4,0x10
+    2c44:	8341                	srli	a4,a4,0x10
+    2c46:	c3d8                	sw	a4,4(a5)
+    2c48:	8082                	ret
 
 Disassembly of section .plt:
 
