@@ -1,3 +1,4 @@
+volatile unsigned int delay_enable = 0;
 void delay_ms(unsigned int ms);
 
 #include "peripherals.h"
@@ -37,24 +38,16 @@ int __attribute__((naked)) main(){
     }
 }
 
-volatile unsigned int delay_enable = 0;
-void delay_ms(unsigned int ms){
-    timer_conf(59999, ms-1, 1);
-    delay_enable = 1;
-    while(delay_enable){}
-    timer_enabled(0);
+void main_interrupt(){
+    main_gpio_val ^= -1;
+    gpio_write(main_gpio_val);
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
-    if(delay_enable){
-        delay_enable = 0;
-        return;
-    } else {
+    if(delay_enable){ delay_enable = 0; }
+    else {
         switch(main_state){
-            case 0:
-                main_gpio_val ^= -1;
-                gpio_write(main_gpio_val);
-                break;
+            case 0: main_interrupt(); break;
             case 1: uart_interrupt(); break;
             case 2: i2c_interrupt(); break;
             case 4: qspi_interrupt(); break;

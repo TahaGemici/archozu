@@ -143,22 +143,22 @@ void mt25ql256aba_write_enable(){ qspi_custom_x0(0x06, 133); }
 void mt25ql256aba_reset_enable(){ qspi_custom_x0(0x66, 133); }
 void mt25ql256aba_reset_memory(){ qspi_custom_x0(0x99, 133); }
 
-void mt25ql256aba_read(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_read(array, addr, 0x03, 1, 24, byte_size, 50); }
-void mt25ql256aba_page_program(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_write(array, addr, 0x02, 1, 24, byte_size, 50); }
-void mt25ql256aba_sector_erase(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_write(array, addr, 0xD8, 1, 24, byte_size, 50); }
-void mt25ql256aba_read_id(unsigned int* array, unsigned int byte_size){ qspi_custom_read(array, 0, 0x9F, 1, 0, byte_size, 50); }
-void mt25ql256aba_read_status_register(unsigned int* array){ qspi_custom_read(array, 0, 0x05, 1, 0, 1, 50); }
-void mt25ql256aba_read_flag_status_register(unsigned int* array){ qspi_custom_read(array, 0, 0x70, 1, 0, 1, 50); }
-void mt25ql256aba_read_nonvolatile_configuration_register(unsigned int* array){ qspi_custom_read(array, 0, 0xB5, 1, 0, 2, 50); }
-void mt25ql256aba_read_volatile_configuration_register(unsigned int* array){ qspi_custom_read(array, 0, 0x85, 1, 0, 1, 50); }
-void mt25ql256aba_write_status_register(unsigned int* array){ qspi_custom_write(array, 0, 0x01, 1, 0, 1, 50); }
-void mt25ql256aba_write_nonvolatile_configuration_register(unsigned int* array){ qspi_custom_write(array, 0, 0xB1, 1, 0, 2, 50); }
-void mt25ql256aba_write_volatile_configuration_register(unsigned int* array){ qspi_custom_write(array, 0, 0x81, 1, 0, 1, 50); }
-void mt25ql256aba_write_enhanced_volatile_configuration_register(unsigned int* array){ qspi_custom_write(array, 0, 0x61, 1, 0, 1, 50); }
+void mt25ql256aba_read(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_read(array, addr, 0x03, 1, 24, byte_size, 133); }
+void mt25ql256aba_page_program(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_write(array, addr, 0x02, 1, 24, byte_size, 133); }
+void mt25ql256aba_sector_erase(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_write(array, addr, 0xD8, 1, 24, byte_size, 133); }
+void mt25ql256aba_read_id(unsigned int* array, unsigned int byte_size){ qspi_custom_read(array, 0, 0x9F, 1, 0, byte_size, 133); }
+void mt25ql256aba_read_status_register(unsigned int* array){ qspi_custom_read(array, 0, 0x05, 1, 0, 1, 133); }
+void mt25ql256aba_read_flag_status_register(unsigned int* array){ qspi_custom_read(array, 0, 0x70, 1, 0, 1, 133); }
+void mt25ql256aba_read_nonvolatile_configuration_register(unsigned int* array){ qspi_custom_read(array, 0, 0xB5, 1, 0, 2, 133); }
+void mt25ql256aba_read_volatile_configuration_register(unsigned int* array){ qspi_custom_read(array, 0, 0x85, 1, 0, 1, 133); }
+void mt25ql256aba_write_status_register(unsigned int* array){ qspi_custom_write(array, 0, 0x01, 1, 0, 1, 133); }
+void mt25ql256aba_write_nonvolatile_configuration_register(unsigned int* array){ qspi_custom_write(array, 0, 0xB1, 1, 0, 2, 133); }
+void mt25ql256aba_write_volatile_configuration_register(unsigned int* array){ qspi_custom_write(array, 0, 0x81, 1, 0, 1, 133); }
+void mt25ql256aba_write_enhanced_volatile_configuration_register(unsigned int* array){ qspi_custom_write(array, 0, 0x61, 1, 0, 1, 133); }
 
-void mt25ql256aba_dual_output_fast_read(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_read(array, addr, 0x3B, 2, 32, byte_size, 50); }
+void mt25ql256aba_dual_output_fast_read(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_read(array, addr, 0x3B, 2, 32, byte_size, 133); }
 
-void mt25ql256aba_quad_output_fast_read(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_read(array, addr, 0x6B, 4, 32, byte_size, 50); }
+void mt25ql256aba_quad_output_fast_read(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_read(array, addr, 0x6B, 4, 32, byte_size, 133); }
 
   /////////////
  //  TIMER  //
@@ -194,6 +194,16 @@ void timer_conf(unsigned int prescaler, unsigned int auto_reload, unsigned int m
     timer_enabled(1);
 }
 
+void delay_us(unsigned int us){
+    unsigned int delay_us_arr[7];
+    for(int i=0;i<7;i++) delay_us_arr[i] = _addr_timer[i];
+
+    timer_conf(CLK_FREQ-1, us-1, 1);
+    delay_enable = 1;
+    while(delay_enable){}
+    for(int i=0;i<7;i++) _addr_timer[i] = delay_us_arr[i];
+}
+
   ///////////
  //  USB  //
 ///////////
@@ -215,7 +225,6 @@ unsigned char usb_audio(unsigned char in){ // audio
     _addr_usb[2] = in;
     _addr_usb[3] = 1;
     while(_addr_usb[3]){}
-    _addr_usb[3] = 0;
     return _addr_usb[1];
 }
 
@@ -229,7 +238,7 @@ void usb_write(unsigned char in){ // camera disk keyboard serial
     _addr_usb[2] = in;
     _addr_usb[3] = 1;
     while(_addr_usb[3]){}
-    _addr_usb[3] = 0;
+    delay_us(500);
 }
 
 void usb_print_short(unsigned short in){ // base16

@@ -24,9 +24,9 @@
 //--------------------------------------------------------------------------------------------------------
 
 module usb_camera_top #(
-    parameter          FRAME_TYPE = "YUY2",    // "MONO" or "YUY2"
-    parameter   [13:0] FRAME_W    = 14'd320,   // video-frame width  in pixels, must be a even number
-    parameter   [13:0] FRAME_H    = 14'd240,   // video-frame height in pixels, must be a even number
+    parameter          FRAME_TYPE = "MONO",    // "MONO" or "YUY2"
+    parameter   [13:0] FRAME_W    = 14'd640,   // video-frame width  in pixels, must be a even number
+    parameter   [13:0] FRAME_H    = 14'd360,   // video-frame height in pixels, must be a even number
     parameter          DEBUG      = "FALSE"    // whether to output USB debug info, "TRUE" or "FALSE"
 ) (
     input  wire        rstn,          // active-low reset, reset when rstn=0 (USB will unplug when reset), normally set to 1
