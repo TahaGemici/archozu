@@ -12,11 +12,13 @@ int debug_main(){
                 case 1: // dump data memory to usb
                     for(int i=0;i<2048;i+=4){
                         usb_print_short(i<<2);
-                        usb_write(0x3A); // :
+                        usb_serial_write(0x3A); // :
                         unsigned int* debug_tmp_ptr = (unsigned int*)0x00000;
+                        delay_us(5000);
                         for(int j=i+3;j>=i;j--){
-                            usb_write(0x20); // space
+                            usb_serial_write(0x20); // space
                             usb_print_int(debug_tmp_ptr[j]);
+                            delay_us(5000);
                         }
                         usb_print_newline();
                     }
@@ -26,10 +28,11 @@ int debug_main(){
                         mt25ql256aba_quad_output_fast_read(debug_tmp_arr, i<<2, 32);
                         for(int j=0;j<8;j++){
                             usb_print_short((i+j)<<2);
-                            usb_write(0x3A); // :
-                            usb_write(0x20); // space
+                            usb_serial_write(0x3A); // :
+                            usb_serial_write(0x20); // space
                             usb_print_int(debug_tmp_arr[j]);
                             usb_print_newline();
+                            delay_us(5000);
                         }
                     }
                     break;

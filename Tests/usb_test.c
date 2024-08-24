@@ -13,28 +13,22 @@ int usb_main(){
         usb_old_state = usb_state;
         switch(usb_state){
             case USB_AUDIO:
-                while(1){
-                    usb_tmp2 = usb_audio(usb_tmp2);
-                }
+                usb_tmp2 = usb_audio(usb_tmp2);
             case USB_CAMERA:
-                while(1){
-                    usb_write(0);
-                    for(int i=0;i<360;i=i+1){
-                        for(int j=0;j<640;j=j+1){
-                            usb_write(usb_tmp2+i+j);
-                        }
+                usb_camera(0);
+                for(int i=0;i<360;i=i+1){
+                    for(int j=0;j<640;j=j+1){
+                        usb_camera(usb_tmp2+i+j);
                     }
-                    usb_tmp2++;
                 }
-            case USB_KEYBOARD:
+                usb_tmp2++;
+            case USB_KEYBOARD: // reset to exit
                 while(1){
-                    usb_write(gpio_read());
+                    usb_keyboard(gpio_read());
                     delay_us(1000000);
                 }
             case USB_SERIAL:
-                while(1){
-                    usb_write(usb_serial_read());
-                }
+                usb_serial_write(usb_serial_read());
         }
     }
 }

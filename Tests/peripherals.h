@@ -216,24 +216,35 @@ void usb_conf(unsigned char usb_mode){
     else _addr_usb[0] = usb_mode;
 }
 
-unsigned char usb_audio(unsigned char in){ // audio
+unsigned int usb_audio(unsigned int in){ // audio
     _addr_usb[2] = in;
     _addr_usb[3] = 1;
     while(_addr_usb[3]){}
     return _addr_usb[1];
 }
 
-unsigned char usb_serial_read(){ // serial
+void usb_camera(unsigned char in){
+    _addr_usb[2] = in;
+    _addr_usb[3] = 1;
+    while(_addr_usb[3]){}
+}
+
+void usb_keyboard(unsigned short in){
+    _addr_usb[2] = in;
+    _addr_usb[3] = 1;
+    while(_addr_usb[3]){}
+}
+
+unsigned char usb_serial_read(){
     while(!_addr_usb[3]){}
     _addr_usb[3] = 0;
     return _addr_usb[1];
 }
 
-void usb_write(unsigned char in){ // camera disk keyboard serial
+void usb_serial_write(unsigned char in){
     _addr_usb[2] = in;
     _addr_usb[3] = 1;
     while(_addr_usb[3]){}
-    delay_us(500);
 }
 
 void usb_print_short(unsigned short in){ // base16
@@ -241,9 +252,9 @@ void usb_print_short(unsigned short in){ // base16
     for(int i=0;i<4;i++){
         usb_print_short_tmp = (in>>12) + 48;
         if(usb_print_short_tmp>=58){
-            usb_print_short_tmp += 7; //make 10-15 to A-F
+            usb_print_short_tmp += 7; // make 10-15 to A-F
         }
-        usb_write(usb_print_short_tmp);
+        usb_serial_write(usb_print_short_tmp);
         in <<= 4;
     }
 }
@@ -254,8 +265,8 @@ void usb_print_int(unsigned int in){ // base16
 }
 
 void usb_print_newline(){
-    usb_write(0x0D); // \r
-    usb_write(0x0A); // \n
+    usb_serial_write(0x0D); // \r
+    usb_serial_write(0x0A); // \n
 }
 
 unsigned short usb_read_short(){ // base16

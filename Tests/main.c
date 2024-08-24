@@ -12,11 +12,11 @@
 // ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
 
 volatile unsigned short main_state = 0;
-volatile unsigned short main_gpio_val = 0x4924;
+volatile unsigned short main_gpio_val = 0x0707;
 
 int __attribute__((naked)) main(){
     gpio_write(main_gpio_val);
-    timer_conf(30000000,0,1);
+    timer_conf(2999999,0,1); // 0.05s
     usb_conf(USB_SERIAL);
     while(1){
         main_state = gpio_read();
