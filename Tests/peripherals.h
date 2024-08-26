@@ -76,7 +76,8 @@ void qspi_custom_x0(unsigned int instr, unsigned int freq){
 void qspi_custom_write(unsigned int* array, unsigned int addr, unsigned int instr, \
     unsigned int mode, unsigned int dummy, unsigned int byte_size, unsigned int freq){
     unsigned int cmd = instr;
-    cmd += mode << 8;
+    if(mode==4) cmd += 3 << 8;
+    else cmd += mode << 8;
     cmd += 1 << 10;
     cmd += (dummy/2) << 11;
     cmd += (byte_size-1) << 16;
@@ -121,7 +122,7 @@ void s25fl128s_rdcr(unsigned int* array){ qspi_custom_read(array, 0, 0x35, 1, 0,
 void s25fl128s_res(unsigned int* array){ qspi_custom_read(array, 0, 0xAB, 1, 24, 1, 50); }
 void s25fl128s_read_id(unsigned int* array, unsigned int addr){ qspi_custom_read(array, addr, 0x90, 1, 24, 2, 133); }
 void s25fl128s_read(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_read(array, addr, 0x03, 1, 24, byte_size, 50); }
-void s25fl128s_wrr(unsigned int* array){ qspi_custom_write(array, 0, 0x01, 1, 24, 2, 133); }
+void s25fl128s_wrr(unsigned int* array){ qspi_custom_write(array, 0, 0x01, 1, 0, 2, 133); }
 void s25fl128s_se(unsigned int* array){ qspi_custom_write(array, 0, 0xD8, 1, 0, 3, 133); }
 void s25fl128s_pp(unsigned int* array, unsigned int addr, unsigned int byte_size){ qspi_custom_write(array, addr, 0x02, 1, 24, byte_size, 133); }
 

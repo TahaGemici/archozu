@@ -1,4 +1,5 @@
-//void delay_ms(unsigned int ms);
+//#define SYNTHESIS
+// ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
 
 #include "peripherals.h"
 #include "uart_test.c"
@@ -9,7 +10,7 @@
 #include "usb_test.c"
 #include "debug.c"
 
-// ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
+#ifdef SYNTHESIS
 
 volatile unsigned short main_state = 0;
 volatile unsigned short main_gpio_val = 0x0707;
@@ -57,3 +58,36 @@ void __attribute__((interrupt("machine"))) interrupt(){
         }
     }
 }
+
+
+
+
+#else
+
+
+unsigned int state = 0, tmp;
+int __attribute__((naked)) main(){
+    i2c_conf(121);
+    uart_conf(9600, 0);
+    timer_conf(100,-5,0);
+    while(1){
+        gpio_write(gpio_read() ^ -1);
+    }
+}
+
+void __attribute__((interrupt("machine"))) interrupt(){
+    switch(state){
+        case 0:
+            tmp = i2c_read(1);
+        case 1:
+            i2c_write(tmp ^ -1, 1);
+        case 2:
+            uart_write(tmp);
+        case 3:
+            tmp = uart_read();
+    }
+    state = (state+1) & 3;
+}
+
+
+#endif

@@ -13,8 +13,8 @@ module USB(
 );
 	
     wire[2:0] USB_CCR_nxt;
+    
     //localparam USB_CCR = 0;
-
 	localparam USB_RDR = 4;
 	localparam USB_TDR = 8;
 	localparam USB_STA = 12;
@@ -46,6 +46,7 @@ module USB(
         USB_STA_o
     );
 
+    //localparam RESET  = 0;
     localparam AUDIO    = 1;
     localparam CAMERA   = 2;
     localparam DISK     = 3;

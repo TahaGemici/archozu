@@ -1,4 +1,4 @@
-//#define I2C_PULL
+`define I2C_PULL
 
 module I2C_master(
     input clk_i,
@@ -80,7 +80,8 @@ module I2C_master(
 	wire[7:0] addr_read = {data_o_perip[6:0], read};
 	
 	reg sda_o;
-	assign sda_io = sda_o;
+	wire sda_en = (state!=ACK0) && (state!=RDATA) && ((state!=ACK1) || read);
+	assign sda_io = sda_en ? sda_o : 1'bz;
 
     reg[7:0] clk_counter, clk_counter_nxt;
     reg clk_i2c, clk_i2c_nxt;
@@ -154,7 +155,6 @@ module I2C_master(
 				counter_nxt = 3'h7;
 				if(sda_io) begin
 					state_nxt = STOP;
-					scln_nxt = 1;
 				end else begin
 					if(read) begin
 						write_perip = 1;
@@ -183,6 +183,7 @@ module I2C_master(
 				state_nxt = {2'b10, read};
 
 				nby_counter_nxt = nby_counter - (read || (!sda_io));
+				nby_counter_nxt = nby_counter - 1;
 				if(nby_counter_nxt==3'b111) state_nxt = STOP;
 			end
 			STOP: begin
@@ -194,16 +195,12 @@ module I2C_master(
 			end
 		endcase
 
-		sda_o  = 1'bz;
 		case(state)
 			IDLE:  sda_o = 1'b1;
-			START: sda_o = 1'b0;
 			ADDR:  sda_o = addr_read[counter];
-			ACK0:  sda_o = 1'bz;
 			WDATA: sda_o = data_o_perip[{nby_counter[1:0], counter}];
-			RDATA: sda_o = 1'bz;
-			ACK1:  if(read) sda_o = (state_nxt == STOP);
-			STOP:  sda_o = 1'b0;
+			ACK1:  sda_o = (state_nxt == STOP);
+			default: sda_o = 1'b0;
 		endcase
 
 		if(clk_i2c | (~clk_i2c_nxt)) begin

@@ -1,7 +1,7 @@
 #include <Wire.h>
 
 char received=0, requested=0;
-char tmp;
+char tmp=0;
 void setup()
 {
   Serial.begin(9600);
@@ -27,7 +27,9 @@ void loop()
 
 void receiveEvent(int howMany)
 {
-  tmp = Wire.read();
+  while (Wire.available()) {
+    tmp = Wire.read();
+  }
   received = 1;
 }
 
