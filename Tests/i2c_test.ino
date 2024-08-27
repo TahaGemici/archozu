@@ -1,10 +1,8 @@
 #include <Wire.h>
 
-char received=0, requested=0;
-char tmp=0;
+char tmp_arr[2];
 void setup()
 {
-  Serial.begin(9600);
   Wire.begin(123);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
@@ -13,28 +11,15 @@ void setup()
 
 void loop()
 {
-  if(received){
-    received = 0;
-    Serial.print("received: ");
-    Serial.println(tmp);
-  }
-  if(requested){
-    requested = 0;
-    Serial.print("requested: ");
-    Serial.println(tmp);
-  }
 }
 
 void receiveEvent(int howMany)
 {
-  while (Wire.available()) {
-    tmp = Wire.read();
-  }
-  received = 1;
+  tmp_arr[0] = Wire.read();
+  tmp_arr[1] = Wire.read();
 }
 
 void requestEvent()
 {
-  Wire.write(tmp);
-  requested = 1;
+  Wire.write(tmp_arr,2);
 }

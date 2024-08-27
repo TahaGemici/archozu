@@ -1,5 +1,6 @@
 `define FPGA
-//`define NO_FLASH
+`define NO_FLASH
+dasdasfawfawf
 `define MT25QL256ABA
 
 `define CLK_PERIOD 16.667

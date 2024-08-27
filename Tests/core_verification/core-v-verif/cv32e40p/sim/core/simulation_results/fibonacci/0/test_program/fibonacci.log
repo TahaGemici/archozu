@@ -1,0 +1,27 @@
+  scopesDump:
+    SCOPE 0x785630000b80: TOP.tb_top_verilator
+    SCOPE 0x785630000bb8: TOP.tb_top_verilator.cv32e40p_tb_wrapper_i.ram_i
+    SCOPE 0x785630000bf0: TOP.tb_top_verilator.cv32e40p_tb_wrapper_i.ram_i.dp_ram_i
+       DPI-EXPORT 0x5acb57559570: read_byte
+       DPI-EXPORT 0x5acb57559580: write_byte
+
+[tb_top_verilator] finished dumping memory
+starting fib(15)...
+fib(0) = 0
+fib(1) = 1
+fib(2) = 1
+fib(3) = 2
+fib(4) = 3
+fib(5) = 5
+fib(6) = 8
+fib(7) = 13
+fib(8) = 21
+fib(9) = 34
+fib(10) = 55
+fib(11) = 89
+fib(12) = 144
+fib(13) = 233
+fib(14) = 377
+finishing...
+TOP.tb_top_verilator @ 978010: EXIT SUCCESS
+- /home/kutaybulun/corev/core-v-verif/cv32e40p/tb/core/tb_top_verilator.sv:83: Verilog $finish

@@ -1,0 +1,16 @@
+  scopesDump:
+    SCOPE 0x7b369bc00b80: TOP.tb_top_verilator
+    SCOPE 0x7b369bc00bb8: TOP.tb_top_verilator.cv32e40p_tb_wrapper_i.ram_i
+    SCOPE 0x7b369bc00bf0: TOP.tb_top_verilator.cv32e40p_tb_wrapper_i.ram_i.dp_ram_i
+       DPI-EXPORT 0x5bb262afb570: read_byte
+       DPI-EXPORT 0x5bb262afb580: write_byte
+
+[tb_top_verilator] finished dumping memory
+Generate an illegal instruction
+CV32E40P BSP: illegal instruction exception handler entered
+
+CV32E40P BSP: illegal instruction exception handler entered
+
+Complete illegal instruction - unreachable
+TOP.tb_top_verilator @ 78320: EXIT SUCCESS
+- /home/kutaybulun/corev/core-v-verif/cv32e40p/tb/core/tb_top_verilator.sv:83: Verilog $finish
