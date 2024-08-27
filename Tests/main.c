@@ -1,4 +1,4 @@
-//#define SYNTHESIS
+#define SYNTHESIS
 // ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
 
 #include "peripherals.h"
@@ -66,15 +66,16 @@ int __attribute__((naked)) main(){
     i2c_conf(0,121);
     uart_conf(9600, 0);
     timer_conf(100,-5,0);
-    while(1){gpio_write(gpio_read() ^ -1);}
+    //while(1){ gpio_write(gpio_read()); }
+    while(1){ gpio_write(gpio_read() ^ -1); }
 }
 
 void __attribute__((interrupt("machine"))) interrupt(){
     switch(state){
         case 0:
-            tmp = i2c_read(1);
+            tmp = i2c_read(3);
         case 1:
-            i2c_write(tmp ^ -1, 1);
+            i2c_write(tmp ^ -1, 3);
         case 2:
             uart_write(tmp);
         case 3:
@@ -82,5 +83,19 @@ void __attribute__((interrupt("machine"))) interrupt(){
     }
     state = (state+1) & 3;
 }
+
+
+
+/*
+
+TIMER TEST
+
+unsigned int tmp=0;
+int __attribute__((naked)) main(){
+    timer_conf(CLK_FREQ_MHZ-1,0,1);
+    while(1){ gpio_write(tmp); }
+}
+void __attribute__((interrupt("machine"))) interrupt(){ tmp++; }
+*/
 
 #endif
