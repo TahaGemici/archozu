@@ -31,7 +31,7 @@ module mcu_tb();
     initial begin
         tx_en = 0;
         wait(sys_rst==0);
-        #8000000;
+        #5000000;
         forever begin
             tx_data = rx_data;
             tx_en = 1;

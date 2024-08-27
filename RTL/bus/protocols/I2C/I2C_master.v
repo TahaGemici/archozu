@@ -1,4 +1,4 @@
-`define I2C_PULL
+//`define I2C_PULL
 
 module I2C_master(
     input clk_i,
@@ -29,7 +29,7 @@ module I2C_master(
 
 /*
 
-	APB <---> I2C_Master
+	bus <---> I2C_Master
 
 */
 
@@ -83,8 +83,9 @@ module I2C_master(
 	wire sda_en = (state!=ACK0) && (state!=RDATA) && ((state!=ACK1) || read);
 	assign sda_io = sda_en ? sda_o : 1'bz;
 
-    reg[7:0] clk_counter, clk_counter_nxt;
+    reg[9:0] clk_counter, clk_counter_nxt;
     reg clk_i2c, clk_i2c_nxt;
+	reg[9:0] clk_div, clk_div_nxt;
 
     always @(posedge clk_i) begin
         clk_counter <= clk_counter_nxt;
@@ -93,7 +94,7 @@ module I2C_master(
     always @* begin
         clk_counter_nxt = clk_counter + 1;
         clk_i2c_nxt = clk_i2c;
-        if(clk_counter==74) begin
+        if(clk_counter==clk_div) begin
             clk_counter_nxt = 0;
             clk_i2c_nxt = ~clk_i2c;
         end
@@ -111,6 +112,7 @@ module I2C_master(
 		scln <= scln_nxt;
 		state <= state_nxt;
 		counter <= counter_nxt;
+		clk_div <= clk_div_nxt;
 		nby_counter <= nby_counter_nxt;
 		read <= read_nxt;
 	end
@@ -121,6 +123,7 @@ module I2C_master(
 		counter_nxt = counter - 1;
 		nby_counter_nxt = nby_counter;
 		read_nxt = read;
+		clk_div_nxt = clk_div;
   
     	write_perip = rst_i;
     	data_i_perip = 0;
@@ -132,6 +135,12 @@ module I2C_master(
 				scln_nxt = 1;
 				if((^data_o_perip[3:2]) | (^data_o_perip[1:0])) state_nxt = START;
 				read_nxt = (data_o_perip[3:0] == 4'b0100);
+				case(data_o_perip[5:4])
+					2'b00: clk_div_nxt = 10'd74;
+					2'b01: clk_div_nxt = 10'd149;
+					2'b10: clk_div_nxt = 10'd299;
+					2'b11: clk_div_nxt = 10'd599;
+				endcase
 			end
 			START: begin
 				rdaddr_perip = I2C_NBY;
@@ -183,7 +192,6 @@ module I2C_master(
 				state_nxt = {2'b10, read};
 
 				nby_counter_nxt = nby_counter - (read || (!sda_io));
-				nby_counter_nxt = nby_counter - 1;
 				if(nby_counter_nxt==3'b111) state_nxt = STOP;
 			end
 			STOP: begin
@@ -191,7 +199,8 @@ module I2C_master(
 				state_nxt = IDLE;
     			wraddr_perip = I2C_CFG;
 				write_perip = clk_i2c & (~clk_i2c_prv);
-				data_i_perip[{read,1'b0}+:2] = 2'b11;
+				data_i_perip = data_o_perip;
+				data_i_perip[{read,1'b1}] = 1'b1;
 			end
 		endcase
 
@@ -215,6 +224,7 @@ module I2C_master(
 		if(rst_i) begin
 			state_nxt = IDLE;
 			scln_nxt = 1;
+			clk_div_nxt = 10'd74;
 		end
 	end
 endmodule

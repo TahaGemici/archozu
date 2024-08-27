@@ -14,7 +14,7 @@ module QSPI_master(
 
 /*
 
-	APB <---> QSPI_Master
+	bus <---> QSPI_Master
 
 */
 

@@ -1,5 +1,7 @@
-#define CLK_FREQ 60
-#define CEIL_CLK(x) (CLK_FREQ/2/x)+((CLK_FREQ/2)%x!=0)
+#define CLK_FREQ_MHZ 60
+#define CLK_FREQ_KHZ (CLK_FREQ_MHZ*1000)
+#define CLK_FREQ_HZ (CLK_FREQ_KHZ*1000)
+#define CEIL_CLK(x) (CLK_FREQ_MHZ/2/x)+((CLK_FREQ_MHZ/2)%x!=0)
 
 volatile unsigned int* const _addr_instr_mem = (unsigned int*)0x04000;
 volatile unsigned int* const _addr_uart      = (unsigned int*)0x06000;
@@ -14,7 +16,7 @@ volatile unsigned int* const _addr_gpio      = (unsigned int*)0x10000;
 ////////////
 
 void uart_conf(unsigned int baud_rate, unsigned char stop_bit){
-    _addr_uart[0] = (CLK_FREQ*1000000) / baud_rate - 1;
+    _addr_uart[0] = CLK_FREQ_HZ / baud_rate - 1;
     _addr_uart[1] = stop_bit;
 }
 
@@ -36,23 +38,31 @@ void uart_write(unsigned char data){
  //  I2C  //
 ///////////
 
-void i2c_conf(unsigned char addr){
+void i2c_conf(unsigned int prescaler, unsigned char addr){
     _addr_i2c[1] = addr;
+    _addr_i2c[4] = prescaler<<4;
+    /*
+    prescaler:
+        0: 400kHz
+        1: 200kHz
+        2: 100kHz
+        3:  50kHz
+    */
 }
 
 void i2c_write(unsigned int data, unsigned char byte_size){
     _addr_i2c[0] = byte_size;
     _addr_i2c[3] = data;
-    _addr_i2c[4] = 1;
+    _addr_i2c[4] += 1;
     while(!(_addr_i2c[4] & 2)){}
-    _addr_i2c[4] &= 12;
+    _addr_i2c[4] -= 3;
 }
 
 unsigned int i2c_read(unsigned char byte_size){
     _addr_i2c[0] = byte_size;
-    _addr_i2c[4] = 4;
+    _addr_i2c[4] += 4;
     while(!(_addr_i2c[4] & 8)){}
-    _addr_i2c[4] &= 3;
+    _addr_i2c[4] -= 12;
     return _addr_i2c[2];
 }
 
@@ -194,7 +204,7 @@ void delay_us(unsigned int us){
     unsigned int delay_us_arr[7];
     for(int i=0;i<7;i++) delay_us_arr[i] = _addr_timer[i];
 
-    timer_conf(CLK_FREQ-1, us-1, 1);
+    timer_conf(CLK_FREQ_MHZ-1, us-1, 1);
     delay_enable = 1;
     while(delay_enable){}
     for(int i=0;i<7;i++) _addr_timer[i] = delay_us_arr[i];
