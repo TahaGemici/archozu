@@ -1,5 +1,3 @@
-//`define I2C_PULL
-
 module I2C_master(
     input clk_i,
     input rst_i,
