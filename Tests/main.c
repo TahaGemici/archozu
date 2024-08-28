@@ -1,4 +1,4 @@
-#define SYNTHESIS
+//#define SYNTHESIS
 // ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
 
 #include "peripherals.h"

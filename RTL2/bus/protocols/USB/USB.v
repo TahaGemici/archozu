@@ -1,0 +1,242 @@
+module USB(
+    input clk_i,
+    input rst_i,
+    input write_i,
+    input [3:0] data_be_i,
+    input [3:0] addr_i,
+    input [31:0] wdata_i,
+    output [31:0] rdata_o,
+
+	output usb_dp_pull_o,
+    inout usb_dp_io,
+    inout usb_dn_io
+);
+	
+    wire[2:0] USB_CCR_nxt;
+    
+    //localparam USB_CCR = 0;
+	localparam USB_RDR = 4;
+	localparam USB_TDR = 8;
+	localparam USB_STA = 12;
+
+    
+    reg write_perip;
+    reg[31:0] wraddr_perip;
+    reg[31:0] data_i_perip;
+    reg[31:0] rdaddr_perip;
+    wire[31:0] data_o_perip;
+    wire USB_STA_o;
+    
+    usb_mem usb_mem(
+        clk_i,
+        rst_i,
+        
+        write_i,
+        data_be_i,
+        {28'b0, addr_i},
+        wdata_i,
+        rdata_o,
+        
+        write_perip,
+        wraddr_perip,
+        data_i_perip,
+        rdaddr_perip,
+        data_o_perip,
+        USB_CCR_nxt,
+        USB_STA_o
+    );
+
+    //localparam RESET  = 0;
+    localparam AUDIO    = 1;
+    localparam CAMERA   = 2;
+    localparam DISK     = 3;
+    localparam KEYBOARD = 4;
+    localparam SERIAL   = 5;
+
+    reg[2:0] state, state_nxt;
+    wire[3:0] usb_ports[0:5];
+    assign usb_ports[0][0] = 0;
+    assign usb_ports[0][1] = 0;
+    assign usb_ports[0][2] = 0;
+    assign usb_ports[0][3] = 0;
+    assign usb_ports[3][0] = 0;
+    assign usb_ports[3][1] = 0;
+    assign usb_ports[3][2] = 0;
+    assign usb_ports[3][3] = 0;
+    wire[5:1] rstn;
+    assign rstn[1] = (~rst_i) & (state==1);
+    assign rstn[2] = (~rst_i) & (state==2);
+    assign rstn[3] = 0;
+    assign rstn[4] = (~rst_i) & (state==4);
+    assign rstn[5] = (~rst_i) & (state==5);
+
+    assign usb_dp_pull_o = usb_ports[state][0];
+    assign usb_dp_io = usb_ports[state][1] ? usb_ports[state][2] : 1'bz;
+    assign usb_dn_io = usb_ports[state][1] ? usb_ports[state][3] : 1'bz;
+
+    always @(posedge clk_i) begin
+        state <= state_nxt;
+    end
+    
+    wire audio_en;
+    wire[31:0] audio_out;
+    reg audio_en_prv;
+    always @(posedge clk_i) audio_en_prv <= audio_en;
+    usb_audio_top usb_audio_top(
+        rstn[1],
+        clk_i,
+        usb_ports[1][0],
+        usb_ports[1][1],
+        usb_ports[1][2],
+        usb_ports[1][3],
+        usb_dp_io,
+        usb_dn_io,
+        ,
+        audio_en,
+        audio_out[31:16],
+        audio_out[15:0],
+        data_o_perip[31:16],
+        data_o_perip[15:0],
+        ,
+        ,
+
+    );
+
+    wire camera_vf_sof, camera_vf_req;
+    usb_camera_top #("MONO", 14'd640, 14'd360, "FALSE") usb_camera_top(
+        rstn[2],
+        clk_i,
+        usb_ports[2][0],
+        usb_ports[2][1],
+        usb_ports[2][2],
+        usb_ports[2][3],
+        usb_dp_io,
+        usb_dn_io,
+        ,
+        camera_vf_sof,
+        camera_vf_req,
+        data_o_perip[7:0],
+        ,
+        ,
+
+    );
+    
+    reg keyboard_req;
+    usb_keyboard_top usb_keyboard_top(
+        rstn[4],
+        clk_i,
+        usb_ports[4][0],
+        usb_ports[4][1],
+        usb_ports[4][2],
+        usb_ports[4][3],
+        usb_dp_io,
+        usb_dn_io,
+        ,
+        data_o_perip[15:0],
+        keyboard_req,
+        ,
+        ,
+
+    );
+
+    wire[7:0] serial_out;
+    wire serial_recv_valid, serial_send_ready;
+    reg serial_send_valid;
+    reg serial_recv_valid_prv;
+    always @(posedge clk_i) serial_recv_valid_prv <= serial_recv_valid;
+    usb_serial_top usb_serial_top(
+        rstn[5],
+        clk_i,
+        usb_ports[5][0],
+        usb_ports[5][1],
+        usb_ports[5][2],
+        usb_ports[5][3],
+        usb_dp_io,
+        usb_dn_io,
+        ,
+        serial_out,
+        serial_recv_valid,
+        data_o_perip[7:0],
+        serial_send_valid,
+        serial_send_ready,
+        ,
+        ,
+
+    );
+    
+    always @* begin
+        case(USB_CCR_nxt)
+            3'd0: state_nxt = 0;
+            3'd1: state_nxt = 1;
+            3'd2: state_nxt = 2;
+            3'd3: state_nxt = 3;
+            3'd4: state_nxt = 4;
+            default: state_nxt = 5;
+        endcase
+        
+        write_perip = 1'b0;
+        data_i_perip = 0;
+        wraddr_perip = USB_RDR;
+        rdaddr_perip = USB_TDR;
+        keyboard_req = 1'b0;
+        serial_send_valid = 1'b0;
+
+        case(state)
+            AUDIO: begin
+                if(audio_en) begin
+                    data_i_perip = audio_out;
+                    write_perip = 1'b1;
+                end
+
+                if(audio_en_prv) begin
+                    wraddr_perip = USB_STA;
+                    write_perip = 1'b1;
+                end
+            end
+
+            CAMERA: begin
+                if(camera_vf_sof | camera_vf_req) begin
+                    wraddr_perip = USB_STA;
+                    write_perip = 1'b1;
+                end
+            end
+
+            DISK: begin
+            end
+
+            KEYBOARD: begin
+                if(USB_STA_o) begin
+                    keyboard_req = 1'b1;
+                    write_perip = 1'b1;
+                    wraddr_perip = USB_STA;
+                end
+            end
+            SERIAL: begin
+                if(serial_recv_valid) begin
+                    data_i_perip = {24'b0, serial_out};
+                    write_perip = 1'b1;
+                end
+                
+                if(serial_recv_valid_prv) begin
+                    data_i_perip = 2;
+                    wraddr_perip = USB_STA;
+                    write_perip = 1'b1;
+                end
+
+                serial_send_valid = USB_STA_o;
+                if(serial_send_ready & serial_send_valid) begin
+                    data_i_perip = 0;
+                    wraddr_perip = USB_STA;
+                    write_perip = 1'b1;
+                end
+            end
+        endcase
+
+        if(rst_i) begin
+            data_i_perip = 0;
+            wraddr_perip = USB_STA;
+            write_perip = 1'b1;
+        end
+    end
+
+endmodule
