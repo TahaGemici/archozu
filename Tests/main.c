@@ -1,4 +1,4 @@
-//#define SYNTHESIS
+#define SYNTHESIS
 // ./configure --prefix=/opt/riscv --with-arch=rv32imac_zicsr
 
 #include "peripherals.h"
@@ -61,6 +61,7 @@ void __attribute__((interrupt("machine"))) interrupt(){
 
 #else
 
+
 unsigned int state = 0, tmp=0;
 int __attribute__((naked)) main(){
     i2c_conf(0,121);
@@ -85,7 +86,6 @@ void __attribute__((interrupt("machine"))) interrupt(){
 }
 
 
-
 /*
 
 TIMER TEST
@@ -96,6 +96,17 @@ int __attribute__((naked)) main(){
     while(1){ gpio_write(tmp); }
 }
 void __attribute__((interrupt("machine"))) interrupt(){ tmp++; }
+*/
+
+/*
+
+//UART TEST
+
+int __attribute__((naked)) main(){
+    uart_conf(9600, 0);
+    while(1){ uart_write(uart_read()); delay_us(1000);}
+}
+
 */
 
 #endif

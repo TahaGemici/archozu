@@ -99,7 +99,7 @@ module USB(
     );
 
     wire camera_vf_sof, camera_vf_req;
-    usb_camera_top #("MONO", 14'd640, 14'd360, "FALSE") usb_camera_top(
+    usb_camera_top #("MONO", 14'd160, 14'd90, "FALSE") usb_camera_top(
         rstn[2],
         clk_i,
         usb_ports[2][0],

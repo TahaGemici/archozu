@@ -7,12 +7,8 @@ module I2C_master(
     input [31:0] wdata_i,
     output [31:0] rdata_o,
 
-	`ifdef I2C_PULL
-	tri1 sda_io,
-	`else
 	inout sda_io,
-	`endif
-	output scl_io
+	inout scl_io
 );
 
 	// states
@@ -123,7 +119,7 @@ module I2C_master(
 		read_nxt = read;
 		clk_div_nxt = clk_div;
   
-    	write_perip = rst_i;
+    	write_perip = 0;
     	data_i_perip = 0;
     	wraddr_perip = I2C_RDR;
     	rdaddr_perip = I2C_CFG;
@@ -133,6 +129,7 @@ module I2C_master(
 				scln_nxt = 1;
 				if((^data_o_perip[3:2]) | (^data_o_perip[1:0])) state_nxt = START;
 				read_nxt = (data_o_perip[3:0] == 4'b0100);
+    			write_perip = 1;
 				case(data_o_perip[5:4])
 					2'b00: clk_div_nxt = 10'd74;
 					2'b01: clk_div_nxt = 10'd149;

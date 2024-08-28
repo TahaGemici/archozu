@@ -19,7 +19,8 @@ module mcu_tb();
         forever in = #500 $random;
     end
 
-    wire sda_io, scl_io, rx, tx, sclk, cs;
+    tri1 sda_io, scl_io;
+    wire rx, tx, sclk, cs;
     wire[3:0] io;
     wire[15:0] out;
 
