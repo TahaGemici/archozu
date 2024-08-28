@@ -13,8 +13,8 @@ module USB(
 );
 	
     wire[2:0] USB_CCR_nxt;
+    
     //localparam USB_CCR = 0;
-
 	localparam USB_RDR = 4;
 	localparam USB_TDR = 8;
 	localparam USB_STA = 12;
@@ -46,6 +46,7 @@ module USB(
         USB_STA_o
     );
 
+    //localparam RESET  = 0;
     localparam AUDIO    = 1;
     localparam CAMERA   = 2;
     localparam DISK     = 3;
@@ -58,10 +59,14 @@ module USB(
     assign usb_ports[0][1] = 0;
     assign usb_ports[0][2] = 0;
     assign usb_ports[0][3] = 0;
+    assign usb_ports[3][0] = 0;
+    assign usb_ports[3][1] = 0;
+    assign usb_ports[3][2] = 0;
+    assign usb_ports[3][3] = 0;
     wire[5:1] rstn;
     assign rstn[1] = (~rst_i) & (state==1);
     assign rstn[2] = (~rst_i) & (state==2);
-    assign rstn[3] = (~rst_i) & (state==3);
+    assign rstn[3] = 0;
     assign rstn[4] = (~rst_i) & (state==4);
     assign rstn[5] = (~rst_i) & (state==5);
 
@@ -111,29 +116,6 @@ module USB(
         camera_vf_sof,
         camera_vf_req,
         data_o_perip[7:0],
-        ,
-        ,
-
-    );
-    
-    wire[40:0] mem_addr;
-    wire mem_wen;
-    wire[7:0] mem_wdata;
-    wire[7:0] mem_rdata;
-    usb_disk_top #(64, "FALSE") usb_disk_top(
-        rstn[3],
-        clk_i,
-        usb_ports[3][0],
-        usb_ports[3][1],
-        usb_ports[3][2],
-        usb_ports[3][3],
-        usb_dp_io,
-        usb_dn_io,
-        ,
-        mem_addr,
-        mem_wen,
-        mem_wdata,
-        mem_rdata,
         ,
         ,
 
@@ -256,23 +238,5 @@ module USB(
             write_perip = 1'b1;
         end
     end
-
-    reg[7:0] mem[0:(64*512-1)];
-
-    reg[7:0] mem_rdata_reg;
-    assign mem_rdata = mem_rdata_reg;
-
-    always @(posedge clk_i) begin
-        mem[mem_addr] <= mem_wen ? mem_wdata : mem[mem_addr];
-        mem_rdata_reg <= mem[mem_addr];
-    end
-
-    integer i;
-    initial begin
-        for(i=0;i<(64*512);i=i+1) begin
-            mem[i] = 0;
-        end
-    end
-
 
 endmodule

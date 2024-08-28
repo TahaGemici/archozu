@@ -70,7 +70,7 @@ module timer(
         counter_nxt = counter;
         irq_7_o_nxt = (irq_ack_i && (irq_id_i==7)) ? 0 : irq_7_o;
 
-        condition_nxt = (&TIM_PRE_o) ? 59_999_999 : TIM_PRE_o[31:0];
+        condition_nxt = (&TIM_PRE_o) ? (`CLK_FREQ - 1) : TIM_PRE_o[31:0];
         counter_nxt = counter + TIM_ENA_o;
         if(TIM_ENA_o & (counter==condition)) begin
             counter_nxt = 0;

@@ -14,9 +14,14 @@ module QSPI_master(
 
 /*
 
-	APB <---> QSPI_Master
+	bus <---> QSPI_Master
 
 */
+
+    localparam QSPI_CCR = 0;
+    localparam QSPI_ADR = 4;
+    localparam QSPI_DR  = 8;
+    localparam QSPI_STA = 40;
 
     reg write_perip;
     reg[31:0] wraddr_perip;
@@ -40,11 +45,6 @@ module QSPI_master(
         rdaddr_perip,
         data_o_perip
     );
-
-    localparam QSPI_CCR = 0;
-    localparam QSPI_ADR = 4;
-    localparam QSPI_DR  = 8;
-    localparam QSPI_STA = 40;
 
 /*
 
@@ -185,7 +185,7 @@ module QSPI_master(
             STATE_IDLE: begin
                 cntr_state_d = 6;
                 write_perip = 1;
-                if(state_d!=STATE_CMD) io_en_d[0] = 1'b0;
+                if(state_d!=STATE_CMD) io_en_d[1:0] = 2'b00;
             end
             
             STATE_CMD: begin
@@ -211,7 +211,11 @@ module QSPI_master(
                 rdaddr_perip = QSPI_ADR;
                 io_d[0] = addr32[cntr_state_q[4:0]];
                 if(cntr_state_q[5:0]==QSPI_DUMMY) begin
-                    io_en_d = QSPI_WRITE ? 4'b1101 : 4'b0000;
+                    io_en_d = 4'b1101;
+                    if(!QSPI_WRITE) begin
+                        io_en_d[0] = 1'b0;
+                        if(&QSPI_DATA_MODE) io_en_d[3:2] = 2'b00;
+                    end
                     state_d = STATE_EXECUTE;
                     case(QSPI_DATA_MODE)
                         default: cntr_state_d = 8'b1111_1111;
@@ -258,7 +262,7 @@ module QSPI_master(
                             cntr_state_d = cntr_state_q - 2;
                         end
                         2'b11: begin
-                            io_en_d = 4'b0000;
+                            io_en_d[3:2] = 2'b00;
                             data_i_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b00}] = io[0];
                             data_i_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b01}] = io[1];
                             data_i_perip[{~cntr_state_q[4:3], cntr_state_q[2], 2'b10}] = io[2];
@@ -266,7 +270,6 @@ module QSPI_master(
                             cntr_state_d = cntr_state_q - 4;
                         end
                     endcase
-
                 end
                 if(cntr_state_q == {~QSPI_SIZE, 3'b000}) begin
                     state_d = STATE_IDLE;
@@ -281,6 +284,10 @@ module QSPI_master(
             state_d         = state_q;
             cntr_state_d    = cntr_state_q;
             state_q_prv_nxt = state_q_prv;
+        end
+
+        if(cs_nd&(~cs_no)) begin
+            io_en_d = 4'b0000;
         end
 
         if(rst_i) begin

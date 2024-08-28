@@ -54,11 +54,11 @@ Disassembly of section .text:
     222c:	00e78f63          	beq	a5,a4,0x224a
     2230:	02f76463          	bltu	a4,a5,0x2258
     2234:	e789                	bnez	a5,0x223e
-    2236:	4505                	li	a0,1
+    2236:	450d                	li	a0,3
     2238:	28c9                	jal	0x230a
     223a:	0ca02823          	sw	a0,208(zero) # 0xd0
     223e:	0d002503          	lw	a0,208(zero) # 0xd0
-    2242:	4585                	li	a1,1
+    2242:	458d                	li	a1,3
     2244:	fff54513          	not	a0,a0
     2248:	2055                	jal	0x22ec
     224a:	0d004503          	lbu	a0,208(zero) # 0xd0

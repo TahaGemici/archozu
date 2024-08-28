@@ -85,21 +85,18 @@ xpm_memory_spram_inst (
 
 `else
 
-   reg[7:0] mem[0:8191];
-   `ifdef NO_FLASH
-      initial $readmemh("s25fl128s.mem",mem,0);
-   `endif
+   reg[7:0] mem[0:127];
 
-   assign data_o[ 0+:8] = mem[{addr_i[12:2], 2'b00}];
-   assign data_o[ 8+:8] = mem[{addr_i[12:2], 2'b01}];
-   assign data_o[16+:8] = mem[{addr_i[12:2], 2'b10}];
-   assign data_o[24+:8] = mem[{addr_i[12:2], 2'b11}];
+   assign data_o[ 0+:8] = mem[{addr_i[6:2], 2'b00}];
+   assign data_o[ 8+:8] = mem[{addr_i[6:2], 2'b01}];
+   assign data_o[16+:8] = mem[{addr_i[6:2], 2'b10}];
+   assign data_o[24+:8] = mem[{addr_i[6:2], 2'b11}];
 
    always @(posedge clk_i) begin
-       mem[{addr_i[12:2], 2'b00}] <= (write_i & be_sel_i[0]) ? data_i[ 0+:8] : mem[{addr_i[12:2], 2'b00}];
-       mem[{addr_i[12:2], 2'b01}] <= (write_i & be_sel_i[1]) ? data_i[ 8+:8] : mem[{addr_i[12:2], 2'b01}];
-       mem[{addr_i[12:2], 2'b10}] <= (write_i & be_sel_i[2]) ? data_i[16+:8] : mem[{addr_i[12:2], 2'b10}];
-       mem[{addr_i[12:2], 2'b11}] <= (write_i & be_sel_i[3]) ? data_i[24+:8] : mem[{addr_i[12:2], 2'b11}];
+       mem[{addr_i[6:2], 2'b00}] <= (write_i & be_sel_i[0]) ? data_i[ 0+:8] : mem[{addr_i[6:2], 2'b00}];
+       mem[{addr_i[6:2], 2'b01}] <= (write_i & be_sel_i[1]) ? data_i[ 8+:8] : mem[{addr_i[6:2], 2'b01}];
+       mem[{addr_i[6:2], 2'b10}] <= (write_i & be_sel_i[2]) ? data_i[16+:8] : mem[{addr_i[6:2], 2'b10}];
+       mem[{addr_i[6:2], 2'b11}] <= (write_i & be_sel_i[3]) ? data_i[24+:8] : mem[{addr_i[6:2], 2'b11}];
    end
 
 `endif

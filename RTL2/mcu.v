@@ -28,8 +28,6 @@ module mcu(
     assign irq[6:0] = 0;
     wire irq_ack;
     wire[4:0] irq_id;
-    
-    wire debug_havereset, debug_running, debug_halted;
 
     cv32e40p_top cv32e40p_top (
         // Clock and Reset
@@ -70,9 +68,9 @@ module mcu(
 
         // Debug Interface
         .debug_req_i(1'b0),
-        .debug_havereset_o(debug_havereset),
-        .debug_running_o(debug_running),
-        .debug_halted_o(debug_halted),
+        .debug_havereset_o(),
+        .debug_running_o(),
+        .debug_halted_o(),
 
         // CPU Control Signals
         .fetch_enable_i(1'b1),
