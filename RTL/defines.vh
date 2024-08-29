@@ -1,7 +1,6 @@
 `define FPGA
 `define NO_FLASH
-`define I2C_MULTI_MASTER
-`define MT25QL256ABA
+//`define MT25QL256ABA
 
 `define CLK_PERIOD 16.667
 `define CLK_FREQ 60_000_000
