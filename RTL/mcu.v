@@ -4,7 +4,7 @@ module mcu(
     input rx,
     output tx,
     inout sda_io,
-    output scl_io,
+    inout scl_io,
     output sclk,
     output cs,
     inout[3:0] io,
