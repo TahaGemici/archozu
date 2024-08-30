@@ -3,6 +3,7 @@ volatile unsigned int usb_state;
 
 int usb_main(){
     usb_state=0;
+    usb_conf(USB_RESET);
     while(!usb_state){
         usb_tmp = gpio_read() & 255;
         usb_state=0;
@@ -10,8 +11,11 @@ int usb_main(){
             usb_tmp>>=1;
             usb_state++;
         }
-        if(usb_state) usb_conf(usb_state);
     }
+
+    while(gpio_read()){}
+    gpio_write(usb_state);
+    usb_conf(usb_state);
 
     switch(usb_state){
         case USB_AUDIO:
@@ -23,10 +27,10 @@ int usb_main(){
             while(1){
                 usb_camera(0);
                 for(int i=0;i<90;i=i+1){
-                    unsigned int usb_tmp3 = (45-i)*5;
+                    unsigned int usb_tmp3 = 45-i;
                     usb_tmp3 = usb_tmp3*usb_tmp3 + usb_tmp2;
                     for(int j=0;j<160;j=j+1){
-                        unsigned int usb_tmp4 = (45-j)*3;
+                        unsigned int usb_tmp4 = 80-j;
                         usb_tmp4 = usb_tmp4*usb_tmp4 + usb_tmp3;
                         usb_camera(usb_tmp4);
                     }
