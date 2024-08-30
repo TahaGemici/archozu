@@ -60,17 +60,31 @@ module bus(
     );
 
     wire[31:0] i2c_out;
-    I2C_master I2C_master(
-        clk_i,
-        rst_i,
-        i2c_en & we,
-        data_be_i,
-        data_addr_i[4:0],
-        data_wdata_i,
-        i2c_out,
-        sda_io,
-        scl_io
-    );
+    `ifdef I2C_V2
+        I2C_master_v2 I2C_master_v2(
+            clk_i,
+            rst_i,
+            i2c_en & we,
+            data_be_i,
+            data_addr_i[4:0],
+            data_wdata_i,
+            i2c_out,
+            sda_io,
+            scl_io
+        );
+    `else
+        I2C_master I2C_master(
+            clk_i,
+            rst_i,
+            i2c_en & we,
+            data_be_i,
+            data_addr_i[4:0],
+            data_wdata_i,
+            i2c_out,
+            sda_io,
+            scl_io
+        );
+    `endif
 
 
     wire[31:0] qspi_out;
