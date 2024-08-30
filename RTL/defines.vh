@@ -1,5 +1,5 @@
 `define FPGA
-`define NO_FLASH
+//`define NO_FLASH
 `define I2C_V2
 `define MT25QL256ABA
 
